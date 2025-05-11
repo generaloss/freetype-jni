@@ -23,7 +23,7 @@
         <dependency>
             <groupId>io.github.generaloss</groupId>
             <artifactId>jpize-utils</artifactId>
-            <version>25.3.1</version>
+            <version>25.5.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -118,6 +118,7 @@
                 <version>0.3.0</version>
                 <extensions>true</extensions>
                 <configuration>
+                    <deploymentName>freetype-jni:${version}</deploymentName>
                     <publishingServerId>central</publishingServerId>
                     <tokenAuth>true</tokenAuth>
                 </configuration>

@@ -34,12 +34,8 @@
 
     <licenses>
         <license>
-            <name>MIT License</name>
-            <url>https://mit-license.org/</url>
-        </license>
-        <license>
-            <name>Public Domain License</name>
-            <url>https://creativecommons.org/public-domain/</url>
+            <name>GNU GPL-v2.0 license</name>
+            <url>https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</url>
         </license>
     </licenses>
 
@@ -67,6 +63,7 @@
                 <version>0.3.0</version>
                 <extensions>true</extensions>
                 <configuration>
+                    <deploymentName>freetype-jni-natives-linux:${version}</deploymentName>
                     <publishingServerId>central</publishingServerId>
                     <tokenAuth>true</tokenAuth>
                 </configuration>

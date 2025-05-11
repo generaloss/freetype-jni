@@ -62,12 +62,8 @@ publishing {
                 inceptionYear = "2025"
                 licenses {
                     license {
-                        name = "MIT License"
-                        url = "https://mit-license.org/"
-                    }
-                    license {
-                        name = "Public Domain License"
-                        url = "https://creativecommons.org/public-domain/"
+                        name = "GNU GPL-v2.0 license"
+                        url = "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
                     }
                 }
                 developers {
@@ -147,6 +143,7 @@ jreleaser {
                 setAuthorization("Basic")
                 username.set(property("deploy.username") as String)
                 password.set(property("deploy.password") as String)
+                deploymentId.set("$varArtifactID:$varVersion")
             }
         }
     }
