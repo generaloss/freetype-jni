@@ -17,13 +17,13 @@
     * [freetype-jni-natives-linux](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-linux) (available arches: x86_64, aarch64)
     * [freetype-jni-natives-android](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-android) (all ABIs available)
 
-Android SDK: 21
+Android SDK: 21 +
 
 ---
 
 ## Code sample:
 
-Java version: 1.8
+Java version: 8 +
 
 ``` java
 final FTLibrary library = FTLibrary.init();
