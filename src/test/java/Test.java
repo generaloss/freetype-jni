@@ -2,8 +2,7 @@ import generaloss.freetype.*;
 import generaloss.freetype.bitmap.FTBitmap;
 import generaloss.freetype.face.FTFace;
 import generaloss.freetype.face.FTSizeMetrics;
-import generaloss.freetype.glyph.FTGlyphMetrics;
-import generaloss.freetype.glyph.FTRenderMode;
+import generaloss.freetype.glyph.*;
 import jpize.util.res.Resource;
 
 public class Test {
@@ -32,10 +31,15 @@ public class Test {
         for(int i = 0; i < CHARS.length(); i++) {
             if(!face.loadGlyph(face.getCharIndex(CHARS.charAt(i))))
                 continue;
-            if(!face.getGlyph().renderGlyph(FTRenderMode.NORMAL))
+
+            final FTGlyphSlot slot = face.getGlyph();
+            if(!slot.renderGlyph(FTRenderMode.NORMAL))
                 continue;
 
-            final FTBitmap bitmap = face.getGlyph().getBitmap();
+            final FTBitmapGlyph bitmapGlyph = slot.getGlyph().toBitmap(FTRenderMode.NORMAL);
+            final FTBitmap bitmap = bitmapGlyph.getBitmap();
+
+            // final FTBitmap bitmap = face.getGlyph().getBitmap();
             final FTGlyphMetrics glyphMetrics = face.getGlyph().getMetrics();
 
             System.out.println(glyphMetrics.getHoriBearingX() + ", " + glyphMetrics.getHoriBearingY());
