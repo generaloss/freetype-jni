@@ -25,30 +25,6 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_glyph_FTGlyph_toBitmap
 
 /*
  * Class:     generaloss_freetype_glyph_FTGlyph
- * Method:    getBitmap
- * Signature: (J)J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_glyph_FTGlyph_getBitmap
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_glyph_FTGlyph
- * Method:    getLeft
- * Signature: (J)I
- */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_glyph_FTGlyph_getLeft
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_glyph_FTGlyph
- * Method:    getTop
- * Signature: (J)I
- */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_glyph_FTGlyph_getTop
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_glyph_FTGlyph
  * Method:    done
  * Signature: (J)V
  */

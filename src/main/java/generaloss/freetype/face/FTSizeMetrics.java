@@ -51,7 +51,8 @@ public class FTSizeMetrics {
 
     /** The ascender in 26.6 fractional pixels, rounded up to an integer value. See FT_FaceRec for the details. */
     public int getAscender() {
-        return FTLibrary.FTPos_toInt(getAscender(address));
+        final int raw = getAscender(address);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 
@@ -59,7 +60,8 @@ public class FTSizeMetrics {
 
     /** The descender in 26.6 fractional pixels, rounded down to an integer value. See FT_FaceRec for the details. */
     public int getDescender() {
-        return FTLibrary.FTPos_toInt(getDescender(address));
+        final int raw = getDescender(address);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 
@@ -67,7 +69,8 @@ public class FTSizeMetrics {
 
     /** The height in 26.6 fractional pixels, rounded to an integer value. See FT_FaceRec for the details. */
     public int getHeight() {
-        return FTLibrary.FTPos_toInt(getHeight(address));
+        final int raw = getHeight(address);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 
@@ -75,7 +78,8 @@ public class FTSizeMetrics {
 
     /** The maximum advance width in 26.6 fractional pixels, rounded to an integer value. See FT_FaceRec for the details. */
     public int getMaxAdvance() {
-        return FTLibrary.FTPos_toInt(getMaxAdvance(address));
+        final int raw = getMaxAdvance(address);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 }

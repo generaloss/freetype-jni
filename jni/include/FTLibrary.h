@@ -9,15 +9,7 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_FTLibrary
- * Method:    getLastErrorCode
- * Signature: ()I
- */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_FTLibrary_getLastErrorCode
-  (JNIEnv *, jclass);
-
-/*
- * Class:     generaloss_freetype_FTLibrary
- * Method:    initFreeType
+ * Method:    init
  * Signature: ()J
  */
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FTLibrary_initFreeType
@@ -33,7 +25,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FTLibrary_newMemoryFace
 
 /*
  * Class:     generaloss_freetype_FTLibrary
- * Method:    strokerNew
+ * Method:    newStroker
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FTLibrary_strokerNew
@@ -41,11 +33,19 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FTLibrary_strokerNew
 
 /*
  * Class:     generaloss_freetype_FTLibrary
- * Method:    doneFreeType
+ * Method:    done
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_FTLibrary_doneFreeType
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_FTLibrary
+ * Method:    getLastErrorCode
+ * Signature: ()I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FTLibrary_getLastErrorCode
+  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

@@ -1,27 +1,23 @@
 package generaloss.freetype.face;
 
-public class FTSize {
+import generaloss.freetype.FTObject;
 
-    private final long address;
+public class FTSize extends FTObject {
 
-    public FTSize(long address) {
-        this.address = address;
-    }
-
-    public long getAddress() {
-        return address;
+    public FTSize(long pointer) {
+        super(pointer);
     }
 
 
     // TODO: face, generic
 
 
-    private static native long getMetrics(long address);
+    private static native long getMetrics(long pointer);
 
     /** Metrics for this size object. */
     public FTSizeMetrics getMetrics() {
-        final long metrics = getMetrics(address);
-        return new FTSizeMetrics(metrics);
+        final long metricsPointer = getMetrics(super.pointer);
+        return new FTSizeMetrics(metricsPointer);
     }
 
 }

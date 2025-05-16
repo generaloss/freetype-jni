@@ -105,6 +105,14 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_face_FTFace_getSize
 
 /*
  * Class:     generaloss_freetype_face_FTFace
+ * Method:    selectCharmap
+ * Signature: (JI)Z
+ */
+JNIEXPORT jboolean JNICALL Java_generaloss_freetype_face_FTFace_selectCharmap
+  (JNIEnv *, jclass, jlong, jint);
+
+/*
+ * Class:     generaloss_freetype_face_FTFace
  * Method:    selectSize
  * Signature: (JI)Z
  */

@@ -1,81 +1,84 @@
 package generaloss.freetype.glyph;
 
 import generaloss.freetype.FTLibrary;
+import generaloss.freetype.FTObject;
 
-public class FTGlyphMetrics { // done
+public class FTGlyphMetrics extends FTObject { // fully implemented
 
-    private final long address;
-
-    public FTGlyphMetrics(long address) {
-        this.address = address;
-    }
-
-    public long getAddress() {
-        return address;
+    public FTGlyphMetrics(long pointer) {
+        super(pointer);
     }
 
 
-    private static native int getWidth(long metrics);
+    private static native int getWidth(long pointer);
 
     /** The glyph's width. */
     public int getWidth() {
-        return FTLibrary.FTPos_toInt(getWidth(address));
+        final int raw = getWidth(super.pointer);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 
-    private static native int getHeight(long metrics);
+    private static native int getHeight(long pointer);
 
     /** The glyph's height. */
     public int getHeight() {
-        return FTLibrary.FTPos_toInt(getHeight(address));
+        final int raw = getHeight(super.pointer);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 
-    private static native int getHoriBearingX(long metrics);
+    private static native int getHoriBearingX(long pointer);
 
     /** Left side bearing for horizontal layout. */
     public int getHoriBearingX() {
-        return FTLibrary.FTPos_toInt(getHoriBearingX(address));
+        final int raw = getHoriBearingX(super.pointer);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 
-    private static native int getHoriBearingY(long metrics);
+    private static native int getHoriBearingY(long pointer);
 
     /** Top side bearing for horizontal layout. */
     public int getHoriBearingY() {
-        return FTLibrary.FTPos_toInt(getHoriBearingY(address));
+        final int raw = getHoriBearingY(super.pointer);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 
-    private static native int getHoriAdvance(long metrics);
+    private static native int getHoriAdvance(long pointer);
 
     /** Advance width for horizontal layout. */
     public int getHoriAdvance() {
-        return FTLibrary.FTPos_toInt(getHoriAdvance(address));
+        final int raw = getHoriAdvance(super.pointer);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 
-    private static native int getVertBearingX(long metrics);
+    private static native int getVertBearingX(long pointer);
 
     /** Left side bearing for vertical layout. */
     public int getVertBearingX() {
-        return FTLibrary.FTPos_toInt(getVertBearingX(address));
+        final int raw = getVertBearingX(super.pointer);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 
-    private static native int getVertBearingY(long metrics);
+    private static native int getVertBearingY(long pointer);
 
     /** Top side bearing for vertical layout. Larger positive values mean further below the vertical glyph origin. */
     public int getVertBearingY() {
-        return FTLibrary.FTPos_toInt(getVertBearingY(address));
+        final int raw = getVertBearingY(super.pointer);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 
-    private static native int getVertAdvance(long metrics);
+    private static native int getVertAdvance(long pointer);
 
     /** Advance height for vertical layout. Positive values mean the glyph has a positive advance downward. */
     public int getVertAdvance() {
-        return FTLibrary.FTPos_toInt(getVertAdvance(address));
+        final int raw = getVertAdvance(super.pointer);
+        return FTLibrary.FTPos_toInt(raw);
     }
 
 }

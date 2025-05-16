@@ -10,7 +10,68 @@ import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class FTLibrary {
+public class FTLibrary extends FTObject {
+
+    private FTLibrary(long poniter) {
+        super(poniter);
+    }
+
+
+    private static native long initFreeType();
+
+    public FTLibrary() {
+        super(initFreeType());
+    }
+
+
+    private static native long newMemoryFace(long library, ByteBuffer data, int dataSize, int faceIndex);
+
+    public FTFace newMemoryFace(ByteBuffer buffer, int faceIndex) {
+        final long facePointer = newMemoryFace(super.pointer, buffer, buffer.remaining(), faceIndex);
+        return new FTFace(facePointer);
+    }
+
+    public FTFace newMemoryFace(byte[] data, int faceIndex) {
+        final ByteBuffer buffer = ByteBuffer.allocateDirect(data.length);
+        buffer.put(data);
+        buffer.position(0);
+        return newMemoryFace(buffer, faceIndex);
+    }
+
+
+    private static native long strokerNew(long library);
+
+    public FTStroker strokerNew() {
+        final long strokerPointer = strokerNew(super.pointer);
+        return new FTStroker(strokerPointer);
+    }
+
+
+    private static native void doneFreeType(long library);
+
+    @Override
+    public void done() {
+        doneFreeType(super.pointer);
+        super.done();
+    }
+
+
+    private static native int getLastErrorCode();
+
+    public static FTError getLastError() {
+        return FTError.byCode(getLastErrorCode());
+    }
+
+
+    public static int encodeChars(char a, char b, char c, char d) {
+        return (a << 24) | (b << 16) | (c << 8) | d;
+    }
+
+    public static int FTPos_toInt(int value) {
+        return ((value + 63) & -64) >> 6;
+    }
+
+
 
     static {
         loadNative();
@@ -73,78 +134,6 @@ public class FTLibrary {
         if(arch.contains("riscv")) return "riscv64";
         if(arch.contains("x86")) return "x86";
         throw new UnsupportedOperationException("Unsupported architecture: " + arch);
-    }
-
-
-
-    public static int encodeChars(char a, char b, char c, char d) {
-        return (a << 24) | (b << 16) | (c << 8) | d;
-    }
-
-    public static int FTPos_toInt(int value) {
-        return ((value + 63) & -64) >> 6;
-    }
-
-
-    private static native int getLastErrorCode();
-
-    public static FTError getLastError() {
-        return FTError.byCode(getLastErrorCode());
-    }
-
-    private static native long initFreeType();
-
-    public static FTLibrary init() {
-        final long address = initFreeType();
-        if(address == 0)
-            throw new RuntimeException("Couldn't initialize FreeType library: " + getLastError());
-
-        return new FTLibrary(address);
-    }
-
-
-    private final long address;
-
-    private FTLibrary(long address) {
-        this.address = address;
-    }
-
-    public long getAddress() {
-        return address;
-    }
-
-
-    private static native long newMemoryFace(long library, ByteBuffer data, int dataSize, int faceIndex);
-
-    public FTFace newMemoryFace(ByteBuffer buffer, int faceIndex) {
-        final long face = newMemoryFace(address, buffer, buffer.remaining(), faceIndex);
-        if(face == 0)
-            throw new RuntimeException("Couldn't load font: " + FTLibrary.getLastError());
-        return new FTFace(face);
-    }
-
-    public FTFace newMemoryFace(byte[] data, int faceIndex) {
-        final ByteBuffer buffer = ByteBuffer.allocateDirect(data.length);
-        buffer.put(data);
-        buffer.position(0);
-        return newMemoryFace(buffer, faceIndex);
-    }
-
-
-    private static native long strokerNew(long library);
-
-    public FTStroker strokerNew() {
-        final long stroker = strokerNew(address);
-        if(stroker == 0)
-            throw new RuntimeException("Couldn't create FreeType stroker: " + FTLibrary.getLastError());
-        return new FTStroker(stroker);
-    }
-
-
-    private static native void doneFreeType(long library);
-
-    public void done() {
-        doneFreeType(address);
     }
 
 }

@@ -5,11 +5,8 @@
 
 static FT_Error lastError = 0;
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_FTLibrary_getLastErrorCode (JNIEnv *, jclass) {
-    return lastError;
-}
-
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FTLibrary_initFreeType (JNIEnv *, jclass) {
+
     FT_Library library;
     lastError = FT_Init_FreeType(&library);
     if(lastError)
@@ -20,6 +17,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FTLibrary_initFreeType (JNIEnv 
 
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FTLibrary_newMemoryFace (
         JNIEnv *env, jclass, jlong libraryPtr, jobject byteBuffer, jint bufferSize, jint faceIndex) {
+
     if(!libraryPtr || !byteBuffer)
         return 0;
 
@@ -38,6 +36,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FTLibrary_newMemoryFace (
 }
 
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FTLibrary_strokerNew (JNIEnv *, jclass, jlong libraryPtr) {
+
     if(!libraryPtr)
         return 0;
 
@@ -52,9 +51,15 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FTLibrary_strokerNew (JNIEnv *,
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_FTLibrary_doneFreeType (JNIEnv *, jclass, jlong libraryPtr) {
+
     if(!libraryPtr)
         return;
 
     FT_Library library = reinterpret_cast<FT_Library>(libraryPtr);
     FT_Done_FreeType(library);
+}
+
+
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FTLibrary_getLastErrorCode (JNIEnv *, jclass) {
+    return lastError;
 }
