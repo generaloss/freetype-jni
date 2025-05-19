@@ -1,5 +1,6 @@
 import generaloss.freetype.*;
 import generaloss.freetype.bitmap.FTBitmap;
+import generaloss.freetype.charmap.FTCharMap;
 import generaloss.freetype.face.FTFace;
 import generaloss.freetype.face.FTSizeMetrics;
 import generaloss.freetype.glyph.*;
@@ -23,7 +24,17 @@ public class Test {
     private static void test1() {
         final FTLibrary library = new FTLibrary();
 
-        final FTFace face = library.newMemoryFace(Resource.internal("/droidsans.ttf").readBytes(), 0);
+        final FTFace face = library.newMemoryFace(Resource.internal("/main.ttf").readBytes(), 0);
+
+        System.out.println("Charmaps num: " + face.getNumCharmaps());
+
+        for(FTCharMap cmap: face.getCharmaps()) {
+            System.out.printf(
+                "encoding=%s platformId=%d encodingId=%d%n",
+                cmap.getEncoding(), cmap.getPlatformID(), cmap.getEncodingID()
+            );
+        }
+
         face.setPixelSizes(0, 15);
         final FTSizeMetrics faceMetrics = face.getSize().getMetrics();
         System.out.println(faceMetrics.getAscender() + ", " + faceMetrics.getDescender() + ", " + faceMetrics.getHeight());

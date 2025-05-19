@@ -29,6 +29,35 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_face_FTFace_getNumGlyphs (JNIEnv
     return face->num_glyphs;
 }
 
+JNIEXPORT jint JNICALL Java_generaloss_freetype_face_FTFace_getNumCharmaps(JNIEnv*, jclass, jlong facePtr) {
+
+    const FT_Face face = reinterpret_cast<FT_Face>(facePtr);
+    if(!face)
+        return 0;
+
+    return static_cast<jint>(face->num_charmaps);
+}
+
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_face_FTFace_getCharmaps(JNIEnv* env, jclass, jlong facePtr) {
+
+    const FT_Face face = reinterpret_cast<FT_Face>(facePtr);
+    if(!face || face->num_charmaps == 0)
+        return env->NewLongArray(0);
+
+    const jsize n = static_cast<jsize>(face->num_charmaps);
+    const jlongArray jArray = env->NewLongArray(n);
+    if(!jArray)
+        return nullptr;
+
+    jlong* array = env->GetLongArrayElements(jArray, nullptr);
+    for(jsize i = 0; i < n; i++)
+        array[i] = reinterpret_cast<jlong>(face->charmaps[i]);
+
+    env->ReleaseLongArrayElements(jArray, array, 0);
+
+    return jArray;
+}
+
 JNIEXPORT jint JNICALL Java_generaloss_freetype_face_FTFace_getAscender (JNIEnv *, jclass, jlong facePtr) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtr);

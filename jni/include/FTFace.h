@@ -33,6 +33,22 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_face_FTFace_getNumGlyphs
 
 /*
  * Class:     generaloss_freetype_face_FTFace
+ * Method:    getNumCharmaps
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_face_FTFace_getNumCharmaps
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_face_FTFace
+ * Method:    getCharmaps
+ * Signature: (J)[J
+ */
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_face_FTFace_getCharmaps
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_face_FTFace
  * Method:    getAscender
  * Signature: (J)I
  */

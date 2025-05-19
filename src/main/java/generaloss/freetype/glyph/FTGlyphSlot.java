@@ -1,16 +1,32 @@
 package generaloss.freetype.glyph;
 
+import generaloss.freetype.FTFixed;
+import generaloss.freetype.FTLibrary;
 import generaloss.freetype.FTObject;
 import generaloss.freetype.bitmap.FTBitmap;
+import generaloss.freetype.face.FTFace;
 
 public class FTGlyphSlot extends FTObject {
 
-    public FTGlyphSlot(long pointer) {
+    private final FTLibrary library;
+    private final FTFace face;
+
+    public FTGlyphSlot(long pointer, FTLibrary library, FTFace face) {
         super(pointer);
+        this.library = library;
+        this.face = face;
+    }
+
+    public FTLibrary getLibrary() {
+        return library;
+    }
+
+    public FTFace getFace() {
+        return face;
     }
 
 
-    // TODO: library, face, next, glyph_index, generic
+    // TODO: next, glyph_index, generic
 
 
     private static native long getMetrics(long pointer);
@@ -25,16 +41,18 @@ public class FTGlyphSlot extends FTObject {
     private static native int getLinearHoriAdvance(long pointer);
 
     /** The advance width of the unhinted glyph. Its value is expressed in 16.16 fractional pixels, unless FTLoad.LINEAR_DESIGN is set when loading the glyph. This field can be important to perform correct WYSIWYG layout. Only relevant for scalable glyphs. */
-    public int getLinearHoriAdvance() {
-        return getLinearHoriAdvance(super.pointer);
+    public FTFixed getLinearHoriAdvance() {
+        final int raw = getLinearHoriAdvance(super.pointer);
+        return new FTFixed(raw);
     }
 
 
     private static native int getLinearVertAdvance(long pointer);
 
     /** The advance height of the unhinted glyph. Its value is expressed in 16.16 fractional pixels, unless FTLoad.LINEAR_DESIGN is set when loading the glyph. This field can be important to perform correct WYSIWYG layout. Only relevant for scalable glyphs. */
-    public int getLinearVertAdvance() {
-        return getLinearVertAdvance(super.pointer);
+    public FTFixed getLinearVertAdvance() {
+        final int raw = getLinearVertAdvance(super.pointer);
+        return new FTFixed(raw);
     }
 
 
@@ -89,6 +107,8 @@ public class FTGlyphSlot extends FTObject {
 
 
     // TODO: outline, num_subglyphs, subglyphs, control_data, control_len, other, lsb_delta, rsb_delta
+
+
 
 
     private static native boolean renderGlyph(long pointer, int renderMode);

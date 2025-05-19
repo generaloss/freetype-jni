@@ -1,6 +1,7 @@
 package generaloss.freetype.face;
 
-import generaloss.freetype.FTLibrary;
+import generaloss.freetype.FTFixed;
+import generaloss.freetype.FTPos;
 
 public class FTSizeMetrics {
 
@@ -31,55 +32,57 @@ public class FTSizeMetrics {
     }
 
 
-    private static native int getXscale(long metrics);
+    private static native int getXScale(long metrics);
 
     /** A 16.16 fractional scaling value to convert horizontal metrics from font units to 26.6 fractional pixels. Only relevant for scalable font formats. */
-    public int getXScale() {
-        return getXscale(address);
+    public FTFixed getXScale() {
+        final int raw = getXScale(address);
+        return new FTFixed(raw);
     }
 
 
-    private static native int getYscale(long metrics);
+    private static native int getYScale(long metrics);
 
     /** A 16.16 fractional scaling value to convert vertical metrics from font units to 26.6 fractional pixels. Only relevant for scalable font formats. */
-    public int getYscale() {
-        return getYscale(address);
+    public FTFixed getYScale() {
+        final int raw = getYScale(address);
+        return new FTFixed(raw);
     }
 
 
     private static native int getAscender(long metrics);
 
     /** The ascender in 26.6 fractional pixels, rounded up to an integer value. See FT_FaceRec for the details. */
-    public int getAscender() {
+    public FTPos getAscender() {
         final int raw = getAscender(address);
-        return FTLibrary.FTPos_toInt(raw);
+        return new FTPos(raw);
     }
 
 
     private static native int getDescender(long metrics);
 
     /** The descender in 26.6 fractional pixels, rounded down to an integer value. See FT_FaceRec for the details. */
-    public int getDescender() {
+    public FTPos getDescender() {
         final int raw = getDescender(address);
-        return FTLibrary.FTPos_toInt(raw);
+        return new FTPos(raw);
     }
 
 
     private static native int getHeight(long metrics);
 
     /** The height in 26.6 fractional pixels, rounded to an integer value. See FT_FaceRec for the details. */
-    public int getHeight() {
+    public FTPos getHeight() {
         final int raw = getHeight(address);
-        return FTLibrary.FTPos_toInt(raw);
+        return new FTPos(raw);
     }
 
 
     private static native int getMaxAdvance(long metrics);
 
     /** The maximum advance width in 26.6 fractional pixels, rounded to an integer value. See FT_FaceRec for the details. */
-    public int getMaxAdvance() {
+    public FTPos getMaxAdvance() {
         final int raw = getMaxAdvance(address);
-        return FTLibrary.FTPos_toInt(raw);
+        return new FTPos(raw);
     }
 
 }

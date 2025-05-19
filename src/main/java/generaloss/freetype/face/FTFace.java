@@ -1,17 +1,18 @@
 package generaloss.freetype.face;
 
 import generaloss.freetype.*;
+import generaloss.freetype.charmap.FTCharMap;
 import generaloss.freetype.charmap.FTEncoding;
 import generaloss.freetype.glyph.FTGlyphSlot;
 
 public class FTFace extends FTObject {
 
-    public FTFace(long pointer) {
+    private final FTLibrary library;
+
+    public FTFace(long pointer, FTLibrary library) {
         super(pointer);
+        this.library = library;
     }
-
-
-    // TODO: num_faces, face_index
 
 
     private static native int getFaceFlags(long pointer);
@@ -42,7 +43,25 @@ public class FTFace extends FTObject {
     }
 
 
-    // TODO: family_name, style_name, num_fixed_sizes, available_sizes, num_charmaps, charmaps, generic, bbox, units_per_EM
+    private static native int getNumCharmaps(long pointer);
+
+    /** The number of charmaps in the face. */
+    public int getNumCharmaps() {
+        return getNumCharmaps(super.pointer);
+    }
+
+
+    private static native long[] getCharmaps(long pointer);
+
+    /** An array of the charmaps of the face. */
+    public FTCharMap[] getCharmaps() {
+        final long[] charmapPointers = getCharmaps(super.pointer);
+
+        final FTCharMap[] charmaps = new FTCharMap[charmapPointers.length];
+        for(int i = 0; i < charmapPointers.length; i++)
+            charmaps[i] = new FTCharMap(charmapPointers[i], this);
+        return charmaps;
+    }
 
 
     private static native int getAscender(long pointer);
@@ -106,7 +125,7 @@ public class FTFace extends FTObject {
     /** The face's associated glyph slot(s). */
     public FTGlyphSlot getGlyph() {
         final long slotPointer = getGlyph(super.pointer);
-        return new FTGlyphSlot(slotPointer);
+        return new FTGlyphSlot(slotPointer, library, this);
     }
 
 
@@ -119,11 +138,21 @@ public class FTFace extends FTObject {
     }
 
 
+
+
     private static native boolean selectCharmap(long pointer, int encoding);
 
-    /** Select a given charmap for character code to glyph index mapping. */
+    /** Select a given charmap by its encoding tag. */
     public boolean selectCharmap(FTEncoding encoding) {
         return selectCharmap(super.pointer, encoding.value);
+    }
+
+
+    private static native boolean setCharmap(long pointer, long charmap);
+
+    /** Select a given charmap for character code to glyph index mapping. */
+    public boolean setCharmap(FTCharMap charmap) {
+        return setCharmap(super.pointer, charmap.getPointer());
     }
 
 
@@ -191,9 +220,9 @@ public class FTFace extends FTObject {
     private static native int getKerning(long pointer, int leftGlyph, int rightGlyph, int kernMode);
 
     /** Return the kerning vector between two glyphs of the same face. */
-    public int getKerning(int leftGlyph, int rightGlyph, FTKerningMode kernMode) {
+    public FTPos getKerning(int leftGlyph, int rightGlyph, FTKerningMode kernMode) {
         final int raw = getKerning(super.pointer, leftGlyph, rightGlyph, kernMode.value);
-        return FTLibrary.FTPos_toInt(raw);
+        return new FTPos(raw);
     }
 
 

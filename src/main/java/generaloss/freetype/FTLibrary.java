@@ -28,7 +28,7 @@ public class FTLibrary extends FTObject {
 
     public FTFace newMemoryFace(ByteBuffer buffer, int faceIndex) {
         final long facePointer = newMemoryFace(super.pointer, buffer, buffer.remaining(), faceIndex);
-        return new FTFace(facePointer);
+        return new FTFace(facePointer, this);
     }
 
     public FTFace newMemoryFace(byte[] data, int faceIndex) {
@@ -66,11 +66,6 @@ public class FTLibrary extends FTObject {
     public static int encodeChars(char a, char b, char c, char d) {
         return (a << 24) | (b << 16) | (c << 8) | d;
     }
-
-    public static int FTPos_toInt(int value) {
-        return ((value + 63) & -64) >> 6;
-    }
-
 
 
     static {

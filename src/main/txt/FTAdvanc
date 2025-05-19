@@ -1,0 +1,9 @@
+
+FT_Error FT_Get_Advance(FT_Face face, FT_UInt gindex, FT_Int32 load_flags, FT_Fixed *padvance)
+FTError getAdvance(FTFace face, int gindex, int loadFlags, FTFixed advance)
+
+FT_Error FT_Get_Advances(FT_Face face, FT_UInt start, FT_UInt count, FT_Int32 load_flags, FT_Fixed *padvances)
+FTError getAdvances(FTFace face, int start, int count, int loadFlags, FTFixed[] advances)
+
+
+
