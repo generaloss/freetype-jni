@@ -1,13 +1,41 @@
 package generaloss.freetype.glyph;
 
-import generaloss.freetype.FTObject;
+import generaloss.freetype.freetype.FTLibrary;
+import generaloss.freetype.FTStruct;
+import generaloss.freetype.freetype.FTRenderMode;
+import generaloss.freetype.image.FTGlyphFormat;
 import generaloss.freetype.stroker.FTStroker;
 
-public class FTGlyph extends FTObject {
+public class FTGlyph extends FTStruct {
 
-    public FTGlyph(long pointer) {
+    private final FTLibrary library;
+
+    public FTGlyph(long pointer, FTLibrary library) {
         super(pointer);
+        this.library = library;
     }
+
+
+    /** A handle to the FreeType library object. */
+    public FTLibrary getLibrary() {
+        return library;
+    }
+
+
+    // FT_Glyph_Format format;
+    private static native int getFormat(long pointer);
+
+    /** The format of the glyph's image.c */
+    public FTGlyphFormat getFormat() {
+        final int raw = getFormat(super.pointer);
+        return FTGlyphFormat.byValue(raw);
+    }
+
+
+    // FT_Vector advance;
+    /** A 16.16 vector that gives the glyph's advance width. */
+
+
 
 
     private static native long strokeBorder(long pointer, long stroker, boolean inside);
@@ -23,7 +51,7 @@ public class FTGlyph extends FTObject {
     /** Convert a given glyph object to a bitmap glyph object. */
     public FTBitmapGlyph toBitmap(FTRenderMode renderMode) {
         final long bitmapPointer = toBitmap(super.pointer, renderMode.value);
-        return new FTBitmapGlyph(bitmapPointer);
+        return new FTBitmapGlyph(bitmapPointer, this);
     }
 
 

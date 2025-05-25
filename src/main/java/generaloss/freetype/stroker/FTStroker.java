@@ -1,8 +1,8 @@
 package generaloss.freetype.stroker;
 
-import generaloss.freetype.FTObject;
+import generaloss.freetype.FTStruct;
 
-public class FTStroker extends FTObject {
+public class FTStroker extends FTStruct {
 
     public FTStroker(long pointer) {
         super(pointer);
@@ -17,9 +17,6 @@ public class FTStroker extends FTObject {
     public void set(int radius, FTStrokerLinecap lineCap, FTStrokerLinejoin lineJoin, int miterLimit) {
         set(super.pointer, radius, lineCap.value, lineJoin.value, miterLimit);
     }
-
-
-    // TODO: rewind, parseOutline, beginSubPath, endSubPath, lineTo, conicTo, cubicTo, getBorderCounts, exportBorder, getCounts, export
 
 
     private static native void done(long pointer);

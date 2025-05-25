@@ -1,0 +1,76 @@
+
+struct FTSubGlyph {
+    FT_Int    index;     [ ] int getIndex()
+    FT_UShort flags;     [ ] int getFlags()
+    FT_Int    arg1;      [ ] int getArg1()
+    FT_Int    arg2;      [ ] int getArg2()
+    FT_Matrix transform; [ ] FTMatrix getTransform()
+}
+
+struct FTGlyphLoadRec {
+    FT_Outline  outline;       [ ]  get()
+    FT_Vector*  extra_points;  [ ]  get()
+    FT_Vector*  extra_points2; [ ]  get()
+    FT_UInt     num_subglyphs; [ ]  get()
+    FT_SubGlyph subglyphs;     [ ]  get()
+}
+
+struct FTGlyphLoaderRec {
+    FT_Memory       memory;        [ ]  get()
+    FT_UInt         max_points;    [ ]  get()
+    FT_UInt         max_contours;  [ ]  get()
+    FT_UInt         max_subglyphs; [ ]  get()
+    FT_Bool         use_extra;     [ ]  get()
+    FT_GlyphLoadRec base;          [ ]  get()
+    FT_GlyphLoadRec current;       [ ]  get()
+    void*           other;         [ ]  get()
+}
+
+
+--------- FUNCTIONS ---------
+
+
+FT_Error FT_GlyphLoader_New(FT_Memory memory, FT_GlyphLoader *aloader)
+FTError new(FTMemory memory, FTGlyphLoader* loader)
+FT_GlyphLoader
+
+FT_Error FT_GlyphLoader_CreateExtra(FT_GlyphLoader loader)
+FTError createExtra(FTGlyphLoader loader)
+FT_GlyphLoader
+
+void FT_GlyphLoader_Done(FT_GlyphLoader loader)
+void done(FTGlyphLoader loader)
+FT_GlyphLoader
+
+void FT_GlyphLoader_Reset(FT_GlyphLoader loader)
+void reset(FTGlyphLoader loader)
+FT_GlyphLoader
+
+void FT_GlyphLoader_Rewind(FT_GlyphLoader loader)
+void rewind(FTGlyphLoader loader)
+FT_GlyphLoader
+
+FT_Error FT_GlyphLoader_CheckPoints(FT_GlyphLoader loader, FT_UInt n_points, FT_UInt n_contours)
+FTError checkPoints(FTGlyphLoader loader, long uPoints, long nConrours)
+FT_GlyphLoader
+
+FT_Error FT_GlyphLoader_CheckSubGlyphs(FT_GlyphLoader loader, FT_UInt n_subs)
+FTError checkSubGlyphs(FTGlyphLoader loader, long nSubs)
+FT_GlyphLoader
+
+void FT_GlyphLoader_Prepare(FT_GlyphLoader loader)
+void prepare(FTGlyphLoader loader)
+FT_GlyphLoader
+
+void FT_GlyphLoader_Add(FT_GlyphLoader loader)
+void add(FTGlyphLoader loader)
+FT_GlyphLoader
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,6 @@
-import generaloss.freetype.*;
-import generaloss.freetype.bitmap.FTBitmap;
-import generaloss.freetype.charmap.FTCharMap;
-import generaloss.freetype.face.FTFace;
-import generaloss.freetype.face.FTSizeMetrics;
-import generaloss.freetype.glyph.*;
+import generaloss.freetype.freetype.*;
+import generaloss.freetype.image.FTBitmap;
+import generaloss.freetype.glyph.FTBitmapGlyph;
 import jpize.util.res.Resource;
 
 public class Test {

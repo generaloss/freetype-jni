@@ -1,7 +1,0 @@
-needed:
-
-FTGeneric, FTBitmapSize, FTBBox, FTVector, FTOutline, FTSubGlyph, FTSlotInternal, FTMatrix
-
-not needed:
-
-FT_Parameter, FT_Open_Args, FT_Size_Request_Type, FT_Size_RequestRec

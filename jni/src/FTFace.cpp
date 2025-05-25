@@ -199,15 +199,6 @@ JNIEXPORT jboolean JNICALL Java_generaloss_freetype_face_FTFace_loadChar (
     return FT_Load_Char(face, charCode, loadFlags) == 0;
 }
 
-JNIEXPORT jboolean JNICALL Java_generaloss_freetype_face_FTFace_hasKerning (JNIEnv *, jclass, jlong facePtr) {
-
-    const FT_Face face = reinterpret_cast<FT_Face>(facePtr);
-    if(!face)
-        return false;
-
-    return (face->face_flags & FT_FACE_FLAG_KERNING) != 0;
-}
-
 JNIEXPORT jint JNICALL Java_generaloss_freetype_face_FTFace_getKerning (
         JNIEnv *env, jclass, jlong facePtr, jint leftGlyph, jint rightGlyph, jint kernMode) {
 

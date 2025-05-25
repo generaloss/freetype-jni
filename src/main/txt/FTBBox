@@ -1,4 +1,0 @@
-
-FT_Error FT_Outline_Get_BBox(FT_Outline* outline, FT_BBox *abbox)
-FTError FTOutlineGetBBox(FTOutline outline, FTBBox bbox)
-

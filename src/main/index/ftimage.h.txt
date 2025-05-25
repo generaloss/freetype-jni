@@ -1,0 +1,158 @@
+struct FTVector {
+    FT_Pos x; [ ] FTPos getX()
+    FT_Pos y; [ ] FTPos getY()
+}
+
+struct FTBBox {
+    FT_Pos xMin; [x]  getXMin()
+    FT_Pos yMin; [x]  getYMin()
+    FT_Pos xMax; [x]  getXMax()
+    FT_Pos yMax; [x]  getYMax()
+}
+
+enum FTPixelMode { [x]
+    NONE
+    MONO
+    GRAY
+    GRAY2
+    GRAY4
+    LCD
+    LCD_V
+    BGRA
+}
+
+struct FTBitmap {
+    unsigned int   rows;         [x] int getRows()
+    unsigned int   width;        [x] int getWidth()
+    int            pitch;        [x] int getPitch()
+    unsigned char* buffer;       [x] ByteBuffer getBuffer()
+    unsigned short num_grays;    [x] short getNumGrays()
+    unsigned char  pixel_mode;   [x] int getPixelMode()
+    unsigned char  palette_mode; [ ] int getPaletteMode()
+    void*          palette;      [ ] void* getPalette()
+}
+
+struct FTOutline {
+    unsigned short  n_contours; [ ] int getNumContours()
+    unsigned short  n_points;   [ ] int getNumPoints()
+    FT_Vector*      points;     [ ] FTVector[] getPoints()
+    unsigned char*  tags;       [ ] int getTags()
+    unsigned short* contours;   [ ] int[] getContours()
+    int             flags;      [ ] int getFlags()
+}
+
+flags FTOutline { [ ]
+    NONE
+    OWNER
+    EVEN_ODD_FILL
+    REVERSE_FILL
+    IGNORE_DROPOUTS
+    SMART_DROPOUTS
+    INCLUDE_STUBS
+    OVERLAP
+    HIGH_PRECISION
+    SINGLE_PASS
+}
+
+flags FTCurveTag { [ ]
+    ON
+    CONIC
+    CUBIC
+    HAS_SCANMODE
+    TOUCH_X
+    TOUCH_Y
+    TOUCH_BOTH
+}
+
+struct FTOutlineFuncs {
+    FT_Outline_MoveToFunc  move_to;  [ ] FTOutlineMoveToFunc getMoveTo()
+    FT_Outline_LineToFunc  line_to;  [ ] FTOutlineLineToFunc getLineTo()
+    FT_Outline_ConicToFunc conic_to; [ ] FTOutlineConicToFunc getConicTo()
+    FT_Outline_CubicToFunc cubic_to; [ ] FTOutlineCubicToFunc getCubicTo()
+    int                    shift;    [ ] int getShift()
+    FT_Pos                 delta;    [ ] FTPos getDelta()
+}
+
+enum FTGlyphFormat { [ ]
+    NONE
+    COMPOSITE
+    BITMAP
+    OUTLINE
+    PLOTTER
+    SVG
+}
+
+struct FT_Span {
+    short          x;        [ ] short getX()
+    unsigned short len;      [ ] int getLength()
+    unsigned char  coverage; [ ] int getCoverage()
+}
+
+enum FTRasterFlag { [ ]
+    DEFAULT
+    AA
+    DIRECT
+    CLIP
+    SDF
+}
+
+struct FTRasterParams {
+    const FT_Bitmap*       target;      [ ] FTBitmap getTarget()
+    const void*            source;      [ ] const void* getSource()
+    int                    flags;       [ ] int getFlags()
+    FT_SpanFunc            gray_spans;  [ ] FT_SpanFunc getGraySpans()
+    FT_SpanFunc            black_spans; [!] FTSpanFunc getBlackSpans()
+    FT_Raster_BitTest_Func bit_test;    [!] FTRasterBitTestFunc getBitTest()
+    FT_Raster_BitSet_Func  bit_set;     [!] FTRasterBitSetFunc getBitSet()
+    void*                  user;        [ ] void* getUser()
+    FT_BBox                clip_box;    [ ] FTBBox getClipBox()
+}
+
+struct FTRasterFuncs {
+    FT_Glyph_Format       glyph_format;    [ ] FTGlyphFormat getGlyphFormat()
+    FT_Raster_NewFunc     raster_new;      [ ] FTRasterNewFunc getRasterNew()
+    FT_Raster_ResetFunc   raster_reset;    [ ] FTRasterResetFunc getRasterReset()
+    FT_Raster_SetModeFunc raster_set_mode; [ ] FTRasterSetModeFunc getRasterSetMode()
+    FT_Raster_RenderFunc  raster_render;   [ ] FTRasterRenderFunc getRasterRender()
+    FT_Raster_DoneFunc    raster_done;     [ ] FTRasterDoneFunc getRasterDone()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
