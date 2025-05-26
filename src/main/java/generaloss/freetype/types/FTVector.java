@@ -9,6 +9,13 @@ public class FTVector extends FTStruct {
     }
 
 
+    private static native long newStruct();
+
+    public static FTVector newInstance() {
+        return new FTVector(newStruct());
+    }
+
+
     // FT_Pos x;
     private static native int getX(long pointer);
 

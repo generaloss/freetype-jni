@@ -10,6 +10,13 @@ public class FTOutline extends FTStruct { // struct done.
     }
 
 
+    private static native long newStruct();
+
+    public static FTOutline newInstance() {
+        return new FTOutline(newStruct());
+    }
+
+
     // unsigned short n_contours;
     private static native int getNContours(long pointer);
 

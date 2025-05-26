@@ -10,29 +10,38 @@ import generaloss.freetype.types.FTVector;
 
 public class FTGlyphSlot extends FTStruct {
 
-    private final FTLibrary library;
-    private final FTFace face;
     private final FTGeneric generic;
 
-    public FTGlyphSlot(long pointer, FTLibrary library, FTFace face) {
+    public FTGlyphSlot(long pointer) {
         super(pointer);
-        this.library = library;
-        this.face = face;
         this.generic = new FTGeneric();
     }
 
 
+    private static native long newStruct();
+
+    public static FTGlyphSlot newInstance() {
+        return new FTGlyphSlot(newStruct());
+    }
+
+
     // FT_Library library;
+    private static native long getLibrary(long pointer);
+
     /** A handle to the FreeType library instance this slot belongs to. */
     public FTLibrary getLibrary() {
-        return library;
+        final long pointer = getLibrary(super.pointer);
+        return new FTLibrary(pointer);
     }
 
 
     // FT_Face face;
+    private static native long getFace(long pointer);
+
     /** A handle to the parent face object. */
     public FTFace getFace() {
-        return face;
+        final long pointer = getFace(super.pointer);
+        return new FTFace(pointer);
     }
 
 
@@ -44,7 +53,7 @@ public class FTGlyphSlot extends FTStruct {
      * */
     public FTGlyphSlot getNext() {
         final long slotPointer = getNext(super.pointer);
-        return new FTGlyphSlot(slotPointer, library, face);
+        return new FTGlyphSlot(slotPointer);
     }
 
 
@@ -227,7 +236,7 @@ public class FTGlyphSlot extends FTStruct {
     /** A function used to extract a glyph image from a slot. Note that the created FT_Glyph object must be released with FT_Done_Glyph. */
     public FTGlyph getGlyph() {
         final long glyphPointer = getGlyph(super.pointer);
-        return new FTGlyph(glyphPointer, library);
+        return new FTGlyph(glyphPointer);
     }
 
 }

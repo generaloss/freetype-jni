@@ -5,17 +5,25 @@ import generaloss.freetype.image.FTBitmap;
 
 public class FTBitmapGlyph extends FTStruct {
 
-    private final FTGlyph glyph;
-
-    public FTBitmapGlyph(long pointer, FTGlyph glyph) {
+    public FTBitmapGlyph(long pointer) {
         super(pointer);
-        this.glyph = glyph;
     }
 
 
+    private static native long newStruct();
+
+    public static FTBitmapGlyph newInstance() {
+        return new FTBitmapGlyph(newStruct());
+    }
+
+
+    //
+    private static native long getRoot(long pointer);
+
     /** The root fields of FT_Glyph. */
     public FTGlyph getRoot() {
-        return glyph;
+        final long pointer = getRoot(super.pointer);
+        return new FTGlyph(pointer);
     }
 
 

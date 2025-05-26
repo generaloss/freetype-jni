@@ -251,6 +251,10 @@ enum FTFSType { [ ]
 }
 
 
+FT_ENC_TAG(value, a, b, c, d)
+int ftEncodeTag(char a, char b, char c, char d)
+
+
 FT_Error FT_Init_FreeType(FT_Library *alibrary)
 FTError initFreeType(FTLibrary library)
 FTLibrary

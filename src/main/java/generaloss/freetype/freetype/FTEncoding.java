@@ -59,7 +59,7 @@ public enum FTEncoding {
     }
 
     FTEncoding(char a, char b, char c, char d) {
-        this.value = FTLibrary.encodeChars(a, b, c, d);
+        this.value = FreeType.ftEncodeTag(a, b, c, d);
     }
 
     public static FTEncoding byValue(int value) {

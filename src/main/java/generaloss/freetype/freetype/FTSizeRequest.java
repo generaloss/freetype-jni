@@ -9,6 +9,13 @@ public class FTSizeRequest extends FTStruct {
     }
 
 
+    private static native long newStruct();
+
+    public static FTSizeRequest newInstance() {
+        return new FTSizeRequest(newStruct());
+    }
+
+
     // FT_Size_Request_Type type;
     private static native int getType(long pointer);
 

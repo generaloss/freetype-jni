@@ -9,6 +9,13 @@ public class FTStroker extends FTStruct {
     }
 
 
+    private static native long newStruct();
+
+    public static FTStroker newInstance() {
+        return new FTStroker(newStruct());
+    }
+
+
     private static native void set(long pointer, int radius, int lineCap, int lineJoin, int miterLimit);
 
     /** he radius is expressed in the same units as the outline coordinates.

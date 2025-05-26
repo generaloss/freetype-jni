@@ -4,18 +4,25 @@ import generaloss.freetype.FTStruct;
 
 public class FTCharMap extends FTStruct { // struct done.
 
-    private final FTFace face;
-
-    public FTCharMap(long pointer, FTFace face) {
+    public FTCharMap(long pointer) {
         super(pointer);
-        this.face = face;
+    }
+
+
+    private static native long newStruct();
+
+    public static FTCharMap newInstance() {
+        return new FTCharMap(newStruct());
     }
 
 
     // FT_Face face;
+    private static native long getFace(long pointer);
+
     /** A handle to the parent face object. */
     public FTFace getFace() {
-        return face;
+        final long pointer = getFace(super.pointer);
+        return new FTFace(pointer);
     }
 
 

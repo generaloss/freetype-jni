@@ -9,6 +9,13 @@ public class FTSize extends FTStruct {
     }
 
 
+    private static native long newStruct();
+
+    public static FTSize newInstance() {
+        return new FTSize(newStruct());
+    }
+
+
     // TODO: face, generic
 
 

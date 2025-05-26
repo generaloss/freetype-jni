@@ -20,12 +20,8 @@ public class FTStruct {
         return pointer;
     }
 
-    public void setPointer(long pointer) {
-        this.pointer = pointer;
-    }
-
     public void done() {
-        this.setPointer(0L);
+        pointer = 0L;
     }
 
 

@@ -10,6 +10,13 @@ public class FTBitmapSize extends FTStruct { // struct done.
     }
 
 
+    private static native long newStruct();
+
+    public static FTBitmapSize newInstance() {
+        return new FTBitmapSize(newStruct());
+    }
+
+
     // FT_Short height;
     private static native short getHeight(long pointer);
 

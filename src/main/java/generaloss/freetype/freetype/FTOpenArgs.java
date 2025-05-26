@@ -9,6 +9,13 @@ public class FTOpenArgs extends FTStruct { // struct done.
     }
 
 
+    private static native long newStruct();
+
+    public static FTOpenArgs newInstance() {
+        return new FTOpenArgs(newStruct());
+    }
+
+
     // FT_UInt flags;
     private static native long getFlags(long pointer);
 

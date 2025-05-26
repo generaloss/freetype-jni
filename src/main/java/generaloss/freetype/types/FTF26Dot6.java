@@ -1,38 +1,53 @@
 package generaloss.freetype.types;
 
+import generaloss.freetype.FTStruct;
+
 /** 26.6 fixed-point value utility */
-public class FTF26Dot6 {
+public class FTF26Dot6 extends FTStruct {
 
-    private final int raw;
-
-    public FTF26Dot6(int rawValue) {
-        this.raw = rawValue;
+    public FTF26Dot6(long pointer) {
+        super(pointer);
     }
 
-    public int getRaw() {
-        return raw;
+
+    private static native long newStruct();
+
+    public static FTF26Dot6 newInstance() {
+        return new FTF26Dot6(newStruct());
+    }
+
+
+    private static native int getRawValue(long pointer);
+
+    public int getRawValue() {
+        return getRawValue(super.pointer);
     }
 
 
     public float getFloat() {
+        final int raw = this.getRawValue();
         return toFloat(raw);
     }
 
     public int getFloor() {
+        final int raw = this.getRawValue();
         return toIntFloor(raw);
     }
 
     public int getRound() {
+        final int raw = this.getRawValue();
         return toIntRound(raw);
     }
 
     public int getCeil() {
+        final int raw = this.getRawValue();
         return toIntCeil(raw);
     }
 
     @Override
     public String toString() {
-        return "FTFixed{float=" + this.getFloat() + ", raw=0x" + Integer.toHexString(raw) + "}";
+        final int raw = this.getRawValue();
+        return "FTFixed{float=" + toFloat(raw) + ", raw=0x" + Integer.toHexString(raw) + "}";
     }
 
 

@@ -13,15 +13,15 @@ import java.nio.file.Path;
 
 public class FTLibrary extends FTStruct {
 
-    private FTLibrary(long poniter) {
+    public FTLibrary(long poniter) {
         super(poniter);
     }
 
 
-    private static native long initFreeType();
+    private static native long newStruct();
 
-    public FTLibrary() {
-        super(initFreeType());
+    public static FTLibrary newInstance() {
+        return new FTLibrary(newStruct());
     }
 
 
@@ -75,11 +75,6 @@ public class FTLibrary extends FTStruct {
 
     public static FTError getLastError() {
         return FTError.byCode(getLastErrorCode());
-    }
-
-
-    public static int encodeChars(char a, char b, char c, char d) {
-        return (a << 24) | (b << 16) | (c << 8) | d;
     }
 
 

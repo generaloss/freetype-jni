@@ -11,6 +11,13 @@ public class FTBitmap extends FTStruct {
     }
 
 
+    private static native long newStruct();
+
+    public static FTBitmap newInstance() {
+        return new FTBitmap(newStruct());
+    }
+
+
     // unsigned int rows;
     private static native int getRows(long pointer);
 

@@ -8,13 +8,18 @@ import generaloss.freetype.types.FTGeneric;
 
 public class FTFace extends FTStruct { // struct done.
 
-    private final FTLibrary library;
     private final FTGeneric generic;
 
-    public FTFace(long pointer, FTLibrary library) {
+    public FTFace(long pointer) {
         super(pointer);
-        this.library = library;
         this.generic = new FTGeneric();
+    }
+
+
+    private static native long newStruct();
+
+    public static FTFace newInstance() {
+        return new FTFace(newStruct());
     }
 
 
@@ -157,7 +162,7 @@ public class FTFace extends FTStruct { // struct done.
 
         final FTCharMap[] objects = new FTCharMap[pointers.length];
         for(int i = 0; i < pointers.length; i++)
-            objects[i] = new FTCharMap(pointers[i], this);
+            objects[i] = new FTCharMap(pointers[i]);
 
         return objects;
     }
@@ -288,7 +293,7 @@ public class FTFace extends FTStruct { // struct done.
     /** The face's associated glyph slot(s). */
     public FTGlyphSlot getGlyph() {
         final long slotPointer = getGlyph(super.pointer);
-        return new FTGlyphSlot(slotPointer, library, this);
+        return new FTGlyphSlot(slotPointer);
     }
 
 
@@ -308,7 +313,7 @@ public class FTFace extends FTStruct { // struct done.
     /** The current active charmap for this face. */
     public FTCharMap getCharmap() {
         final long charmapPointer = getCharmap(super.pointer);
-        return new FTCharMap(charmapPointer, this);
+        return new FTCharMap(charmapPointer);
     }
 
 

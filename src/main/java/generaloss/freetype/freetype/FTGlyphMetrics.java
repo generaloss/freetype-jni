@@ -10,6 +10,13 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
     }
 
 
+    private static native long newStruct();
+
+    public static FTGlyphMetrics newInstance() {
+        return new FTGlyphMetrics(newStruct());
+    }
+
+
     // FT_Pos width;
     private static native int getWidth(long pointer);
 

@@ -9,6 +9,13 @@ public class FTMatrix extends FTStruct {
     }
 
 
+    private static native long newStruct();
+
+    public static FTMatrix newInstance() {
+        return new FTMatrix(newStruct());
+    }
+
+
     // FT_Fixed xx;
     private static native int getXX(long pointer);
 

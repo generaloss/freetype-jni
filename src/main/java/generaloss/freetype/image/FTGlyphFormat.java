@@ -1,6 +1,7 @@
 package generaloss.freetype.image;
 
 import generaloss.freetype.freetype.FTLibrary;
+import generaloss.freetype.freetype.FreeType;
 
 public enum FTGlyphFormat {
 
@@ -28,7 +29,7 @@ public enum FTGlyphFormat {
     }
 
     FTGlyphFormat(char a, char b, char c, char d) {
-        this.value = FTLibrary.encodeChars(a, b, c, d);
+        this.value = FreeType.ftEncodeTag(a, b, c, d);
     }
 
     public static FTGlyphFormat byValue(int value) {

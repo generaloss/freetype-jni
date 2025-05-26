@@ -8,13 +8,20 @@ import generaloss.freetype.stroker.FTStroker;
 
 public class FTGlyph extends FTStruct {
 
-    private final FTLibrary library;
-
-    public FTGlyph(long pointer, FTLibrary library) {
+    public FTGlyph(long pointer) {
         super(pointer);
-        this.library = library;
     }
 
+
+    private static native long newStruct();
+
+    public static FTGlyph newInstance() {
+        return new FTGlyph(newStruct());
+    }
+
+
+    //
+    private static native long get(long pointer);
 
     /** A handle to the FreeType library object. */
     public FTLibrary getLibrary() {

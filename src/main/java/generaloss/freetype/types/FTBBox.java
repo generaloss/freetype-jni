@@ -9,6 +9,13 @@ public class FTBBox extends FTStruct {
     }
 
 
+    private static native long newStruct();
+
+    public static FTBBox newInstance() {
+        return new FTBBox(newStruct());
+    }
+
+
     // FT_Pos xMin;
     private static native int getXMin(long pointer);
 
