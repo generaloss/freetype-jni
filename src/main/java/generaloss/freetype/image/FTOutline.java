@@ -1,6 +1,8 @@
 package generaloss.freetype.image;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FTStructRegistry;
+import generaloss.freetype.glyph.FTBitmapGlyph;
 import generaloss.freetype.types.FTVector;
 
 public class FTOutline extends FTStruct { // struct done.
@@ -36,12 +38,17 @@ public class FTOutline extends FTStruct { // struct done.
 
 
     // FT_Vector* points;
-    private static native long getPoints(long pointer);
+    private static native long[] getPoints(long pointer);
 
     /** A pointer to an array of n_points FT_Vector elements, giving the outline's point coordinates. */
-    public FTVector getPoints() {
-        final long vectorPointer = getPoints(super.pointer);
-        return new FTVector(vectorPointer);
+    public FTVector[] getPoints() {
+        final long[] pointers = getPoints(super.pointer);
+
+        final FTVector[] objects = new FTVector[pointers.length];
+        for(int i = 0; i < objects.length; i++)
+            objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTVector::new);
+
+        return objects;
     }
 
 

@@ -1,4 +1,4 @@
-package generaloss.freetype.stroker;
+package generaloss.freetype.stroke;
 
 public enum FTStrokerLinecap {
 

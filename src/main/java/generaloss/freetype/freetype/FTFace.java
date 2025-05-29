@@ -1,10 +1,7 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.*;
-import generaloss.freetype.types.FTBBox;
-import generaloss.freetype.types.FTPos;
-import generaloss.freetype.types.FTFixed;
-import generaloss.freetype.types.FTGeneric;
+import generaloss.freetype.types.*;
 
 public class FTFace extends FTStruct { // struct done.
 
@@ -138,7 +135,7 @@ public class FTFace extends FTStruct { // struct done.
 
         final FTBitmapSize[] objects = new FTBitmapSize[pointers.length];
         for(int i = 0; i < pointers.length; i++)
-            objects[i] = new FTBitmapSize(pointers[i]);
+            objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTBitmapSize::new);
 
         return objects;
     }
@@ -162,7 +159,7 @@ public class FTFace extends FTStruct { // struct done.
 
         final FTCharMap[] objects = new FTCharMap[pointers.length];
         for(int i = 0; i < pointers.length; i++)
-            objects[i] = new FTCharMap(pointers[i]);
+            objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTCharMap::new);
 
         return objects;
     }
@@ -186,8 +183,8 @@ public class FTFace extends FTStruct { // struct done.
      * See FT_Size_Metrics for further discussion.
      * Note that the bounding box does not vary in OpenType variation fonts and should only be used in relation to the default instance. */
     public FTBBox getBBox() {
-        final long bboxPointer = getBBox(super.pointer);
-        return new FTBBox(bboxPointer);
+        final long pointer = getBBox(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTBBox::new);
     }
 
 
@@ -292,8 +289,8 @@ public class FTFace extends FTStruct { // struct done.
 
     /** The face's associated glyph slot(s). */
     public FTGlyphSlot getGlyph() {
-        final long slotPointer = getGlyph(super.pointer);
-        return new FTGlyphSlot(slotPointer);
+        final long pointer = getGlyph(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTGlyphSlot::new);
     }
 
 
@@ -302,8 +299,8 @@ public class FTFace extends FTStruct { // struct done.
 
     /** The current active size for this face. */
     public FTSize getSize() {
-        final long sizePointer = getSize(super.pointer);
-        return new FTSize(sizePointer);
+        final long pointer = getSize(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTSize::new);
     }
 
 
@@ -312,61 +309,41 @@ public class FTFace extends FTStruct { // struct done.
 
     /** The current active charmap for this face. */
     public FTCharMap getCharmap() {
-        final long charmapPointer = getCharmap(super.pointer);
-        return new FTCharMap(charmapPointer);
+        final long pointer = getCharmap(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTCharMap::new);
     }
 
 
 
+    public void attachFile(String filepath) {
+        final FTError error = FreeType.ftAttachFile(this, filepath);
+        error.checkError();
+    }
 
-    // FTError attachFile(FTFace face, String filepath)
+    public void attachStream(FTOpenArgs parameters) {
+        final FTError error = FreeType.ftAttachStream(this, parameters);
+        error.checkError();
+    }
 
+    public void referenceFace() {
+        final FTError error = FreeType.ftReferenceFace(this);
+        error.checkError();
+    }
 
-    // FTError attachStream(FTFace face, FTOpenArgs* parameters)
-
-
-    // FTError referenceFace(FTFace face)
-
-
-    private static native boolean selectSize(long pointer, int strike_index);
-
-    /** Select a bitmap strike.
-     * To be more precise, this function sets the scaling factors of the active FT_Size object in a face so that bitmaps from this particular strike are taken by FT_Load_Glyph and friends.
-     * */
     public boolean selectSize(int strikeIndex) {
         return selectSize(super.pointer, strikeIndex);
     }
 
-
     // FTError requestSize(FTFace face, FTSizeRequest reqest)
 
-
-    private static native boolean setCharSize(long pointer, int charWidth, int charHeight, int horzResolution, int vertResolution);
-
-    /** While this function allows fractional points as input values, the resulting ppem value for the given resolution is always rounded to the nearest integer.
-     * If either the character width or height is zero, it is set equal to the other value.
-     * If either the horizontal or vertical resolution is zero, it is set equal to the other value.
-     * A character width or height smaller than 1pt is set to 1pt; if both resolution values are zero, they are set to 72dpi.
-     * Don't use this function if you are using the freetype.h.txt cache API. */
     public boolean setCharSize(int charWidth, int charHeight, int horzResolution, int vertResolution) {
         return setCharSize(super.pointer, charWidth, charHeight, horzResolution, vertResolution);
     }
 
-
-    private static native boolean setPixelSizes(long pointer, int pixelWidth, int pixelHeight);
-
-    /** You should not rely on the resulting glyphs matching or being constrained to this pixel size.
-     * Refer to FT_Request_Size to understand how requested sizes relate to actual sizes.
-     * Don't use this function if you are using the freetype.h.txt cache API.
-     * */
     public boolean setPixelSizes(int pixelWidth, int pixelHeight) {
         return setPixelSizes(super.pointer, pixelWidth, pixelHeight);
     }
 
-
-    private static native boolean loadGlyph(long pointer, int glyphIndex, int loadFlags);
-
-    /** Load a glyph into the glyph slot of a face object. */
     public boolean loadGlyph(int glyphIndex, LoadFlags loadFlags) {
         return loadGlyph(super.pointer, glyphIndex, loadFlags.getBits());
     }
@@ -375,10 +352,6 @@ public class FTFace extends FTStruct { // struct done.
         return loadGlyph(super.pointer, glyphIndex, 0);
     }
 
-
-    private static native boolean loadChar(long pointer, int charCode, int loadFlags);
-
-    /** Load a glyph into the glyph slot of a face object, accessed by its character code.c */
     public boolean loadChar(int charCode, LoadFlags loadFlags) {
         return loadChar(super.pointer, charCode, loadFlags.getBits());
     }
@@ -387,107 +360,63 @@ public class FTFace extends FTStruct { // struct done.
         return loadChar(super.pointer, charCode, 0);
     }
 
-
     // void setTransform(FTFace face, FTMatrix matrix, FTVector delta)
-
 
     // void getTransform(FTFace face, FTMatrix* matrixm, FTVactor* delta)
 
-
-    private static native int getKerning(long pointer, int leftGlyph, int rightGlyph, int kernMode);
-
-    /** Return the kerning vector between two glyphs of the same face. */
     public float getKerning(int leftGlyph, int rightGlyph, FTKerningMode kernMode) {
         final int raw = getKerning(super.pointer, leftGlyph, rightGlyph, kernMode.value);
         return FTPos.toFloat(raw);
     }
 
-
-    // FTError getTrackKerning(FTFace face, FTFixed pointSize, int degree, FTFixed* kerning)
-    private static native int getTrackKerning(long pointer, int pointSize, int degree);
-
-    /** Return the kerning vector between two glyphs of the same face. */
     public float getTrackKerning(int pointSize, int degree) {
         final int raw = getTrackKerning(super.pointer, FTFixed.of(pointSize), degree);
         return FTFixed.toFloat(raw);
     }
 
-
-    private static native boolean selectCharmap(long pointer, int encoding);
-
-    /** Select a given charmap by its encoding tag. */
     public boolean selectCharmap(FTEncoding encoding) {
         return selectCharmap(super.pointer, encoding.value);
     }
 
-
-    private static native boolean setCharmap(long pointer, long charmap);
-
-    /** Select a given charmap for character code to glyph index mapping. */
     public boolean setCharmap(FTCharMap charmap) {
         return setCharmap(super.pointer, charmap.getPointer());
     }
 
-
-    private static native int getCharIndex(long pointer, int charCode);
-
-    /** Return the glyph index of a given character code.
-     * This function uses the currently selected charmap to do the mapping.c
-     * */
     public int getCharIndex(int charCode) {
         return getCharIndex(super.pointer, charCode);
     }
 
-
     // long getFirstChar(FTFace face, int* gindex)
-
 
     // long getNextChar(FTFace face, long charcode, int* gindex)
 
-
     // FTError properties(FTFace face, int numProperties, FTParameter* properties)
-
 
     // int getNameIndex(FTFace face, String* glyphName)
 
-
     // FTError getGlyphName(FTFace face, int glyphIndex, FTPointer buffer, int bufferMax)
-
 
     // String getPostscriptName(FTFace face)
 
-
     // int getFSTypeFlags(FTFace face)
-
 
     // int getCharVariantIndex(FTFace face, long charcode, long variantSelector)
 
-
     // int getCharVariantIsDefault(FTFace face, long charcode, long variantSelector)
-
 
     // int getVariantSelectors(FTFace face)
 
-
     // int getVariantsOfChar(FTFace face, long charcode)
-
 
     // int getCharsOfVariant(FTFace face, long variantSelector)
 
-
     // boolean checkTrueTypePatents(FTFace face)
-
 
     // boolean setUnpatentedHinting(FTFace face, boolean value)
 
-
-    private static native void doneFace(long pointer);
-
-    /** Discard a given face object, as well as all of its child slots and sizes. */
-    @Override
     public void done() {
-        doneFace(super.pointer);
-        super.done();
+        FreeType.ftDoneFace(this);
+        super.destroyPointer();
         generic.getFinalizer().run();
     }
 

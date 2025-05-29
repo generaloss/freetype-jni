@@ -1,27 +1,41 @@
 package generaloss.freetype;
 
-import generaloss.freetype.freetype.FTLibrary;
-
 public class FTStruct {
 
     protected long pointer;
 
     protected FTStruct(long pointer) {
-        if(pointer == 0L) {
+        this.pointer = pointer;
+        this.checkPointer();
+        FTStructRegistry.register(this);
+    }
+
+    private void checkPointer() {
+        if(this.isDestroyed()) {
             throw new IllegalArgumentException(
-                "Invalid pointer (0). Unable to create " + this.getClass().getSimpleName() +
-                " object. FT last error: " + FTLibrary.getLastError()
+                "Invalid pointer (0). Unable to create " + this.getClass().getSimpleName() + " object."
             );
         }
-        this.pointer = pointer;
     }
+
 
     public long getPointer() {
         return pointer;
     }
 
-    public void done() {
+    protected void destroyPointer() {
+        FTStructRegistry.unregister(pointer);
         pointer = 0L;
+    }
+
+    public boolean isDestroyed() {
+        return (pointer == 0L);
+    }
+
+
+    @Override
+    public String toString() {
+        return (this.getClass().getSimpleName() + "[0x" + Long.toHexString(pointer) + "]");
     }
 
 

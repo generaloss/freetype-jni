@@ -60,7 +60,7 @@ public class FTOpenArgs extends FTStruct { // struct done.
     // /** A handle to a source stream object. */
     // public FTStream getStream() {
     //     final long pointer = getStream(super.pointer);
-    //     return new FTStream(pointer);
+    //     return FTStructRegistry.getOrCreate(pointer, FTStream::new);
     // }
 
 
@@ -72,7 +72,7 @@ public class FTOpenArgs extends FTStruct { // struct done.
     //  * */
     // public FTModule getDriver() {
     //     final long pointer = getDriver(super.pointer);
-    //     return new FTModule(pointer);
+    //     return FTStructRegistry.getOrCreate(pointer, FTModule::new);
     // }
 
 
@@ -94,7 +94,7 @@ public class FTOpenArgs extends FTStruct { // struct done.
     //
     //     final FTParameter[] objects = new FTParameter[pointers.length];
     //     for(int i = 0; i < pointers.length; i++)
-    //         objects[i] = new FTParameter(pointers[i]);
+    //         objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTParameter::new);
     //
     //     return objects;
     // }

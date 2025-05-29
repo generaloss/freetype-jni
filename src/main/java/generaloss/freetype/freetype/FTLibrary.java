@@ -1,8 +1,9 @@
 package generaloss.freetype.freetype;
 
-import generaloss.freetype.types.FTError;
 import generaloss.freetype.FTStruct;
-import generaloss.freetype.stroker.FTStroker;
+import generaloss.freetype.stroke.FreeTypeStroke;
+import generaloss.freetype.stroke.FTStroker;
+import generaloss.freetype.types.FTError;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,11 +14,6 @@ import java.nio.file.Path;
 
 public class FTLibrary extends FTStruct {
 
-    public FTLibrary(long poniter) {
-        super(poniter);
-    }
-
-
     private static native long newStruct();
 
     public static FTLibrary newInstance() {
@@ -25,56 +21,60 @@ public class FTLibrary extends FTStruct {
     }
 
 
-    private static native long newFace(long pointer, String filepath, long faceIndex);
+    public FTLibrary(long poniter) {
+        super(poniter);
+    }
+
+    public FTLibrary() {
+        super(newStruct());
+        final FTError error = FreeType.ftInitFreeType(this);
+        error.checkError();
+    }
+
 
     public FTFace newFace(String filepath, long faceIndex) {
-        final long facePointer = newFace(super.pointer, filepath, faceIndex);
-        return new FTFace(facePointer, this);
+        final FTFace dstFace = FTFace.newInstance();
+        final FTError error = FreeType.ftNewFace(this, filepath, faceIndex, dstFace);
+        error.checkError();
+        return dstFace;
     }
 
-
-    private static native long newMemoryFace(long pointer, ByteBuffer data, int dataSize, int faceIndex);
-
-    public FTFace newMemoryFace(ByteBuffer buffer, int faceIndex) {
-        final long facePointer = newMemoryFace(super.pointer, buffer, buffer.remaining(), faceIndex);
-        return new FTFace(facePointer, this);
+    public FTFace newMemoryFace(ByteBuffer fileBase, long fileSize, int faceIndex) {
+        final FTFace dstFace = FTFace.newInstance();
+        final FTError error = FreeType.ftNewMemoryFace(this, fileBase, fileSize, faceIndex, dstFace);
+        error.checkError();
+        return dstFace;
     }
 
-    public FTFace newMemoryFace(byte[] data, int faceIndex) {
-        final ByteBuffer buffer = ByteBuffer.allocateDirect(data.length);
-        buffer.put(data);
-        buffer.position(0);
-        return newMemoryFace(buffer, faceIndex);
+    public FTFace newMemoryFace(byte[] fileBase, long fileSize, int faceIndex) {
+        final FTFace dstFace = FTFace.newInstance();
+        final FTError error = FreeType.ftNewMemoryFace(this, fileBase, fileSize, faceIndex, dstFace);
+        error.checkError();
+        return dstFace;
     }
 
+    public FTFace openFace(FTOpenArgs args, int faceIndex) {
+        final FTFace dstFace = FTFace.newInstance();
+        final FTError error = FreeType.ftOpenFace(this, args, faceIndex, dstFace);
+        error.checkError();
+        return dstFace;
+    }
 
-    // FTError openFace(FTLibrary library, FTOpenArgs args, long faceIndex, FTFace* face)
+    public void version(int[] dstMajor, int[] dstMinor, int[] dstPatch) {
+        FreeType.ftLibraryVersion(this, dstMajor, dstMinor, dstPatch);
+    }
 
-
-    // void FTLibraryVersion(FTLibrary library, int* major, int* minor, int* patch)
-
-
-    private static native long strokerNew(long pointer);
+    public void done() {
+        final FTError error = FreeType.ftDoneFreeType(this);
+        error.checkError();
+        super.destroyPointer();
+    }
 
     public FTStroker strokerNew() {
-        final long strokerPointer = strokerNew(super.pointer);
-        return new FTStroker(strokerPointer);
-    }
-
-
-    private static native void doneFreeType(long pointer);
-
-    @Override
-    public void done() {
-        doneFreeType(super.pointer);
-        super.done();
-    }
-
-
-    private static native int getLastErrorCode();
-
-    public static FTError getLastError() {
-        return FTError.byCode(getLastErrorCode());
+        final FTStroker dstStroker = FTStroker.newInstance();
+        final FTError error = FreeTypeStroke.ftStrokerNew(this, dstStroker);
+        error.checkError();
+        return dstStroker;
     }
 
 

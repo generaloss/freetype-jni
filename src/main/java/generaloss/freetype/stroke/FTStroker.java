@@ -1,4 +1,4 @@
-package generaloss.freetype.stroker;
+package generaloss.freetype.stroke;
 
 import generaloss.freetype.FTStruct;
 
@@ -29,10 +29,9 @@ public class FTStroker extends FTStruct {
     private static native void done(long pointer);
 
     /** Destroy a stroker object. */
-    @Override
     public void done() {
         done(super.pointer);
-        super.done();
+        super.destroyPointer();
     }
 
 }

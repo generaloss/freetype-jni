@@ -1,5 +1,6 @@
 package generaloss.freetype.freetype;
 
+import generaloss.freetype.FTStructRegistry;
 import generaloss.freetype.types.FTFixed;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.glyph.FTGlyph;
@@ -31,7 +32,7 @@ public class FTGlyphSlot extends FTStruct {
     /** A handle to the FreeType library instance this slot belongs to. */
     public FTLibrary getLibrary() {
         final long pointer = getLibrary(super.pointer);
-        return new FTLibrary(pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTLibrary::new);
     }
 
 
@@ -41,7 +42,7 @@ public class FTGlyphSlot extends FTStruct {
     /** A handle to the parent face object. */
     public FTFace getFace() {
         final long pointer = getFace(super.pointer);
-        return new FTFace(pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTFace::new);
     }
 
 
@@ -52,8 +53,8 @@ public class FTGlyphSlot extends FTStruct {
      * As this is rare, the glyph slots are listed through a direct, single-linked list using its next field.
      * */
     public FTGlyphSlot getNext() {
-        final long slotPointer = getNext(super.pointer);
-        return new FTGlyphSlot(slotPointer);
+        final long pointer = getNext(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTGlyphSlot::new);
     }
 
 
@@ -80,8 +81,8 @@ public class FTGlyphSlot extends FTStruct {
 
     /** The metrics of the last loaded glyph in the slot. The returned values depend on the last load flags (see the FT_Load_Glyph API function) and can be expressed either in 26.6 fractional pixels or font units. */
     public FTGlyphMetrics getMetrics() {
-        final long metricsPointer = getMetrics(super.pointer);
-        return new FTGlyphMetrics(metricsPointer);
+        final long pointer = getMetrics(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTGlyphMetrics::new);
     }
 
 
@@ -112,8 +113,8 @@ public class FTGlyphSlot extends FTStruct {
      * As specified with FT_LOAD_VERTICAL_LAYOUT, it uses either the horiAdvance or the vertAdvance value of metrics field.
      * */
     public FTVector getAdvance() {
-        final long vectorPointer = getAdvance(super.pointer);
-        return new FTVector(vectorPointer);
+        final long pointer = getAdvance(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTVector::new);
     }
 
 
@@ -132,8 +133,8 @@ public class FTGlyphSlot extends FTStruct {
 
     /** This field is used as a bitmap descriptor. Note that the address and content of the bitmap buffer can change between calls of FT_Load_Glyph and a few other functions. */
     public FTBitmap getBitmap() {
-        final long bitmapPointer = getBitmap(super.pointer);
-        return new FTBitmap(bitmapPointer);
+        final long pointer = getBitmap(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTBitmap::new);
     }
 
 
@@ -164,8 +165,8 @@ public class FTGlyphSlot extends FTStruct {
      * [Since 2.10.1] If FT_LOAD_NO_SCALE is set, outline coordinates of OpenType variation fonts for a selected instance are internally handled as 26.6 fractional font units but returned as (rounded) integers, as expected.
      * To get unrounded font units, don't use FT_LOAD_NO_SCALE but load the glyph with FT_LOAD_NO_HINTING and scale it, using the font's units_per_EM value as the ppem. */
     public FTOutline getOutline() {
-        final long outlinePointer = getOutline(super.pointer);
-        return new FTOutline(outlinePointer);
+        final long pointer = getOutline(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTOutline::new);
     }
 
 
@@ -191,7 +192,7 @@ public class FTGlyphSlot extends FTStruct {
     //
     //     final FTSubGlyph[] objects = new FTSubGlyph[pointers.length];
     //     for(int i = 0; i < pointers.length; i++)
-    //         objects[i] = new FTSubGlyph(pointers[i]);
+    //         objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTSubGlyph::new);
     //
     //     return objects;
     // }
@@ -235,8 +236,8 @@ public class FTGlyphSlot extends FTStruct {
 
     /** A function used to extract a glyph image from a slot. Note that the created FT_Glyph object must be released with FT_Done_Glyph. */
     public FTGlyph getGlyph() {
-        final long glyphPointer = getGlyph(super.pointer);
-        return new FTGlyph(glyphPointer);
+        final long pointer = getGlyph(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTGlyph::new);
     }
 
 }

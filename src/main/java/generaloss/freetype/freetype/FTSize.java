@@ -1,6 +1,7 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FTStructRegistry;
 
 public class FTSize extends FTStruct {
 
@@ -23,8 +24,8 @@ public class FTSize extends FTStruct {
 
     /** Metrics for this size object. */
     public FTSizeMetrics getMetrics() {
-        final long metricsPointer = getMetrics(super.pointer);
-        return new FTSizeMetrics(metricsPointer);
+        final long pointer = getMetrics(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTSizeMetrics::new);
     }
 
 }

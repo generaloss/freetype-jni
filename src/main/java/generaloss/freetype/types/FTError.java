@@ -137,12 +137,17 @@ public enum FTError {
         this.description = description;
     }
 
-    public boolean isError() {
+    public boolean hasError() {
         return (code != 0);
     }
 
     public boolean isOK() {
         return (code == 0);
+    }
+
+    public void checkError() {
+        if(this.hasError())
+            throw new Error("FTError: " + this.toString());
     }
 
     public String getDescription() {

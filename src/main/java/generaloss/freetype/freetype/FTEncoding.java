@@ -1,5 +1,7 @@
 package generaloss.freetype.freetype;
 
+import generaloss.freetype.types.FTTag;
+
 public enum FTEncoding {
 
     /** Reserved for all formats except BDF, PCF, and Windows FNT; see below for more information. */
@@ -59,7 +61,7 @@ public enum FTEncoding {
     }
 
     FTEncoding(char a, char b, char c, char d) {
-        this.value = FreeType.ftEncodeTag(a, b, c, d);
+        this.value = FTTag.encode(a, b, c, d);
     }
 
     public static FTEncoding byValue(int value) {

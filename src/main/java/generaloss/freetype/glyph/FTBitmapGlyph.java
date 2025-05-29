@@ -1,6 +1,7 @@
 package generaloss.freetype.glyph;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FTStructRegistry;
 import generaloss.freetype.image.FTBitmap;
 
 public class FTBitmapGlyph extends FTStruct {
@@ -23,7 +24,7 @@ public class FTBitmapGlyph extends FTStruct {
     /** The root fields of FT_Glyph. */
     public FTGlyph getRoot() {
         final long pointer = getRoot(super.pointer);
-        return new FTGlyph(pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTGlyph::new);
     }
 
 
@@ -49,8 +50,8 @@ public class FTBitmapGlyph extends FTStruct {
 
     /** A descriptor for the bitmap. */
     public FTBitmap getBitmap() {
-        final long bitmapPointer = getBitmap(super.pointer);
-        return new FTBitmap(bitmapPointer);
+        final long pointer = getBitmap(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTBitmap::new);
     }
 
 }

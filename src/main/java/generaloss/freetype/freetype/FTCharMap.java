@@ -1,6 +1,7 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FTStructRegistry;
 
 public class FTCharMap extends FTStruct { // struct done.
 
@@ -22,7 +23,7 @@ public class FTCharMap extends FTStruct { // struct done.
     /** A handle to the parent face object. */
     public FTFace getFace() {
         final long pointer = getFace(super.pointer);
-        return new FTFace(pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTFace::new);
     }
 
 

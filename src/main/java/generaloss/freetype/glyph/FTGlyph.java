@@ -1,10 +1,11 @@
 package generaloss.freetype.glyph;
 
+import generaloss.freetype.FTStructRegistry;
 import generaloss.freetype.freetype.FTLibrary;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.freetype.FTRenderMode;
 import generaloss.freetype.image.FTGlyphFormat;
-import generaloss.freetype.stroker.FTStroker;
+import generaloss.freetype.stroke.FTStroker;
 
 public class FTGlyph extends FTStruct {
 
@@ -21,11 +22,12 @@ public class FTGlyph extends FTStruct {
 
 
     //
-    private static native long get(long pointer);
+    private static native long getLibrary(long pointer);
 
     /** A handle to the FreeType library object. */
     public FTLibrary getLibrary() {
-        return library;
+        final long pointer = getLibrary(super.pointer);
+        return FTStructRegistry.getOrCreate(pointer, FTLibrary::new);
     }
 
 
@@ -57,18 +59,17 @@ public class FTGlyph extends FTStruct {
 
     /** Convert a given glyph object to a bitmap glyph object. */
     public FTBitmapGlyph toBitmap(FTRenderMode renderMode) {
-        final long bitmapPointer = toBitmap(super.pointer, renderMode.value);
-        return new FTBitmapGlyph(bitmapPointer, this);
+        final long pointer = toBitmap(super.pointer, renderMode.value);
+        return FTStructRegistry.getOrCreate(pointer, FTBitmapGlyph::new);
     }
 
 
     private static native void done(long pointer);
 
     /** Destroy a given glyph. */
-    @Override
     public void done() {
         done(super.pointer);
-        super.done();
+        super.destroyPointer();
     }
 
 }
