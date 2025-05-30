@@ -3,6 +3,8 @@ package generaloss.freetype.freetype;
 import generaloss.freetype.*;
 import generaloss.freetype.types.*;
 
+import java.nio.ByteBuffer;
+
 public class FTFace extends FTStruct { // struct done.
 
     private static native long newStruct();
@@ -385,14 +387,14 @@ public class FTFace extends FTStruct { // struct done.
         FreeType.ftGetTransform(this, dstMatrix, dstDelta);
     }
 
-    public void getKerning(int leftGlyph, int rightGlyph, FTKerningMode kernMode, FTVector dstKerning) {
-        final FTError error = FreeType.ftGetKerning(this, leftGlyph, rightGlyph, kernMode, dstKerning);
+    public void getKerning(int leftGlyph, int rightGlyph, FTKerningMode kerningMode, FTVector dstKerning) {
+        final FTError error = FreeType.ftGetKerning(this, leftGlyph, rightGlyph, kerningMode, dstKerning);
         error.checkError();
     }
 
-    public FTVector getKerning(int leftGlyph, int rightGlyph, FTKerningMode kernMode) {
+    public FTVector getKerning(int leftGlyph, int rightGlyph, FTKerningMode kerningMode) {
         final FTVector dstKerning = FTVector.newInstance();
-        this.getKerning(leftGlyph, rightGlyph, kernMode, dstKerning);
+        this.getKerning(leftGlyph, rightGlyph, kerningMode, dstKerning);
         return dstKerning;
     }
 
@@ -425,35 +427,78 @@ public class FTFace extends FTStruct { // struct done.
         return FreeType.ftGetFirstChar(this, dstGIndex);
     }
 
-    // long getNextChar(FTFace face, long charcode, int* gindex)
+    public long getNextChar(long charcode, long[] dstGIndex) {
+        return FreeType.ftGetNextChar(this, charcode, dstGIndex);
+    }
 
-    // FTError properties(FTFace face, int numProperties, FTParameter* properties)
+    public void properties(int numProperties, FTParameter[] properties) {
+        final FTError error = FreeType.ftFaceProperties(this, numProperties, properties);
+        error.checkError();
+    }
 
-    // int getNameIndex(FTFace face, String* glyphName)
+    public void properties(FTParameter[] properties) {
+        final FTError error = FreeType.ftFaceProperties(this, properties);
+        error.checkError();
+    }
 
-    // FTError getGlyphName(FTFace face, int glyphIndex, FTPointer buffer, int bufferMax)
+    public long getNameIndex(String glyphName) {
+        return FreeType.ftGetNameIndex(this, glyphName);
+    }
 
-    // String getPostscriptName(FTFace face)
+    public void getGlyphName(int glyphIndex, ByteBuffer buffer, long bufferMax) {
+        final FTError error = FreeType.ftGetGlyphName(this, glyphIndex, buffer, bufferMax);
+        error.checkError();
+    }
 
-    // int getFSTypeFlags(FTFace face)
+    public void getGlyphName(int glyphIndex, ByteBuffer buffer) {
+        final FTError error = FreeType.ftGetGlyphName(this, glyphIndex, buffer);
+        error.checkError();
+    }
 
-    // int getCharVariantIndex(FTFace face, long charcode, long variantSelector)
+    public String getPostscriptName() {
+        return FreeType.ftGetPostscriptName(this);
+    }
 
-    // int getCharVariantIsDefault(FTFace face, long charcode, long variantSelector)
+    public int getFSTypeFlagsRaw() {
+        return FreeType.ftGetFSTypeFlagsRaw(this);
+    }
 
-    // int getVariantSelectors(FTFace face)
+    public FSTypeFlags getFSTypeFlags() {
+        return FreeType.ftGetFSTypeFlags(this);
+    }
 
-    // int getVariantsOfChar(FTFace face, long charcode)
+    public int getCharVariantIndex(long charcode, long variantSelector) {
+        return FreeType.ftFaceGetCharVariantIndex(this, charcode, variantSelector);
+    }
 
-    // int getCharsOfVariant(FTFace face, long variantSelector)
+    public int getCharVariantIsDefault(long charcode, long variantSelector) {
+        return FreeType.ftFaceGetCharVariantIsDefault(this, charcode, variantSelector);
+    }
 
-    // boolean checkTrueTypePatents(FTFace face)
+    public int getVariantSelectors() {
+        return FreeType.ftFaceGetVariantSelectors(this);
+    }
 
-    // boolean setUnpatentedHinting(FTFace face, boolean value)
+    public int getVariantsOfChar(long charcode) {
+        return FreeType.ftFaceGetVariantsOfChar(this, charcode);
+    }
+
+    public int getCharsOfVariant(long variantSelector) {
+        return FreeType.ftFaceGetCharsOfVariant(this, variantSelector);
+    }
+
+    public boolean checkTrueTypePatents() {
+        return FreeType.ftFaceCheckTrueTypePatents(this);
+    }
+
+    public boolean setUnpatentedHinting(boolean value) {
+        return FreeType.ftFaceSetUnpatentedHinting(this, value);
+    }
 
     public void done() {
         generic.getFinalizer().run();
-        FreeType.ftDoneFace(this);
+        final FTError error = FreeType.ftDoneFace(this);
+        error.checkError();
         super.destroyPointer();
     }
 

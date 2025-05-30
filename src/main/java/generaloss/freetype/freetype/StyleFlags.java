@@ -34,5 +34,4 @@ public class StyleFlags extends BitMask {
         return this.has(FTStyleFlag.BOLD);
     }
 
-
 }

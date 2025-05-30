@@ -26,85 +26,91 @@ enum FTStrokerBorder { [x]
 
 FT_StrokerBorder FT_Outline_GetInsideBorder(FT_Outline* outline)
 FTStrokerBorder getInsideBorder(FTOutline outline)
-FTOutline
 
 FT_StrokerBorder FT_Outline_GetOutsideBorder(FT_Outline* outline)
 FTStrokerBorder getOutsideBorder(FTOutline outline)
-FTOutline
 
 FT_Error FT_Stroker_New(FT_Library library, FT_Stroker *astroker)
 FTError strokerNew(FTLibrary library, FTStroker* stroker)
-FTLibrary
 
 void FT_Stroker_Set(FT_Stroker stroker, FT_Fixed radius, FT_Stroker_LineCap line_cap, FT_Stroker_LineJoin line_join, FT_Fixed miter_limit)
 void strokerSet(FTStroker stroker, FTFixed radius, FTStrokerLineCap lineCap, FTStrokerLineJoin lineJoin, FTFixed miterLimit)
-FTStroker
 
 void FT_Stroker_Rewind(FT_Stroker stroker)
 void rewind(FTStroker stroker)
-FTStroker
 
 FT_Error FT_Stroker_ParseOutline(FT_Stroker stroker, FT_Outline* outline, FT_Bool opened)
 FTError parseOutline(FTStroker stroker, FTOutline outline, boolean opened)
-FTStroker
 
 FT_Error FT_Stroker_BeginSubPath(FT_Stroker stroker, FT_Vector* to, FT_Bool open)
 FTError beginSubPath(FTStroker stroker, FTVector to, boolean open)
-FTStroker
 
 FT_Error FT_Stroker_EndSubPath(FT_Stroker stroker)
 FTError endSubPath(FTStroker stroker)
-FTStroker
 
 FT_Error FT_Stroker_LineTo(FT_Stroker stroker, FT_Vector* to)
 FTError lineTo(FTStroker stroker, FTVector to)
-FTStroker
 
 FT_Error FT_Stroker_ConicTo(FT_Stroker stroker, FT_Vector* control, FT_Vector* to)
 FTError conicTo(FTStroker stroker, FTVector control, FTVector to)
-FTStroker
 
 FT_Error FT_Stroker_CubicTo(FT_Stroker stroker, FT_Vector* control1, FT_Vector* control2, FT_Vector* to)
 FTError cubicTo(FTStroker stroker, FTVector control1, FTVector control2, FTVector to)
-FTStroker
 
 FT_Error FT_Stroker_GetBorderCounts(FT_Stroker stroker, FT_StrokerBorder border, FT_UInt *anum_points, FT_UInt *anum_contours)
 FTError borderCounts(FTStroker stroker, FTStrokerBorder border, long[] anumPoints, long[] anumContours)
-FTStroker
 
 void FT_Stroker_ExportBorder(FT_Stroker stroker, FT_StrokerBorder border, FT_Outline* outline)
 void exportBorder(FTStroker stroker, FTStrokerBorder border, FTOutline outline)
-FTStroker
 
 FT_Error FT_Stroker_GetCounts(FT_Stroker stroker, FT_UInt *anum_points, FT_UInt *anum_contours)
 FTError getCounts(FTStroker stroker, long[] anumPoints, long[] anumContours)
-FTStroker
 
 void FT_Stroker_Export(FT_Stroker stroker, FT_Outline* outline)
 void export(FTStroker stroker, FTOutline outline)
-FTStroker
 
 void FT_Stroker_Done(FT_Stroker stroker)
 FTError done(FTStroker stroker)
-FTStroker
 
 FT_Error FT_Glyph_Stroke(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool destroy)
 FTError stroke(FTGlyph pglyph, FTStroker stroker, boolean destroy)
-FTGlyph
 
 FT_Error FT_Glyph_StrokeBorder(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool inside, FT_Bool destroy)
 FTError strokeBorder(FTGlyph pglyph, FTStroker stroker, boolean inside, boolean destroy)
-FTGlyph
 
 
+--------- METHODS ---------
 
 
+object FTOutline {
+    FTStrokerBorder getInsideBorder(FTOutline outline)
+    FTStrokerBorder getOutsideBorder(FTOutline outline)
+}
 
+object FTLibrary {
+    FTError strokerNew(FTLibrary library, FTStroker* stroker)
+}
 
+object FTStroker {
+    void strokerSet(FTStroker stroker, FTFixed radius, FTStrokerLineCap lineCap, FTStrokerLineJoin lineJoin, FTFixed miterLimit)
+    void rewind(FTStroker stroker)
+    FTError parseOutline(FTStroker stroker, FTOutline outline, boolean opened)
+    FTError beginSubPath(FTStroker stroker, FTVector to, boolean open)
+    FTError endSubPath(FTStroker stroker)
+    FTError lineTo(FTStroker stroker, FTVector to)
+    FTError conicTo(FTStroker stroker, FTVector control, FTVector to)
+    FTError cubicTo(FTStroker stroker, FTVector control1, FTVector control2, FTVector to)
+    FTError borderCounts(FTStroker stroker, FTStrokerBorder border, long[] anumPoints, long[] anumContours)
+    void exportBorder(FTStroker stroker, FTStrokerBorder border, FTOutline outline)
+    FTError getCounts(FTStroker stroker, long[] anumPoints, long[] anumContours)
+    void export(FTStroker stroker, FTOutline outline)
+    FTError done(FTStroker stroker)
+}
 
-
-
-
+object FTGlyph {
+    FTError stroke(FTGlyph pglyph, FTStroker stroker, boolean destroy)
+    FTError strokeBorder(FTGlyph pglyph, FTStroker stroker, boolean inside, boolean destroy)
+}
 
 
 

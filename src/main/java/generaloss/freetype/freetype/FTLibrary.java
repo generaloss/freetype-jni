@@ -1,6 +1,7 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FreeType;
 import generaloss.freetype.stroke.FreeTypeStroke;
 import generaloss.freetype.stroke.FTStroker;
 import generaloss.freetype.types.FTError;

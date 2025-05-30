@@ -1,13 +1,20 @@
-package generaloss.freetype.freetype;
+package generaloss.freetype;
 
-import generaloss.freetype.FTStructRegistry;
+import generaloss.freetype.freetype.*;
+import generaloss.freetype.glyph.FTGlyph;
+import generaloss.freetype.image.FTGlyphFormat;
+import generaloss.freetype.stroke.FTStroker;
 import generaloss.freetype.types.*;
-import generaloss.freetype.FTStruct;
 
 import java.nio.ByteBuffer;
 
-// freetype.h
 public class FreeType {
+
+
+    // ------------------------------
+    // ---      freetype.h        ---
+    // ------------------------------
+
 
     // FT_Error FT_Init_FreeType(FT_Library *alibrary)
     private static native int FT_Init_FreeType(long alibrary);
@@ -293,9 +300,13 @@ public class FreeType {
     // FT_Error FT_Get_Glyph_Name(FT_Face face, FT_UInt glyph_index, FT_Pointer buffer, FT_UInt buffer_max)
     private static native int FT_Get_Glyph_Name(long face, long glyph_index, ByteBuffer buffer, long buffer_max);
 
-    public static FTError ftGetGlyphName(FTFace face, int glyphIndex, ByteBuffer buffer, int bufferMax) {
+    public static FTError ftGetGlyphName(FTFace face, int glyphIndex, ByteBuffer buffer, long bufferMax) {
         final int code = FT_Get_Glyph_Name(face.getPointer(), glyphIndex, buffer, bufferMax);
         return FTError.byCode(code);
+    }
+
+    public static FTError ftGetGlyphName(FTFace face, int glyphIndex, ByteBuffer buffer) {
+        return ftGetGlyphName(face, glyphIndex, buffer, buffer.limit());
     }
     
     
@@ -319,8 +330,12 @@ public class FreeType {
     // FT_UShort FT_Get_FSType_Flags(FT_Face face)
     private static native int FT_Get_FSType_Flags(long face);
 
-    public static int ftGetFSTypeFlags(FTFace face) {
+    public static int ftGetFSTypeFlagsRaw(FTFace face) {
         return FT_Get_FSType_Flags(face.getPointer());
+    }
+
+    public static FSTypeFlags ftGetFSTypeFlags(FTFace face) {
+        return new FSTypeFlags(ftGetFSTypeFlagsRaw(face));
     }
 
     
@@ -445,5 +460,320 @@ public class FreeType {
     public static boolean ftFaceSetUnpatentedHinting(FTFace face, boolean value) {
         return FT_Face_SetUnpatentedHinting(face.getPointer(), value);
     }
-    
+
+
+    // ------------------------------
+    // ---      ftgloadr.h        ---
+    // ------------------------------
+
+
+    // FT_Error FT_GlyphLoader_New(FT_Memory memory, FT_GlyphLoader *aloader)
+    private static native int FT_GlyphLoader_New(long memory, long aloader);
+
+    public FTError ftGlyphLoaderNew(FTMemory memory, FTGlyphLoader loader) {
+        final int code = FT_GlyphLoader_New(memory.getPointer(), loader.getPointer());
+        return FTError.byCode(code);
+    }
+
+
+    // FT_Error FT_GlyphLoader_CreateExtra(FT_GlyphLoader loader)
+    private static native int FT_GlyphLoader_CreateExtra(long loader);
+
+    public FTError ftGlyphLoaderCreateExtra(FTGlyphLoader loader) {
+        final int code = FT_GlyphLoader_CreateExtra(loader.getPointer());
+        return FTError.byCode(code);
+    }
+
+
+    // void FT_GlyphLoader_Done(FT_GlyphLoader loader)
+    private static native void FT_GlyphLoader_Done(long loader);
+
+    public void ftGlyphLoaderDone(FTGlyphLoader loader) {
+        FT_GlyphLoader_Done(loader.getPointer());
+    }
+
+
+    // void FT_GlyphLoader_Reset(FT_GlyphLoader loader)
+    private static native void FT_GlyphLoader_Reset(long loader);
+
+    public void ftGlyphLoaderReset(FTGlyphLoader loader) {
+        FT_GlyphLoader_Reset(loader.getPointer());
+    }
+
+
+    // void FT_GlyphLoader_Rewind(FT_GlyphLoader loader)
+    private static native void FT_GlyphLoader_Rewind(long loader);
+
+    public void ftGlyphLoaderRewind(FTGlyphLoader loader) {
+        FT_GlyphLoader_Rewind(loader.getPointer());
+    }
+
+
+    // FT_Error FT_GlyphLoader_CheckPoints(FT_GlyphLoader loader, FT_UInt n_points, FT_UInt n_contours)
+    private static native int FT_GlyphLoader_CheckPoints(long loader, long n_points, long n_contours);
+
+    public FTError ftGlyphLoaderCheckPoints(FTGlyphLoader loader, long uPoints, long nConrours) {
+        final int code = FT_GlyphLoader_CheckPoints(loader.getPointer(), uPoints, nConrours);
+        return FTError.byCode(code);
+    }
+
+
+    // FT_Error FT_GlyphLoader_CheckSubGlyphs(FT_GlyphLoader loader, FT_UInt n_subs)
+    private static native int FT_GlyphLoader_CheckSubGlyphs(long loader, long n_subs);
+
+    public FTError ftGlyphLoaderCheckSubGlyphs(FTGlyphLoader loader, long nSubs) {
+        final int code = FT_GlyphLoader_CheckSubGlyphs(loader.getPointer(), nSubs);
+        return FTError.byCode(code);
+    }
+
+
+    // void FT_GlyphLoader_Prepare(FT_GlyphLoader loader)
+    private static native void FT_GlyphLoader_Prepare(long loader);
+
+    public void ftGlyphLoaderPrepare(FTGlyphLoader loader) {
+        FT_GlyphLoader_Prepare(loader.getPointer());
+    }
+
+
+    // void FT_GlyphLoader_Add(FT_GlyphLoader loader)
+    private static native void FT_GlyphLoader_Add(long loader);
+
+    public void ftGlyphLoaderAdd(FTGlyphLoader loader) {
+        FT_GlyphLoader_Add(loader.getPointer());
+    }
+
+
+    // ------------------------------
+    // ---       ftglyph.h        ---
+    // ------------------------------
+
+
+    // FT_Error FT_New_Glyph(FT_Library library, FT_Glyph_Format format, FT_Glyph *aglyph)
+    private static native int FT_New_Glyph();
+
+    public FTError FT_New_Glyph(FTLibrary library, FTGlyphFormat format, FTGlyph glyph) {
+        final int code = FT_New_Glyph();
+        return FTError.byCode(code);
+    }
+
+
+    // FT_Error FT_Get_Glyph(FT_GlyphSlot slot, FT_Glyph *aglyph)
+    private static native int FT_Get_Glyph();
+
+    public FTError FT_Get_Glyph(FTGlyphSlot slot, FTGlyph glyph) {
+        final int code = FT_Get_Glyph();
+        return FTError.byCode(code);
+    }
+
+
+    // FT_Error FT_Glyph_Copy(FT_Glyph source, FT_Glyph *target)
+    private static native int FT_Glyph_Copy();
+
+    public FTError FT_Glyph_Copy(FTGlyph source, FTGlyph target) {
+        final int code = FT_Glyph_Copy();
+        return FTError.byCode(code);
+    }
+
+
+    // FT_Error FT_Glyph_Transform(FT_Glyph glyph, const FT_Matrix* matrix, const FT_Vector* delta)
+    private static native int FT_Glyph_Transform();
+
+    public FTError FT_Glyph_Transform(FTGlyph glyph, FTMatrix matrix, FTVector delta) {
+        final int code = FT_Glyph_Transform();
+        return FTError.byCode(code);
+    }
+
+
+    // void FT_Glyph_Get_CBox(FT_Glyph glyph, FT_UInt bbox_mode, FT_BBox *acbox)
+    private static native void FT_Glyph_Get_CBox();
+
+    public void FT_Glyph_Get_CBox(FTGlyph glyph, long bboxMode, FTBBox cbox) {
+        FT_Glyph_Get_CBox();
+    }
+
+
+    // FT_Error FT_Glyph_To_Bitmap(FT_Glyph* the_glyph, FT_Render_Mode render_mode, const FT_Vector* origin, FT_Bool destroy)
+    private static native int FT_Glyph_To_Bitmap(long the_glyph, render_mode, const FT_Vector* origin, FT_Bool destroy);
+
+    public FTError FT_Glyph_To_Bitmap(FTGlyph glyph, FTRenderMode renderMode, FTVector origin, boolean destroy) {
+        final int code = FT_Glyph_To_Bitmap();
+        return FTError.byCode(code);
+    }
+
+
+    // void FT_Done_Glyph(FT_Glyph glyph)
+    private static native void FT_Done_Glyph(long glyph);
+
+    public void FT_Done_Glyph(FTGlyph glyph) {
+        FT_Done_Glyph();
+    }
+
+
+    // void FT_Matrix_Multiply(const FT_Matrix* a, FT_Matrix* b)
+    private static native void FT_Matrix_Multiply(long a, long b);
+
+    public void FT_Matrix_Multiply(FTMatrix a, FTMatrix b) {
+        FT_Matrix_Multiply();
+    }
+
+
+    // FT_Error FT_Matrix_Invert(FT_Matrix* matrix)
+    private static native int FT_Matrix_Invert(long matrix);
+
+    public FTError FT_Matrix_Invert(FTMatrix matrix) {
+        final int code = FT_Matrix_Invert();
+        return FTError.byCode(code);
+    }
+
+
+    // ------------------------------
+    // ---      ftstroke.h        ---
+    // ------------------------------
+
+
+    // FT_StrokerBorder FT_Outline_GetInsideBorder(FT_Outline* outline)
+    private static native void FT_Outline_GetInsideBorder();
+
+    public static void FT_Outline_GetInsideBorder() {
+        FT_Outline_GetInsideBorder();
+    }
+
+
+    // FT_StrokerBorder FT_Outline_GetOutsideBorder(FT_Outline* outline)
+    private static native void FT_Outline_GetOutsideBorder();
+
+    public static void FT_Outline_GetOutsideBorder() {
+        FT_Outline_GetOutsideBorder();
+    }
+
+
+    // FT_Error FT_Stroker_New(FT_Library library, FT_Stroker *astroker)
+    public static native int FT_Stroker_New(long library, long dstStroker);
+
+    public static FTError ftStrokerNew(FTLibrary library, FTStroker dstStroker) {
+        final int code = FT_Stroker_New(library.getPointer(), dstStroker.getPointer());
+        return FTError.byCode(code);
+    }
+
+
+    // void FT_Stroker_Set(FT_Stroker stroker, FT_Fixed radius, FT_Stroker_LineCap line_cap, FT_Stroker_LineJoin line_join, FT_Fixed mite
+    private static native void FT_Stroker_Set();
+
+    public static void FT_Stroker_Set() {
+        FT_Stroker_Set();
+    }
+
+
+    // void FT_Stroker_Rewind(FT_Stroker stroker)
+    private static native void FT_Stroker_Rewind();
+
+    public static void FT_Stroker_Rewind() {
+        FT_Stroker_Rewind();
+    }
+
+
+    // FT_Error FT_Stroker_ParseOutline(FT_Stroker stroker, FT_Outline* outline, FT_Bool opened)
+    private static native void FT_Stroker_ParseOutline();
+
+    public static void FT_Stroker_ParseOutline() {
+        FT_Stroker_ParseOutline();
+    }
+
+
+    // FT_Error FT_Stroker_BeginSubPath(FT_Stroker stroker, FT_Vector* to, FT_Bool open)
+    private static native void FT_Stroker_BeginSubPath();
+
+    public static void FT_Stroker_BeginSubPath() {
+        FT_Stroker_BeginSubPath();
+    }
+
+
+    // FT_Error FT_Stroker_EndSubPath(FT_Stroker stroker)
+    private static native void FT_Stroker_EndSubPath();
+
+    public static void FT_Stroker_EndSubPath() {
+        FT_Stroker_EndSubPath();
+    }
+
+
+    // FT_Error FT_Stroker_LineTo(FT_Stroker stroker, FT_Vector* to)
+    private static native void FT_Stroker_LineTo();
+
+    public static void FT_Stroker_LineTo() {
+        FT_Stroker_LineTo();
+    }
+
+
+    // FT_Error FT_Stroker_ConicTo(FT_Stroker stroker, FT_Vector* control, FT_Vector* to)
+    private static native void FT_Stroker_ConicTo();
+
+    public static void FT_Stroker_ConicTo() {
+        FT_Stroker_ConicTo();
+    }
+
+
+    // FT_Error FT_Stroker_CubicTo(FT_Stroker stroker, FT_Vector* control1, FT_Vector* control2, FT_Vector* to)
+    private static native void FT_Stroker_CubicTo();
+
+    public static void FT_Stroker_CubicTo() {
+        FT_Stroker_CubicTo();
+    }
+
+
+    // FT_Error FT_Stroker_GetBorderCounts(FT_Stroker stroker, FT_StrokerBorder border, FT_UInt *anum_points, FT_UInt *anum_contours)
+    private static native void FT_Stroker_GetBorderCounts();
+
+    public static void FT_Stroker_GetBorderCounts() {
+        FT_Stroker_GetBorderCounts();
+    }
+
+
+    // void FT_Stroker_ExportBorder(FT_Stroker stroker, FT_StrokerBorder border, FT_Outline* outline)
+    private static native void FT_Stroker_ExportBorder();
+
+    public static void FT_Stroker_ExportBorder() {
+        FT_Stroker_ExportBorder();
+    }
+
+
+    // FT_Error FT_Stroker_GetCounts(FT_Stroker stroker, FT_UInt *anum_points, FT_UInt *anum_contours)
+    private static native void FT_Stroker_GetCounts();
+
+    public static void FT_Stroker_GetCounts() {
+        FT_Stroker_GetCounts();
+    }
+
+
+    // void FT_Stroker_Export(FT_Stroker stroker, FT_Outline* outline)
+    private static native void FT_Stroker_Export();
+
+    public static void FT_Stroker_Export() {
+        FT_Stroker_Export();
+    }
+
+
+    // void FT_Stroker_Done(FT_Stroker stroker)
+    private static native void FT_Stroker_Done();
+
+    public static void FT_Stroker_Done() {
+        FT_Stroker_Done();
+    }
+
+
+    // FT_Error FT_Glyph_Stroke(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool destroy)
+    private static native void FT_Glyph_Stroke();
+
+    public static void FT_Glyph_Stroke() {
+        FT_Glyph_Stroke();
+    }
+
+
+    // FT_Error FT_Glyph_StrokeBorder(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool inside, FT_Bool destroy)
+    private static native void FT_Glyph_StrokeBorder();
+
+    public static void FT_Glyph_StrokeBorder() {
+        FT_Glyph_StrokeBorder();
+    }
+
+
 }

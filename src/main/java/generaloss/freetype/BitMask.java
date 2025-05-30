@@ -26,11 +26,17 @@ public class BitMask {
 
 
     public boolean has(int bit) {
+        if(bit == 0)
+            return this.isDefault();
         return (bits & bit) != 0;
     }
 
     public void set(int bit) {
-        bits |= bit;
+        if(bit == 0) {
+            bits = 0;
+        }else{
+            bits |= bit;
+        }
     }
 
     public void clear(int bit) {

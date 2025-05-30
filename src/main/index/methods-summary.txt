@@ -1,0 +1,122 @@
+object FTLibrary {
+    --- freetype.h ---
+    FTError initFreeType(FTLibrary library)
+    FTError newFace(FTLibrary library, String filepath, long faceIndex, FTFace* face)
+    FTError newMemoryFace(FTLibrary library, byte[] fileBase, long fileSize, long faceIndex, FTFace* face)
+    FTError openFace(FTLibrary library, FTOpenArgs args, long faceIndex, FTFace* face)
+    void FTLibraryVersion(FTLibrary library, int* major, int* minor, int* patch)
+    FTError doneFreeType(FTLibrary library)
+    --- ftglyph.h ---
+    FTError newGlyph(FTLibrary library, FTGlyphFormat format, FTGlyph* glyph)
+    --- ftstroke.h ---
+    FTError strokerNew(FTLibrary library, FTStroker* stroker)
+}
+
+object FTFace {
+    --- freetype.h ---
+    FTError attachFile(FTFace face, String filepath)
+    FTError attachStream(FTFace face, FTOpenArgs* parameters)
+    FTError referenceFace(FTFace face)
+    FTError selectSize(FTFace face, int strikeIndex)
+    FTError requestSize(FTFace face, FTSizeRequest reqest)
+    FTError setCharSize(FTFace face, FTF26Dot6 charWidth, FTF26Dot6 charHeight, int horzResolution, int vertResolution)
+    FTError setPixelSizes(FTFace face, int pixelWidth, int pixelHeight)
+    FTError loadGlyph(FTFace face, int glyphIndex, int loadFlags)
+    FTError loadChar(FTFace face, long charcode, int loadFlags)
+    void setTransform(FTFace face, FTMatrix matrix, FTVector delta)
+    void getTransform(FTFace face, FTMatrix* matrixm, FTVactor* delta)
+    FTError getKerning(FTFace face, int leftGlyph, int rightGlyph, int kernMode, FTVector* kerning)
+    FTError getTrackKerning(FTFace face, FTFixed pointSize, int degree, FTFixed* kerning)
+    FTError selectCharmap(FTFace face, FTEncoding encoding)
+    FTError setCharmap(FTFace face, FTCharMap charmap)
+    int getCharIndex(FTFace face, long charcode)
+    long getFirstChar(FTFace face, int* gindex)
+    long getNextChar(FTFace face, long charcode, int* gindex)
+    FTError properties(FTFace face, int numProperties, FTParameter* properties)
+    int getNameIndex(FTFace face, String* glyphName)
+    FTError getGlyphName(FTFace face, int glyphIndex, FTPointer buffer, int bufferMax)
+    String getPostscriptName(FTFace face)
+    int getFSTypeFlags(FTFace face)
+    int getCharVariantIndex(FTFace face, long charcode, long variantSelector)
+    int getCharVariantIsDefault(FTFace face, long charcode, long variantSelector)
+    int getVariantSelectors(FTFace face)
+    int getVariantsOfChar(FTFace face, long charcode)
+    int getCharsOfVariant(FTFace face, long variantSelector)
+    boolean checkTrueTypePatents(FTFace face)
+    boolean setUnpatentedHinting(FTFace face, boolean value)
+    FTError doneFace(FTFace face)
+}
+
+object FTGlyphSlot {
+    --- freetype.h ---
+    FTError renderGlyph(FTGlyphSlot slot, FTRenderMode mode)
+    FTError getSubGlyphInfo(FTGlyphSlot glyph, int subIndex, int* pIndex, int* pFlags, int* pArg1, int* pArg2, FTMatrix* pTransform)
+    --- ftglyph.h ---
+    FTError getGlyph(FTGlyphSlot slot, FTGlyph* glyph)
+}
+
+object FTCharMap {
+    --- freetype.h ---
+    int getCharmapIndex(FTCharMap charmap)
+}
+
+object FTVector {
+    --- freetype.h ---
+    void FTVectorTransform(FTVector vector, FTMatrix matrix)
+}
+
+object FTGlyphLoader {
+    --- ftgloadr.h ---
+    FTError new(FTMemory memory, FTGlyphLoader* loader)
+    FTError createExtra(FTGlyphLoader loader)
+    void done(FTGlyphLoader loader)
+    void reset(FTGlyphLoader loader)
+    void rewind(FTGlyphLoader loader)
+    FTError checkPoints(FTGlyphLoader loader, long uPoints, long nConrours)
+    FTError checkSubGlyphs(FTGlyphLoader loader, long nSubs)
+    void prepare(FTGlyphLoader loader)
+    void add(FTGlyphLoader loader)
+}
+
+object FTGlyph {
+    --- ftglyph.h ---
+    FTError copy(FTGlyph source, FTFlyph* target)
+    FTError transform(FTGlyph glyph, FTMatrix* matrix, FTVector* delta)
+    void getCBox(FTGlyph glyph, long bboxMode, FTBBox* cbox)
+    FTError toBitmap(FTGlyph glyph, FTRenderMode renderMode, FTVector* origin, boolean destroy)
+    void doneGlyph(FTGlyph glyph)
+    --- ftstroke.h ---
+    FTError stroke(FTGlyph pglyph, FTStroker stroker, boolean destroy)
+    FTError strokeBorder(FTGlyph pglyph, FTStroker stroker, boolean inside, boolean destroy)
+}
+
+object FTMatrix {
+    --- ftglyph.h ---
+    void multiply(FTMatrix a, FTMatrix* b)
+    FTError invert(FTMatrix* matrix)
+}
+
+object FTOutline {
+    --- ftstroke.h ---
+    FTStrokerBorder getInsideBorder(FTOutline outline)
+    FTStrokerBorder getOutsideBorder(FTOutline outline)
+}
+
+object FTStroker {
+    --- ftstroke.h ---
+    void strokerSet(FTStroker stroker, FTFixed radius, FTStrokerLineCap lineCap, FTStrokerLineJoin lineJoin, FTFixed miterLimit)
+    void rewind(FTStroker stroker)
+    FTError parseOutline(FTStroker stroker, FTOutline outline, boolean opened)
+    FTError beginSubPath(FTStroker stroker, FTVector to, boolean open)
+    FTError endSubPath(FTStroker stroker)
+    FTError lineTo(FTStroker stroker, FTVector to)
+    FTError conicTo(FTStroker stroker, FTVector control, FTVector to)
+    FTError cubicTo(FTStroker stroker, FTVector control1, FTVector control2, FTVector to)
+    FTError borderCounts(FTStroker stroker, FTStrokerBorder border, long[] anumPoints, long[] anumContours)
+    void exportBorder(FTStroker stroker, FTStrokerBorder border, FTOutline outline)
+    FTError getCounts(FTStroker stroker, long[] anumPoints, long[] anumContours)
+    void export(FTStroker stroker, FTOutline outline)
+    FTError done(FTStroker stroker)
+}
+
+

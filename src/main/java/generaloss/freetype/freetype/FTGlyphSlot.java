@@ -1,14 +1,12 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStructRegistry;
+import generaloss.freetype.FreeType;
 import generaloss.freetype.gload.FTSubGlyph;
-import generaloss.freetype.types.FTFixed;
+import generaloss.freetype.types.*;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.image.*;
-import generaloss.freetype.types.FTGeneric;
-import generaloss.freetype.types.FTPos;
-import generaloss.freetype.types.FTVector;
 
 public class FTGlyphSlot extends FTStruct {
 
@@ -223,21 +221,19 @@ public class FTGlyphSlot extends FTStruct {
     }
 
 
-
-
-    private static native boolean renderGlyph(long pointer, int renderMode);
-
-    /** Convert a given glyph image to a bitmap. It does so by inspecting the glyph image format, finding the relevant renderer, and invoking it. */
-    public boolean renderGlyph(FTRenderMode renderMode) {
-        return renderGlyph(super.pointer, renderMode.value);
+    public void renderGlyph(FTRenderMode mode) {
+        final FTError error = FreeType.ftRenderGlyph(this, mode);
+        error.checkError();
     }
 
+    public void getSubGlyphInfo(long subIndex, int[] dstPIndex, long[] dstPFlags, int[] dstPArg1, int[] dstPArg2, FTMatrix dstPTransform) {
+        final FTError error = FreeType.ftGetSubGlyphInfo(this, subIndex, dstPIndex, dstPFlags, dstPArg1, dstPArg2, dstPTransform);
+        error.checkError();
+    }
 
-    private static native long getGlyph(long glyphSlot);
-
-    /** A function used to extract a glyph image from a slot. Note that the created FT_Glyph object must be released with FT_Done_Glyph. */
     public FTGlyph getGlyph() {
-        final long pointer = getGlyph(super.pointer);
+        final FTError error = FreeTypeGlyph.ftRenderGlyph(this, mode);
+        error.checkError();
         return FTStructRegistry.getOrCreate(pointer, FTGlyph::new);
     }
 
