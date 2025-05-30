@@ -6,13 +6,6 @@ import java.nio.ByteBuffer;
 
 public class FTBitmap extends FTStruct {
 
-    private static native long newStruct();
-
-    public static FTBitmap newInstance() {
-        return new FTBitmap(newStruct());
-    }
-
-
     public FTBitmap(long pointer) {
         super(pointer);
     }
@@ -26,7 +19,6 @@ public class FTBitmap extends FTStruct {
         return getRows(super.pointer);
     }
 
-
     // unsigned int width;
     private static native int getWidth(long pointer);
 
@@ -34,7 +26,6 @@ public class FTBitmap extends FTStruct {
     public int getWidth() {
         return getWidth(super.pointer);
     }
-
 
     // int pitch;
     private static native int getPitch(long pointer);
@@ -46,7 +37,6 @@ public class FTBitmap extends FTStruct {
     public int getPitch() {
         return getPitch(super.pointer);
     }
-
 
     // unsigned char* buffer;
     private static native ByteBuffer getBuffer(long pointer);
@@ -66,7 +56,6 @@ public class FTBitmap extends FTStruct {
         return getNumGray(super.pointer);
     }
 
-
     // unsigned char pixel_mode;
     private static native int getPixelMode(long pointer);
 
@@ -77,10 +66,10 @@ public class FTBitmap extends FTStruct {
     }
 
 
-    // unsigned char palette_mode;
+    private static native long newStruct();
 
-
-    // void* palette;
-
+    public static FTBitmap newInstance() {
+        return new FTBitmap(newStruct());
+    }
 
 }

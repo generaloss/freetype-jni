@@ -4,13 +4,6 @@ import generaloss.freetype.FTStruct;
 
 public class FTBBox extends FTStruct {
 
-    private static native long newStruct();
-
-    public static FTBBox newInstance() {
-        return new FTBBox(newStruct());
-    }
-
-
     public FTBBox(long pointer) {
         super(pointer);
     }
@@ -25,7 +18,6 @@ public class FTBBox extends FTStruct {
         return FTPos.toFloat(raw);
     }
 
-
     // FT_Pos yMin;
     private static native int getYMin(long pointer);
 
@@ -34,7 +26,6 @@ public class FTBBox extends FTStruct {
         final int raw = getYMin(super.pointer);
         return FTPos.toFloat(raw);
     }
-
 
     // FT_Pos xMax;
     private static native int getXMax(long pointer);
@@ -45,7 +36,6 @@ public class FTBBox extends FTStruct {
         return FTPos.toFloat(raw);
     }
 
-
     // FT_Pos yMax;
     private static native int getYMax(long pointer);
 
@@ -55,5 +45,11 @@ public class FTBBox extends FTStruct {
         return FTPos.toFloat(raw);
     }
 
+
+    private static native long newStruct();
+
+    public static FTBBox newInstance() {
+        return new FTBBox(newStruct());
+    }
 
 }

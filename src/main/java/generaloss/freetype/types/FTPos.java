@@ -5,13 +5,6 @@ import generaloss.freetype.FTStruct;
 /** 26.6 fixed-point value utility */
 public class FTPos extends FTStruct {
 
-    private static native long newStruct();
-
-    public static FTPos newInstance() {
-        return new FTPos(newStruct());
-    }
-
-
     public FTPos(long pointer) {
         super(pointer);
     }
@@ -49,6 +42,13 @@ public class FTPos extends FTStruct {
     public String toString() {
         final int raw = this.getRawValue();
         return "FTFixed{float=" + toFloat(raw) + ", raw=0x" + Integer.toHexString(raw) + "}";
+    }
+
+
+    private static native long newStruct();
+
+    public static FTPos newInstance() {
+        return new FTPos(newStruct());
     }
 
 

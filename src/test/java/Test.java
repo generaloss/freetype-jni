@@ -40,10 +40,8 @@ public class Test {
             face.loadGlyph(face.getCharIndex(CHARS.charAt(i)));
 
             final FTGlyphSlot slot = face.getGlyph();
-            if(!slot.renderGlyph(FTRenderMode.NORMAL))
-                continue;
-
-            final FTBitmapGlyph bitmapGlyph = slot.getGlyph().toBitmap(FTRenderMode.NORMAL);
+            slot.renderGlyph(FTRenderMode.NORMAL);
+            final FTBitmapGlyph bitmapGlyph = slot.getGlyph().toBitmap(FTRenderMode.NORMAL, null, false);
             final FTBitmap bitmap = bitmapGlyph.getBitmap();
 
             // final FTBitmap bitmap = face.getGlyph().getBitmap();

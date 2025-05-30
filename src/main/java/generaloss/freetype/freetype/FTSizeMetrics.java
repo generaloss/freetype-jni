@@ -6,13 +6,6 @@ import generaloss.freetype.types.FTPos;
 
 public class FTSizeMetrics extends FTStruct {
 
-    private static native long newStruct();
-
-    public static FTSizeMetrics newInstance() {
-        return new FTSizeMetrics(newStruct());
-    }
-
-
     public FTSizeMetrics(long pointer) {
         super(pointer);
     }
@@ -25,14 +18,12 @@ public class FTSizeMetrics extends FTStruct {
         return getXppem(super.pointer);
     }
 
-
     private static native int getYppem(long metrics);
 
     /** The height of the scaled EM square in pixels, hence the term ‘ppem’ (pixels per EM). It is also referred to as ‘nominal height’. */
     public int getYppem() {
         return getYppem(super.pointer);
     }
-
 
     private static native int getXScale(long metrics);
 
@@ -42,7 +33,6 @@ public class FTSizeMetrics extends FTStruct {
         return FTFixed.toFloat(raw);
     }
 
-
     private static native int getYScale(long metrics);
 
     /** A 16.16 fractional scaling value to convert vertical metrics from font units to 26.6 fractional pixels. Only relevant for scalable font formats. */
@@ -50,7 +40,6 @@ public class FTSizeMetrics extends FTStruct {
         final int raw = getYScale(super.pointer);
         return FTFixed.toFloat(raw);
     }
-
 
     private static native int getAscender(long metrics);
 
@@ -60,7 +49,6 @@ public class FTSizeMetrics extends FTStruct {
         return FTPos.toFloat(raw);
     }
 
-
     private static native int getDescender(long metrics);
 
     /** The descender in 26.6 fractional pixels, rounded down to an integer value. See FT_FaceRec for the details. */
@@ -68,7 +56,6 @@ public class FTSizeMetrics extends FTStruct {
         final int raw = getDescender(super.pointer);
         return FTPos.toFloat(raw);
     }
-
 
     private static native int getHeight(long metrics);
 
@@ -78,13 +65,19 @@ public class FTSizeMetrics extends FTStruct {
         return FTPos.toFloat(raw);
     }
 
-
     private static native int getMaxAdvance(long metrics);
 
     /** The maximum advance width in 26.6 fractional pixels, rounded to an integer value. See FT_FaceRec for the details. */
     public float getMaxAdvance() {
         final int raw = getMaxAdvance(super.pointer);
         return FTPos.toFloat(raw);
+    }
+
+
+    private static native long newStruct();
+
+    public static FTSizeMetrics newInstance() {
+        return new FTSizeMetrics(newStruct());
     }
 
 }

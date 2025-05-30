@@ -1,16 +1,10 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
-import generaloss.freetype.FTStructRegistry;
+import generaloss.freetype.FTStructCache;
+import generaloss.freetype.FreeType;
 
 public class FTCharMap extends FTStruct { // struct done.
-
-    private static native long newStruct();
-
-    public static FTCharMap newInstance() {
-        return new FTCharMap(newStruct());
-    }
-
 
     public FTCharMap(long pointer) {
         super(pointer);
@@ -23,9 +17,8 @@ public class FTCharMap extends FTStruct { // struct done.
     /** A handle to the parent face object. */
     public FTFace getFace() {
         final long pointer = getFace(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTFace::new);
+        return FTStructCache.getOrCreate(pointer, FTFace::new);
     }
-
 
     // FT_Encoding encoding;
     private static native int getEncoding(long pointer);
@@ -38,7 +31,6 @@ public class FTCharMap extends FTStruct { // struct done.
         return FTEncoding.byValue(raw);
     }
 
-
     // FT_UShort platform_id;
     private static native int getPlatformID(long pointer);
 
@@ -49,7 +41,6 @@ public class FTCharMap extends FTStruct { // struct done.
         return getPlatformID(super.pointer);
     }
 
-
     // FT_UShort encoding_id;
     private static native int getEncodingID(long pointer);
 
@@ -58,6 +49,18 @@ public class FTCharMap extends FTStruct { // struct done.
      * */
     public int getEncodingID() {
         return getEncodingID(super.pointer);
+    }
+
+
+    public int getIndex() {
+        return FreeType.ftGetCharmapIndex(this);
+    }
+
+
+    private static native long newStruct();
+
+    public static FTCharMap newInstance() {
+        return new FTCharMap(newStruct());
     }
 
 }

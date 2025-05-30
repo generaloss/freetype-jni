@@ -5,13 +5,6 @@ import generaloss.freetype.FTStruct;
 
 public class FTBitmapSize extends FTStruct { // struct done.
 
-    private static native long newStruct();
-
-    public static FTBitmapSize newInstance() {
-        return new FTBitmapSize(newStruct());
-    }
-
-
     public FTBitmapSize(long pointer) {
         super(pointer);
     }
@@ -27,7 +20,6 @@ public class FTBitmapSize extends FTStruct { // struct done.
         return getHeight(super.pointer);
     }
 
-
     // FT_Short width;
     private static native short getWidth(long pointer);
 
@@ -35,7 +27,6 @@ public class FTBitmapSize extends FTStruct { // struct done.
     public short getWidth() {
         return getWidth(super.pointer);
     }
-
 
     // FT_Pos size;
     private static native int getSize(long pointer);
@@ -48,7 +39,6 @@ public class FTBitmapSize extends FTStruct { // struct done.
         return FTPos.toFloat(raw);
     }
 
-
     // FT_Pos x_ppem;
     private static native int getXppem(long pointer);
 
@@ -58,7 +48,6 @@ public class FTBitmapSize extends FTStruct { // struct done.
         return FTPos.toFloat(raw);
     }
 
-
     // FT_Pos y_ppem;
     private static native int getYppem(long pointer);
 
@@ -66,6 +55,13 @@ public class FTBitmapSize extends FTStruct { // struct done.
     public float getYppem() {
         final int raw = getYppem(super.pointer);
         return FTPos.toFloat(raw);
+    }
+
+
+    private static native long newStruct();
+
+    public static FTBitmapSize newInstance() {
+        return new FTBitmapSize(newStruct());
     }
 
 }

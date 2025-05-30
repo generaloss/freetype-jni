@@ -1,16 +1,9 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
-import generaloss.freetype.FTStructRegistry;
+import generaloss.freetype.FTStructCache;
 
 public class FTOpenArgs extends FTStruct { // struct done.
-
-    private static native long newStruct();
-
-    public static FTOpenArgs newInstance() {
-        return new FTOpenArgs(newStruct());
-    }
-
 
     public FTOpenArgs(long pointer) {
         super(pointer);
@@ -25,7 +18,6 @@ public class FTOpenArgs extends FTStruct { // struct done.
         return getFlags(super.pointer);
     }
 
-
     // const FT_Byte* memory_base;
     private static native byte getMemoryBase(long pointer);
 
@@ -34,7 +26,6 @@ public class FTOpenArgs extends FTStruct { // struct done.
         return getMemoryBase(super.pointer);
     }
 
-
     // FT_Long memory_size;
     private static native long getMemorySize(long pointer);
 
@@ -42,7 +33,6 @@ public class FTOpenArgs extends FTStruct { // struct done.
     public long getMemorySize() {
         return getMemorySize(super.pointer);
     }
-
 
     // FT_String* pathname;
     private static native String getPathname(long pointer);
@@ -54,7 +44,6 @@ public class FTOpenArgs extends FTStruct { // struct done.
         return getPathname(super.pointer);
     }
 
-
     // FT_Stream stream;
     private static native long getStream(long pointer);
 
@@ -63,7 +52,6 @@ public class FTOpenArgs extends FTStruct { // struct done.
     //     final long pointer = getStream(super.pointer);
     //     return FTStructRegistry.getOrCreate(pointer, FTStream::new);
     // }
-
 
     // FT_Module driver;
     private static native long getDriver(long pointer);
@@ -76,7 +64,6 @@ public class FTOpenArgs extends FTStruct { // struct done.
     //     return FTStructRegistry.getOrCreate(pointer, FTModule::new);
     // }
 
-
     // FT_Int num_params;
     private static native int getNumParams(long pointer);
 
@@ -84,7 +71,6 @@ public class FTOpenArgs extends FTStruct { // struct done.
     public int getNumParams() {
         return getNumParams(super.pointer);
     }
-
 
     // FT_Parameter* params;
     private static native long[] getParams(long pointer);
@@ -95,9 +81,16 @@ public class FTOpenArgs extends FTStruct { // struct done.
 
         final FTParameter[] objects = new FTParameter[pointers.length];
         for(int i = 0; i < pointers.length; i++)
-            objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTParameter::new);
+            objects[i] = FTStructCache.getOrCreate(pointers[i], FTParameter::new);
 
         return objects;
+    }
+
+
+    private static native long newStruct();
+
+    public static FTOpenArgs newInstance() {
+        return new FTOpenArgs(newStruct());
     }
 
 }

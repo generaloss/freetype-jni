@@ -5,13 +5,6 @@ import generaloss.freetype.types.FTPos;
 
 public class FTGlyphMetrics extends FTStruct { // struct done.
 
-    private static native long newStruct();
-
-    public static FTGlyphMetrics newInstance() {
-        return new FTGlyphMetrics(newStruct());
-    }
-
-
     public FTGlyphMetrics(long pointer) {
         super(pointer);
     }
@@ -26,7 +19,6 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
         return FTPos.toFloat(raw);
     }
 
-
     // FT_Pos height;
     private static native int getHeight(long pointer);
 
@@ -35,7 +27,6 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
         final int raw = getHeight(super.pointer);
         return FTPos.toFloat(raw);
     }
-
 
     // FT_Pos horiBearingX;
     private static native int getHoriBearingX(long pointer);
@@ -46,7 +37,6 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
         return FTPos.toFloat(raw);
     }
 
-
     // FT_Pos horiBearingY;
     private static native int getHoriBearingY(long pointer);
 
@@ -55,7 +45,6 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
         final int raw = getHoriBearingY(super.pointer);
         return FTPos.toFloat(raw);
     }
-
 
     // FT_Pos horiAdvance;
     private static native int getHoriAdvance(long pointer);
@@ -66,7 +55,6 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
         return FTPos.toFloat(raw);
     }
 
-
     // FT_Pos vertBearingX;
     private static native int getVertBearingX(long pointer);
 
@@ -75,7 +63,6 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
         final int raw = getVertBearingX(super.pointer);
         return FTPos.toFloat(raw);
     }
-
 
     // FT_Pos vertBearingY;
     private static native int getVertBearingY(long pointer);
@@ -86,7 +73,6 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
         return FTPos.toFloat(raw);
     }
 
-
     // FT_Pos vertAdvance;
     private static native int getVertAdvance(long pointer);
 
@@ -94,6 +80,13 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
     public float getVertAdvance() {
         final int raw = getVertAdvance(super.pointer);
         return FTPos.toFloat(raw);
+    }
+
+
+    private static native long newStruct();
+
+    public static FTGlyphMetrics newInstance() {
+        return new FTGlyphMetrics(newStruct());
     }
 
 }

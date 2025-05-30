@@ -1,6 +1,6 @@
 package generaloss.freetype.freetype;
 
-import generaloss.freetype.FTStructRegistry;
+import generaloss.freetype.FTStructCache;
 import generaloss.freetype.FreeType;
 import generaloss.freetype.gload.FTSubGlyph;
 import generaloss.freetype.types.*;
@@ -9,13 +9,6 @@ import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.image.*;
 
 public class FTGlyphSlot extends FTStruct {
-
-    private static native long newStruct();
-
-    public static FTGlyphSlot newInstance() {
-        return new FTGlyphSlot(newStruct());
-    }
-
 
     private final FTGeneric generic;
 
@@ -31,9 +24,8 @@ public class FTGlyphSlot extends FTStruct {
     /** A handle to the FreeType library instance this slot belongs to. */
     public FTLibrary getLibrary() {
         final long pointer = getLibrary(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTLibrary::new);
+        return FTStructCache.getOrCreate(pointer, FTLibrary::new);
     }
-
 
     // FT_Face face;
     private static native long getFace(long pointer);
@@ -41,9 +33,8 @@ public class FTGlyphSlot extends FTStruct {
     /** A handle to the parent face object. */
     public FTFace getFace() {
         final long pointer = getFace(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTFace::new);
+        return FTStructCache.getOrCreate(pointer, FTFace::new);
     }
-
 
     // FT_GlyphSlot next;
     private static native long getNext(long pointer);
@@ -53,9 +44,8 @@ public class FTGlyphSlot extends FTStruct {
      * */
     public FTGlyphSlot getNext() {
         final long pointer = getNext(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTGlyphSlot::new);
+        return FTStructCache.getOrCreate(pointer, FTGlyphSlot::new);
     }
-
 
     // FT_UInt glyph_index;
     private static native long getGlyphIndex(long pointer);
@@ -65,7 +55,6 @@ public class FTGlyphSlot extends FTStruct {
         return getGlyphIndex(super.pointer);
     }
 
-
     // FT_Generic generic;
     /** A typeless pointer unused by the FreeType library or any of its drivers.
      * It can be used by client applications to link their own data to each glyph slot object.
@@ -74,16 +63,14 @@ public class FTGlyphSlot extends FTStruct {
         return generic;
     }
 
-
     // FT_Glyph_Metrics metrics;
     private static native long getMetrics(long pointer);
 
     /** The metrics of the last loaded glyph in the slot. The returned values depend on the last load flags (see the FT_Load_Glyph API function) and can be expressed either in 26.6 fractional pixels or font units. */
     public FTGlyphMetrics getMetrics() {
         final long pointer = getMetrics(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTGlyphMetrics::new);
+        return FTStructCache.getOrCreate(pointer, FTGlyphMetrics::new);
     }
-
 
     // FT_Fixed linearHoriAdvance;
     private static native int getLinearHoriAdvance(long pointer);
@@ -94,7 +81,6 @@ public class FTGlyphSlot extends FTStruct {
         return FTFixed.toFloat(raw);
     }
 
-
     // FT_Fixed linearVertAdvance;
     private static native int getLinearVertAdvance(long pointer);
 
@@ -104,7 +90,6 @@ public class FTGlyphSlot extends FTStruct {
         return FTFixed.toFloat(raw);
     }
 
-
     // FT_Vector advance;
     private static native long getAdvance(long pointer);
 
@@ -113,9 +98,8 @@ public class FTGlyphSlot extends FTStruct {
      * */
     public FTVector getAdvance() {
         final long pointer = getAdvance(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTVector::new);
+        return FTStructCache.getOrCreate(pointer, FTVector::new);
     }
-
 
     // FT_Glyph_Format format;
     private static native int getFormat(long pointer);
@@ -126,16 +110,14 @@ public class FTGlyphSlot extends FTStruct {
         return FTGlyphFormat.byValue(raw);
     }
 
-
     // FT_Bitmap bitmap;
     private static native long getBitmap(long pointer);
 
     /** This field is used as a bitmap descriptor. Note that the address and content of the bitmap buffer can change between calls of FT_Load_Glyph and a few other functions. */
     public FTBitmap getBitmap() {
         final long pointer = getBitmap(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTBitmap::new);
+        return FTStructCache.getOrCreate(pointer, FTBitmap::new);
     }
-
 
     // FT_Int bitmap_left;
     private static native int getBitmapLeft(long pointer);
@@ -145,7 +127,6 @@ public class FTGlyphSlot extends FTStruct {
         return getBitmapLeft(super.pointer);
     }
 
-
     // FT_Int bitmap_top;
     private static native int getBitmapTop(long pointer);
 
@@ -153,7 +134,6 @@ public class FTGlyphSlot extends FTStruct {
     public int getBitmapTop() {
         return getBitmapTop(super.pointer);
     }
-
 
     // FT_Outline outline;
     private static native long getOutline(long pointer);
@@ -165,9 +145,8 @@ public class FTGlyphSlot extends FTStruct {
      * To get unrounded font units, don't use FT_LOAD_NO_SCALE but load the glyph with FT_LOAD_NO_HINTING and scale it, using the font's units_per_EM value as the ppem. */
     public FTOutline getOutline() {
         final long pointer = getOutline(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTOutline::new);
+        return FTStructCache.getOrCreate(pointer, FTOutline::new);
     }
-
 
     // FT_UInt num_subglyphs;
     private static native long getNumSubglyphs(long pointer);
@@ -178,7 +157,6 @@ public class FTGlyphSlot extends FTStruct {
     public long getNumSubglyphs() {
         return getNumSubglyphs(super.pointer);
     }
-
 
     // FT_SubGlyph subglyphs;
     private static native long[] getSubglyphs(long pointer);
@@ -191,11 +169,10 @@ public class FTGlyphSlot extends FTStruct {
 
         final FTSubGlyph[] objects = new FTSubGlyph[pointers.length];
         for(int i = 0; i < pointers.length; i++)
-            objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTSubGlyph::new);
+            objects[i] = FTStructCache.getOrCreate(pointers[i], FTSubGlyph::new);
 
         return objects;
     }
-
 
     // FT_Pos lsb_delta;
     private static native int getLsbDelta(long pointer);
@@ -207,7 +184,6 @@ public class FTGlyphSlot extends FTStruct {
         final int raw = getLsbDelta(super.pointer);
         return FTPos.toFloat(raw);
     }
-
 
     // FT_Pos rsb_delta;
     private static native int getRsbDelta(long pointer);
@@ -221,8 +197,8 @@ public class FTGlyphSlot extends FTStruct {
     }
 
 
-    public void renderGlyph(FTRenderMode mode) {
-        final FTError error = FreeType.ftRenderGlyph(this, mode);
+    public void renderGlyph(FTRenderMode renderMode) {
+        final FTError error = FreeType.ftRenderGlyph(this, renderMode);
         error.checkError();
     }
 
@@ -232,9 +208,17 @@ public class FTGlyphSlot extends FTStruct {
     }
 
     public FTGlyph getGlyph() {
-        final FTError error = FreeTypeGlyph.ftRenderGlyph(this, mode);
+        final FTGlyph dstGlyph = FTGlyph.newInstance();
+        final FTError error = FreeType.ftGetGlyph(this, dstGlyph);
         error.checkError();
-        return FTStructRegistry.getOrCreate(pointer, FTGlyph::new);
+        return dstGlyph;
+    }
+
+
+    private static native long newStruct();
+
+    public static FTGlyphSlot newInstance() {
+        return new FTGlyphSlot(newStruct());
     }
 
 }

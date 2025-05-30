@@ -1,18 +1,11 @@
 package generaloss.freetype.gload;
 
 import generaloss.freetype.FTStruct;
-import generaloss.freetype.FTStructRegistry;
+import generaloss.freetype.FTStructCache;
 import generaloss.freetype.freetype.SubglyphFlags;
 import generaloss.freetype.types.FTMatrix;
 
 public class FTSubGlyph extends FTStruct {
-
-    private static native long newStruct();
-
-    public static FTSubGlyph newInstance() {
-        return new FTSubGlyph(newStruct());
-    }
-
 
     public FTSubGlyph(long pointer) {
         super(pointer);
@@ -27,7 +20,6 @@ public class FTSubGlyph extends FTStruct {
         return getIndex(super.pointer);
     }
 
-
     // FT_UShort flags;
     private static native int getFlags(long pointer);
 
@@ -41,7 +33,6 @@ public class FTSubGlyph extends FTStruct {
         return new SubglyphFlags(raw);
     }
 
-
     // FT_Int arg1;
     private static native int getArg1(long pointer);
 
@@ -49,7 +40,6 @@ public class FTSubGlyph extends FTStruct {
     public int getArg1() {
         return getArg1(super.pointer);
     }
-
 
     // FT_Int arg2;
     private static native int getArg2(long pointer);
@@ -59,15 +49,20 @@ public class FTSubGlyph extends FTStruct {
         return getArg2(super.pointer);
     }
 
-
     // FT_Matrix transform;
     private static native long getTransform(long pointer);
 
     /**  */
     public FTMatrix getTransform() {
         final long pointer = getTransform(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTMatrix::new);
+        return FTStructCache.getOrCreate(pointer, FTMatrix::new);
     }
 
+
+    private static native long newStruct();
+
+    public static FTSubGlyph newInstance() {
+        return new FTSubGlyph(newStruct());
+    }
 
 }

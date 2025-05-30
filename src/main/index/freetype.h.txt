@@ -403,17 +403,18 @@ boolean FTFaceSetUnpatentedHinting(FTFace face, boolean value)
 
 object FTLibrary {
     FTError initFreeType(FTLibrary library)
+    FTError doneFreeType(FTLibrary library)
     FTError newFace(FTLibrary library, String filepath, long faceIndex, FTFace* face)
     FTError newMemoryFace(FTLibrary library, byte[] fileBase, long fileSize, long faceIndex, FTFace* face)
     FTError openFace(FTLibrary library, FTOpenArgs args, long faceIndex, FTFace* face)
     void FTLibraryVersion(FTLibrary library, int* major, int* minor, int* patch)
-    FTError doneFreeType(FTLibrary library)
 }
 
 object FTFace {
     FTError attachFile(FTFace face, String filepath)
     FTError attachStream(FTFace face, FTOpenArgs* parameters)
     FTError referenceFace(FTFace face)
+    FTError doneFace(FTFace face)
     FTError selectSize(FTFace face, int strikeIndex)
     FTError requestSize(FTFace face, FTSizeRequest reqest)
     FTError setCharSize(FTFace face, FTF26Dot6 charWidth, FTF26Dot6 charHeight, int horzResolution, int vertResolution)
@@ -441,7 +442,6 @@ object FTFace {
     int getCharsOfVariant(FTFace face, long variantSelector)
     boolean checkTrueTypePatents(FTFace face)
     boolean setUnpatentedHinting(FTFace face, boolean value)
-    FTError doneFace(FTFace face)
 }
 
 object FTGlyphSlot {

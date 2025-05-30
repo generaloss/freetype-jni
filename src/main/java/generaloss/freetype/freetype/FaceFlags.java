@@ -81,5 +81,4 @@ public class FaceFlags extends BitMask {
         return this.has(FTFaceFlag.TRICKY);
     }
 
-
 }

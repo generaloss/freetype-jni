@@ -1,17 +1,10 @@
 package generaloss.freetype.glyph;
 
 import generaloss.freetype.FTStruct;
-import generaloss.freetype.FTStructRegistry;
+import generaloss.freetype.FTStructCache;
 import generaloss.freetype.image.FTBitmap;
 
 public class FTBitmapGlyph extends FTStruct {
-
-    private static native long newStruct();
-
-    public static FTBitmapGlyph newInstance() {
-        return new FTBitmapGlyph(newStruct());
-    }
-
 
     public FTBitmapGlyph(long pointer) {
         super(pointer);
@@ -24,10 +17,10 @@ public class FTBitmapGlyph extends FTStruct {
     /** The root fields of FT_Glyph. */
     public FTGlyph getRoot() {
         final long pointer = getRoot(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTGlyph::new);
+        return FTStructCache.getOrCreate(pointer, FTGlyph::new);
     }
 
-
+    //
     private static native int getLeft(long pointer);
 
     /** The left-side bearing, i.e., the horizontal distance from the current pen position to the left border of the glyph bitmap. */
@@ -35,7 +28,7 @@ public class FTBitmapGlyph extends FTStruct {
         return getLeft(super.pointer);
     }
 
-
+    //
     private static native int getTop(long pointer);
 
     /** The top-side bearing, i.e., the vertical distance from the current pen position to the top border of the glyph bitmap.
@@ -45,13 +38,20 @@ public class FTBitmapGlyph extends FTStruct {
         return getTop(super.pointer);
     }
 
-
+    //
     private static native long getBitmap(long pointer);
 
     /** A descriptor for the bitmap. */
     public FTBitmap getBitmap() {
         final long pointer = getBitmap(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTBitmap::new);
+        return FTStructCache.getOrCreate(pointer, FTBitmap::new);
+    }
+
+
+    private static native long newStruct();
+
+    public static FTBitmapGlyph newInstance() {
+        return new FTBitmapGlyph(newStruct());
     }
 
 }

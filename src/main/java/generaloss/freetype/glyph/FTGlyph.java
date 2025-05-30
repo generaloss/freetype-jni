@@ -1,35 +1,32 @@
 package generaloss.freetype.glyph;
 
-import generaloss.freetype.FTStructRegistry;
+import generaloss.freetype.FTStructCache;
+import generaloss.freetype.FreeType;
 import generaloss.freetype.freetype.FTLibrary;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.freetype.FTRenderMode;
 import generaloss.freetype.image.FTGlyphFormat;
 import generaloss.freetype.stroke.FTStroker;
+import generaloss.freetype.types.FTBBox;
+import generaloss.freetype.types.FTError;
+import generaloss.freetype.types.FTMatrix;
+import generaloss.freetype.types.FTVector;
 
 public class FTGlyph extends FTStruct {
-
-    private static native long newStruct();
-
-    public static FTGlyph newInstance() {
-        return new FTGlyph(newStruct());
-    }
-
 
     public FTGlyph(long pointer) {
         super(pointer);
     }
 
 
-    //
+    // FT_Library library;
     private static native long getLibrary(long pointer);
 
     /** A handle to the FreeType library object. */
     public FTLibrary getLibrary() {
         final long pointer = getLibrary(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTLibrary::new);
+        return FTStructCache.getOrCreate(pointer, FTLibrary::new);
     }
-
 
     // FT_Glyph_Format format;
     private static native int getFormat(long pointer);
@@ -40,36 +37,56 @@ public class FTGlyph extends FTStruct {
         return FTGlyphFormat.byValue(raw);
     }
 
-
     // FT_Vector advance;
+    private static native long getAdvance(long pointer);
+
     /** A 16.16 vector that gives the glyph's advance width. */
-
-
-
-
-    private static native long strokeBorder(long pointer, long stroker, boolean inside);
-
-    /** Stroke a given outline glyph object with a given stroker, but only return either its inside or outside border.c */
-    public void strokeBorder(FTStroker stroker, boolean inside) {
-        super.pointer = strokeBorder(super.pointer, stroker.getPointer(), inside);
+    public FTVector getAdvance() {
+        final long pointer = getFormat(super.pointer);
+        return FTStructCache.getOrCreate(pointer, FTVector::new);
     }
 
 
-    private static native long toBitmap(long pointer, int renderMode);
-
-    /** Convert a given glyph object to a bitmap glyph object. */
-    public FTBitmapGlyph toBitmap(FTRenderMode renderMode) {
-        final long pointer = toBitmap(super.pointer, renderMode.value);
-        return FTStructRegistry.getOrCreate(pointer, FTBitmapGlyph::new);
+    public void copy(FTGlyph target) {
+        final FTError error = FreeType.ftGlyphCopy(this, target);
+        error.checkError();
     }
 
+    public void transform(FTMatrix matrix, FTVector delta) {
+        final FTError error = FreeType.ftGlyphTransform(this, matrix, delta);
+        error.checkError();
+    }
 
-    private static native void done(long pointer);
+    public void getCBox(long bboxMode, FTBBox cbox) {
+        FreeType.ftGlyphGetCBox(this, bboxMode, cbox);
+    }
 
-    /** Destroy a given glyph. */
+    public FTBitmapGlyph toBitmap(FTRenderMode renderMode, FTVector origin, boolean destroy) {
+        final long[] dstPointer = new long[1];
+        final FTError error = FreeType.ftGlyphToBitmap(this, renderMode, origin, destroy, dstPointer);
+        error.checkError();
+        return FTStructCache.getOrCreate(dstPointer[0], FTBitmapGlyph::new);
+    }
+
     public void done() {
-        done(super.pointer);
-        super.destroyPointer();
+        FreeType.ftDoneGlyph(this);
+    }
+
+    public void stroke(FTStroker stroker, boolean destroy) {
+        final FTError error = FreeType.ftGlyphStroke(this, stroker, destroy);
+        error.checkError();
+    }
+
+    public void strokeBorder(FTStroker stroker, boolean inside, boolean destroy) {
+        final FTError error = FreeType.ftGlyphStrokeBorder(this, stroker, inside, destroy);
+        error.checkError();
+    }
+
+
+    private static native long newStruct();
+
+    public static FTGlyph newInstance() {
+        return new FTGlyph(newStruct());
     }
 
 }

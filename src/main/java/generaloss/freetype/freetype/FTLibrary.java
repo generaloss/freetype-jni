@@ -2,7 +2,8 @@ package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FreeType;
-import generaloss.freetype.stroke.FreeTypeStroke;
+import generaloss.freetype.glyph.FTGlyph;
+import generaloss.freetype.image.FTGlyphFormat;
 import generaloss.freetype.stroke.FTStroker;
 import generaloss.freetype.types.FTError;
 
@@ -15,13 +16,6 @@ import java.nio.file.Path;
 
 public class FTLibrary extends FTStruct {
 
-    private static native long newStruct();
-
-    public static FTLibrary newInstance() {
-        return new FTLibrary(newStruct());
-    }
-
-
     public FTLibrary(long poniter) {
         super(poniter);
     }
@@ -32,6 +26,11 @@ public class FTLibrary extends FTStruct {
         error.checkError();
     }
 
+
+    public void done() {
+        final FTError error = FreeType.ftDoneFreeType(this);
+        error.checkError();
+    }
 
     public FTFace newFace(String filepath, long faceIndex) {
         final FTFace dstFace = FTFace.newInstance();
@@ -69,21 +68,29 @@ public class FTLibrary extends FTStruct {
         return dstFace;
     }
 
-    public void version(int[] dstMajor, int[] dstMinor, int[] dstPatch) {
+    public void getVersion(int[] dstMajor, int[] dstMinor, int[] dstPatch) {
         FreeType.ftLibraryVersion(this, dstMajor, dstMinor, dstPatch);
     }
 
-    public void done() {
-        final FTError error = FreeType.ftDoneFreeType(this);
+    public FTGlyph newGlyph(FTGlyphFormat format) {
+        final FTGlyph dstGlyph = FTGlyph.newInstance();
+        final FTError error = FreeType.ftNewGlyph(this, format, dstGlyph);
         error.checkError();
-        super.destroyPointer();
+        return dstGlyph;
     }
 
-    public FTStroker strokerNew() {
+    public FTStroker newStroker() {
         final FTStroker dstStroker = FTStroker.newInstance();
-        final FTError error = FreeTypeStroke.ftStrokerNew(this, dstStroker);
+        final FTError error = FreeType.ftStrokerNew(this, dstStroker);
         error.checkError();
         return dstStroker;
+    }
+
+
+    private static native long newStruct();
+
+    public static FTLibrary newInstance() {
+        return new FTLibrary(newStruct());
     }
 
 

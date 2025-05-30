@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
-public class FTStructRegistry {
+public class FTStructCache {
 
     private static final Map<Long, FTStruct> STRUCT_BY_POINTER_MAP = new ConcurrentHashMap<>();
 

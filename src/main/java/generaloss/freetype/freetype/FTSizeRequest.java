@@ -4,13 +4,6 @@ import generaloss.freetype.FTStruct;
 
 public class FTSizeRequest extends FTStruct {
 
-    private static native long newStruct();
-
-    public static FTSizeRequest newInstance() {
-        return new FTSizeRequest(newStruct());
-    }
-
-
     public FTSizeRequest(long pointer) {
         super(pointer);
     }
@@ -25,7 +18,6 @@ public class FTSizeRequest extends FTStruct {
         return FTSizeRequestType.byValue(raw);
     }
 
-
     // FT_Long width;
     private static native long getWidth(long pointer);
 
@@ -34,7 +26,6 @@ public class FTSizeRequest extends FTStruct {
         return getWidth(super.pointer);
     }
 
-
     // FT_Long height;
     private static native long getHeight(long pointer);
 
@@ -42,7 +33,6 @@ public class FTSizeRequest extends FTStruct {
     public long getHeight() {
         return getHeight(super.pointer);
     }
-
 
     // FT_UInt horiResolution;
     private static native long getHoriResolution(long pointer);
@@ -54,7 +44,6 @@ public class FTSizeRequest extends FTStruct {
         return getHoriResolution(super.pointer);
     }
 
-
     // FT_UInt vertResolution;
     private static native long getVertResolution(long pointer);
 
@@ -63,6 +52,13 @@ public class FTSizeRequest extends FTStruct {
      * */
     public long getVertResolution() {
         return getVertResolution(super.pointer);
+    }
+
+
+    private static native long newStruct();
+
+    public static FTSizeRequest newInstance() {
+        return new FTSizeRequest(newStruct());
     }
 
 }

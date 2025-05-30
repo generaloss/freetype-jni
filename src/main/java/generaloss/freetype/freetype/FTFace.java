@@ -7,13 +7,6 @@ import java.nio.ByteBuffer;
 
 public class FTFace extends FTStruct { // struct done.
 
-    private static native long newStruct();
-
-    public static FTFace newInstance() {
-        return new FTFace(newStruct());
-    }
-
-
     private final FTGeneric generic;
 
     public FTFace(long pointer) {
@@ -32,7 +25,6 @@ public class FTFace extends FTStruct { // struct done.
         return getNumFaces(super.pointer);
     }
 
-
     // FT_Long face_index;
     private static native long getFaceIndex(long pointer);
 
@@ -48,7 +40,6 @@ public class FTFace extends FTStruct { // struct done.
         return getFaceIndex(super.pointer);
     }
 
-
     // FT_Long face_flags;
     private static native int getFaceFlags(long pointer);
 
@@ -57,7 +48,6 @@ public class FTFace extends FTStruct { // struct done.
         final int flags = getFaceFlags(super.pointer);
         return new FaceFlags(flags);
     }
-
 
     // FT_Long style_flags;
     private static native int getStyleFlags(long pointer);
@@ -72,7 +62,6 @@ public class FTFace extends FTStruct { // struct done.
         return new StyleFlags(flags);
     }
 
-
     // FT_Long num_glyphs;
     private static native long getNumGlyphs(long pointer);
 
@@ -82,7 +71,6 @@ public class FTFace extends FTStruct { // struct done.
     public long getNumGlyphs() {
         return getNumGlyphs(super.pointer);
     }
-
 
     // FT_String* family_name;
     private static native String getFamilyName(long pointer);
@@ -99,7 +87,6 @@ public class FTFace extends FTStruct { // struct done.
         return getFamilyName(super.pointer);
     }
 
-
     // FT_String* style_name;
     private static native String getStyleName(long pointer);
 
@@ -113,7 +100,6 @@ public class FTFace extends FTStruct { // struct done.
         return getStyleName(super.pointer);
     }
 
-
     // FT_Int num_fixed_sizes;
     private static native int getNumFixedSizes(long pointer);
 
@@ -123,7 +109,6 @@ public class FTFace extends FTStruct { // struct done.
     public int getNumFixedSizes() {
         return getNumFixedSizes(super.pointer);
     }
-
 
     // FT_Bitmap_Size* available_sizes;
     private static native long[] getAvailableSizes(long pointer);
@@ -137,11 +122,10 @@ public class FTFace extends FTStruct { // struct done.
 
         final FTBitmapSize[] objects = new FTBitmapSize[pointers.length];
         for(int i = 0; i < pointers.length; i++)
-            objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTBitmapSize::new);
+            objects[i] = FTStructCache.getOrCreate(pointers[i], FTBitmapSize::new);
 
         return objects;
     }
-
 
     // FT_Int num_charmaps;
     private static native int getNumCharmaps(long pointer);
@@ -150,7 +134,6 @@ public class FTFace extends FTStruct { // struct done.
     public int getNumCharmaps() {
         return getNumCharmaps(super.pointer);
     }
-
 
     // FT_CharMap* charmaps;
     private static native long[] getCharmaps(long pointer);
@@ -161,17 +144,15 @@ public class FTFace extends FTStruct { // struct done.
 
         final FTCharMap[] objects = new FTCharMap[pointers.length];
         for(int i = 0; i < pointers.length; i++)
-            objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTCharMap::new);
+            objects[i] = FTStructCache.getOrCreate(pointers[i], FTCharMap::new);
 
         return objects;
     }
-
 
     // FT_Generic generic;
     public FTGeneric getGeneric() {
         return generic;
     }
-
 
     // FT_BBox bbox;
     private static native long getBBox(long pointer);
@@ -186,9 +167,8 @@ public class FTFace extends FTStruct { // struct done.
      * Note that the bounding box does not vary in OpenType variation fonts and should only be used in relation to the default instance. */
     public FTBBox getBBox() {
         final long pointer = getBBox(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTBBox::new);
+        return FTStructCache.getOrCreate(pointer, FTBBox::new);
     }
-
 
     // FT_UShort units_per_EM;
     private static native int getUnitsPerEM(long pointer);
@@ -201,7 +181,6 @@ public class FTFace extends FTStruct { // struct done.
         return getUnitsPerEM(super.pointer);
     }
 
-
     // FT_Short ascender;
     private static native short getAscender(long pointer);
 
@@ -212,7 +191,6 @@ public class FTFace extends FTStruct { // struct done.
     public short getAscender() {
         return getAscender(super.pointer);
     }
-
 
     // FT_Short descender;
     private static native short getDescender(long pointer);
@@ -226,7 +204,6 @@ public class FTFace extends FTStruct { // struct done.
         return getDescender(super.pointer);
     }
 
-
     // FT_Short height;
     private static native short getHeight(long pointer);
 
@@ -237,7 +214,6 @@ public class FTFace extends FTStruct { // struct done.
     public short getHeight() {
         return getHeight(super.pointer);
     }
-
 
     // FT_Short max_advance_width;
     private static native short getMaxAdvanceWidth(long pointer);
@@ -250,7 +226,6 @@ public class FTFace extends FTStruct { // struct done.
         return getMaxAdvanceWidth(super.pointer);
     }
 
-
     // FT_Short max_advance_height;
     private static native short getMaxAdvanceHeight(long pointer);
 
@@ -261,7 +236,6 @@ public class FTFace extends FTStruct { // struct done.
     public short getMaxAdvanceHeight() {
         return getMaxAdvanceHeight(super.pointer);
     }
-
 
     // FT_Short underline_position;
     private static native short getUnderlinePosition(long pointer);
@@ -274,7 +248,6 @@ public class FTFace extends FTStruct { // struct done.
         return getUnderlinePosition(super.pointer);
     }
 
-
     // FT_Short underline_thickness;
     private static native short getUnderlineThickness(long pointer);
 
@@ -285,16 +258,14 @@ public class FTFace extends FTStruct { // struct done.
         return getUnderlineThickness(super.pointer);
     }
 
-
     // FT_GlyphSlot glyph;
     private static native long getGlyph(long pointer);
 
     /** The face's associated glyph slot(s). */
     public FTGlyphSlot getGlyph() {
         final long pointer = getGlyph(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTGlyphSlot::new);
+        return FTStructCache.getOrCreate(pointer, FTGlyphSlot::new);
     }
-
 
     // FT_Size size;
     private static native long getSize(long pointer);
@@ -302,9 +273,8 @@ public class FTFace extends FTStruct { // struct done.
     /** The current active size for this face. */
     public FTSize getSize() {
         final long pointer = getSize(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTSize::new);
+        return FTStructCache.getOrCreate(pointer, FTSize::new);
     }
-
 
     // FT_CharMap charmap;
     private static native long getCharmap(long pointer);
@@ -312,7 +282,7 @@ public class FTFace extends FTStruct { // struct done.
     /** The current active charmap for this face. */
     public FTCharMap getCharmap() {
         final long pointer = getCharmap(super.pointer);
-        return FTStructRegistry.getOrCreate(pointer, FTCharMap::new);
+        return FTStructCache.getOrCreate(pointer, FTCharMap::new);
     }
 
 
@@ -328,6 +298,12 @@ public class FTFace extends FTStruct { // struct done.
 
     public void referenceFace() {
         final FTError error = FreeType.ftReferenceFace(this);
+        error.checkError();
+    }
+
+    public void done() {
+        generic.getFinalizer().run();
+        final FTError error = FreeType.ftDoneFace(this);
         error.checkError();
     }
 
@@ -356,12 +332,12 @@ public class FTFace extends FTStruct { // struct done.
         error.checkError();
     }
 
-    public void loadGlyph(int glyphIndex, int loadFlags) {
+    public void loadGlyph(long glyphIndex, int loadFlags) {
         final FTError error = FreeType.ftLoadGlyph(this, glyphIndex, loadFlags);
         error.checkError();
     }
 
-    public void loadGlyph(int glyphIndex) {
+    public void loadGlyph(long glyphIndex) {
         this.loadGlyph(glyphIndex, 0);
     }
 
@@ -419,7 +395,7 @@ public class FTFace extends FTStruct { // struct done.
         error.checkError();
     }
 
-    public int getCharIndex(int charcode) {
+    public long getCharIndex(int charcode) {
         return FreeType.ftGetCharIndex(this, charcode);
     }
 
@@ -467,7 +443,7 @@ public class FTFace extends FTStruct { // struct done.
         return FreeType.ftGetFSTypeFlags(this);
     }
 
-    public int getCharVariantIndex(long charcode, long variantSelector) {
+    public long getCharVariantIndex(long charcode, long variantSelector) {
         return FreeType.ftFaceGetCharVariantIndex(this, charcode, variantSelector);
     }
 
@@ -495,11 +471,11 @@ public class FTFace extends FTStruct { // struct done.
         return FreeType.ftFaceSetUnpatentedHinting(this, value);
     }
 
-    public void done() {
-        generic.getFinalizer().run();
-        final FTError error = FreeType.ftDoneFace(this);
-        error.checkError();
-        super.destroyPointer();
+
+    private static native long newStruct();
+
+    public static FTFace newInstance() {
+        return new FTFace(newStruct());
     }
 
 }

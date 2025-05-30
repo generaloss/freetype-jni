@@ -1,5 +1,7 @@
 package generaloss.freetype;
 
+import generaloss.freetype.gload.FTSubGlyph;
+
 public class FTStruct {
 
     protected long pointer;
@@ -7,7 +9,7 @@ public class FTStruct {
     protected FTStruct(long pointer) {
         this.pointer = pointer;
         this.checkPointer();
-        FTStructRegistry.register(this);
+        FTStructCache.register(this);
     }
 
     private void checkPointer() {
@@ -24,7 +26,7 @@ public class FTStruct {
     }
 
     protected void destroyPointer() {
-        FTStructRegistry.unregister(pointer);
+        FTStructCache.unregister(pointer);
         pointer = 0L;
     }
 
@@ -39,10 +41,10 @@ public class FTStruct {
     }
 
 
-    public static long[] makePointerArray(FTStruct... struct) {
-        final long[] pointers = new long[struct.length];
-        for(int i = 0; i < struct.length; i++)
-            pointers[i] = struct[i].pointer;
+    public static long[] makePointerArray(FTStruct... structs) {
+        final long[] pointers = new long[structs.length];
+        for(int i = 0; i < structs.length; i++)
+            pointers[i] = structs[i].pointer;
         return pointers;
     }
 
