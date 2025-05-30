@@ -5,15 +5,15 @@ import generaloss.freetype.FTStruct;
 
 public class FTBitmapSize extends FTStruct { // struct done.
 
-    public FTBitmapSize(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTBitmapSize newInstance() {
         return new FTBitmapSize(newStruct());
+    }
+
+
+    public FTBitmapSize(long pointer) {
+        super(pointer);
     }
 
 

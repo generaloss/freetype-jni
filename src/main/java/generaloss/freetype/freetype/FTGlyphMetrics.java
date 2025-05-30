@@ -5,15 +5,15 @@ import generaloss.freetype.types.FTPos;
 
 public class FTGlyphMetrics extends FTStruct { // struct done.
 
-    public FTGlyphMetrics(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTGlyphMetrics newInstance() {
         return new FTGlyphMetrics(newStruct());
+    }
+
+
+    public FTGlyphMetrics(long pointer) {
+        super(pointer);
     }
 
 

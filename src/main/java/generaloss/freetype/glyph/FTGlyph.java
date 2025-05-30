@@ -9,15 +9,15 @@ import generaloss.freetype.stroke.FTStroker;
 
 public class FTGlyph extends FTStruct {
 
-    public FTGlyph(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTGlyph newInstance() {
         return new FTGlyph(newStruct());
+    }
+
+
+    public FTGlyph(long pointer) {
+        super(pointer);
     }
 
 

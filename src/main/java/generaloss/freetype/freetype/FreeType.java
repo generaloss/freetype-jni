@@ -44,11 +44,19 @@ public class FreeType {
         return FTError.byCode(code);
     }
 
+    public static FTError ftNewMemoryFace(FTLibrary library, ByteBuffer fileBase, long faceIndex, FTFace dstFace) {
+        return ftNewMemoryFace(library, fileBase, fileBase.limit(), faceIndex, dstFace);
+    }
+
     public static FTError ftNewMemoryFace(FTLibrary library, byte[] fileBase, long fileSize, long faceIndex, FTFace dstFace) {
         final ByteBuffer fileBaseBuf = ByteBuffer.allocateDirect(fileBase.length);
         fileBaseBuf.put(fileBase);
         fileBaseBuf.position(0);
         return ftNewMemoryFace(library, fileBaseBuf, fileSize, faceIndex, dstFace);
+    }
+
+    public static FTError ftNewMemoryFace(FTLibrary library, byte[] fileBase, long faceIndex, FTFace dstFace) {
+        return ftNewMemoryFace(library, fileBase, fileBase.length, faceIndex, dstFace);
     }
 
 
@@ -144,6 +152,10 @@ public class FreeType {
     public static FTError ftLoadGlyph(FTFace face, int glyphIndex, LoadFlags loadFlags) {
         return ftLoadGlyph(face, glyphIndex, loadFlags.getBits());
     }
+
+    public static FTError ftLoadGlyph(FTFace face, int glyphIndex) {
+        return ftLoadGlyph(face, glyphIndex, 0);
+    }
     
 
     // FT_Error FT_Load_Char(FT_Face face, FT_ULong char_code, FT_Int32 load_flags)
@@ -155,7 +167,11 @@ public class FreeType {
     }
 
     public static FTError ftLoadChar(FTFace face, int charcode, LoadFlags loadFlags) {
-        return ftLoadGlyph(face, charcode, loadFlags.getBits());
+        return ftLoadChar(face, charcode, loadFlags.getBits());
+    }
+
+    public static FTError ftLoadChar(FTFace face, int charcode) {
+        return ftLoadChar(face, charcode, 0);
     }
 
     
@@ -239,16 +255,16 @@ public class FreeType {
     // FT_ULong FT_Get_First_Char(FT_Face face, FT_UInt *agindex)
     private static native long FT_Get_First_Char(long face, long[] agindex);
 
-    public static long ftGetFirstChar(FTFace face, long[] gindex) {
-        return FT_Get_First_Char(face.getPointer(), gindex);
+    public static long ftGetFirstChar(FTFace face, long[] dstGIndex) {
+        return FT_Get_First_Char(face.getPointer(), dstGIndex);
     }
     
 
     // FT_ULong FT_Get_Next_Char(FT_Face face, FT_ULong char_code, FT_UInt *agindex)
     public static native long FT_Get_Next_Char(long face, long char_code, long[] agindex);
 
-    public static long ftGetNextChar(FTFace face, long charcode, long[] gindex) {
-        return FT_Get_Next_Char(face.getPointer(), charcode, gindex);
+    public static long ftGetNextChar(FTFace face, long charcode, long[] dstGIndex) {
+        return FT_Get_Next_Char(face.getPointer(), charcode, dstGIndex);
     }
 
     
@@ -259,6 +275,10 @@ public class FreeType {
         final long[] pointers = FTStruct.makePointerArray(properties);
         final int code = FT_Face_Properties(face.getPointer(), numProperties, pointers);
         return FTError.byCode(code);
+    }
+
+    public static FTError ftFaceProperties(FTFace face, FTParameter[] properties) {
+        return ftFaceProperties(face, properties.length, properties);
     }
 
     
@@ -290,8 +310,8 @@ public class FreeType {
     // FT_Error FT_Get_SubGlyph_Info(FT_GlyphSlot glyph, FT_UInt sub_index, FT_Int *p_index, FT_UInt *p_flags, FT_Int *p_arg1, FT_Int *p_arg2, FT_Matrix *p_transform)
     private static native int FT_Get_SubGlyph_Info(long glyph, long sub_index, int[] p_index, long[] p_flags, int[] p_arg1, int[] p_arg2, FTMatrix p_transform);
 
-    public static FTError ftGetSubGlyphInfo(FTGlyphSlot glyph, long subIndex, int[] pIndex, long[] pFlags, int[] pArg1, int[] pArg2, FTMatrix dstPTransform) {
-        final int code = FT_Get_SubGlyph_Info(glyph.getPointer(), subIndex, pIndex, pFlags, pArg1, pArg2, dstPTransform);
+    public static FTError ftGetSubGlyphInfo(FTGlyphSlot glyph, long subIndex, int[] dstPIndex, long[] dstPFlags, int[] dstPArg1, int[] dstPArg2, FTMatrix dstPTransform) {
+        final int code = FT_Get_SubGlyph_Info(glyph.getPointer(), subIndex, dstPIndex, dstPFlags, dstPArg1, dstPArg2, dstPTransform);
         return FTError.byCode(code);
     }
 

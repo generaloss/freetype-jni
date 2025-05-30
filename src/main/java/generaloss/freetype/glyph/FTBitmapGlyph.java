@@ -6,15 +6,15 @@ import generaloss.freetype.image.FTBitmap;
 
 public class FTBitmapGlyph extends FTStruct {
 
-    public FTBitmapGlyph(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTBitmapGlyph newInstance() {
         return new FTBitmapGlyph(newStruct());
+    }
+
+
+    public FTBitmapGlyph(long pointer) {
+        super(pointer);
     }
 
 

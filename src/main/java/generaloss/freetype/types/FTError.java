@@ -1,5 +1,7 @@
 package generaloss.freetype.types;
 
+import generaloss.freetype.FTException;
+
 public enum FTError {
 
     OK                            (0x00, "no error"),
@@ -147,7 +149,7 @@ public enum FTError {
 
     public void checkError() {
         if(this.hasError())
-            throw new Error("FTError: " + this.toString());
+            throw new FTException("FTError: " + this.toString());
     }
 
     public String getDescription() {

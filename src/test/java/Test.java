@@ -37,8 +37,7 @@ public class Test {
         System.out.println(faceMetrics.getAscender() + ", " + faceMetrics.getDescender() + ", " + faceMetrics.getHeight());
 
         for(int i = 0; i < CHARS.length(); i++) {
-            if(!face.loadGlyph(face.getCharIndex(CHARS.charAt(i))))
-                continue;
+            face.loadGlyph(face.getCharIndex(CHARS.charAt(i)));
 
             final FTGlyphSlot slot = face.getGlyph();
             if(!slot.renderGlyph(FTRenderMode.NORMAL))

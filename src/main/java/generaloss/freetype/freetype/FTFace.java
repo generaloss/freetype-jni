@@ -5,18 +5,18 @@ import generaloss.freetype.types.*;
 
 public class FTFace extends FTStruct { // struct done.
 
+    private static native long newStruct();
+
+    public static FTFace newInstance() {
+        return new FTFace(newStruct());
+    }
+
+
     private final FTGeneric generic;
 
     public FTFace(long pointer) {
         super(pointer);
         this.generic = new FTGeneric();
-    }
-
-
-    private static native long newStruct();
-
-    public static FTFace newInstance() {
-        return new FTFace(newStruct());
     }
 
 
@@ -314,7 +314,6 @@ public class FTFace extends FTStruct { // struct done.
     }
 
 
-
     public void attachFile(String filepath) {
         final FTError error = FreeType.ftAttachFile(this, filepath);
         error.checkError();
@@ -330,63 +329,101 @@ public class FTFace extends FTStruct { // struct done.
         error.checkError();
     }
 
-    public boolean selectSize(int strikeIndex) {
-        return selectSize(super.pointer, strikeIndex);
+    public void selectSize(int strikeIndex) {
+        final FTError error = FreeType.ftSelectSize(this, strikeIndex);
+        error.checkError();
     }
 
-    // FTError requestSize(FTFace face, FTSizeRequest reqest)
-
-    public boolean setCharSize(int charWidth, int charHeight, int horzResolution, int vertResolution) {
-        return setCharSize(super.pointer, charWidth, charHeight, horzResolution, vertResolution);
+    public void requestSize(FTSizeRequest reqest) {
+        final FTError error = FreeType.ftRequestSize(this, reqest);
+        error.checkError();
     }
 
-    public boolean setPixelSizes(int pixelWidth, int pixelHeight) {
-        return setPixelSizes(super.pointer, pixelWidth, pixelHeight);
+    public void setCharSize(int charWidth, int charHeight, int horzResolution, int vertResolution) {
+        final FTError error = FreeType.ftSetCharSize(this, charWidth, charHeight, horzResolution, vertResolution);
+        error.checkError();
     }
 
-    public boolean loadGlyph(int glyphIndex, LoadFlags loadFlags) {
-        return loadGlyph(super.pointer, glyphIndex, loadFlags.getBits());
+    public void setPixelSizes(int pixelWidth, int pixelHeight) {
+        final FTError error = FreeType.ftSetPixelSizes(this, pixelWidth, pixelHeight);
+        error.checkError();
     }
 
-    public boolean loadGlyph(int glyphIndex) {
-        return loadGlyph(super.pointer, glyphIndex, 0);
+    public void loadGlyph(int glyphIndex, LoadFlags loadFlags) {
+        final FTError error = FreeType.ftLoadGlyph(this, glyphIndex, loadFlags);
+        error.checkError();
     }
 
-    public boolean loadChar(int charCode, LoadFlags loadFlags) {
-        return loadChar(super.pointer, charCode, loadFlags.getBits());
+    public void loadGlyph(int glyphIndex, int loadFlags) {
+        final FTError error = FreeType.ftLoadGlyph(this, glyphIndex, loadFlags);
+        error.checkError();
     }
 
-    public boolean loadChar(int charCode) {
-        return loadChar(super.pointer, charCode, 0);
+    public void loadGlyph(int glyphIndex) {
+        this.loadGlyph(glyphIndex, 0);
     }
 
-    // void setTransform(FTFace face, FTMatrix matrix, FTVector delta)
+    public void loadChar(int charcode, LoadFlags loadFlags) {
+        final FTError error = FreeType.ftLoadChar(this, charcode, loadFlags);
+        error.checkError();
+    }
 
-    // void getTransform(FTFace face, FTMatrix* matrixm, FTVactor* delta)
+    public void loadChar(int charcode, int loadFlags) {
+        final FTError error = FreeType.ftLoadChar(this, charcode, loadFlags);
+        error.checkError();
+    }
 
-    public float getKerning(int leftGlyph, int rightGlyph, FTKerningMode kernMode) {
-        final int raw = getKerning(super.pointer, leftGlyph, rightGlyph, kernMode.value);
-        return FTPos.toFloat(raw);
+    public void loadChar(int charcode) {
+        this.loadChar(charcode, 0);
+    }
+
+    public void setTransform(FTMatrix matrix, FTVector delta) {
+        FreeType.ftSetTransform(this, matrix, delta);
+    }
+
+    public void getTransform(FTMatrix dstMatrix, FTVector dstDelta) {
+        FreeType.ftGetTransform(this, dstMatrix, dstDelta);
+    }
+
+    public void getKerning(int leftGlyph, int rightGlyph, FTKerningMode kernMode, FTVector dstKerning) {
+        final FTError error = FreeType.ftGetKerning(this, leftGlyph, rightGlyph, kernMode, dstKerning);
+        error.checkError();
+    }
+
+    public FTVector getKerning(int leftGlyph, int rightGlyph, FTKerningMode kernMode) {
+        final FTVector dstKerning = FTVector.newInstance();
+        this.getKerning(leftGlyph, rightGlyph, kernMode, dstKerning);
+        return dstKerning;
+    }
+
+    public void getTrackKerning(int pointSize, int degree, FTFixed dstKerning) {
+        final FTError error = FreeType.ftGetTrackKerning(this, pointSize, degree, dstKerning);
+        error.checkError();
     }
 
     public float getTrackKerning(int pointSize, int degree) {
-        final int raw = getTrackKerning(super.pointer, FTFixed.of(pointSize), degree);
-        return FTFixed.toFloat(raw);
+        final FTFixed dstKerning = FTFixed.newInstance();
+        this.getTrackKerning(pointSize, degree, dstKerning);
+        return dstKerning.getFloat();
     }
 
-    public boolean selectCharmap(FTEncoding encoding) {
-        return selectCharmap(super.pointer, encoding.value);
+    public void selectCharmap(FTEncoding encoding) {
+        final FTError error = FreeType.ftSelectCharmap(this, encoding);
+        error.checkError();
     }
 
-    public boolean setCharmap(FTCharMap charmap) {
-        return setCharmap(super.pointer, charmap.getPointer());
+    public void setCharmap(FTCharMap charmap) {
+        final FTError error = FreeType.ftSetCharmap(this, charmap);
+        error.checkError();
     }
 
-    public int getCharIndex(int charCode) {
-        return getCharIndex(super.pointer, charCode);
+    public int getCharIndex(int charcode) {
+        return FreeType.ftGetCharIndex(this, charcode);
     }
 
-    // long getFirstChar(FTFace face, int* gindex)
+    public long getFirstChar(long[] dstGIndex) {
+        return FreeType.ftGetFirstChar(this, dstGIndex);
+    }
 
     // long getNextChar(FTFace face, long charcode, int* gindex)
 
@@ -415,9 +452,9 @@ public class FTFace extends FTStruct { // struct done.
     // boolean setUnpatentedHinting(FTFace face, boolean value)
 
     public void done() {
+        generic.getFinalizer().run();
         FreeType.ftDoneFace(this);
         super.destroyPointer();
-        generic.getFinalizer().run();
     }
 
 }

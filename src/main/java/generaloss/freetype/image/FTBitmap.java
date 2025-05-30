@@ -6,15 +6,15 @@ import java.nio.ByteBuffer;
 
 public class FTBitmap extends FTStruct {
 
-    public FTBitmap(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTBitmap newInstance() {
         return new FTBitmap(newStruct());
+    }
+
+
+    public FTBitmap(long pointer) {
+        super(pointer);
     }
 
 

@@ -7,6 +7,13 @@ import java.nio.ByteBuffer;
 
 public class FTParameter extends FTStruct {
 
+    private static native long newStruct();
+
+    public static FTParameter newInstance() {
+        return new FTParameter(newStruct());
+    }
+
+
     public FTParameter(long pointer) {
         super(pointer);
     }

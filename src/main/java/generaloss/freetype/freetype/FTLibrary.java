@@ -46,11 +46,19 @@ public class FTLibrary extends FTStruct {
         return dstFace;
     }
 
+    public FTFace newMemoryFace(ByteBuffer fileBase, int faceIndex) {
+        return this.newMemoryFace(fileBase, fileBase.limit(), faceIndex);
+    }
+
     public FTFace newMemoryFace(byte[] fileBase, long fileSize, int faceIndex) {
         final FTFace dstFace = FTFace.newInstance();
         final FTError error = FreeType.ftNewMemoryFace(this, fileBase, fileSize, faceIndex, dstFace);
         error.checkError();
         return dstFace;
+    }
+
+    public FTFace newMemoryFace(byte[] fileBase, int faceIndex) {
+        return this.newMemoryFace(fileBase, fileBase.length, faceIndex);
     }
 
     public FTFace openFace(FTOpenArgs args, int faceIndex) {

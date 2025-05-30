@@ -4,15 +4,15 @@ import generaloss.freetype.FTStruct;
 
 public class FTSizeRequest extends FTStruct {
 
-    public FTSizeRequest(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTSizeRequest newInstance() {
         return new FTSizeRequest(newStruct());
+    }
+
+
+    public FTSizeRequest(long pointer) {
+        super(pointer);
     }
 
 

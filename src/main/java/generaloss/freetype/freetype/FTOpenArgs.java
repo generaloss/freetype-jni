@@ -1,18 +1,19 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FTStructRegistry;
 
 public class FTOpenArgs extends FTStruct { // struct done.
-
-    public FTOpenArgs(long pointer) {
-        super(pointer);
-    }
-
 
     private static native long newStruct();
 
     public static FTOpenArgs newInstance() {
         return new FTOpenArgs(newStruct());
+    }
+
+
+    public FTOpenArgs(long pointer) {
+        super(pointer);
     }
 
 
@@ -88,15 +89,15 @@ public class FTOpenArgs extends FTStruct { // struct done.
     // FT_Parameter* params;
     private static native long[] getParams(long pointer);
 
-    // /** Extra parameters passed to the font driver when opening a new face. */
-    // public FTParameter[] getParams() {
-    //     final long[] pointers = getParams(super.pointer);
-    //
-    //     final FTParameter[] objects = new FTParameter[pointers.length];
-    //     for(int i = 0; i < pointers.length; i++)
-    //         objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTParameter::new);
-    //
-    //     return objects;
-    // }
+    /** Extra parameters passed to the font driver when opening a new face. */
+    public FTParameter[] getParams() {
+        final long[] pointers = getParams(super.pointer);
+
+        final FTParameter[] objects = new FTParameter[pointers.length];
+        for(int i = 0; i < pointers.length; i++)
+            objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTParameter::new);
+
+        return objects;
+    }
 
 }

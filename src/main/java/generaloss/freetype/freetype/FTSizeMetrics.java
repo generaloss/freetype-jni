@@ -6,15 +6,15 @@ import generaloss.freetype.types.FTPos;
 
 public class FTSizeMetrics extends FTStruct {
 
-    public FTSizeMetrics(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTSizeMetrics newInstance() {
         return new FTSizeMetrics(newStruct());
+    }
+
+
+    public FTSizeMetrics(long pointer) {
+        super(pointer);
     }
 
 

@@ -4,15 +4,15 @@ import generaloss.freetype.FTStruct;
 
 public class FTMatrix extends FTStruct {
 
-    public FTMatrix(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTMatrix newInstance() {
         return new FTMatrix(newStruct());
+    }
+
+
+    public FTMatrix(long pointer) {
+        super(pointer);
     }
 
 

@@ -4,15 +4,15 @@ import generaloss.freetype.FTStruct;
 
 public class FTBBox extends FTStruct {
 
-    public FTBBox(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTBBox newInstance() {
         return new FTBBox(newStruct());
+    }
+
+
+    public FTBBox(long pointer) {
+        super(pointer);
     }
 
 

@@ -5,15 +5,15 @@ import generaloss.freetype.FTStructRegistry;
 
 public class FTCharMap extends FTStruct { // struct done.
 
-    public FTCharMap(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTCharMap newInstance() {
         return new FTCharMap(newStruct());
+    }
+
+
+    public FTCharMap(long pointer) {
+        super(pointer);
     }
 
 

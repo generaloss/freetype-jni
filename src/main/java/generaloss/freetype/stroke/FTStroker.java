@@ -4,15 +4,15 @@ import generaloss.freetype.FTStruct;
 
 public class FTStroker extends FTStruct {
 
-    public FTStroker(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTStroker newInstance() {
         return new FTStroker(newStruct());
+    }
+
+
+    public FTStroker(long pointer) {
+        super(pointer);
     }
 
 

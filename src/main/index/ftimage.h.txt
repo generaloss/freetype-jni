@@ -41,17 +41,17 @@ struct FTOutline {
     int             flags;      [ ] int getFlags()
 }
 
-flags FTOutline { [ ]
-    NONE
-    OWNER
-    EVEN_ODD_FILL
-    REVERSE_FILL
-    IGNORE_DROPOUTS
-    SMART_DROPOUTS
-    INCLUDE_STUBS
-    OVERLAP
-    HIGH_PRECISION
-    SINGLE_PASS
+flags FTOutline/*Flag*/ { [ ]
+    NONE            0
+    OWNER           1
+    EVEN_ODD_FILL   2
+    REVERSE_FILL    4
+    IGNORE_DROPOUTS 8
+    SMART_DROPOUTS  16
+    INCLUDE_STUBS   32
+    OVERLAP         64
+    HIGH_PRECISION  256
+    SINGLE_PASS     512
 }
 
 flags FTCurveTag { [ ]

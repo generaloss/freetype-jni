@@ -5,15 +5,15 @@ import generaloss.freetype.FTStructRegistry;
 
 public class FTSize extends FTStruct {
 
-    public FTSize(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTSize newInstance() {
         return new FTSize(newStruct());
+    }
+
+
+    public FTSize(long pointer) {
+        super(pointer);
     }
 
 

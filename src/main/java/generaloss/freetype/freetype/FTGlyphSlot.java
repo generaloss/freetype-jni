@@ -1,6 +1,7 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStructRegistry;
+import generaloss.freetype.gload.FTSubGlyph;
 import generaloss.freetype.types.FTFixed;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.glyph.FTGlyph;
@@ -11,18 +12,18 @@ import generaloss.freetype.types.FTVector;
 
 public class FTGlyphSlot extends FTStruct {
 
+    private static native long newStruct();
+
+    public static FTGlyphSlot newInstance() {
+        return new FTGlyphSlot(newStruct());
+    }
+
+
     private final FTGeneric generic;
 
     public FTGlyphSlot(long pointer) {
         super(pointer);
         this.generic = new FTGeneric();
-    }
-
-
-    private static native long newStruct();
-
-    public static FTGlyphSlot newInstance() {
-        return new FTGlyphSlot(newStruct());
     }
 
 
@@ -187,15 +188,15 @@ public class FTGlyphSlot extends FTStruct {
     /** The difference between hinted and unhinted left side bearing while auto-hinting is active.
      * Zero otherwise.
      * */
-    // public FTSubGlyph[] getSubglyphs() {
-    //     final long[] pointers = getSubglyphs(super.pointer);
-    //
-    //     final FTSubGlyph[] objects = new FTSubGlyph[pointers.length];
-    //     for(int i = 0; i < pointers.length; i++)
-    //         objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTSubGlyph::new);
-    //
-    //     return objects;
-    // }
+    public FTSubGlyph[] getSubglyphs() {
+        final long[] pointers = getSubglyphs(super.pointer);
+
+        final FTSubGlyph[] objects = new FTSubGlyph[pointers.length];
+        for(int i = 0; i < pointers.length; i++)
+            objects[i] = FTStructRegistry.getOrCreate(pointers[i], FTSubGlyph::new);
+
+        return objects;
+    }
 
 
     // FT_Pos lsb_delta;

@@ -4,15 +4,15 @@ import generaloss.freetype.FTStruct;
 
 public class FTVector extends FTStruct {
 
-    public FTVector(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTVector newInstance() {
         return new FTVector(newStruct());
+    }
+
+
+    public FTVector(long pointer) {
+        super(pointer);
     }
 
 

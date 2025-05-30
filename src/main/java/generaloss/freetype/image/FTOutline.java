@@ -2,20 +2,19 @@ package generaloss.freetype.image;
 
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FTStructRegistry;
-import generaloss.freetype.glyph.FTBitmapGlyph;
 import generaloss.freetype.types.FTVector;
 
 public class FTOutline extends FTStruct { // struct done.
-
-    public FTOutline(long pointer) {
-        super(pointer);
-    }
-
 
     private static native long newStruct();
 
     public static FTOutline newInstance() {
         return new FTOutline(newStruct());
+    }
+
+
+    public FTOutline(long pointer) {
+        super(pointer);
     }
 
 
@@ -84,8 +83,13 @@ public class FTOutline extends FTStruct { // struct done.
     /** A set of bit flags used to characterize the outline and give hints to the scan-converter and hinter on how to convert/grid-fit it.
      * See FT_OUTLINE_XXX.
      * */
-    public int getFlags() {
+    public int getFlagsRaw() {
         return getFlags(super.pointer);
+    }
+
+    public OutlineFlags getFlags() {
+        final int raw = this.getFlagsRaw();
+        return new OutlineFlags(raw);
     }
 
 }

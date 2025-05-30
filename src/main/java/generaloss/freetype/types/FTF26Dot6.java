@@ -5,15 +5,15 @@ import generaloss.freetype.FTStruct;
 /** 26.6 fixed-point value utility */
 public class FTF26Dot6 extends FTStruct {
 
-    public FTF26Dot6(long pointer) {
-        super(pointer);
-    }
-
-
     private static native long newStruct();
 
     public static FTF26Dot6 newInstance() {
         return new FTF26Dot6(newStruct());
+    }
+
+
+    public FTF26Dot6(long pointer) {
+        super(pointer);
     }
 
 
@@ -29,20 +29,21 @@ public class FTF26Dot6 extends FTStruct {
         return toFloat(raw);
     }
 
-    public int getFloor() {
+    public int getIntFloor() {
         final int raw = this.getRawValue();
         return toIntFloor(raw);
     }
 
-    public int getRound() {
+    public int getIntRound() {
         final int raw = this.getRawValue();
         return toIntRound(raw);
     }
 
-    public int getCeil() {
+    public int getIntCeil() {
         final int raw = this.getRawValue();
         return toIntCeil(raw);
     }
+
 
     @Override
     public String toString() {
