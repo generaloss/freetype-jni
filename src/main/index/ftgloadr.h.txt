@@ -1,29 +1,28 @@
 
-struct FTSubGlyph { [ ]
-    FT_Int    index;     [ ] int getIndex()
-    FT_UShort flags;     [ ] int getFlags()
-    FT_Int    arg1;      [ ] int getArg1()
-    FT_Int    arg2;      [ ] int getArg2()
-    FT_Matrix transform; [ ] FTMatrix getTransform()
+struct FTSubGlyph { [x]
+    FT_Int    index;     [x] int getIndex()
+    FT_UShort flags;     [x] int getFlags()
+    FT_Int    arg1;      [x] int getArg1()
+    FT_Int    arg2;      [x] int getArg2()
+    FT_Matrix transform; [x] FTMatrix getTransform()
 }
 
 struct FTGlyphLoadRec { [x]
-    FT_Outline  outline;       [x]  get()
-    FT_Vector*  extra_points;  [x]  get()
-    FT_Vector*  extra_points2; [x]  get()
-    FT_UInt     num_subglyphs; [x]  get()
-    FT_SubGlyph subglyphs;     [x]  get()
+    FT_Outline  outline;       [x]  getOutline()
+    FT_Vector*  extra_points;  [x]  getExtraPoints()
+    FT_Vector*  extra_points2; [x]  getExtraPoints2()
+    FT_UInt     num_subglyphs; [x]  getNumSubglyphs()
+    FT_SubGlyph subglyphs;     [x]  getSubglyphs()
 }
 
 struct FTGlyphLoaderRec { [x]
-    FT_Memory       memory;        [x]  get()
-    FT_UInt         max_points;    [x]  get()
-    FT_UInt         max_contours;  [x]  get()
-    FT_UInt         max_subglyphs; [x]  get()
-    FT_Bool         use_extra;     [x]  get()
-    FT_GlyphLoadRec base;          [x]  get()
-    FT_GlyphLoadRec current;       [x]  get()
-    void*           other;         [x]  get()
+    FT_Memory       memory;        [x]  getMemory()
+    FT_UInt         max_points;    [x]  getMaxPoints()
+    FT_UInt         max_contours;  [x]  getMaxContours()
+    FT_UInt         max_subglyphs; [x]  getMaxSubglyphs()
+    FT_Bool         use_extra;     [x]  getUseExtra()
+    FT_GlyphLoadRec base;          [x]  getBase()
+    FT_GlyphLoadRec current;       [x]  getCurrent()
 }
 
 

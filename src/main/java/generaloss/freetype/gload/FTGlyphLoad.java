@@ -5,7 +5,7 @@ import generaloss.freetype.FTStructCache;
 import generaloss.freetype.image.FTOutline;
 import generaloss.freetype.types.FTVector;
 
-public class FTGlyphLoad extends FTStruct {
+public class FTGlyphLoad extends FTStruct { // struct done.
 
     public FTGlyphLoad(long pointer) {
         super(pointer);

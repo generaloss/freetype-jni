@@ -12,7 +12,7 @@ import generaloss.freetype.types.FTError;
 import generaloss.freetype.types.FTMatrix;
 import generaloss.freetype.types.FTVector;
 
-public class FTGlyph extends FTStruct {
+public class FTGlyph extends FTStruct { // struct done.
 
     public FTGlyph(long pointer) {
         super(pointer);
@@ -22,7 +22,6 @@ public class FTGlyph extends FTStruct {
     // FT_Library library;
     private static native long getLibrary(long pointer);
 
-    /** A handle to the FreeType library object. */
     public FTLibrary getLibrary() {
         final long pointer = getLibrary(super.pointer);
         return FTStructCache.getOrCreate(pointer, FTLibrary::new);
@@ -31,7 +30,6 @@ public class FTGlyph extends FTStruct {
     // FT_Glyph_Format format;
     private static native int getFormat(long pointer);
 
-    /** The format of the glyph's image.c */
     public FTGlyphFormat getFormat() {
         final int raw = getFormat(super.pointer);
         return FTGlyphFormat.byValue(raw);
@@ -40,7 +38,6 @@ public class FTGlyph extends FTStruct {
     // FT_Vector advance;
     private static native long getAdvance(long pointer);
 
-    /** A 16.16 vector that gives the glyph's advance width. */
     public FTVector getAdvance() {
         final long pointer = getFormat(super.pointer);
         return FTStructCache.getOrCreate(pointer, FTVector::new);

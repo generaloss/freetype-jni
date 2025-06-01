@@ -6,7 +6,7 @@ import generaloss.freetype.FreeType;
 import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.FTError;
 
-public class FTGlyphLoader extends FTStruct {
+public class FTGlyphLoader extends FTStruct { // struct done.
 
     public FTGlyphLoader(long pointer) {
         super(pointer);
@@ -63,13 +63,6 @@ public class FTGlyphLoader extends FTStruct {
     public FTGlyphLoad getCurrent() {
         final long pointer = getCurrent(super.pointer);
         return FTStructCache.getOrCreate(pointer, FTGlyphLoad::new);
-    }
-
-    // void* other;
-    private static native Object getOther(long pointer);
-
-    public Object getOther() {
-        return getOther(super.pointer);
     }
 
 

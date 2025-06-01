@@ -2,7 +2,7 @@ package generaloss.freetype.system;
 
 import generaloss.freetype.FTStruct;
 
-public class FTMemory extends FTStruct {
+public class FTMemory extends FTStruct { // struct done.
 
     public FTMemory(long pointer) {
         super(pointer);

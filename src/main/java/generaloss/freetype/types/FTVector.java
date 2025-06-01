@@ -3,7 +3,7 @@ package generaloss.freetype.types;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FreeType;
 
-public class FTVector extends FTStruct {
+public class FTVector extends FTStruct { // struct done.
 
     public FTVector(long pointer) {
         super(pointer);

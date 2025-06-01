@@ -1,9 +1,9 @@
-struct FTVector {
-    FT_Pos x; [ ] FTPos getX()
-    FT_Pos y; [ ] FTPos getY()
+struct FTVector { [x]
+    FT_Pos x; [x] FTPos getX()
+    FT_Pos y; [x] FTPos getY()
 }
 
-struct FTBBox {
+struct FTBBox { [x]
     FT_Pos xMin; [x]  getXMin()
     FT_Pos yMin; [x]  getYMin()
     FT_Pos xMax; [x]  getXMax()
@@ -21,7 +21,7 @@ enum FTPixelMode { [x]
     BGRA
 }
 
-struct FTBitmap {
+struct FTBitmap { [ ]
     unsigned int   rows;         [x] int getRows()
     unsigned int   width;        [x] int getWidth()
     int            pitch;        [x] int getPitch()
@@ -32,16 +32,16 @@ struct FTBitmap {
     void*          palette;      [ ] void* getPalette()
 }
 
-struct FTOutline {
-    unsigned short  n_contours; [ ] int getNumContours()
-    unsigned short  n_points;   [ ] int getNumPoints()
-    FT_Vector*      points;     [ ] FTVector[] getPoints()
-    unsigned char*  tags;       [ ] int getTags()
-    unsigned short* contours;   [ ] int[] getContours()
-    int             flags;      [ ] int getFlags()
+struct FTOutline { [x]
+    unsigned short  n_contours; [x] int getNumContours()
+    unsigned short  n_points;   [x] int getNumPoints()
+    FT_Vector*      points;     [x] FTVector[] getPoints()
+    unsigned char*  tags;       [x] int getTags()
+    unsigned short* contours;   [x] int[] getContours()
+    int             flags;      [x] int getFlags()
 }
 
-flags FTOutline/*Flag*/ { [ ]
+flags FTOutline/*Flag*/ { [x]
     NONE            0
     OWNER           1
     EVEN_ODD_FILL   2
@@ -64,7 +64,7 @@ flags FTCurveTag { [ ]
     TOUCH_BOTH
 }
 
-struct FTOutlineFuncs {
+struct FTOutlineFuncs { [ ]
     FT_Outline_MoveToFunc  move_to;  [ ] FTOutlineMoveToFunc getMoveTo()
     FT_Outline_LineToFunc  line_to;  [ ] FTOutlineLineToFunc getLineTo()
     FT_Outline_ConicToFunc conic_to; [ ] FTOutlineConicToFunc getConicTo()
@@ -82,7 +82,7 @@ enum FTGlyphFormat { [ ]
     SVG
 }
 
-struct FT_Span {
+struct FT_Span { [ ]
     short          x;        [ ] short getX()
     unsigned short len;      [ ] int getLength()
     unsigned char  coverage; [ ] int getCoverage()
@@ -96,7 +96,7 @@ enum FTRasterFlag { [ ]
     SDF
 }
 
-struct FTRasterParams {
+struct FTRasterParams { [ ]
     const FT_Bitmap*       target;      [ ] FTBitmap getTarget()
     const void*            source;      [ ] const void* getSource()
     int                    flags;       [ ] int getFlags()
@@ -108,7 +108,7 @@ struct FTRasterParams {
     FT_BBox                clip_box;    [ ] FTBBox getClipBox()
 }
 
-struct FTRasterFuncs {
+struct FTRasterFuncs { [ ]
     FT_Glyph_Format       glyph_format;    [ ] FTGlyphFormat getGlyphFormat()
     FT_Raster_NewFunc     raster_new;      [ ] FTRasterNewFunc getRasterNew()
     FT_Raster_ResetFunc   raster_reset;    [ ] FTRasterResetFunc getRasterReset()

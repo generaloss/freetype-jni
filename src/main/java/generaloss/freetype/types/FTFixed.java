@@ -2,8 +2,7 @@ package generaloss.freetype.types;
 
 import generaloss.freetype.FTStruct;
 
-/** 16.16 fixed-point value utility */
-public class FTFixed extends FTStruct {
+public class FTFixed extends FTStruct { // struct done.
 
     public FTFixed(long pointer) {
         super(pointer);

@@ -14,7 +14,7 @@ import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class FTLibrary extends FTStruct {
+public class FTLibrary extends FTStruct { // struct done.
 
     public FTLibrary(long poniter) {
         super(poniter);

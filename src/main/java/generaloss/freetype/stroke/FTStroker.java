@@ -7,16 +7,13 @@ import generaloss.freetype.types.FTError;
 import generaloss.freetype.types.FTFixed;
 import generaloss.freetype.types.FTVector;
 
-public class FTStroker extends FTStruct {
+public class FTStroker extends FTStruct { // struct done.
 
     public FTStroker(long pointer) {
         super(pointer);
     }
 
 
-    /** The radius is expressed in the same units as the outline coordinates.
-     * The miter_limit multiplied by the radius gives the maximum size of a miter spike, at which it is clipped for FTStrokerLinejoin.MITER_VARIABLE or replaced with a bevel join for FTStrokerLinejoin.MITER_FIXED.
-     * This function calls FT_Stroker_Rewind automatically. */
     public void set(float radius, FTStrokerLinecap lineCap, FTStrokerLinejoin lineJoin, float miterLimit) {
         FreeType.ftStrokerSet(this, FTFixed.of(radius), lineCap, lineJoin, FTFixed.of(miterLimit));
     }
@@ -73,7 +70,6 @@ public class FTStroker extends FTStruct {
         FreeType.ftStrokerExport(this, outline);
     }
 
-    /** Destroy a stroker object. */
     public void done() {
         FreeType.ftStrokerDone(this);
     }

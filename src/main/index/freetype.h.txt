@@ -60,7 +60,6 @@ struct FTFace { [x]
     FT_Bitmap_Size* available_sizes;     [x] FTBitmapSize[] getAvailableSizes()
     FT_Int          num_charmaps;        [x] int getNumCharmaps()
     FT_CharMap*     charmaps;            [x] FTCharMap getCharmaps()
-    FT_Generic      generic;             [x] FTGeneric getGeneric()
     FT_BBox         bbox;                [x] FTBBox getBBox()
     FT_UShort       units_per_EM;        [x] int getUnitsPerEM()
     FT_Short        ascender;            [x] int getAscender()
@@ -113,19 +112,16 @@ struct FTSizeMetrics { [x]
     FT_Pos    max_advance; [x] FTPos getMaxAdvance()
 }
 
-struct FTSize { [ ]
-    FT_Face          face;     [ ] FTFace getFace()
-    FT_Generic       generic;  [ ] FTGeneric getGeneric()
+struct FTSize { [x]
+    FT_Face          face;     [x] FTFace getFace()
     FT_Size_Metrics  metrics;  [x] FTSizeMetrics getMetrics()
-    FT_Size_Internal internal; [ ] FTSizeInternal getInternal()
 }
 
-struct FTGlyphSlot { [ ]
+struct FTGlyphSlot { [x]
     FT_Library       library;           [x] FTLibrary getLibrary()
     FT_Face          face;              [x] FTFace getFace()
-    FT_GlyphSlot     next;              [ ] FTGlyphSlot getNext()
-    FT_UInt          glyph_index;       [ ] int getGlyphIndex()
-    FT_Generic       generic;           [ ] FTGeneric getGeneric()
+    FT_GlyphSlot     next;              [x] FTGlyphSlot getNext()
+    FT_UInt          glyph_index;       [x] int getGlyphIndex()
     FT_Glyph_Metrics metrics;           [x] FTGlyphMetrics getMetrics()
     FT_Fixed         linearHoriAdvance; [x] FTFixed getLinearHoriAdvance()
     FT_Fixed         linearVertAdvance; [x] FTFixed getLinearVertAdvance()
@@ -134,11 +130,11 @@ struct FTGlyphSlot { [ ]
     FT_Bitmap        bitmap;            [x] FTBitmap getBitmap()
     FT_Int           bitmap_left;       [x] int getBitmapLeft()
     FT_Int           bitmap_top;        [x] int getBitmapTop()
-    FT_Outline       outline;           [ ] FTOutline getOutline()
-    FT_UInt          num_subglyphs;     [ ] int getNumSubglyphs()
-    FT_SubGlyph      subglyphs;         [ ] FTSubGlyph getSubglyphs()
-    FT_Pos           lsb_delta;         [ ] FTPos getLsbDelta()
-    FT_Pos           rsb_delta;         [ ] FTPos getRsbDelta()
+    FT_Outline       outline;           [x] FTOutline getOutline()
+    FT_UInt          num_subglyphs;     [x] int getNumSubglyphs()
+    FT_SubGlyph      subglyphs;         [x] FTSubGlyph getSubglyphs()
+    FT_Pos           lsb_delta;         [x] FTPos getLsbDelta()
+    FT_Pos           rsb_delta;         [x] FTPos getRsbDelta()
 }
 
 flags FTOpen { [ ]
@@ -174,7 +170,7 @@ enum FTSizeRequestType { [x]
     MAX
 }
 
-struct FTSizeRequest {
+struct FTSizeRequest { [x]
     FT_Size_Request_Type type;           [x] FTSizeRequestType getType()
     FT_Long              width;          [x] long getWidth()
     FT_Long              height;         [x] long getHeight()

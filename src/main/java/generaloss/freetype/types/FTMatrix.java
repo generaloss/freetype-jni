@@ -3,7 +3,7 @@ package generaloss.freetype.types;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FreeType;
 
-public class FTMatrix extends FTStruct {
+public class FTMatrix extends FTStruct { // struct done.
 
     public FTMatrix(long pointer) {
         super(pointer);
@@ -13,7 +13,6 @@ public class FTMatrix extends FTStruct {
     // FT_Fixed xx;
     private static native int getXX(long pointer);
 
-    /** Matrix coefficient. */
     public float getXX() {
         final int raw = getXX(super.pointer);
         return FTFixed.toFloat(raw);
@@ -22,7 +21,6 @@ public class FTMatrix extends FTStruct {
     // FT_Fixed xy;
     private static native int getXY(long pointer);
 
-    /** Matrix coefficient. */
     public float getXY() {
         final int raw = getXY(super.pointer);
         return FTFixed.toFloat(raw);
@@ -31,7 +29,6 @@ public class FTMatrix extends FTStruct {
     // FT_Fixed yx;
     private static native int getYX(long pointer);
 
-    /** Matrix coefficient. */
     public float getYX() {
         final int raw = getYX(super.pointer);
         return FTFixed.toFloat(raw);
@@ -40,7 +37,6 @@ public class FTMatrix extends FTStruct {
     // FT_Fixed yy;
     private static native int getYY(long pointer);
 
-    /** Matrix coefficient. */
     public float getYY() {
         final int raw = getYY(super.pointer);
         return FTFixed.toFloat(raw);

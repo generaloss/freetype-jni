@@ -1,7 +1,5 @@
 package generaloss.freetype;
 
-import generaloss.freetype.gload.FTSubGlyph;
-
 public class FTStruct {
 
     protected long pointer;

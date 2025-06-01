@@ -21,7 +21,7 @@ public class Test {
     private static void test1() {
         final FTLibrary library = new FTLibrary();
 
-        final FTFace face = library.newMemoryFace(Resource.internal("/main.ttf").readBytes(), 0);
+        final FTFace face = library.newMemoryFace(Resource.internal("/main.ttf").readByteBuffer(), 0);
 
         System.out.println("Charmaps num: " + face.getNumCharmaps());
 

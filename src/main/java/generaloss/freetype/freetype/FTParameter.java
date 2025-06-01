@@ -5,11 +5,12 @@ import generaloss.freetype.types.FTTag;
 
 import java.nio.ByteBuffer;
 
-public class FTParameter extends FTStruct {
+public class FTParameter extends FTStruct { // struct done.
 
     public FTParameter(long pointer) {
         super(pointer);
     }
+
 
     // FT_ULong tag;
     private static native long getTag(long pointer);
@@ -21,7 +22,6 @@ public class FTParameter extends FTStruct {
     public String getTagString() {
         return FTTag.decodeString(this.getTag());
     }
-
 
     private static native void setTag(long pointer, long tag);
 
@@ -44,7 +44,6 @@ public class FTParameter extends FTStruct {
     public ByteBuffer getData() {
         return getData(super.pointer);
     }
-
 
     private static native void setData(long pointer, ByteBuffer buffer);
 
