@@ -601,153 +601,318 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Name_1Index
 // FT_Error FT_Get_Glyph_Name(FT_Face face, FT_UInt glyph_index, FT_Pointer buffer, FT_UInt buffer_max)
 // int FT_Get_Glyph_Name(long face, long glyph_index, ByteBuffer buffer, long buffer_max);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph_1Name
-  (JNIEnv *, jclass, jlong, jlong, jobject, jlong) {
+  (JNIEnv *env, jclass, jlong facePtrRaw, jlong glyphIndexRaw, jobject bufferRaw, jlong bufferMaxRaw) {
 
-    return 0;
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
+    if(!face) {
+        throwException(env, "Invalid FT_Face pointer");
+        return 0;
+    }
+
+    const FT_UInt glyphIndex = static_cast<FT_UInt>(glyphIndexRaw);
+    const FT_UInt bufferMax = static_cast<FT_UInt>(bufferMaxRaw);
+
+    const FT_Pointer buffer = env->GetDirectBufferAddress(bufferRaw);
+    if(!buffer) {
+        throwException(env, "Invalid buffer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Get_Glyph_Name(face, glyphIndex, buffer, bufferMax);
+    return static_cast<jint>(error);
 }
 
 // const char* FT_Get_Postscript_Name(FT_Face face)
 // String FT_Get_Postscript_Name(long face);
 JNIEXPORT jstring JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Postscript_1Name
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong facePtrRaw) {
 
-    return NULL;
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
+    if(!face) {
+        throwException(env, "Invalid FT_Face pointer");
+        return NULL;
+    }
+
+    const char* name = FT_Get_Postscript_Name(face);
+    if(!name)
+        return NULL;
+
+    return env->NewStringUTF(name);
 }
 
 // FT_Error FT_Get_SubGlyph_Info(FT_GlyphSlot glyph, FT_UInt sub_index, FT_Int *p_index, FT_UInt *p_flags, FT_Int *p_arg1, FT_Int *p_arg2, FT_Matrix *p_transform)
 // int FT_Get_SubGlyph_Info(long glyph, long sub_index, int[] p_index, long[] p_flags, int[] p_arg1, int[] p_arg2, long p_transform);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1SubGlyph_1Info
-  (JNIEnv *, jclass, jlong, jlong, jintArray, jlongArray, jintArray, jintArray, jlong) {
+  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong subIndexRaw, jintArray pIndexArray, jlongArray pFlagsArray, jintArray pArg1Array, jintArray pArg2Array, jlong pTransformPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot glyph = *reinterpret_cast<FT_GlyphSlot*>(glyphPtrRaw);
+    if(!glyph) {
+        throwException(env, "Invalid FT_GlyphSlot pointer");
+        return 0;
+    }
+
+    const FT_UInt subIndex = static_cast<FT_UInt>(subIndexRaw);
+
+    jint* pIndex = env->GetIntArrayElements(pIndexArray, NULL);
+    jlong* pFlags = env->GetLongArrayElements(pFlagsArray, NULL);
+    jint* pArg1 = env->GetIntArrayElements(pArg1Array, NULL);
+    jint* pArg2 = env->GetIntArrayElements(pArg2Array, NULL);
+    FT_Matrix* pTransform = reinterpret_cast<FT_Matrix*>(pTransformPtrRaw);
+
+    const FT_Error error = FT_Get_SubGlyph_Info(glyph, subIndex, pIndex, (FT_UInt*)pFlags, pArg1, pArg2, pTransform);
+
+    env->ReleaseIntArrayElements(pIndexArray, pIndex, 0);
+    env->ReleaseLongArrayElements(pFlagsArray, pFlags, 0);
+    env->ReleaseIntArrayElements(pArg1Array, pArg1, 0);
+    env->ReleaseIntArrayElements(pArg2Array, pArg2, 0);
+
+    return static_cast<jint>(error);
 }
 
 // FT_UShort FT_Get_FSType_Flags(FT_Face face)
 // int FT_Get_FSType_Flags(long face);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong facePtrRaw) {
 
-    return 0;
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
+    if(!face) {
+        throwException(env, "Invalid FT_Face pointer");
+        return 0;
+    }
+
+    const FT_UShort flags = FT_Get_FSType_Flags(face);
+    return static_cast<jint>(flags);
 }
 
 // FT_UInt FT_Face_GetCharVariantIndex(FT_Face face, FT_ULong charcode, FT_ULong variantSelector)
 // long FT_Face_GetCharVariantIndex(long face, long charcode, long variantSelector);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharVariantIndex
-  (JNIEnv *, jclass, jlong, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong facePtrRaw, jlong charCodeRaw, jlong variantSelectorRaw) {
 
-    return 0;
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
+    if(!face) {
+        throwException(env, "Invalid FT_Face pointer");
+        return 0;
+    }
+
+    const FT_ULong charCode = static_cast<FT_ULong>(charCodeRaw);
+    const FT_ULong variantSelector = static_cast<FT_ULong>(variantSelectorRaw);
+
+    const FT_UInt index = FT_Face_GetCharVariantIndex(face, charCode, variantSelector);
+    return static_cast<jlong>(index);
 }
 
 // FT_Int FT_Face_GetCharVariantIsDefault(FT_Face face, FT_ULong charcode, FT_ULong variantSelector)
 // int FT_Face_GetCharVariantIsDefault(long face, long charcode, long variantSelector);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharVariantIsDefault
-  (JNIEnv *, jclass, jlong, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong facePtrRaw, jlong charCodeRaw, jlong variantSelectorRaw) {
 
-    return 0;
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
+    if(!face) {
+        throwException(env, "Invalid FT_Face pointer");
+        return 0;
+    }
+
+    const FT_ULong charCode = static_cast<FT_ULong>(charCodeRaw);
+    const FT_ULong variantSelector = static_cast<FT_ULong>(variantSelectorRaw);
+
+    const FT_Int isDefault = FT_Face_GetCharVariantIsDefault(face, charCode, variantSelector);
+    return static_cast<jint>(isDefault);
 }
 
 // FT_UInt32* FT_Face_GetVariantSelectors(FT_Face face)
 // int FT_Face_GetVariantSelectors(long face);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSelectors
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong facePtrRaw) {
 
-    return 0;
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
+    if(!face) {
+        throwException(env, "Invalid FT_Face pointer");
+        return 0;
+    }
+
+    const FT_UInt32* selectors = FT_Face_GetVariantSelectors(face);
+    return reinterpret_cast<jint>(selectors);
 }
 
 // FT_UInt32* FT_Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode)
 // int FT_Face_GetVariantsOfChar(long face, long charcode);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsOfChar
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong facePtrRaw, jlong charCodeRaw) {
 
-    return 0;
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
+    if(!face) {
+        throwException(env, "Invalid FT_Face pointer");
+        return 0;
+    }
+
+    const FT_ULong charCode = static_cast<FT_ULong>(charCodeRaw);
+
+    const FT_UInt32* variants = FT_Face_GetVariantsOfChar(face, charCode);
+    return reinterpret_cast<jint>(variants);
 }
 
 // FT_UInt32* FT_Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector)
 // int FT_Face_GetCharsOfVariant(long face, long variantSelector);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVariant
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong facePtrRaw, jlong variantSelectorRaw) {
 
-    return 0;
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
+    if(!face) {
+        throwException(env, "Invalid FT_Face pointer");
+        return 0;
+    }
+
+    const FT_ULong variantSelector = static_cast<FT_ULong>(variantSelectorRaw);
+
+    const FT_UInt32* chars = FT_Face_GetCharsOfVariant(face, variantSelector);
+    return reinterpret_cast<jint>(chars);
 }
 
 // FT_Long FT_MulDiv(FT_Long a, FT_Long b, FT_Long c)
 // long FT_MulDiv(long a, long b, long c);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1MulDiv
-  (JNIEnv *, jclass, jlong, jlong, jlong) {
+  (JNIEnv *, jclass, jlong aRaw, jlong bRaw, jlong cRaw) {
 
-    return 0;
+    const FT_Long a = static_cast<FT_Long>(aRaw);
+    const FT_Long b = static_cast<FT_Long>(bRaw);
+    const FT_Long c = static_cast<FT_Long>(cRaw);
+
+    const FT_Long result = FT_MulDiv(a, b, c);
+    return static_cast<jlong>(result);
 }
 
 // FT_Long FT_MulFix(FT_Long a, FT_Long b)
 // long FT_MulFix(long a, long b);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1MulFix
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *, jclass, jlong aRaw, jlong bRaw) {
 
-    return 0;
+    const FT_Long a = static_cast<FT_Long>(aRaw);
+    const FT_Long b = static_cast<FT_Long>(bRaw);
+
+    const FT_Long result = FT_MulFix(a, b);
+    return static_cast<jlong>(result);
 }
 
 // FT_Long FT_DivFix(FT_Long a, FT_Long b)
 // long FT_DivFix(long a, long b);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1DivFix
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *, jclass, jlong aRaw, jlong bRaw) {
 
-    return 0;
+    const FT_Long a = static_cast<FT_Long>(aRaw);
+    const FT_Long b = static_cast<FT_Long>(bRaw);
+
+    const FT_Long result = FT_DivFix(a, b);
+    return static_cast<jlong>(result);
 }
 
 // FT_Fixed FT_RoundFix(FT_Fixed a)
 // long FT_RoundFix(long a);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1RoundFix
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong aRaw) {
 
-    return 0;
+    const FT_Fixed a = static_cast<FT_Fixed>(aRaw);
+    const FT_Fixed result = FT_RoundFix(a);
+    return static_cast<jlong>(result);
 }
 
 // FT_Fixed FT_CeilFix(FT_Fixed a)
 // long FT_CeilFix(long a);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1CeilFix
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong aRaw) {
 
-    return 0;
+    const FT_Fixed a = static_cast<FT_Fixed>(aRaw);
+    const FT_Fixed result = FT_CeilFix(a);
+    return static_cast<jlong>(result);
 }
 
 // FT_Fixed FT_FloorFix(FT_Fixed a)
 // long FT_FloorFix(long a);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1FloorFix
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong aRaw) {
 
-    return 0;
+    const FT_Fixed a = static_cast<FT_Fixed>(aRaw);
+    const FT_Fixed result = FT_FloorFix(a);
+    return static_cast<jlong>(result);
 }
 
 // void FT_Vector_Transform(FT_Vector* vector, const FT_Matrix* matrix)
 // void FT_Vector_Transform(long vector, long matrix);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Vector_1Transform
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong vectorPtrRaw, jlong matrixPtrRaw) {
 
+    FT_Vector* vector = reinterpret_cast<FT_Vector*>(vectorPtrRaw);
+    if(!vector) {
+        throwException(env, "Invalid FT_Vector pointer");
+        return;
+    }
 
+    const FT_Matrix* matrix = reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
+    if(!matrix) {
+        throwException(env, "Invalid FT_Matrix pointer");
+        return;
+    }
+
+    FT_Vector_Transform(vector, matrix);
 }
 
 // void FT_Library_Version(FT_Library library, FT_Int *amajor, FT_Int *aminor, FT_Int *apatch)
 // void FT_Library_Version(long library, int[] amajor, int[] aminor, int[] apatch);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Library_1Version
-  (JNIEnv *, jclass, jlong, jintArray, jintArray, jintArray) {
+  (JNIEnv *env, jclass, jlong libraryPtrRaw, jintArray majorArray, jintArray minorArray, jintArray patchArray) {
 
+    const FT_Library library = *reinterpret_cast<FT_Library*>(libraryPtrRaw);
+    if(!library) {
+        throwException(env, "Invalid FT_Library pointer");
+        return;
+    }
 
+    jint* major = env->GetIntArrayElements(majorArray, NULL);
+    jint* minor = env->GetIntArrayElements(minorArray, NULL);
+    jint* patch = env->GetIntArrayElements(patchArray, NULL);
+
+    FT_Int amajor, aminor, apatch;
+    FT_Library_Version(library, &amajor, &aminor, &apatch);
+
+    major[0] = static_cast<jint>(amajor);
+    minor[0] = static_cast<jint>(aminor);
+    patch[0] = static_cast<jint>(apatch);
+
+    env->ReleaseIntArrayElements(majorArray, major, 0);
+    env->ReleaseIntArrayElements(minorArray, minor, 0);
+    env->ReleaseIntArrayElements(patchArray, patch, 0);
 }
 
 // FT_Bool FT_Face_CheckTrueTypePatents(FT_Face face)
 // boolean FT_Face_CheckTrueTypePatents(long face);
 JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1CheckTrueTypePatents
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong facePtrRaw) {
 
-    return false;
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
+    if(!face) {
+        throwException(env, "Invalid FT_Face pointer");
+        return JNI_FALSE;
+    }
+
+    const FT_Bool result = FT_Face_CheckTrueTypePatents(face);
+    return static_cast<jboolean>(result);
 }
 
 // FT_Bool FT_Face_SetUnpatentedHinting(FT_Face face, FT_Bool value)
 // boolean FT_Face_SetUnpatentedHinting(long face, boolean value);
 JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1SetUnpatentedHinting
-  (JNIEnv *, jclass, jlong, jboolean) {
+  (JNIEnv *env, jclass, jlong facePtrRaw, jboolean valueRaw) {
 
-    return false;
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
+    if(!face) {
+        throwException(env, "Invalid FT_Face pointer");
+        return JNI_FALSE;
+    }
+
+    const FT_Bool value = static_cast<FT_Bool>(valueRaw);
+
+    const FT_Bool result = FT_Face_SetUnpatentedHinting(face, value);
+    return static_cast<jboolean>(result);
 }
 
 
@@ -759,73 +924,142 @@ JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1SetUnpate
 // FT_Error FT_GlyphLoader_New(FT_Memory memory, FT_GlyphLoader *aloader)
 // int FT_GlyphLoader_New(long memory, long aloader);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1New
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong memoryPtrRaw, jlong loaderPtrRaw) {
 
-    return 0;
+    const FT_Memory memory = *reinterpret_cast<FT_Memory*>(memoryPtrRaw);
+    if(!memory) {
+        throwException(env, "Invalid FT_Memory pointer");
+        return 0;
+    }
+
+    FT_GlyphLoader* loader = reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    if(!loader) {
+        throwException(env, "Invalid FT_GlyphLoader pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_GlyphLoader_New(memory, loader);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_GlyphLoader_CreateExtra(FT_GlyphLoader loader)
 // int FT_GlyphLoader_CreateExtra(long loader);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CreateExtra
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
-    return 0;
+    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    if(!loader) {
+        throwException(env, "Invalid FT_GlyphLoader pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_GlyphLoader_CreateExtra(loader);
+    return static_cast<jint>(error);
 }
 
 // void FT_GlyphLoader_Done(FT_GlyphLoader loader)
 // void FT_GlyphLoader_Done(long loader);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Done
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
+    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    if(!loader) {
+        throwException(env, "Invalid FT_GlyphLoader pointer");
+        return;
+    }
 
+    FT_GlyphLoader_Done(loader);
 }
 
 // void FT_GlyphLoader_Reset(FT_GlyphLoader loader)
 // void FT_GlyphLoader_Reset(long loader);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Reset
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
+    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    if(!loader) {
+        throwException(env, "Invalid FT_GlyphLoader pointer");
+        return;
+    }
 
+    FT_GlyphLoader_Reset(loader);
 }
 
 // void FT_GlyphLoader_Rewind(FT_GlyphLoader loader)
 // void FT_GlyphLoader_Rewind(long loader);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Rewind
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
+    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    if(!loader) {
+        throwException(env, "Invalid FT_GlyphLoader pointer");
+        return;
+    }
 
+    FT_GlyphLoader_Rewind(loader);
 }
 
 // FT_Error FT_GlyphLoader_CheckPoints(FT_GlyphLoader loader, FT_UInt n_points, FT_UInt n_contours)
 // int FT_GlyphLoader_CheckPoints(long loader, long n_points, long n_contours);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CheckPoints
-  (JNIEnv *, jclass, jlong, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong loaderPtrRaw, jlong nPointsRaw, jlong nContoursRaw) {
 
-    return 0;
+    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    if(!loader) {
+        throwException(env, "Invalid FT_GlyphLoader pointer");
+        return 0;
+    }
+
+    const FT_UInt nPoints = static_cast<FT_UInt>(nPointsRaw);
+    const FT_UInt nContours = static_cast<FT_UInt>(nContoursRaw);
+
+    const FT_Error error = FT_GlyphLoader_CheckPoints(loader, nPoints, nContours);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_GlyphLoader_CheckSubGlyphs(FT_GlyphLoader loader, FT_UInt n_subs)
 // int FT_GlyphLoader_CheckSubGlyphs(long loader, long n_subs);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CheckSubGlyphs
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong loaderPtrRaw, jlong nSubsRaw) {
 
-    return 0;
+    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    if(!loader) {
+        throwException(env, "Invalid FT_GlyphLoader pointer");
+        return 0;
+    }
+
+    const FT_UInt nSubs = static_cast<FT_UInt>(nSubsRaw);
+
+    const FT_Error error = FT_GlyphLoader_CheckSubGlyphs(loader, nSubs);
+    return static_cast<jint>(error);
 }
 
 // void FT_GlyphLoader_Prepare(FT_GlyphLoader loader)
 // void FT_GlyphLoader_Prepare(long loader);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Prepare
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
+    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    if(!loader) {
+        throwException(env, "Invalid FT_GlyphLoader pointer");
+        return;
+    }
 
+    FT_GlyphLoader_Prepare(loader);
 }
 
 // void FT_GlyphLoader_Add(FT_GlyphLoader loader)
 // void FT_GlyphLoader_Add(long loader);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Add
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
+    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    if(!loader) {
+        throwException(env, "Invalid FT_GlyphLoader pointer");
+        return;
+    }
 
+    FT_GlyphLoader_Add(loader);
 }
 
 
@@ -837,73 +1071,179 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Add
 // FT_Error FT_New_Glyph(FT_Library library, FT_Glyph_Format format, FT_Glyph *aglyph)
 // int FT_New_Glyph(long library, int format, long aglyph);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Glyph
-  (JNIEnv *, jclass, jlong, jint, jlong) {
+  (JNIEnv *env, jclass, jlong libraryPtrRaw, jint formatRaw, jlong glyphPtrRaw) {
 
-    return 0;
+    const FT_Library library = *reinterpret_cast<FT_Library*>(libraryPtrRaw);
+    if(!library) {
+        throwException(env, "Invalid FT_Library pointer");
+        return 0;
+    }
+
+    FT_Glyph* glyph = reinterpret_cast<FT_Glyph*>(glyphPtrRaw);
+    if(!glyph) {
+        throwException(env, "Invalid FT_Glyph pointer");
+        return 0;
+    }
+
+    const FT_Glyph_Format format = static_cast<FT_Glyph_Format>(formatRaw);
+
+    const FT_Error error = FT_New_Glyph(library, format, glyph);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_Get_Glyph(FT_GlyphSlot slot, FT_Glyph *aglyph)
 // int FT_Get_Glyph(long slot, long aglyph);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong slotPtrRaw, jlong glyphPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot) {
+        throwException(env, "Invalid FT_GlyphSlot pointer");
+        return 0;
+    }
+
+    FT_Glyph* glyph = reinterpret_cast<FT_Glyph*>(glyphPtrRaw);
+    if(!glyph) {
+        throwException(env, "Invalid FT_Glyph pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Get_Glyph(slot, glyph);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_Glyph_Copy(FT_Glyph source, FT_Glyph *target)
 // int FT_Glyph_Copy(long source, long target);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Copy
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong sourcePtrRaw, jlong targetPtrRaw) {
 
-    return 0;
+    const FT_Glyph source = *reinterpret_cast<FT_Glyph*>(sourcePtrRaw);
+    if(!source) {
+        throwException(env, "Invalid source FT_Glyph pointer");
+        return 0;
+    }
+
+    FT_Glyph* target = reinterpret_cast<FT_Glyph*>(targetPtrRaw);
+    if(!target) {
+        throwException(env, "Invalid target FT_Glyph pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Glyph_Copy(source, target);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_Glyph_Transform(FT_Glyph glyph, const FT_Matrix* matrix, const FT_Vector* delta)
 // int FT_Glyph_Transform(long glyph, long matrix, long delta);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Transform
-  (JNIEnv *, jclass, jlong, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong matrixPtrRaw, jlong deltaPtrRaw) {
 
-    return 0;
+    const FT_Glyph glyph = *reinterpret_cast<FT_Glyph*>(glyphPtrRaw);
+    if(!glyph) {
+        throwException(env, "Invalid FT_Glyph pointer");
+        return 0;
+    }
+
+    const FT_Matrix* matrix = reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
+    const FT_Vector* delta = reinterpret_cast<FT_Vector*>(deltaPtrRaw);
+
+    const FT_Error error = FT_Glyph_Transform(glyph, matrix, delta);
+    return static_cast<jint>(error);
 }
 
 // void FT_Glyph_Get_CBox(FT_Glyph glyph, FT_UInt bbox_mode, FT_BBox *acbox)
 // void FT_Glyph_Get_CBox(long glyph, long bboxMode, long acbox);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Get_1CBox
-  (JNIEnv *, jclass, jlong, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong bboxModeRaw, jlong cboxPtrRaw) {
 
+    const FT_Glyph glyph = *reinterpret_cast<FT_Glyph*>(glyphPtrRaw);
+    if(!glyph) {
+        throwException(env, "Invalid FT_Glyph pointer");
+        return;
+    }
 
+    const FT_UInt bboxMode = static_cast<FT_UInt>(bboxModeRaw);
+
+    FT_BBox* cbox = reinterpret_cast<FT_BBox*>(cboxPtrRaw);
+    if(!cbox) {
+        throwException(env, "Invalid FT_BBox pointer");
+        return;
+    }
+
+    FT_Glyph_Get_CBox(glyph, bboxMode, cbox);
 }
 
 // FT_Error FT_Glyph_To_Bitmap(FT_Glyph* the_glyph, FT_Render_Mode render_mode, const FT_Vector* origin, FT_Bool destroy)
 // int FT_Glyph_To_Bitmap(long the_glyph, int render_mode, long origin, boolean destroy, long[] dstBitmapGlyphPointer);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1To_1Bitmap
-  (JNIEnv *, jclass, jlong, jint, jlong, jboolean, jlongArray) {
+  (JNIEnv *env, jclass, jlong glyphPtrPtrRaw, jint renderModeRaw, jlong originPtrRaw, jboolean destroyRaw, jlongArray dstGlyphPtrArray) {
 
-    return 0;
+    FT_Glyph* glyphPtr = reinterpret_cast<FT_Glyph*>(glyphPtrPtrRaw);
+    if(!glyphPtr) {
+        throwException(env, "Invalid FT_Glyph pointer");
+        return 0;
+    }
+
+    const FT_Render_Mode renderMode = static_cast<FT_Render_Mode>(renderModeRaw);
+    const FT_Vector* origin = reinterpret_cast<FT_Vector*>(originPtrRaw);
+    const FT_Bool destroy = static_cast<FT_Bool>(destroyRaw);
+
+    jlong* dstGlyphPtr = env->GetLongArrayElements(dstGlyphPtrArray, NULL);
+    if(!dstGlyphPtr) {
+        throwException(env, "Invalid destination array");
+        return 0;
+    }
+
+    const FT_Error error = FT_Glyph_To_Bitmap(glyphPtr, renderMode, origin, destroy);
+    dstGlyphPtr[0] = reinterpret_cast<jlong>(*glyphPtr);
+
+    env->ReleaseLongArrayElements(dstGlyphPtrArray, dstGlyphPtr, 0);
+
+    return static_cast<jint>(error);
 }
 
 // void FT_Done_Glyph(FT_Glyph glyph)
 // void FT_Done_Glyph(long glyph);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Glyph
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong glyphPtrRaw) {
 
+    const FT_Glyph glyph = *reinterpret_cast<FT_Glyph*>(glyphPtrRaw);
+    if(!glyph) {
+        throwException(env, "Invalid FT_Glyph pointer");
+        return;
+    }
 
+    FT_Done_Glyph(glyph);
 }
 
 // void FT_Matrix_Multiply(const FT_Matrix* a, FT_Matrix* b)
 // void FT_Matrix_Multiply(long a, long b);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Multiply
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong aPtrRaw, jlong bPtrRaw) {
 
+    const FT_Matrix* a = reinterpret_cast<FT_Matrix*>(aPtrRaw);
+    FT_Matrix* b = reinterpret_cast<FT_Matrix*>(bPtrRaw);
+    if(!a || !b) {
+        throwException(env, "Invalid FT_Matrix pointer");
+        return;
+    }
 
+    FT_Matrix_Multiply(a, b);
 }
 
 // FT_Error FT_Matrix_Invert(FT_Matrix* matrix)
 // int FT_Matrix_Invert(long matrix);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Invert
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong matrixPtrRaw) {
 
-    return 0;
+    FT_Matrix* matrix = reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
+    if(!matrix) {
+        throwException(env, "Invalid FT_Matrix pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Matrix_Invert(matrix);
+    return static_cast<jint>(error);
 }
 
 
@@ -915,143 +1255,365 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Invert
 // FT_StrokerBorder FT_Outline_GetInsideBorder(FT_Outline* outline)
 // int FT_Outline_GetInsideBorder(long outline);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1GetInsideBorder
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong outlinePtrRaw) {
 
-    return 0;
+    const FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    const FT_StrokerBorder border = FT_Outline_GetInsideBorder(outline);
+    return static_cast<jint>(border);
 }
 
 // FT_StrokerBorder FT_Outline_GetOutsideBorder(FT_Outline* outline)
 // int FT_Outline_GetOutsideBorder(long outline);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1GetOutsideBorder
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong outlinePtrRaw) {
 
-    return 0;
+    const FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    const FT_StrokerBorder border = FT_Outline_GetOutsideBorder(outline);
+    return static_cast<jint>(border);
 }
 
 // FT_Error FT_Stroker_New(FT_Library library, FT_Stroker *astroker)
 // int FT_Stroker_New(long library, long dstStroker);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1New
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong libraryPtrRaw, jlong strokerPtrRaw) {
 
-    return 0;
+    const FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
+    if(!library) {
+        throwException(env, "Invalid FT_Library pointer");
+        return 0;
+    }
+
+    FT_Stroker* stroker = reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Stroker_New(library, stroker);
+    return static_cast<jint>(error);
 }
 
 // void FT_Stroker_Set(FT_Stroker stroker, FT_Fixed radius, FT_Stroker_LineCap line_cap, FT_Stroker_LineJoin line_join, FT_Fixed miter_limit)
 // void FT_Stroker_Set(long stroker, int radius, int line_cap, int line_join, int miter_limit);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Set
-  (JNIEnv *, jclass, jlong, jint, jint, jint, jint) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw, jint radiusRaw, jint lineCapRaw, jint lineJoinRaw, jint miterLimitRaw) {
 
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return;
+    }
 
+    const FT_Fixed radius = static_cast<FT_Fixed>(radiusRaw);
+    const FT_Stroker_LineCap lineCap = static_cast<FT_Stroker_LineCap>(lineCapRaw);
+    const FT_Stroker_LineJoin lineJoin = static_cast<FT_Stroker_LineJoin>(lineJoinRaw);
+    const FT_Fixed miterLimit = static_cast<FT_Fixed>(miterLimitRaw);
+
+    FT_Stroker_Set(stroker, radius, lineCap, lineJoin, miterLimit);
 }
 
 // void FT_Stroker_Rewind(FT_Stroker stroker)
 // void FT_Stroker_Rewind(long stroker);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Rewind
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw) {
 
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return;
+    }
 
+    FT_Stroker_Rewind(stroker);
 }
 
 // FT_Error FT_Stroker_ParseOutline(FT_Stroker stroker, FT_Outline* outline, FT_Bool opened)
 // int FT_Stroker_ParseOutline(long stroker, long outline, boolean opened);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ParseOutline
-  (JNIEnv *, jclass, jlong, jlong, jboolean) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong outlinePtrRaw, jboolean openedRaw) {
 
-    return 0;
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return 0;
+    }
+
+    const FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    const FT_Bool opened = static_cast<FT_Bool>(openedRaw);
+
+    const FT_Error error = FT_Stroker_ParseOutline(stroker, outline, opened);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_Stroker_BeginSubPath(FT_Stroker stroker, FT_Vector* to, FT_Bool open)
 // int FT_Stroker_BeginSubPath(long stroker, long to, boolean open);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1BeginSubPath
-  (JNIEnv *, jclass, jlong, jlong, jboolean) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong toPtrRaw, jboolean openRaw) {
 
-    return 0;
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return 0;
+    }
+
+    const FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
+    if(!to) {
+        throwException(env, "Invalid FT_Vector pointer");
+        return 0;
+    }
+
+    const FT_Bool open = static_cast<FT_Bool>(openRaw);
+
+    const FT_Error error = FT_Stroker_BeginSubPath(stroker, to, open);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_Stroker_EndSubPath(FT_Stroker stroker)
 // int FT_Stroker_EndSubPath(long stroker);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1EndSubPath
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw) {
 
-    return 0;
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Stroker_EndSubPath(stroker);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_Stroker_LineTo(FT_Stroker stroker, FT_Vector* to)
 // int FT_Stroker_LineTo(long stroker, long to);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1LineTo
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong toPtrRaw) {
 
-    return 0;
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return 0;
+    }
+
+    const FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
+    if(!to) {
+        throwException(env, "Invalid FT_Vector pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Stroker_LineTo(stroker, to);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_Stroker_ConicTo(FT_Stroker stroker, FT_Vector* control, FT_Vector* to)
 // int FT_Stroker_ConicTo(long stroker, long control, long to);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ConicTo
-  (JNIEnv *, jclass, jlong, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong controlPtrRaw, jlong toPtrRaw) {
 
-    return 0;
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return 0;
+    }
+
+    const FT_Vector* control = reinterpret_cast<FT_Vector*>(controlPtrRaw);
+    const FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
+    if(!control || !to) {
+        throwException(env, "Invalid FT_Vector pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Stroker_ConicTo(stroker, control, to);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_Stroker_CubicTo(FT_Stroker stroker, FT_Vector* control1, FT_Vector* control2, FT_Vector* to)
 // int FT_Stroker_CubicTo(long stroker, long control1, long control2, long to);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1CubicTo
-  (JNIEnv *, jclass, jlong, jlong, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong control1PtrRaw, jlong control2PtrRaw, jlong toPtrRaw) {
 
-    return 0;
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return 0;
+    }
+
+    const FT_Vector* control1 = reinterpret_cast<FT_Vector*>(control1PtrRaw);
+    const FT_Vector* control2 = reinterpret_cast<FT_Vector*>(control2PtrRaw);
+    const FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
+    if(!control1 || !control2 || !to) {
+        throwException(env, "Invalid FT_Vector pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Stroker_CubicTo(stroker, control1, control2, to);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_Stroker_GetBorderCounts(FT_Stroker stroker, FT_StrokerBorder border, FT_UInt *anum_points, FT_UInt *anum_contours)
 // int FT_Stroker_GetBorderCounts(long stroker, int border, long[] anum_points, long[] anum_contours);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1GetBorderCounts
-  (JNIEnv *, jclass, jlong, jint, jlongArray, jlongArray) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw, jint borderRaw, jlongArray numPointsArray, jlongArray numContoursArray) {
 
-    return 0;
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return 0;
+    }
+
+    const FT_StrokerBorder border = static_cast<FT_StrokerBorder>(borderRaw);
+    jlong* numPoints = env->GetLongArrayElements(numPointsArray, NULL);
+    jlong* numContours = env->GetLongArrayElements(numContoursArray, NULL);
+
+    FT_UInt anum_points, anum_contours;
+    const FT_Error error = FT_Stroker_GetBorderCounts(stroker, border, &anum_points, &anum_contours);
+
+    numPoints[0] = static_cast<jlong>(anum_points);
+    numContours[0] = static_cast<jlong>(anum_contours);
+
+    env->ReleaseLongArrayElements(numPointsArray, numPoints, 0);
+    env->ReleaseLongArrayElements(numContoursArray, numContours, 0);
+
+    return static_cast<jint>(error);
 }
 
 // void FT_Stroker_ExportBorder(FT_Stroker stroker, FT_StrokerBorder border, FT_Outline* outline)
 // void FT_Stroker_ExportBorder(long stroker, long border, long outline);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ExportBorder
-  (JNIEnv *, jclass, jlong, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong borderRaw, jlong outlinePtrRaw) {
 
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return;
+    }
 
+    const FT_StrokerBorder border = static_cast<FT_StrokerBorder>(borderRaw);
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return;
+    }
+
+    FT_Stroker_ExportBorder(stroker, border, outline);
 }
 
 // FT_Error FT_Stroker_GetCounts(FT_Stroker stroker, FT_UInt *anum_points, FT_UInt *anum_contours)
 // int FT_Stroker_GetCounts(long stroker, long[] anum_points, long[] anum_contours);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1GetCounts
-  (JNIEnv *, jclass, jlong, jlongArray, jlongArray) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlongArray numPointsArray, jlongArray numContoursArray) {
 
-    return 0;
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return 0;
+    }
+
+    jlong* numPoints = env->GetLongArrayElements(numPointsArray, NULL);
+    jlong* numContours = env->GetLongArrayElements(numContoursArray, NULL);
+
+    FT_UInt anum_points, anum_contours;
+    const FT_Error error = FT_Stroker_GetCounts(stroker, &anum_points, &anum_contours);
+
+    numPoints[0] = static_cast<jlong>(anum_points);
+    numContours[0] = static_cast<jlong>(anum_contours);
+
+    env->ReleaseLongArrayElements(numPointsArray, numPoints, 0);
+    env->ReleaseLongArrayElements(numContoursArray, numContours, 0);
+
+    return static_cast<jint>(error);
 }
 
 // void FT_Stroker_Export(FT_Stroker stroker, FT_Outline* outline)
 // void FT_Stroker_Export(long stroker, long outline);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Export
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong outlinePtrRaw) {
 
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return;
+    }
 
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return;
+    }
+
+    FT_Stroker_Export(stroker, outline);
 }
 
 // void FT_Stroker_Done(FT_Stroker stroker)
 // void FT_Stroker_Done(long stroker);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Done
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw) {
 
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return;
+    }
 
+    FT_Stroker_Done(stroker);
 }
 
 // FT_Error FT_Glyph_Stroke(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool destroy)
 // int FT_Glyph_Stroke(long pglyph, long stroker, boolean destroy);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Stroke
-  (JNIEnv *, jclass, jlong, jlong, jboolean) {
+  (JNIEnv *env, jclass, jlong glyphPtrPtrRaw, jlong strokerPtrRaw, jboolean destroyRaw) {
 
-    return 0;
+    FT_Glyph* glyphPtr = reinterpret_cast<FT_Glyph*>(glyphPtrPtrRaw);
+    if(!glyphPtr) {
+        throwException(env, "Invalid FT_Glyph pointer");
+        return 0;
+    }
+
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return 0;
+    }
+
+    const FT_Bool destroy = static_cast<FT_Bool>(destroyRaw);
+
+    const FT_Error error = FT_Glyph_Stroke(glyphPtr, stroker, destroy);
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_Glyph_StrokeBorder(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool inside, FT_Bool destroy)
 // int FT_Glyph_StrokeBorder(long pglyph, long stroker, boolean inside, boolean destroy);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1StrokeBorder
-  (JNIEnv *, jclass, jlong, jlong, jboolean, jboolean) {
+  (JNIEnv *env, jclass, jlong glyphPtrPtrRaw, jlong strokerPtrRaw, jboolean insideRaw, jboolean destroyRaw) {
 
-    return 0;
+    FT_Glyph* glyphPtr = reinterpret_cast<FT_Glyph*>(glyphPtrPtrRaw);
+    if(!glyphPtr) {
+        throwException(env, "Invalid FT_Glyph pointer");
+        return 0;
+    }
+
+    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    if(!stroker) {
+        throwException(env, "Invalid FT_Stroker pointer");
+        return 0;
+    }
+
+    const FT_Bool inside = static_cast<FT_Bool>(insideRaw);
+    const FT_Bool destroy = static_cast<FT_Bool>(destroyRaw);
+
+    const FT_Error error = FT_Glyph_StrokeBorder(glyphPtr, stroker, inside, destroy);
+    return static_cast<jint>(error);
 }

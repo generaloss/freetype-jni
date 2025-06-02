@@ -11,6 +11,8 @@ var varVersion = "25.5.1-SNAPSHOT-2"
 var varDescription = "FreeType Library JNI Android native libraries"
 var stagingDir = layout.buildDirectory.dir("staging-deploy").get()
 
+var secretDir = "/home/user/.gnupg"
+
 version = varVersion
 group = varGroupID
 
@@ -129,8 +131,8 @@ jreleaser {
     signing {
         active.set(org.jreleaser.model.Active.ALWAYS)
         armored = true
-        publicKey.set(file("/home/user/.gnupg/public.asc").readText())
-        secretKey.set(file("/home/user/.gnupg/private.asc").readText())
+        publicKey.set(file("$secretDir/public.asc").readText())
+        secretKey.set(file("$secretDir/private.asc").readText())
         passphrase.set(property("signing.passphrase") as String)
     }
     deploy {
