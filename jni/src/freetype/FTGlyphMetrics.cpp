@@ -2,49 +2,49 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getWidth
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getWidth
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHeight
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHeight
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriBearingX
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriBearingX
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriBearingY
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriBearingY
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriAdvance
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriAdvance
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertBearingX
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertBearingX
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertBearingY
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertBearingY
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertAdvance
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertAdvance
   (JNIEnv *, jclass, jlong) {
 
     return 0;

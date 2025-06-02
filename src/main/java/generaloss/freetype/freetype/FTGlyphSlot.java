@@ -55,18 +55,18 @@ public class FTGlyphSlot extends FTStruct { // struct done.
     }
 
     // FT_Fixed linearHoriAdvance;
-    private static native int getLinearHoriAdvance(long pointer);
+    private static native long getLinearHoriAdvance(long pointer);
 
     public float getLinearHoriAdvance() {
-        final int raw = getLinearHoriAdvance(super.pointer);
+        final long raw = getLinearHoriAdvance(super.pointer);
         return FTFixed.toFloat(raw);
     }
 
     // FT_Fixed linearVertAdvance;
-    private static native int getLinearVertAdvance(long pointer);
+    private static native long getLinearVertAdvance(long pointer);
 
     public float getLinearVertAdvance() {
-        final int raw = getLinearVertAdvance(super.pointer);
+        final long raw = getLinearVertAdvance(super.pointer);
         return FTFixed.toFloat(raw);
     }
 
@@ -137,18 +137,18 @@ public class FTGlyphSlot extends FTStruct { // struct done.
     }
 
     // FT_Pos lsb_delta;
-    private static native int getLsbDelta(long pointer);
+    private static native long getLsbDelta(long pointer);
 
     public float getLsbDelta() {
-        final int raw = getLsbDelta(super.pointer);
+        final long raw = getLsbDelta(super.pointer);
         return FTPos.toFloat(raw);
     }
 
     // FT_Pos rsb_delta;
-    private static native int getRsbDelta(long pointer);
+    private static native long getRsbDelta(long pointer);
 
     public float getRsbDelta() {
-        final int raw = getRsbDelta(super.pointer);
+        final long raw = getRsbDelta(super.pointer);
         return FTPos.toFloat(raw);
     }
 

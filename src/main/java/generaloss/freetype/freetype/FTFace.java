@@ -112,9 +112,9 @@ public class FTFace extends FTStruct { // struct done.
     }
 
     // FT_UShort units_per_EM;
-    private static native int getUnitsPerEM(long pointer);
+    private static native long getUnitsPerEM(long pointer);
 
-    public int getUnitsPerEM() {
+    public long getUnitsPerEM() {
         return getUnitsPerEM(super.pointer);
     }
 
@@ -356,15 +356,15 @@ public class FTFace extends FTStruct { // struct done.
         return FreeType.ftFaceGetCharVariantIsDefault(this, charcode, variantSelector);
     }
 
-    public int getVariantSelectors() {
+    public long getVariantSelectors() {
         return FreeType.ftFaceGetVariantSelectors(this);
     }
 
-    public int getVariantsOfChar(long charcode) {
+    public long getVariantsOfChar(long charcode) {
         return FreeType.ftFaceGetVariantsOfChar(this, charcode);
     }
 
-    public int getCharsOfVariant(long variantSelector) {
+    public long getCharsOfVariant(long variantSelector) {
         return FreeType.ftFaceGetCharsOfVariant(this, variantSelector);
     }
 

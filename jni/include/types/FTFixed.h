@@ -10,19 +10,19 @@ extern "C" {
 #undef generaloss_freetype_types_FTFixed_BITS
 #define generaloss_freetype_types_FTFixed_BITS 16L
 #undef generaloss_freetype_types_FTFixed_UNIT
-#define generaloss_freetype_types_FTFixed_UNIT 65536L
+#define generaloss_freetype_types_FTFixed_UNIT 65536LL
 #undef generaloss_freetype_types_FTFixed_HALF_UNIT
-#define generaloss_freetype_types_FTFixed_HALF_UNIT 32768L
+#define generaloss_freetype_types_FTFixed_HALF_UNIT 32768LL
 #undef generaloss_freetype_types_FTFixed_MASK
-#define generaloss_freetype_types_FTFixed_MASK 65535L
+#define generaloss_freetype_types_FTFixed_MASK 65535LL
 #undef generaloss_freetype_types_FTFixed_UNIT_FRAC
 #define generaloss_freetype_types_FTFixed_UNIT_FRAC 1.5258789E-5f
 /*
  * Class:     generaloss_freetype_types_FTFixed
  * Method:    getRawValue
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTFixed_getRawValue
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTFixed_getRawValue
   (JNIEnv *, jclass, jlong);
 
 /*

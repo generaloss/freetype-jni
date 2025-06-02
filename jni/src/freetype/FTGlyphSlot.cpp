@@ -2,107 +2,189 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+// FT_Library library;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLibrary
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->library);
 }
 
+// FT_Face face;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getFace
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->face);
 }
 
+// FT_GlyphSlot next;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getNext
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->next);
 }
 
+// FT_UInt glyph_index;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getGlyphIndex
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->glyph_index);
 }
 
+// FT_Glyph_Metrics metrics;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getMetrics
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->metrics);
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLinearHoriAdvance
-  (JNIEnv *, jclass, jlong) {
+// FT_Fixed linearHoriAdvance;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLinearHoriAdvance
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->linearHoriAdvance);
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLinearVertAdvance
-  (JNIEnv *, jclass, jlong) {
+// FT_Fixed linearVertAdvance;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLinearVertAdvance
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->linearVertAdvance);
 }
 
+// FT_Vector advance;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getAdvance
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->advance);
 }
 
+// FT_Glyph_Format format;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getFormat
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->format);
 }
 
+// FT_Bitmap bitmap;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getBitmap
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->bitmap);
 }
 
+// FT_Int bitmap_left;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getBitmapLeft
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->bitmap_left);
 }
 
+// FT_Int bitmap_top;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getBitmapTop
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->bitmap_top);
 }
 
+// FT_Outline outline;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getOutline
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->outline);
 }
 
+// FT_UInt num_subglyphs;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getNumSubglyphs
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->num_subglyphs);
 }
 
+// FT_SubGlyph subglyphs;
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getSubglyphs
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
     return NULL;
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLsbDelta
-  (JNIEnv *, jclass, jlong) {
+// FT_Pos lsb_delta;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLsbDelta
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->lsb_delta);
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getRsbDelta
-  (JNIEnv *, jclass, jlong) {
+// FT_Pos rsb_delta;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getRsbDelta
+  (JNIEnv *, jclass, jlong slotPtrRaw) {
 
-    return 0;
+    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    if(!slot)
+        return 0;
+
+    return reinterpret_cast<jlong>(&slot->rsb_delta);
 }
+
 
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_newStruct
   (JNIEnv *, jclass) {

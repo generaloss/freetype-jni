@@ -2,17 +2,28 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+// FT_Face face;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSize_getFace
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong sizePtrRaw) {
 
-    return 0;
+    const FT_Size size = *reinterpret_cast<FT_Size*>(sizePtrRaw);
+    if(!size)
+        return 0;
+
+    return reinterpret_cast<jlong>(&size->face);
 }
 
+// FT_Size_Metrics metrics;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSize_getMetrics
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong sizePtrRaw) {
 
-    return 0;
+    const FT_Size size = *reinterpret_cast<FT_Size*>(sizePtrRaw);
+    if(!size)
+        return 0;
+
+    return reinterpret_cast<jlong>(&size->metrics);
 }
+
 
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSize_newStruct
   (JNIEnv *, jclass) {

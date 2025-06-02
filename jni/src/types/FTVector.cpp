@@ -2,29 +2,30 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTVector_getX
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_getX
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setX
-  (JNIEnv *, jclass, jlong, jfloat) {
+  (JNIEnv *, jclass, jlong, jlong) {
 
 
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTVector_getY
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_getY
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setY
-  (JNIEnv *, jclass, jlong, jfloat) {
+  (JNIEnv *, jclass, jlong, jlong) {
 
 
 }
+
 
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_newStruct
   (JNIEnv *, jclass) {

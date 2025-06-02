@@ -2,53 +2,94 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXppem
-  (JNIEnv *, jclass, jlong) {
+// FT_UShort x_ppem;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXppem
+  (JNIEnv *, jclass, jlong metricsPtrRaw) {
 
-    return 0;
+    FT_Size_Metrics* metrics = reinterpret_cast<FT_Size_Metrics*>(metricsPtrRaw);
+    if(!metrics)
+        return 0;
+
+    return reinterpret_cast<jlong>(&metrics->x_ppem);
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYppem
-  (JNIEnv *, jclass, jlong) {
+// FT_UShort y_ppem;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYppem
+  (JNIEnv *, jclass, jlong metricsPtrRaw) {
 
-    return 0;
+    FT_Size_Metrics* metrics = reinterpret_cast<FT_Size_Metrics*>(metricsPtrRaw);
+    if(!metrics)
+        return 0;
+
+    return reinterpret_cast<jlong>(&metrics->y_ppem);
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXScale
-  (JNIEnv *, jclass, jlong) {
+// FT_Fixed x_scale;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXScale
+  (JNIEnv *, jclass, jlong metricsPtrRaw) {
 
-    return 0;
+    FT_Size_Metrics* metrics = reinterpret_cast<FT_Size_Metrics*>(metricsPtrRaw);
+    if(!metrics)
+        return 0;
+
+    return reinterpret_cast<jlong>(&metrics->x_scale);
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYScale
-  (JNIEnv *, jclass, jlong) {
+// FT_Fixed y_scale;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYScale
+  (JNIEnv *, jclass, jlong metricsPtrRaw) {
 
-    return 0;
+    FT_Size_Metrics* metrics = reinterpret_cast<FT_Size_Metrics*>(metricsPtrRaw);
+    if(!metrics)
+        return 0;
+
+    return reinterpret_cast<jlong>(&metrics->y_scale);
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getAscender
-  (JNIEnv *, jclass, jlong) {
+// FT_Pos ascender;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getAscender
+  (JNIEnv *, jclass, jlong metricsPtrRaw) {
 
-    return 0;
+    FT_Size_Metrics* metrics = reinterpret_cast<FT_Size_Metrics*>(metricsPtrRaw);
+    if(!metrics)
+        return 0;
+
+    return reinterpret_cast<jlong>(&metrics->ascender);
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getDescender
-  (JNIEnv *, jclass, jlong) {
+// FT_Pos descender;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getDescender
+  (JNIEnv *, jclass, jlong metricsPtrRaw) {
 
-    return 0;
+    FT_Size_Metrics* metrics = reinterpret_cast<FT_Size_Metrics*>(metricsPtrRaw);
+    if(!metrics)
+        return 0;
+
+    return reinterpret_cast<jlong>(&metrics->descender);
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getHeight
-  (JNIEnv *, jclass, jlong) {
+// FT_Pos height;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getHeight
+  (JNIEnv *, jclass, jlong metricsPtrRaw) {
 
-    return 0;
+    FT_Size_Metrics* metrics = reinterpret_cast<FT_Size_Metrics*>(metricsPtrRaw);
+    if(!metrics)
+        return 0;
+
+    return reinterpret_cast<jlong>(&metrics->height);
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getMaxAdvance
-  (JNIEnv *, jclass, jlong) {
+// FT_Pos max_advance;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getMaxAdvance
+  (JNIEnv *, jclass, jlong metricsPtrRaw) {
 
-    return 0;
+    FT_Size_Metrics* metrics = reinterpret_cast<FT_Size_Metrics*>(metricsPtrRaw);
+    if(!metrics)
+        return 0;
+
+    return reinterpret_cast<jlong>(&metrics->max_advance);
 }
+
 
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_newStruct
   (JNIEnv *, jclass) {

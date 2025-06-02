@@ -1,10 +1,11 @@
 #include "FreeType.h"
+
 #include <ft2build.h>
+#include <freetype/internal/ftgloadr.h>
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 #include FT_OUTLINE_H
 #include FT_STROKER_H
-#include <jni.h>
 
 
 void throwException(JNIEnv* env, const char* message) {
@@ -670,8 +671,8 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1SubGlyph_1Info
 }
 
 // FT_UShort FT_Get_FSType_Flags(FT_Face face)
-// int FT_Get_FSType_Flags(long face);
-JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
+// long FT_Get_FSType_Flags(long face);
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
   (JNIEnv *env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
@@ -681,7 +682,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
     }
 
     const FT_UShort flags = FT_Get_FSType_Flags(face);
-    return static_cast<jint>(flags);
+    return static_cast<jlong>(flags);
 }
 
 // FT_UInt FT_Face_GetCharVariantIndex(FT_Face face, FT_ULong charcode, FT_ULong variantSelector)
@@ -721,8 +722,8 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharVarian
 }
 
 // FT_UInt32* FT_Face_GetVariantSelectors(FT_Face face)
-// int FT_Face_GetVariantSelectors(long face);
-JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSelectors
+// long FT_Face_GetVariantSelectors(long face);
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSelectors
   (JNIEnv *env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
@@ -732,12 +733,12 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSel
     }
 
     const FT_UInt32* selectors = FT_Face_GetVariantSelectors(face);
-    return reinterpret_cast<jint>(selectors);
+    return reinterpret_cast<jlong>(selectors);
 }
 
 // FT_UInt32* FT_Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode)
-// int FT_Face_GetVariantsOfChar(long face, long charcode);
-JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsOfChar
+// long FT_Face_GetVariantsOfChar(long face, long charcode);
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsOfChar
   (JNIEnv *env, jclass, jlong facePtrRaw, jlong charCodeRaw) {
 
     const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
@@ -749,12 +750,12 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsOf
     const FT_ULong charCode = static_cast<FT_ULong>(charCodeRaw);
 
     const FT_UInt32* variants = FT_Face_GetVariantsOfChar(face, charCode);
-    return reinterpret_cast<jint>(variants);
+    return reinterpret_cast<jlong>(variants);
 }
 
 // FT_UInt32* FT_Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector)
-// int FT_Face_GetCharsOfVariant(long face, long variantSelector);
-JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVariant
+// long FT_Face_GetCharsOfVariant(long face, long variantSelector);
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVariant
   (JNIEnv *env, jclass, jlong facePtrRaw, jlong variantSelectorRaw) {
 
     const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
@@ -766,7 +767,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVar
     const FT_ULong variantSelector = static_cast<FT_ULong>(variantSelectorRaw);
 
     const FT_UInt32* chars = FT_Face_GetCharsOfVariant(face, variantSelector);
-    return reinterpret_cast<jint>(chars);
+    return reinterpret_cast<jlong>(chars);
 }
 
 // FT_Long FT_MulDiv(FT_Long a, FT_Long b, FT_Long c)
@@ -1257,7 +1258,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Invert
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1GetInsideBorder
   (JNIEnv *env, jclass, jlong outlinePtrRaw) {
 
-    const FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline) {
         throwException(env, "Invalid FT_Outline pointer");
         return 0;
@@ -1272,7 +1273,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1GetInsideB
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1GetOutsideBorder
   (JNIEnv *env, jclass, jlong outlinePtrRaw) {
 
-    const FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline) {
         throwException(env, "Invalid FT_Outline pointer");
         return 0;
@@ -1347,7 +1348,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ParseOutli
         return 0;
     }
 
-    const FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline) {
         throwException(env, "Invalid FT_Outline pointer");
         return 0;
@@ -1370,7 +1371,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1BeginSubPa
         return 0;
     }
 
-    const FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
+    FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
     if(!to) {
         throwException(env, "Invalid FT_Vector pointer");
         return 0;
@@ -1408,7 +1409,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1LineTo
         return 0;
     }
 
-    const FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
+    FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
     if(!to) {
         throwException(env, "Invalid FT_Vector pointer");
         return 0;
@@ -1429,8 +1430,8 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ConicTo
         return 0;
     }
 
-    const FT_Vector* control = reinterpret_cast<FT_Vector*>(controlPtrRaw);
-    const FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
+    FT_Vector* control = reinterpret_cast<FT_Vector*>(controlPtrRaw);
+    FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
     if(!control || !to) {
         throwException(env, "Invalid FT_Vector pointer");
         return 0;
@@ -1451,9 +1452,9 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1CubicTo
         return 0;
     }
 
-    const FT_Vector* control1 = reinterpret_cast<FT_Vector*>(control1PtrRaw);
-    const FT_Vector* control2 = reinterpret_cast<FT_Vector*>(control2PtrRaw);
-    const FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
+    FT_Vector* control1 = reinterpret_cast<FT_Vector*>(control1PtrRaw);
+    FT_Vector* control2 = reinterpret_cast<FT_Vector*>(control2PtrRaw);
+    FT_Vector* to = reinterpret_cast<FT_Vector*>(toPtrRaw);
     if(!control1 || !control2 || !to) {
         throwException(env, "Invalid FT_Vector pointer");
         return 0;

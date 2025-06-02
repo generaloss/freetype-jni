@@ -20,10 +20,10 @@ public class FTSubGlyph extends FTStruct { // struct done.
     }
 
     // FT_UShort flags;
-    private static native int getFlags(long pointer);
+    private static native long getFlags(long pointer);
 
     public int getFlagsRaw() {
-        return getFlags(super.pointer);
+        return (int) getFlags(super.pointer);
     }
 
     public SubglyphFlags getFlags() {

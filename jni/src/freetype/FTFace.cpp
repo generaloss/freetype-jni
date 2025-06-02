@@ -4,7 +4,7 @@
 
 // FT_Long num_faces;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getNumFaces
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong facePtrRaw) {
 
     const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
     if(!face)
@@ -48,7 +48,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTFace_getStyleFlags
 
 // FT_Long num_glyphs;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getNumGlyphs
-  (JNIEnv *, jclass, jlong) {
   (JNIEnv *, jclass, jlong facePtrRaw) {
 
     const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
@@ -156,14 +155,14 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getBBox
 }
 
 // FT_UShort units_per_EM;
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTFace_getUnitsPerEM
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getUnitsPerEM
   (JNIEnv *, jclass, jlong facePtrRaw) {
 
     const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
     if(!face)
         return 0;
 
-    return static_cast<jint>(face->units_per_EM);
+    return static_cast<jlong>(face->units_per_EM);
 }
 
 // FT_Short ascender;

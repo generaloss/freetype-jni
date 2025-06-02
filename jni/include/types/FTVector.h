@@ -10,34 +10,34 @@ extern "C" {
 /*
  * Class:     generaloss_freetype_types_FTVector
  * Method:    getX
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTVector_getX
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_getX
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTVector
  * Method:    setX
- * Signature: (JF)V
+ * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setX
-  (JNIEnv *, jclass, jlong, jfloat);
+  (JNIEnv *, jclass, jlong, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTVector
  * Method:    getY
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTVector_getY
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_getY
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTVector
  * Method:    setY
- * Signature: (JF)V
+ * Signature: (JJ)V
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setY
-  (JNIEnv *, jclass, jlong, jfloat);
+  (JNIEnv *, jclass, jlong, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTVector

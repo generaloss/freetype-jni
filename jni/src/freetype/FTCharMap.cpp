@@ -14,13 +14,13 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getEncoding
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getPlatformID
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTCharMap_getPlatformID
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getEncodingID
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTCharMap_getEncodingID
   (JNIEnv *, jclass, jlong) {
 
     return 0;

@@ -162,10 +162,10 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Kerning
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Get_Track_Kerning
- * Signature: (JIIJ)I
+ * Signature: (JJIJ)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Track_1Kerning
-  (JNIEnv *, jclass, jlong, jint, jint, jlong);
+  (JNIEnv *, jclass, jlong, jlong, jint, jlong);
 
 /*
  * Class:     generaloss_freetype_FreeType
@@ -258,9 +258,9 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1SubGlyph_1Info
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Get_FSType_Flags
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
   (JNIEnv *, jclass, jlong);
 
 /*
@@ -282,25 +282,25 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharVarian
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Face_GetVariantSelectors
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSelectors
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSelectors
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Face_GetVariantsOfChar
- * Signature: (JJ)I
+ * Signature: (JJ)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsOfChar
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsOfChar
   (JNIEnv *, jclass, jlong, jlong);
 
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Face_GetCharsOfVariant
- * Signature: (JJ)I
+ * Signature: (JJ)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVariant
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVariant
   (JNIEnv *, jclass, jlong, jlong);
 
 /*
@@ -554,10 +554,10 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1New
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Stroker_Set
- * Signature: (JIIII)V
+ * Signature: (JJIIJ)V
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Set
-  (JNIEnv *, jclass, jlong, jint, jint, jint, jint);
+  (JNIEnv *, jclass, jlong, jlong, jint, jint, jlong);
 
 /*
  * Class:     generaloss_freetype_FreeType

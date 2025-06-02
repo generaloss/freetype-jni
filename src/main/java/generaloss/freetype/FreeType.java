@@ -192,6 +192,7 @@ public class FreeType {
     private static native int FT_Render_Glyph(long slot, int render_mode);
 
     public static FTError ftRenderGlyph(FTGlyphSlot slot, FTRenderMode renderMode) {
+        System.out.println("FT_Render_Glyph(" + slot.getPointer() + ", " + renderMode.name() + ")");
         final int code = FT_Render_Glyph(slot.getPointer(), renderMode.value);
         return FTError.byCode(code);
     }
@@ -205,7 +206,7 @@ public class FreeType {
     }
 
     // FT_Error FT_Get_Track_Kerning(FT_Face face, FT_Fixed point_size, FT_Int degree, FT_Fixed* akerning)
-    private static native int FT_Get_Track_Kerning(long face, int point_size, int degree, long akerning);
+    private static native int FT_Get_Track_Kerning(long face, long point_size, int degree, long akerning);
 
     public static FTError ftGetTrackKerning(FTFace face, float pointSize, int degree, FTFixed dstKerning) {
         final int code = FT_Get_Track_Kerning(face.getPointer(), FTFixed.of(pointSize), degree, dstKerning.getPointer());
@@ -304,10 +305,10 @@ public class FreeType {
     }
 
     // FT_UShort FT_Get_FSType_Flags(FT_Face face)
-    private static native int FT_Get_FSType_Flags(long face);
+    private static native long FT_Get_FSType_Flags(long face);
 
     public static int ftGetFSTypeFlagsRaw(FTFace face) {
-        return FT_Get_FSType_Flags(face.getPointer());
+        return (int) FT_Get_FSType_Flags(face.getPointer());
     }
 
     public static FSTypeFlags ftGetFSTypeFlags(FTFace face) {
@@ -329,23 +330,23 @@ public class FreeType {
     }
 
     // FT_UInt32* FT_Face_GetVariantSelectors(FT_Face face)
-    private static native int FT_Face_GetVariantSelectors(long face);
+    private static native long FT_Face_GetVariantSelectors(long face);
 
-    public static int ftFaceGetVariantSelectors(FTFace face) {
+    public static long ftFaceGetVariantSelectors(FTFace face) {
         return FT_Face_GetVariantSelectors(face.getPointer());
     }
 
     // FT_UInt32* FT_Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode)
-    private static native int FT_Face_GetVariantsOfChar(long face, long charcode);
+    private static native long FT_Face_GetVariantsOfChar(long face, long charcode);
 
-    public static int ftFaceGetVariantsOfChar(FTFace face, long charcode) {
+    public static long ftFaceGetVariantsOfChar(FTFace face, long charcode) {
         return FT_Face_GetVariantsOfChar(face.getPointer(), charcode);
     }
 
     // FT_UInt32* FT_Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector)
-    private static native int FT_Face_GetCharsOfVariant(long face, long variantSelector);
+    private static native long FT_Face_GetCharsOfVariant(long face, long variantSelector);
 
-    public static int ftFaceGetCharsOfVariant(FTFace face, long variantSelector) {
+    public static long ftFaceGetCharsOfVariant(FTFace face, long variantSelector) {
         return FT_Face_GetCharsOfVariant(face.getPointer(), variantSelector);
     }
 
@@ -609,7 +610,7 @@ public class FreeType {
     }
 
     // void FT_Stroker_Set(FT_Stroker stroker, FT_Fixed radius, FT_Stroker_LineCap line_cap, FT_Stroker_LineJoin line_join, FT_Fixed miter_limit)
-    private static native void FT_Stroker_Set(long stroker, int radius, int line_cap, int line_join, int miter_limit);
+    private static native void FT_Stroker_Set(long stroker, long radius, int line_cap, int line_join, long miter_limit);
 
     public static void ftStrokerSet(FTStroker stroker, float radius, FTStrokerLinecap lineCap, FTStrokerLinejoin lineJoin, float miterLimit) {
         FT_Stroker_Set(stroker.getPointer(), FTFixed.of(radius), lineCap.value, lineJoin.value, FTFixed.of(miterLimit));

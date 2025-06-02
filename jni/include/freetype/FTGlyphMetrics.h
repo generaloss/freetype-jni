@@ -10,65 +10,65 @@ extern "C" {
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphMetrics
  * Method:    getWidth
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getWidth
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getWidth
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphMetrics
  * Method:    getHeight
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHeight
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHeight
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphMetrics
  * Method:    getHoriBearingX
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriBearingX
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriBearingX
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphMetrics
  * Method:    getHoriBearingY
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriBearingY
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriBearingY
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphMetrics
  * Method:    getHoriAdvance
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriAdvance
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getHoriAdvance
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphMetrics
  * Method:    getVertBearingX
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertBearingX
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertBearingX
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphMetrics
  * Method:    getVertBearingY
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertBearingY
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertBearingY
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphMetrics
  * Method:    getVertAdvance
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertAdvance
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertAdvance
   (JNIEnv *, jclass, jlong);
 
 /*
