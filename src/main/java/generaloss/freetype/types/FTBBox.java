@@ -10,34 +10,34 @@ public class FTBBox extends FTStruct { // struct done.
 
 
     // FT_Pos xMin;
-    private static native long getXMin(long pointer);
+    private static native int getXMin(long pointer);
 
     public float getXMin() {
-        final long raw = getXMin(super.pointer);
+        final int raw = getXMin(super.pointer);
         return FTPos.toFloat(raw);
     }
 
     // FT_Pos yMin;
-    private static native long getYMin(long pointer);
+    private static native int getYMin(long pointer);
 
     public float getYMin() {
-        final long raw = getYMin(super.pointer);
+        final int raw = getYMin(super.pointer);
         return FTPos.toFloat(raw);
     }
 
     // FT_Pos xMax;
-    private static native long getXMax(long pointer);
+    private static native int getXMax(long pointer);
 
     public float getXMax() {
-        final long raw = getXMax(super.pointer);
+        final int raw = getXMax(super.pointer);
         return FTPos.toFloat(raw);
     }
 
     // FT_Pos yMax;
-    private static native long getYMax(long pointer);
+    private static native int getYMax(long pointer);
 
     public float getYMax() {
-        final long raw = getYMax(super.pointer);
+        final int raw = getYMax(super.pointer);
         return FTPos.toFloat(raw);
     }
 

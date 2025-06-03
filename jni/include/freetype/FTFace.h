@@ -106,9 +106,9 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getBBox
 /*
  * Class:     generaloss_freetype_freetype_FTFace
  * Method:    getUnitsPerEM
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getUnitsPerEM
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTFace_getUnitsPerEM
   (JNIEnv *, jclass, jlong);
 
 /*

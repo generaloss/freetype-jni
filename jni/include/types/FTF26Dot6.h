@@ -27,6 +27,14 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTF26Dot6_getRawValue
 
 /*
  * Class:     generaloss_freetype_types_FTF26Dot6
+ * Method:    setRawValue
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTF26Dot6_setRawValue
+  (JNIEnv *, jclass, jlong, jint);
+
+/*
+ * Class:     generaloss_freetype_types_FTF26Dot6
  * Method:    newStruct
  * Signature: ()J
  */

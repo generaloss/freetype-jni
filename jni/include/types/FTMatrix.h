@@ -10,33 +10,33 @@ extern "C" {
 /*
  * Class:     generaloss_freetype_types_FTMatrix
  * Method:    getXX
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTMatrix_getXX
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getXX
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTMatrix
  * Method:    getXY
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTMatrix_getXY
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getXY
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTMatrix
  * Method:    getYX
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTMatrix_getYX
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getYX
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTMatrix
  * Method:    getYY
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTMatrix_getYY
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getYY
   (JNIEnv *, jclass, jlong);
 
 /*

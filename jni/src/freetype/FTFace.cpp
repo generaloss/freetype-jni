@@ -1,3 +1,5 @@
+// typedef struct FT_FaceRec_*  FT_Face;
+
 #include "freetype/FTFace.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -155,14 +157,14 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getBBox
 }
 
 // FT_UShort units_per_EM;
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getUnitsPerEM
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTFace_getUnitsPerEM
   (JNIEnv *, jclass, jlong facePtrRaw) {
 
     const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
     if(!face)
         return 0;
 
-    return static_cast<jlong>(face->units_per_EM);
+    return static_cast<jint>(face->units_per_EM);
 }
 
 // FT_Short ascender;
@@ -279,6 +281,6 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getCharmap
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_newStruct
   (JNIEnv *, jclass) {
 
-    FT_Face* pointer = new FT_Face;
+    FT_Face* pointer = new FT_Face(nullptr);
     return reinterpret_cast<jlong>(pointer);
 }

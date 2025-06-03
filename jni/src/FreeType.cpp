@@ -145,7 +145,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Open_1Face
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Attach_1File
   (JNIEnv *env, jclass, jlong facePtrRaw, jstring filepathRaw) {
 
-    const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
     if(!face) {
         throwException(env, "Invalid FT_Face pointer");
         return 0;
@@ -169,7 +169,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Attach_1File
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Attach_1Stream
   (JNIEnv *env, jclass, jlong facePtrRaw, jlong argsPtrRaw) {
 
-    const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
     if(!face) {
         throwException(env, "Invalid FT_Face pointer");
         return 0;
@@ -205,7 +205,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Reference_1Face
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Face
   (JNIEnv *env, jclass, jlong facePtrRaw) {
 
-    const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
+    const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
     if(!face) {
         throwException(env, "Invalid FT_Face pointer");
         return 0;
@@ -366,7 +366,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Transform
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Render_1Glyph
   (JNIEnv *env, jclass, jlong slotPtrRaw, jint renderModeRaw) {
 
-    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    const FT_GlyphSlot slot = reinterpret_cast<FT_GlyphSlot>(slotPtrRaw);
     if(!slot) {
         throwException(env, "Invalid FT_GlyphSlot pointer");
         return 0;
@@ -455,7 +455,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Set_1Charmap
         return 0;
     }
 
-    const FT_CharMap charmap = *reinterpret_cast<FT_CharMap*>(charmapPtrRaw);
+    const FT_CharMap charmap = reinterpret_cast<FT_CharMap>(charmapPtrRaw);
     if(!charmap) {
         throwException(env, "Invalid FT_CharMap pointer");
         return 0;
@@ -470,7 +470,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Set_1Charmap
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Charmap_1Index
   (JNIEnv *env, jclass, jlong charmapPtrRaw) {
 
-    const FT_CharMap charmap = *reinterpret_cast<FT_CharMap*>(charmapPtrRaw);
+    const FT_CharMap charmap = reinterpret_cast<FT_CharMap>(charmapPtrRaw);
     if(!charmap) {
         throwException(env, "Invalid FT_CharMap pointer");
         return 0;
@@ -646,7 +646,7 @@ JNIEXPORT jstring JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Postscript_
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1SubGlyph_1Info
   (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong subIndexRaw, jintArray pIndexArray, jlongArray pFlagsArray, jintArray pArg1Array, jintArray pArg2Array, jlong pTransformPtrRaw) {
 
-    const FT_GlyphSlot glyph = *reinterpret_cast<FT_GlyphSlot*>(glyphPtrRaw);
+    const FT_GlyphSlot glyph = reinterpret_cast<FT_GlyphSlot>(glyphPtrRaw);
     if(!glyph) {
         throwException(env, "Invalid FT_GlyphSlot pointer");
         return 0;
@@ -671,8 +671,8 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1SubGlyph_1Info
 }
 
 // FT_UShort FT_Get_FSType_Flags(FT_Face face)
-// long FT_Get_FSType_Flags(long face);
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
+// int FT_Get_FSType_Flags(long face);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
   (JNIEnv *env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = *reinterpret_cast<FT_Face*>(facePtrRaw);
@@ -682,7 +682,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
     }
 
     const FT_UShort flags = FT_Get_FSType_Flags(face);
-    return static_cast<jlong>(flags);
+    return static_cast<jint>(flags);
 }
 
 // FT_UInt FT_Face_GetCharVariantIndex(FT_Face face, FT_ULong charcode, FT_ULong variantSelector)
@@ -1097,7 +1097,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Glyph
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
   (JNIEnv *env, jclass, jlong slotPtrRaw, jlong glyphPtrRaw) {
 
-    const FT_GlyphSlot slot = *reinterpret_cast<FT_GlyphSlot*>(slotPtrRaw);
+    const FT_GlyphSlot slot = reinterpret_cast<FT_GlyphSlot>(slotPtrRaw);
     if(!slot) {
         throwException(env, "Invalid FT_GlyphSlot pointer");
         return 0;

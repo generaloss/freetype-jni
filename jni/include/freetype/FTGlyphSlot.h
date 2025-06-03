@@ -50,17 +50,17 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getMetrics
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphSlot
  * Method:    getLinearHoriAdvance
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLinearHoriAdvance
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLinearHoriAdvance
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphSlot
  * Method:    getLinearVertAdvance
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLinearVertAdvance
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLinearVertAdvance
   (JNIEnv *, jclass, jlong);
 
 /*
@@ -130,17 +130,17 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getSu
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphSlot
  * Method:    getLsbDelta
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLsbDelta
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLsbDelta
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTGlyphSlot
  * Method:    getRsbDelta
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getRsbDelta
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getRsbDelta
   (JNIEnv *, jclass, jlong);
 
 /*

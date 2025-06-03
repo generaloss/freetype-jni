@@ -1,34 +1,57 @@
+// typedef struct FT_CharMapRec_*  FT_CharMap;
+
 #include "freetype/FTCharMap.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+// FT_Face face;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTCharMap_getFace
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong charmapPtrRaw) {
 
-    return 0;
+    const FT_CharMap charmap = reinterpret_cast<FT_CharMap>(charmapPtrRaw);
+    if(!charmap)
+        return 0;
+
+    return reinterpret_cast<jlong>(&charmap->face);
 }
 
+// FT_Encoding encoding;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getEncoding
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong charmapPtrRaw) {
 
-    return 0;
+    const FT_CharMap charmap = reinterpret_cast<FT_CharMap>(charmapPtrRaw);
+    if(!charmap)
+        return 0;
+
+    return static_cast<jint>(charmap->encoding);
 }
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTCharMap_getPlatformID
-  (JNIEnv *, jclass, jlong) {
+// FT_UShort platform_id;
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getPlatformID
+  (JNIEnv *, jclass, jlong charmapPtrRaw) {
 
-    return 0;
+    const FT_CharMap charmap = reinterpret_cast<FT_CharMap>(charmapPtrRaw);
+    if(!charmap)
+        return 0;
+
+    return static_cast<jint>(charmap->platform_id);
 }
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTCharMap_getEncodingID
-  (JNIEnv *, jclass, jlong) {
+// FT_UShort encoding_id;
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getEncodingID
+  (JNIEnv *, jclass, jlong charmapPtrRaw) {
 
-    return 0;
+    const FT_CharMap charmap = reinterpret_cast<FT_CharMap>(charmapPtrRaw);
+    if(!charmap)
+        return 0;
+
+    return static_cast<jint>(charmap->encoding_id);
 }
+
 
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTCharMap_newStruct
   (JNIEnv *, jclass) {
 
-    FT_CharMap* pointer = new FT_CharMap;
+    FT_CharMap* pointer = new FT_CharMap(nullptr);
     return reinterpret_cast<jlong>(pointer);
 }

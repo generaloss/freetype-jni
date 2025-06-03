@@ -11,33 +11,33 @@ public class FTVector extends FTStruct { // struct done.
 
 
     // FT_Pos x;
-    private static native long getX(long pointer);
+    private static native int getRawX(long pointer);
 
     public float getX() {
-        final long raw = getX(super.pointer);
+        final int raw = getRawX(super.pointer);
         return FTPos.toFloat(raw);
     }
 
-    private static native void setX(long pointer, long value);
+    private static native void setRawX(long pointer, int value);
 
     public void setX(float value) {
-        final long raw = FTPos.of(value);
-        setX(super.pointer, raw);
+        final int raw = FTPos.of(value);
+        setRawX(super.pointer, raw);
     }
 
     // FT_Pos y;
-    private static native long getY(long pointer);
+    private static native int getRawY(long pointer);
 
     public float getY() {
-        final long raw = getY(super.pointer);
+        final int raw = getRawY(super.pointer);
         return FTPos.toFloat(raw);
     }
 
-    private static native void setY(long pointer, long value);
+    private static native void setRawY(long pointer, int value);
 
     public void setY(float value) {
-        final long raw = FTPos.of(value);
-        setY(super.pointer, raw);
+        final int raw = FTPos.of(value);
+        setRawY(super.pointer, raw);
     }
 
 

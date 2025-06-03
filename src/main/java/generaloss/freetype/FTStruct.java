@@ -39,6 +39,12 @@ public class FTStruct {
     }
 
 
+    public static long getPointer(FTStruct struct) {
+        if(struct == null)
+            return 0L;
+        return struct.pointer;
+    }
+
     public static long[] makePointerArray(FTStruct... structs) {
         final long[] pointers = new long[structs.length];
         for(int i = 0; i < structs.length; i++)

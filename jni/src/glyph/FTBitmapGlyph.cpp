@@ -29,6 +29,6 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_glyph_FTBitmapGlyph_getBitmap
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_glyph_FTBitmapGlyph_newStruct
   (JNIEnv *, jclass) {
 
-    FT_BitmapGlyph* pointer = new FT_BitmapGlyph;
+    FT_BitmapGlyph* pointer = new FT_BitmapGlyph(nullptr);
     return reinterpret_cast<jlong>(pointer);
 }

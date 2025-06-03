@@ -10,20 +10,28 @@ extern "C" {
 #undef generaloss_freetype_types_FTPos_BITS
 #define generaloss_freetype_types_FTPos_BITS 6L
 #undef generaloss_freetype_types_FTPos_UNIT
-#define generaloss_freetype_types_FTPos_UNIT 64LL
+#define generaloss_freetype_types_FTPos_UNIT 64L
 #undef generaloss_freetype_types_FTPos_HALF_UNIT
-#define generaloss_freetype_types_FTPos_HALF_UNIT 32LL
+#define generaloss_freetype_types_FTPos_HALF_UNIT 32L
 #undef generaloss_freetype_types_FTPos_MASK
-#define generaloss_freetype_types_FTPos_MASK 63LL
+#define generaloss_freetype_types_FTPos_MASK 63L
 #undef generaloss_freetype_types_FTPos_UNIT_FRAC
 #define generaloss_freetype_types_FTPos_UNIT_FRAC 0.015625f
 /*
  * Class:     generaloss_freetype_types_FTPos
  * Method:    getRawValue
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTPos_getRawValue
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTPos_getRawValue
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_types_FTPos
+ * Method:    setRawValue
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTPos_setRawValue
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     generaloss_freetype_types_FTPos

@@ -2,10 +2,16 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTPos_getRawValue
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTPos_getRawValue
   (JNIEnv *, jclass, jlong) {
 
     return 0;
+}
+
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTPos_setRawValue
+  (JNIEnv *, jclass, jlong, jint) {
+
+
 }
 
 

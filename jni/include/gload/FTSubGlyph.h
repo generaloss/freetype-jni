@@ -18,9 +18,9 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getIndex
 /*
  * Class:     generaloss_freetype_gload_FTSubGlyph
  * Method:    getFlags
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getFlags
+JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getFlags
   (JNIEnv *, jclass, jlong);
 
 /*

@@ -21,7 +21,7 @@ public class Test {
     private static void test1() {
         final FTLibrary library = new FTLibrary();
 
-        final FTFace face = library.newMemoryFace(Resource.internal("/main.ttf").readByteBuffer(), 0);
+        final FTFace face = library.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
         System.out.println("Charmaps num: " + face.getNumCharmaps());
 
@@ -33,8 +33,8 @@ public class Test {
         }
 
         face.setPixelSizes(0, 15);
-        final FTSizeMetrics faceMetrics = face.getSize().getMetrics();
-        System.out.println(faceMetrics.getAscender() + ", " + faceMetrics.getDescender() + ", " + faceMetrics.getHeight());
+        final FTSizeMetrics metrics = face.getSize().getMetrics();
+        System.out.println(metrics.getAscender() + ", " + metrics.getDescender() + ", " + metrics.getHeight());
 
         for(int i = 0; i < CHARS.length(); i++) {
             face.loadGlyph(face.getCharIndex(CHARS.charAt(i)));

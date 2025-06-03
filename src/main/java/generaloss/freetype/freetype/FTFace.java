@@ -112,9 +112,9 @@ public class FTFace extends FTStruct { // struct done.
     }
 
     // FT_UShort units_per_EM;
-    private static native long getUnitsPerEM(long pointer);
+    private static native int getUnitsPerEM(long pointer);
 
-    public long getUnitsPerEM() {
+    public int getUnitsPerEM() {
         return getUnitsPerEM(super.pointer);
     }
 

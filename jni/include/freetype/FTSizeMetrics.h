@@ -10,65 +10,65 @@ extern "C" {
 /*
  * Class:     generaloss_freetype_freetype_FTSizeMetrics
  * Method:    getXppem
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXppem
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXppem
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeMetrics
  * Method:    getYppem
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYppem
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYppem
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeMetrics
  * Method:    getXScale
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXScale
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXScale
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeMetrics
  * Method:    getYScale
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYScale
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYScale
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeMetrics
  * Method:    getAscender
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getAscender
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getAscender
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeMetrics
  * Method:    getDescender
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getDescender
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getDescender
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeMetrics
  * Method:    getHeight
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getHeight
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getHeight
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeMetrics
  * Method:    getMaxAdvance
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getMaxAdvance
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getMaxAdvance
   (JNIEnv *, jclass, jlong);
 
 /*

@@ -258,9 +258,9 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1SubGlyph_1Info
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Get_FSType_Flags
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
   (JNIEnv *, jclass, jlong);
 
 /*

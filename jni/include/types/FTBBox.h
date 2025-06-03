@@ -10,33 +10,33 @@ extern "C" {
 /*
  * Class:     generaloss_freetype_types_FTBBox
  * Method:    getXMin
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_getXMin
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMin
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTBBox
  * Method:    getYMin
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_getYMin
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMin
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTBBox
  * Method:    getXMax
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_getXMax
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMax
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTBBox
  * Method:    getYMax
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_getYMax
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMax
   (JNIEnv *, jclass, jlong);
 
 /*

@@ -23,6 +23,6 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_glyph_FTGlyph_getAdvance
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_glyph_FTGlyph_newStruct
   (JNIEnv *, jclass) {
 
-    FT_Glyph* pointer = new FT_Glyph;
+    FT_Glyph* pointer = new FT_Glyph(nullptr);
     return reinterpret_cast<jlong>(pointer);
 }

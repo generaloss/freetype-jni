@@ -9,35 +9,35 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_types_FTVector
- * Method:    getX
- * Signature: (J)J
+ * Method:    getRawX
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_getX
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTVector_getRawX
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTVector
- * Method:    setX
- * Signature: (JJ)V
+ * Method:    setRawX
+ * Signature: (JI)V
  */
-JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setX
-  (JNIEnv *, jclass, jlong, jlong);
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setRawX
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     generaloss_freetype_types_FTVector
- * Method:    getY
- * Signature: (J)J
+ * Method:    getRawY
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_getY
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTVector_getRawY
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTVector
- * Method:    setY
- * Signature: (JJ)V
+ * Method:    setRawY
+ * Signature: (JI)V
  */
-JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setY
-  (JNIEnv *, jclass, jlong, jlong);
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setRawY
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     generaloss_freetype_types_FTVector

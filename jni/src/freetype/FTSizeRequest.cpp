@@ -35,6 +35,6 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_getVertR
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_newStruct
   (JNIEnv *, jclass) {
 
-    FT_Size_Request* pointer = new FT_Size_Request;
+    FT_Size_Request* pointer = new FT_Size_Request(nullptr);
     return reinterpret_cast<jlong>(pointer);
 }

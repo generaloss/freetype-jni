@@ -37,6 +37,6 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getSubgl
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_newStruct
   (JNIEnv *, jclass) {
 
-    FT_GlyphLoad* pointer = new FT_GlyphLoad;
+    FT_GlyphLoad* pointer = new FT_GlyphLoad(nullptr);
     return reinterpret_cast<jlong>(pointer);
 }

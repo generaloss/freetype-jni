@@ -2,25 +2,25 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_getXMin
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMin
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_getYMin
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMin
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_getXMax
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMax
   (JNIEnv *, jclass, jlong) {
 
     return 0;
 }
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_getYMax
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMax
   (JNIEnv *, jclass, jlong) {
 
     return 0;

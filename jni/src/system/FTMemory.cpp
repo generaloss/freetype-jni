@@ -5,6 +5,6 @@
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_system_FTMemory_newStruct
   (JNIEnv *, jclass) {
 
-    FT_Memory* pointer = new FT_Memory;
+    FT_Memory* pointer = new FT_Memory(nullptr);
     return reinterpret_cast<jlong>(pointer);
 }

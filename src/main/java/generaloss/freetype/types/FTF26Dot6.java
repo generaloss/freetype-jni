@@ -15,7 +15,6 @@ public class FTF26Dot6 extends FTStruct { // struct done.
         return getRawValue(super.pointer);
     }
 
-
     public float getFloat() {
         final int raw = this.getRawValue();
         return toFloat(raw);
@@ -34,6 +33,18 @@ public class FTF26Dot6 extends FTStruct { // struct done.
     public int getIntCeil() {
         final int raw = this.getRawValue();
         return toIntCeil(raw);
+    }
+
+
+    private static native void setRawValue(long pointer, int value);
+
+    public void setRawValue(int value) {
+        setRawValue(super.pointer, value);
+    }
+
+    public void set(float value) {
+        final int raw = of(value);
+        setRawValue(super.pointer, raw);
     }
 
 

@@ -28,16 +28,16 @@ public class FTCharMap extends FTStruct { // struct done.
     }
 
     // FT_UShort platform_id;
-    private static native long getPlatformID(long pointer);
+    private static native int getPlatformID(long pointer);
 
-    public long getPlatformID() {
+    public int getPlatformID() {
         return getPlatformID(super.pointer);
     }
 
     // FT_UShort encoding_id;
-    private static native long getEncodingID(long pointer);
+    private static native int getEncodingID(long pointer);
 
-    public long getEncodingID() {
+    public int getEncodingID() {
         return getEncodingID(super.pointer);
     }
 

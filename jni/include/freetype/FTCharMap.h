@@ -26,17 +26,17 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getEncoding
 /*
  * Class:     generaloss_freetype_freetype_FTCharMap
  * Method:    getPlatformID
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTCharMap_getPlatformID
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getPlatformID
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTCharMap
  * Method:    getEncodingID
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTCharMap_getEncodingID
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getEncodingID
   (JNIEnv *, jclass, jlong);
 
 /*
