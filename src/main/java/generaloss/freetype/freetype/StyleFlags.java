@@ -2,6 +2,8 @@ package generaloss.freetype.freetype;
 
 import generaloss.freetype.BitMask;
 
+import java.util.StringJoiner;
+
 public class StyleFlags extends BitMask {
 
     public StyleFlags() { }
@@ -32,6 +34,15 @@ public class StyleFlags extends BitMask {
 
     public boolean hasBold() {
         return this.has(FTStyleFlag.BOLD);
+    }
+
+
+    @Override
+    public String toString() {
+        final StringJoiner joiner = new StringJoiner(", ");
+        for(FTStyleFlag flag: FTStyleFlag.values())
+            joiner.add(flag.toString() + "=" + this.has(flag));
+        return "FaceFlags{" + joiner + "}";
     }
 
 }

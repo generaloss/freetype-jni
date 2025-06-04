@@ -35,7 +35,7 @@ public class FTStruct {
 
     @Override
     public String toString() {
-        return (this.getClass().getSimpleName() + "[0x" + Long.toHexString(pointer) + "]");
+        return (this.getClass().getSimpleName() + "[" + pointer + "]");
     }
 
 

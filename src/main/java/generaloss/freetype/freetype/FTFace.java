@@ -1,6 +1,7 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.*;
+import generaloss.freetype.gload.FTSubGlyph;
 import generaloss.freetype.types.*;
 
 import java.nio.ByteBuffer;
@@ -76,7 +77,7 @@ public class FTFace extends FTStruct { // struct done.
     public FTBitmapSize[] getAvailableSizes() {
         final long[] pointers = getAvailableSizes(super.pointer);
         if(pointers == null)
-            return null;
+            return new FTBitmapSize[0];
 
         final FTBitmapSize[] objects = new FTBitmapSize[pointers.length];
         for(int i = 0; i < pointers.length; i++)
@@ -98,7 +99,7 @@ public class FTFace extends FTStruct { // struct done.
     public FTCharMap[] getCharmaps() {
         final long[] pointers = getCharmaps(super.pointer);
         if(pointers == null)
-            return null;
+            return new FTCharMap[0];
 
         final FTCharMap[] objects = new FTCharMap[pointers.length];
         for(int i = 0; i < pointers.length; i++)

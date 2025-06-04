@@ -3,8 +3,8 @@
     <option name="MAIN_CLASS_NAME" value="Test" />
     <module name="freetype-jni" />
     <method v="2">
-      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_build-natives-dev" />
-      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_clean" />
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="dev compile natives (linux)" run_configuration_type="ShConfigurationType" />
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="clean test build" run_configuration_type="ShConfigurationType" />
       <option name="Make" enabled="true" />
     </method>
   </configuration>

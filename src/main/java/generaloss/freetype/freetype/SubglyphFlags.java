@@ -2,6 +2,8 @@ package generaloss.freetype.freetype;
 
 import generaloss.freetype.BitMask;
 
+import java.util.StringJoiner;
+
 public class SubglyphFlags extends BitMask {
 
     public SubglyphFlags() { }
@@ -52,6 +54,15 @@ public class SubglyphFlags extends BitMask {
 
     public boolean hasUseMyMetrics() {
         return this.has(FTSubglyphFlag.USE_MY_METRICS);
+    }
+
+
+    @Override
+    public String toString() {
+        final StringJoiner joiner = new StringJoiner(", ");
+        for(FTSubglyphFlag flag: FTSubglyphFlag.values())
+            joiner.add(flag.toString() + "=" + this.has(flag));
+        return "FaceFlags{" + joiner + "}";
     }
 
 }

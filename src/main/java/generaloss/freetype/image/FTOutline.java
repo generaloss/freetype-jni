@@ -3,6 +3,7 @@ package generaloss.freetype.image;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FTStructCache;
 import generaloss.freetype.FreeType;
+import generaloss.freetype.gload.FTSubGlyph;
 import generaloss.freetype.stroke.FTStrokerBorder;
 import generaloss.freetype.types.FTVector;
 
@@ -33,7 +34,7 @@ public class FTOutline extends FTStruct { // struct done.
     public FTVector[] getPoints() {
         final long[] pointers = getPoints(super.pointer);
         if(pointers == null)
-            return null;
+            return new FTVector[0];
 
         final FTVector[] objects = new FTVector[pointers.length];
         for(int i = 0; i < objects.length; i++)

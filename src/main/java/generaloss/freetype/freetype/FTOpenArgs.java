@@ -2,6 +2,7 @@ package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FTStructCache;
+import generaloss.freetype.gload.FTSubGlyph;
 
 public class FTOpenArgs extends FTStruct {
 
@@ -55,7 +56,7 @@ public class FTOpenArgs extends FTStruct {
     public FTParameter[] getParams() {
         final long[] pointers = getParams(super.pointer);
         if(pointers == null)
-            return null;
+            return new FTParameter[0];
 
         final FTParameter[] objects = new FTParameter[pointers.length];
         for(int i = 0; i < pointers.length; i++)

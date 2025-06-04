@@ -14,7 +14,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLibrary
     if(!slot)
         return 0;
 
-    return reinterpret_cast<jlong>(&slot->library);
+    return reinterpret_cast<jlong>(slot->library);
 }
 
 // FT_Face face;
@@ -25,7 +25,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getFace
     if(!slot)
         return 0;
 
-    return reinterpret_cast<jlong>(&slot->face);
+    return reinterpret_cast<jlong>(slot->face);
 }
 
 // FT_GlyphSlot next;
@@ -164,7 +164,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getNumSubg
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getSubglyphs
   (JNIEnv *env, jclass, jlong slotPtrRaw) {
 
-    return NULL;
+    return NULL; // TODO: ?
 }
 
 // FT_Pos lsb_delta;

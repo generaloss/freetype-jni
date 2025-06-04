@@ -2,6 +2,8 @@ package generaloss.freetype.freetype;
 
 import generaloss.freetype.BitMask;
 
+import java.util.StringJoiner;
+
 public class LoadFlags extends BitMask {
 
     public LoadFlags() { }
@@ -132,6 +134,17 @@ public class LoadFlags extends BitMask {
 
     public boolean hasTargetLCD_V() {
         return this.has(FTLoadTarget.LCD_V);
+    }
+
+
+    @Override
+    public String toString() {
+        final StringJoiner joiner = new StringJoiner(", ");
+        for(FTLoad flag: FTLoad.values())
+            joiner.add(flag.toString() + "=" + this.has(flag));
+        for(FTLoadTarget flag: FTLoadTarget.values())
+            joiner.add(flag.toString() + "=" + this.has(flag));
+        return "FaceFlags{" + joiner + "}";
     }
 
 

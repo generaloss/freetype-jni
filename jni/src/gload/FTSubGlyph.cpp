@@ -1,3 +1,5 @@
+// typedef struct FT_SubGlyphRec_* FT_SubGlyph;
+
 #include "gload/FTSubGlyph.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H

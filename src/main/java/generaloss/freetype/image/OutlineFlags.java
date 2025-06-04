@@ -1,6 +1,9 @@
 package generaloss.freetype.image;
 
 import generaloss.freetype.BitMask;
+import generaloss.freetype.freetype.FTFaceFlag;
+
+import java.util.StringJoiner;
 
 public class OutlineFlags extends BitMask {
 
@@ -60,6 +63,15 @@ public class OutlineFlags extends BitMask {
 
     public boolean hasSinglePass() {
         return this.has(FTOutlineFlag.SINGLE_PASS);
+    }
+
+
+    @Override
+    public String toString() {
+        final StringJoiner joiner = new StringJoiner(", ");
+        for(FTOutlineFlag flag: FTOutlineFlag.values())
+            joiner.add(flag.toString() + "=" + this.has(flag));
+        return "FaceFlags{" + joiner + "}";
     }
 
 }

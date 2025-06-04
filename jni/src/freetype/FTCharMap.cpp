@@ -12,7 +12,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTCharMap_getFace
     if(!charmap)
         return 0;
 
-    return reinterpret_cast<jlong>(&charmap->face);
+    return reinterpret_cast<jlong>(charmap->face);
 }
 
 // FT_Encoding encoding;

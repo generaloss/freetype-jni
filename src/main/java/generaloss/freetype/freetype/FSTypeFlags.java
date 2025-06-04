@@ -2,6 +2,8 @@ package generaloss.freetype.freetype;
 
 import generaloss.freetype.BitMask;
 
+import java.util.StringJoiner;
+
 public class FSTypeFlags extends BitMask {
 
     public FSTypeFlags() { }
@@ -48,6 +50,15 @@ public class FSTypeFlags extends BitMask {
 
     public boolean hasBitmapEmbeddingOnly() {
         return this.has(FTFSType.BITMAP_EMBEDDING_ONLY);
+    }
+
+
+    @Override
+    public String toString() {
+        final StringJoiner joiner = new StringJoiner(", ");
+        for(FTFSType flag: FTFSType.values())
+            joiner.add(flag.toString() + "=" + this.has(flag));
+        return "FaceFlags{" + joiner + "}";
     }
 
 }

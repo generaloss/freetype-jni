@@ -1,3 +1,5 @@
+// typedef struct FT_Vector_ { ... } FT_Vector;
+
 #include "types/FTVector.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
