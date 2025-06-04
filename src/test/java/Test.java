@@ -8,7 +8,7 @@ import jpize.util.res.Resource;
 public class Test {
 
     public static void main(String[] args) {
-        for(int i = 0; i < 1000; i++)
+        for(int i = 0; i < 1; i++)
             test1();
     }
 
@@ -23,7 +23,7 @@ public class Test {
     private static void test1() {
         final FTLibrary library = new FTLibrary();
 
-        final FTFace face = library.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        final FTFace face = library.newMemoryFace(Resource.internal("/main.ttf").readByteBuffer(), 0);
 
         System.out.println("family: " + face.getFamilyName());
         System.out.println("style: " + face.getStyleName());
@@ -53,7 +53,6 @@ public class Test {
             System.out.println("render");
             slot.renderGlyph(FTRenderMode.NORMAL);
 
-            System.out.println("getGlyph");
             final FTGlyph glyph = slot.getGlyph();
 
             System.out.println("advance: " + glyph.getAdvance());
@@ -63,8 +62,8 @@ public class Test {
             System.out.println("origin: " + origin);
             final FTBitmap bitmap = bitmapGlyph.getBitmap();
 
-            // final FTBitmap bitmap = face.getGlyph().getBitmap();
-            final FTGlyphMetrics glyphMetrics = face.getGlyph().getMetrics();
+            // final FTBitmap bitmap = slot.getBitmap();
+            final FTGlyphMetrics glyphMetrics = slot.getMetrics();
 
             System.out.println(glyphMetrics.getHoriBearingX() + ", " + glyphMetrics.getHoriBearingY());
             System.out.println(glyphMetrics.getWidth() + ", " + glyphMetrics.getHeight() + ", " + glyphMetrics.getHoriAdvance());

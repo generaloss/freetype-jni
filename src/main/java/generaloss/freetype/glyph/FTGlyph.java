@@ -39,7 +39,7 @@ public class FTGlyph extends FTStruct { // struct done.
     private static native long getAdvance(long pointer);
 
     public FTVector getAdvance() {
-        final long pointer = getFormat(super.pointer);
+        final long pointer = getAdvance(super.pointer);
         return FTStructCache.getOrCreate(pointer, FTVector::new);
     }
 

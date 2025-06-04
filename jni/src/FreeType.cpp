@@ -29,8 +29,10 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Init_1FreeType
 
     if(error == 0 && libraryPtrRaw != nullptr) {
         const jsize length = env->GetArrayLength(libraryPtrRaw);
-        if(length < 1)
+        if(length < 1) {
             throwException(env, "FT_Face pointer array length < 1");
+            return static_cast<jint>(error);
+        }
 
         const jlong libraryPtr = reinterpret_cast<jlong>(library);
         env->SetLongArrayRegion(libraryPtrRaw, 0, 1, &libraryPtr);
@@ -76,10 +78,12 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Face
     FT_Face face;
     const FT_Error error = FT_New_Face(library, filepath, faceIndex, &face);
 
-    if(!error && facePtrRaw != nullptr) {
+    if(error == 0 && facePtrRaw != nullptr) {
         const jsize length = env->GetArrayLength(facePtrRaw);
-        if(length < 1)
+        if(length < 1) {
             throwException(env, "FT_Face pointer array length < 1");
+            return static_cast<jint>(error);
+        }
 
         jlong facePtr = reinterpret_cast<jlong>(face);
         env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
@@ -113,10 +117,12 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Memory_1Face
     FT_Face face;
     const FT_Error error = FT_New_Memory_Face(libraryPtr, fileBase, fileSize, faceIndex, &face);
 
-    if(!error && facePtrRaw != nullptr) {
+    if(error == 0 && facePtrRaw != nullptr) {
         const jsize length = env->GetArrayLength(facePtrRaw);
-        if(length < 1)
+        if(length < 1) {
             throwException(env, "FT_Face pointer array length < 1");
+            return static_cast<jint>(error);
+        }
 
         jlong facePtr = reinterpret_cast<jlong>(face);
         env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
@@ -147,10 +153,12 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Open_1Face
     FT_Face face;
     const FT_Error error = FT_Open_Face(library, argsPtr, faceIndex, &face);
 
-    if(!error && facePtrRaw != nullptr) {
+    if(error == 0 && facePtrRaw != nullptr) {
         const jsize length = env->GetArrayLength(facePtrRaw);
-        if(length < 1)
+        if(length < 1) {
             throwException(env, "FT_Face pointer array length < 1");
+            return static_cast<jint>(error);
+        }
 
         jlong facePtr = reinterpret_cast<jlong>(face);
         env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
@@ -1104,7 +1112,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Glyph
     FT_Glyph glyph;
     const FT_Error error = FT_New_Glyph(library, format, &glyph);
 
-    if(!error && glyphPtrRaw != nullptr) {
+    if(error && glyphPtrRaw != nullptr) {
         const jsize length = env->GetArrayLength(glyphPtrRaw);
         if(length < 1)
             throwException(env, "FT_Face pointer array length < 1");
@@ -1130,11 +1138,12 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
     FT_Glyph glyph = nullptr;
     const FT_Error error = FT_Get_Glyph(slot, &glyph);
 
-    if(!error && glyphPtrRaw != nullptr) {
+    if(error == 0 && glyphPtrRaw != nullptr) {
         const jsize length = env->GetArrayLength(glyphPtrRaw);
-        if(length < 1)
+        if(length < 1) {
             throwException(env, "FT_Face pointer array length < 1");
-
+            return static_cast<jint>(error);
+        }
         jlong glyphPtr = reinterpret_cast<jlong>(glyph);
         env->SetLongArrayRegion(glyphPtrRaw, 0, 1, &glyphPtr);
     }

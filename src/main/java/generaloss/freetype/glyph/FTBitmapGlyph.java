@@ -41,11 +41,4 @@ public class FTBitmapGlyph extends FTStruct { // struct done.
         return FTStructCache.getOrCreate(pointer, FTBitmap::new);
     }
 
-
-    private static native long newStruct();
-
-    public static FTBitmapGlyph newInstance() {
-        return new FTBitmapGlyph(newStruct());
-    }
-
 }

@@ -39,14 +39,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_glyph_FTBitmapGlyph_getTop
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_glyph_FTBitmapGlyph_getBitmap
   (JNIEnv *, jclass, jlong);
 
-/*
- * Class:     generaloss_freetype_glyph_FTBitmapGlyph
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_glyph_FTBitmapGlyph_newStruct
-  (JNIEnv *, jclass);
-
 #ifdef __cplusplus
 }
 #endif

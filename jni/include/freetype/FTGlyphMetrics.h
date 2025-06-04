@@ -71,14 +71,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertB
 JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_getVertAdvance
   (JNIEnv *, jclass, jlong);
 
-/*
- * Class:     generaloss_freetype_freetype_FTGlyphMetrics
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphMetrics_newStruct
-  (JNIEnv *, jclass);
-
 #ifdef __cplusplus
 }
 #endif

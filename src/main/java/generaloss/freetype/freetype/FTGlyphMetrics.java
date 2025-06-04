@@ -74,11 +74,4 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
         return FTPos.toFloat(raw);
     }
 
-
-    private static native long newStruct();
-
-    public static FTGlyphMetrics newInstance() {
-        return new FTGlyphMetrics(newStruct());
-    }
-
 }

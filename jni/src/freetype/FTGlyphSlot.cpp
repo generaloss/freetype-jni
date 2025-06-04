@@ -3,6 +3,8 @@
 #include "freetype/FTGlyphSlot.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include FT_GLYPH_H
+#include <jni.h>
 
 // FT_Library library;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLibrary
@@ -160,7 +162,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getNumSubg
 
 // FT_SubGlyph subglyphs;
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getSubglyphs
-  (JNIEnv *, jclass, jlong slotPtrRaw) {
+  (JNIEnv *env, jclass, jlong slotPtrRaw) {
 
     return NULL;
 }
