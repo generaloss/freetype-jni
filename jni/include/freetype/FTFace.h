@@ -191,14 +191,6 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getSize
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getCharmap
   (JNIEnv *, jclass, jlong);
 
-/*
- * Class:     generaloss_freetype_freetype_FTFace
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_newStruct
-  (JNIEnv *, jclass);
-
 #ifdef __cplusplus
 }
 #endif

@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Init_FreeType
- * Signature: (J)I
+ * Signature: ([J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Init_1FreeType
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv *, jclass, jlongArray);
 
 /*
  * Class:     generaloss_freetype_FreeType
@@ -26,26 +26,26 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1FreeType
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_New_Face
- * Signature: (JLjava/lang/String;JJ)I
+ * Signature: (JLjava/lang/String;J[J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Face
-  (JNIEnv *, jclass, jlong, jstring, jlong, jlong);
+  (JNIEnv *, jclass, jlong, jstring, jlong, jlongArray);
 
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_New_Memory_Face
- * Signature: (JLjava/nio/ByteBuffer;JJJ)I
+ * Signature: (JLjava/nio/ByteBuffer;JJ[J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Memory_1Face
-  (JNIEnv *, jclass, jlong, jobject, jlong, jlong, jlong);
+  (JNIEnv *, jclass, jlong, jobject, jlong, jlong, jlongArray);
 
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Open_Face
- * Signature: (JJJJ)I
+ * Signature: (JJJ[J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Open_1Face
-  (JNIEnv *, jclass, jlong, jlong, jlong, jlong);
+  (JNIEnv *, jclass, jlong, jlong, jlong, jlongArray);
 
 /*
  * Class:     generaloss_freetype_FreeType
@@ -458,18 +458,18 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Add
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_New_Glyph
- * Signature: (JIJ)I
+ * Signature: (JI[J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Glyph
-  (JNIEnv *, jclass, jlong, jint, jlong);
+  (JNIEnv *, jclass, jlong, jint, jlongArray);
 
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Get_Glyph
- * Signature: (JJ)I
+ * Signature: (J[J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv *, jclass, jlong, jlongArray);
 
 /*
  * Class:     generaloss_freetype_FreeType

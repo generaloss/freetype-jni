@@ -54,6 +54,8 @@ public class FTOpenArgs extends FTStruct {
 
     public FTParameter[] getParams() {
         final long[] pointers = getParams(super.pointer);
+        if(pointers == null)
+            return null;
 
         final FTParameter[] objects = new FTParameter[pointers.length];
         for(int i = 0; i < pointers.length; i++)

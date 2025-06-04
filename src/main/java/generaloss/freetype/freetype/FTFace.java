@@ -75,6 +75,8 @@ public class FTFace extends FTStruct { // struct done.
 
     public FTBitmapSize[] getAvailableSizes() {
         final long[] pointers = getAvailableSizes(super.pointer);
+        if(pointers == null)
+            return null;
 
         final FTBitmapSize[] objects = new FTBitmapSize[pointers.length];
         for(int i = 0; i < pointers.length; i++)
@@ -95,6 +97,8 @@ public class FTFace extends FTStruct { // struct done.
 
     public FTCharMap[] getCharmaps() {
         final long[] pointers = getCharmaps(super.pointer);
+        if(pointers == null)
+            return null;
 
         final FTCharMap[] objects = new FTCharMap[pointers.length];
         for(int i = 0; i < pointers.length; i++)
@@ -374,13 +378,6 @@ public class FTFace extends FTStruct { // struct done.
 
     public boolean setUnpatentedHinting(boolean value) {
         return FreeType.ftFaceSetUnpatentedHinting(this, value);
-    }
-
-
-    private static native long newStruct();
-
-    public static FTFace newInstance() {
-        return new FTFace(newStruct());
     }
 
 }

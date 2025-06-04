@@ -143,14 +143,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getLsbDelta
 JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getRsbDelta
   (JNIEnv *, jclass, jlong);
 
-/*
- * Class:     generaloss_freetype_freetype_FTGlyphSlot
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_newStruct
-  (JNIEnv *, jclass);
-
 #ifdef __cplusplus
 }
 #endif

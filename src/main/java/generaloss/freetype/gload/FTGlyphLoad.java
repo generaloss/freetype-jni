@@ -47,6 +47,8 @@ public class FTGlyphLoad extends FTStruct { // struct done.
 
     public FTSubGlyph[] getSubglyphs() {
         final long[] pointers = getSubglyphs(super.pointer);
+        if(pointers == null)
+            return null;
 
         final FTSubGlyph[] objects = new FTSubGlyph[pointers.length];
         for(int i = 0; i < objects.length; i++)

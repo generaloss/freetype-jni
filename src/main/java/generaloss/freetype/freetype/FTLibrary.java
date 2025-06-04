@@ -1,6 +1,7 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FTStructCache;
 import generaloss.freetype.FreeType;
 import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.image.FTGlyphFormat;
@@ -21,9 +22,14 @@ public class FTLibrary extends FTStruct { // struct done.
     }
 
     public FTLibrary() {
-        super(newStruct());
-        final FTError error = FreeType.ftInitFreeType(this);
+        super(freeTypeInit());
+    }
+
+    private static long freeTypeInit() {
+        final long[] dstLibraryPointer = new long[1];
+        final FTError error = FreeType.ftInitFreeType(dstLibraryPointer);
         error.checkError();
+        return dstLibraryPointer[0];
     }
 
 
@@ -33,39 +39,39 @@ public class FTLibrary extends FTStruct { // struct done.
     }
 
     public FTFace newFace(String filepath, long faceIndex) {
-        final FTFace dstFace = FTFace.newInstance();
-        final FTError error = FreeType.ftNewFace(this, filepath, faceIndex, dstFace);
+        final long[] dstFacePointer = new long[1];
+        final FTError error = FreeType.ftNewFace(this, filepath, faceIndex, dstFacePointer);
         error.checkError();
-        return dstFace;
+        return FTStructCache.getOrCreate(dstFacePointer[0], FTFace::new);
     }
 
-    public FTFace newMemoryFace(ByteBuffer fileBase, long fileSize, int faceIndex) {
-        final FTFace dstFace = FTFace.newInstance();
-        final FTError error = FreeType.ftNewMemoryFace(this, fileBase, fileSize, faceIndex, dstFace);
+    public FTFace newMemoryFace(ByteBuffer dataBuffer, long dataSize, int faceIndex) {
+        final long[] dstFacePointer = new long[1];
+        final FTError error = FreeType.ftNewMemoryFace(this, dataBuffer, dataSize, faceIndex, dstFacePointer);
         error.checkError();
-        return dstFace;
+        return FTStructCache.getOrCreate(dstFacePointer[0], FTFace::new);
     }
 
-    public FTFace newMemoryFace(ByteBuffer fileBase, int faceIndex) {
-        return this.newMemoryFace(fileBase, fileBase.limit(), faceIndex);
+    public FTFace newMemoryFace(ByteBuffer dataBuffer, int faceIndex) {
+        return this.newMemoryFace(dataBuffer, dataBuffer.remaining(), faceIndex);
     }
 
-    public FTFace newMemoryFace(byte[] fileBase, long fileSize, int faceIndex) {
-        final FTFace dstFace = FTFace.newInstance();
-        final FTError error = FreeType.ftNewMemoryFace(this, fileBase, fileSize, faceIndex, dstFace);
+    public FTFace newMemoryFace(byte[] data, long dataSize, int faceIndex) {
+        final long[] dstFacePointer = new long[1];
+        final FTError error = FreeType.ftNewMemoryFace(this, data, dataSize, faceIndex, dstFacePointer);
         error.checkError();
-        return dstFace;
+        return FTStructCache.getOrCreate(dstFacePointer[0], FTFace::new);
     }
 
-    public FTFace newMemoryFace(byte[] fileBase, int faceIndex) {
-        return this.newMemoryFace(fileBase, fileBase.length, faceIndex);
+    public FTFace newMemoryFace(byte[] data, int faceIndex) {
+        return this.newMemoryFace(data, data.length, faceIndex);
     }
 
     public FTFace openFace(FTOpenArgs args, int faceIndex) {
-        final FTFace dstFace = FTFace.newInstance();
-        final FTError error = FreeType.ftOpenFace(this, args, faceIndex, dstFace);
+        final long[] dstFacePointer = new long[1];
+        final FTError error = FreeType.ftOpenFace(this, args, faceIndex, dstFacePointer);
         error.checkError();
-        return dstFace;
+        return FTStructCache.getOrCreate(dstFacePointer[0], FTFace::new);
     }
 
     public void getVersion(int[] dstMajor, int[] dstMinor, int[] dstPatch) {
@@ -73,10 +79,10 @@ public class FTLibrary extends FTStruct { // struct done.
     }
 
     public FTGlyph newGlyph(FTGlyphFormat format) {
-        final FTGlyph dstGlyph = FTGlyph.newInstance();
-        final FTError error = FreeType.ftNewGlyph(this, format, dstGlyph);
+        final long[] dstGlyphPointer = new long[1];
+        final FTError error = FreeType.ftNewGlyph(this, format, dstGlyphPointer);
         error.checkError();
-        return dstGlyph;
+        return FTStructCache.getOrCreate(dstGlyphPointer[0], FTGlyph::new);
     }
 
     public FTStroker newStroker() {
@@ -84,13 +90,6 @@ public class FTLibrary extends FTStruct { // struct done.
         final FTError error = FreeType.ftStrokerNew(this, dstStroker);
         error.checkError();
         return dstStroker;
-    }
-
-
-    private static native long newStruct();
-
-    public static FTLibrary newInstance() {
-        return new FTLibrary(newStruct());
     }
 
 

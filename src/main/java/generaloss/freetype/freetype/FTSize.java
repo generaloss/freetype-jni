@@ -26,11 +26,4 @@ public class FTSize extends FTStruct { // struct done.
         return FTStructCache.getOrCreate(pointer, FTSizeMetrics::new);
     }
 
-
-    private static native long newStruct();
-
-    public static FTSize newInstance() {
-        return new FTSize(newStruct());
-    }
-
 }

@@ -22,10 +22,10 @@ public class FreeType {
 
 
     // FT_Error FT_Init_FreeType(FT_Library *alibrary)
-    private static native int FT_Init_FreeType(long alibrary);
+    private static native int FT_Init_FreeType(long[] alibrary);
 
-    public static FTError ftInitFreeType(FTLibrary dstLibrary) {
-        final int code = FT_Init_FreeType(FTStruct.getPointer(dstLibrary));
+    public static FTError ftInitFreeType(long[] dstLibraryPointer) {
+        final int code = FT_Init_FreeType(dstLibraryPointer);
         return FTError.byCode(code);
     }
 
@@ -39,41 +39,41 @@ public class FreeType {
     }
 
     // FT_Error FT_New_Face(FT_Library library, const char* filepathname, FT_Long face_index, FT_Face *aface)
-    private static native int FT_New_Face(long library, String filepathname, long face_index, long aface);
+    private static native int FT_New_Face(long library, String filepathname, long face_index, long[] aface);
 
-    public static FTError ftNewFace(FTLibrary library, String filepath, long faceIndex, FTFace dstFace) {
-        final int code = FT_New_Face(FTStruct.getPointer(library), filepath, faceIndex, FTStruct.getPointer(dstFace));
+    public static FTError ftNewFace(FTLibrary library, String filepath, long faceIndex, long[] dstFacePointer) {
+        final int code = FT_New_Face(FTStruct.getPointer(library), filepath, faceIndex, dstFacePointer);
         return FTError.byCode(code);
     }
 
     // FT_Error FT_New_Memory_Face(FT_Library library, const FT_Byte* file_base, FT_Long file_size, FT_Long face_index, FT_Face *aface)
-    private static native int FT_New_Memory_Face(long library, ByteBuffer file_base, long file_size, long face_index, long aface);
+    private static native int FT_New_Memory_Face(long library, ByteBuffer file_base, long file_size, long face_index, long[] aface);
 
-    public static FTError ftNewMemoryFace(FTLibrary library, ByteBuffer fileBase, long fileSize, long faceIndex, FTFace dstFace) {
-        final int code = FT_New_Memory_Face(FTStruct.getPointer(library), fileBase, fileSize, faceIndex, FTStruct.getPointer(dstFace));
+    public static FTError ftNewMemoryFace(FTLibrary library, ByteBuffer dataBuffer, long dataSize, long faceIndex, long[] dstFacePointer) {
+        final int code = FT_New_Memory_Face(FTStruct.getPointer(library), dataBuffer, dataSize, faceIndex, dstFacePointer);
         return FTError.byCode(code);
     }
 
-    public static FTError ftNewMemoryFace(FTLibrary library, ByteBuffer fileBase, long faceIndex, FTFace dstFace) {
-        return ftNewMemoryFace(library, fileBase, fileBase.limit(), faceIndex, dstFace);
+    public static FTError ftNewMemoryFace(FTLibrary library, ByteBuffer dataBuffer, long faceIndex, long[] dstFacePointer) {
+        return ftNewMemoryFace(library, dataBuffer, dataBuffer.remaining(), faceIndex, dstFacePointer);
     }
 
-    public static FTError ftNewMemoryFace(FTLibrary library, byte[] fileBase, long fileSize, long faceIndex, FTFace dstFace) {
-        final ByteBuffer fileBaseBuf = ByteBuffer.allocateDirect(fileBase.length);
-        fileBaseBuf.put(fileBase);
-        fileBaseBuf.position(0);
-        return ftNewMemoryFace(library, fileBaseBuf, fileSize, faceIndex, dstFace);
+    public static FTError ftNewMemoryFace(FTLibrary library, byte[] data, long dataSize, long faceIndex, long[] dstFacePointer) {
+        final ByteBuffer buffer = ByteBuffer.allocateDirect(data.length);
+        buffer.put(data);
+        buffer.flip();
+        return ftNewMemoryFace(library, buffer, dataSize, faceIndex, dstFacePointer);
     }
 
-    public static FTError ftNewMemoryFace(FTLibrary library, byte[] fileBase, long faceIndex, FTFace dstFace) {
-        return ftNewMemoryFace(library, fileBase, fileBase.length, faceIndex, dstFace);
+    public static FTError ftNewMemoryFace(FTLibrary library, byte[] data, long faceIndex, long[] dstFacePointer) {
+        return ftNewMemoryFace(library, data, data.length, faceIndex, dstFacePointer);
     }
 
     // FT_Error FT_Open_Face(FT_Library library, const FT_Open_Args* args, FT_Long face_index, FT_Face *aface)
-    private static native int FT_Open_Face(long library, long args, long face_index, long aface);
+    private static native int FT_Open_Face(long library, long args, long face_index, long[] aface);
 
-    public static FTError ftOpenFace(FTLibrary library, FTOpenArgs args, long faceIndex, FTFace dstFace) {
-        final int code = FT_Open_Face(FTStruct.getPointer(library), FTStruct.getPointer(args), faceIndex, FTStruct.getPointer(dstFace));
+    public static FTError ftOpenFace(FTLibrary library, FTOpenArgs args, long faceIndex, long[] dstFacePointer) {
+        final int code = FT_Open_Face(FTStruct.getPointer(library), FTStruct.getPointer(args), faceIndex, dstFacePointer);
         return FTError.byCode(code);
     }
 
@@ -192,7 +192,6 @@ public class FreeType {
     private static native int FT_Render_Glyph(long slot, int render_mode);
 
     public static FTError ftRenderGlyph(FTGlyphSlot slot, FTRenderMode renderMode) {
-        System.out.println("FT_Render_Glyph(" + FTStruct.getPointer(slot) + ", " + renderMode.name() + ")");
         final int code = FT_Render_Glyph(FTStruct.getPointer(slot), renderMode.value);
         return FTError.byCode(code);
     }
@@ -508,18 +507,18 @@ public class FreeType {
 
 
     // FT_Error FT_New_Glyph(FT_Library library, FT_Glyph_Format format, FT_Glyph *aglyph)
-    private static native int FT_New_Glyph(long library, int format, long aglyph);
+    private static native int FT_New_Glyph(long library, int format, long[] aglyph);
 
-    public static FTError ftNewGlyph(FTLibrary library, FTGlyphFormat format, FTGlyph dstGlyph) {
-        final int code = FT_New_Glyph(FTStruct.getPointer(library), format.value, FTStruct.getPointer(dstGlyph));
+    public static FTError ftNewGlyph(FTLibrary library, FTGlyphFormat format, long[] dstGlyphPointer) {
+        final int code = FT_New_Glyph(FTStruct.getPointer(library), format.value, dstGlyphPointer);
         return FTError.byCode(code);
     }
 
     // FT_Error FT_Get_Glyph(FT_GlyphSlot slot, FT_Glyph *aglyph)
-    private static native int FT_Get_Glyph(long slot, long aglyph);
+    private static native int FT_Get_Glyph(long slot, long[] aglyph);
 
-    public static FTError ftGetGlyph(FTGlyphSlot slot, FTGlyph dstGlyph) {
-        final int code = FT_Get_Glyph(FTStruct.getPointer(slot), FTStruct.getPointer(dstGlyph));
+    public static FTError ftGetGlyph(FTGlyphSlot slot, long[] dstGlyphPointer) {
+        final int code = FT_Get_Glyph(FTStruct.getPointer(slot), dstGlyphPointer);
         return FTError.byCode(code);
     }
 

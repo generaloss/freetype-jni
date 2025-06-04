@@ -47,11 +47,3 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getEncodingID
 
     return static_cast<jint>(charmap->encoding_id);
 }
-
-
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTCharMap_newStruct
-  (JNIEnv *, jclass) {
-
-    FT_CharMap* pointer = new FT_CharMap(nullptr);
-    return reinterpret_cast<jlong>(pointer);
-}

@@ -46,6 +46,12 @@ public class FTVector extends FTStruct { // struct done.
     }
 
 
+    @Override
+    public String toString() {
+        return "FTVector{x=" + this.getX() + ", y=" + this.getY() + "}";
+    }
+
+
     private static native long newStruct();
 
     public static FTVector newInstance() {

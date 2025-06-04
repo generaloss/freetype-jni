@@ -79,11 +79,4 @@ public class FTGlyph extends FTStruct { // struct done.
         error.checkError();
     }
 
-
-    private static native long newStruct();
-
-    public static FTGlyph newInstance() {
-        return new FTGlyph(newStruct());
-    }
-
 }

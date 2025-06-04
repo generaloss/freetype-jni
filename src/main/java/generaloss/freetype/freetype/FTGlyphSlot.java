@@ -128,6 +128,8 @@ public class FTGlyphSlot extends FTStruct { // struct done.
 
     public FTSubGlyph[] getSubglyphs() {
         final long[] pointers = getSubglyphs(super.pointer);
+        if(pointers == null)
+            return null;
 
         final FTSubGlyph[] objects = new FTSubGlyph[pointers.length];
         for(int i = 0; i < pointers.length; i++)
@@ -164,17 +166,10 @@ public class FTGlyphSlot extends FTStruct { // struct done.
     }
 
     public FTGlyph getGlyph() {
-        final FTGlyph dstGlyph = FTGlyph.newInstance();
-        final FTError error = FreeType.ftGetGlyph(this, dstGlyph);
+        final long[] dstGlyphPointer = new long[1];
+        final FTError error = FreeType.ftGetGlyph(this, dstGlyphPointer);
         error.checkError();
-        return dstGlyph;
-    }
-
-
-    private static native long newStruct();
-
-    public static FTGlyphSlot newInstance() {
-        return new FTGlyphSlot(newStruct());
+        return FTStructCache.getOrCreate(dstGlyphPointer[0], FTGlyph::new);
     }
 
 }

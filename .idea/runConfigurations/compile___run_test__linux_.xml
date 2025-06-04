@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="compile &amp; run test (linux)" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="Test" />
+    <module name="freetype-jni" />
+    <method v="2">
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_build-natives-dev" />
+      <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_clean" />
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

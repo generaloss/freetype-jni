@@ -2,28 +2,46 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_getX
-  (JNIEnv *, jclass, jlong) {
+// FT_Pos x;
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTVector_getRawX
+  (JNIEnv *, jclass, jlong vectorPtrRaw) {
 
-    return 0;
+    const FT_Vector* vector = reinterpret_cast<FT_Vector*>(vectorPtrRaw);
+    if(!vector)
+        return 0;
+
+    return static_cast<jint>(vector->x);
 }
 
-JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setX
-  (JNIEnv *, jclass, jlong, jlong) {
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setRawX
+  (JNIEnv *, jclass, jlong vectorPtrRaw, jint xRaw) {
 
+    FT_Vector* vector = reinterpret_cast<FT_Vector*>(vectorPtrRaw);
+    if(!vector)
+        return;
 
+    vector->x = static_cast<FT_Pos>(xRaw);
 }
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_getY
-  (JNIEnv *, jclass, jlong) {
+// FT_Pos y;
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTVector_getRawY
+  (JNIEnv *, jclass, jlong vectorPtrRaw) {
 
-    return 0;
+    const FT_Vector* vector = reinterpret_cast<FT_Vector*>(vectorPtrRaw);
+    if(!vector)
+        return 0;
+
+    return static_cast<jint>(vector->y);
 }
 
-JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setY
-  (JNIEnv *, jclass, jlong, jlong) {
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setRawY
+  (JNIEnv *, jclass, jlong vectorPtrRaw, jint yRaw) {
 
+    FT_Vector* vector = reinterpret_cast<FT_Vector*>(vectorPtrRaw);
+    if(!vector)
+        return;
 
+    vector->y = static_cast<FT_Pos>(yRaw);
 }
 
 

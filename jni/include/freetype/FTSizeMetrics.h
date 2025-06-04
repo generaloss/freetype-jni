@@ -71,14 +71,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getHeight
 JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getMaxAdvance
   (JNIEnv *, jclass, jlong);
 
-/*
- * Class:     generaloss_freetype_freetype_FTSizeMetrics
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_newStruct
-  (JNIEnv *, jclass);
-
 #ifdef __cplusplus
 }
 #endif

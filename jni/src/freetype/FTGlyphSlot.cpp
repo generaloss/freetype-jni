@@ -186,11 +186,3 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getRsbDelta
 
     return static_cast<jint>(slot->rsb_delta);
 }
-
-
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_newStruct
-  (JNIEnv *, jclass) {
-
-    FT_GlyphSlot* pointer = new FT_GlyphSlot(nullptr);
-    return reinterpret_cast<jlong>(pointer);
-}

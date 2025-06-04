@@ -31,14 +31,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_glyph_FTGlyph_getFormat
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_glyph_FTGlyph_getAdvance
   (JNIEnv *, jclass, jlong);
 
-/*
- * Class:     generaloss_freetype_glyph_FTGlyph
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_glyph_FTGlyph_newStruct
-  (JNIEnv *, jclass);
-
 #ifdef __cplusplus
 }
 #endif

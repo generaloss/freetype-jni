@@ -32,6 +32,8 @@ public class FTOutline extends FTStruct { // struct done.
 
     public FTVector[] getPoints() {
         final long[] pointers = getPoints(super.pointer);
+        if(pointers == null)
+            return null;
 
         final FTVector[] objects = new FTVector[pointers.length];
         for(int i = 0; i < objects.length; i++)

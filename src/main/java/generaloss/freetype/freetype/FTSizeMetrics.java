@@ -73,11 +73,4 @@ public class FTSizeMetrics extends FTStruct { // struct done.
         return FTPos.toFloat(raw);
     }
 
-
-    private static native long newStruct();
-
-    public static FTSizeMetrics newInstance() {
-        return new FTSizeMetrics(newStruct());
-    }
-
 }

@@ -23,14 +23,6 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSize_getFace
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSize_getMetrics
   (JNIEnv *, jclass, jlong);
 
-/*
- * Class:     generaloss_freetype_freetype_FTSize
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSize_newStruct
-  (JNIEnv *, jclass);
-
 #ifdef __cplusplus
 }
 #endif

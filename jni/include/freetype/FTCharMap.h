@@ -39,14 +39,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getPlatformID
 JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTCharMap_getEncodingID
   (JNIEnv *, jclass, jlong);
 
-/*
- * Class:     generaloss_freetype_freetype_FTCharMap
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTCharMap_newStruct
-  (JNIEnv *, jclass);
-
 #ifdef __cplusplus
 }
 #endif

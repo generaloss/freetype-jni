@@ -25,11 +25,3 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSize_getMetrics
 
     return reinterpret_cast<jlong>(&size->metrics);
 }
-
-
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSize_newStruct
-  (JNIEnv *, jclass) {
-
-    FT_Size* pointer = new FT_Size;
-    return reinterpret_cast<jlong>(pointer);
-}

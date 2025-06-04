@@ -46,11 +46,4 @@ public class FTCharMap extends FTStruct { // struct done.
         return FreeType.ftGetCharmapIndex(this);
     }
 
-
-    private static native long newStruct();
-
-    public static FTCharMap newInstance() {
-        return new FTCharMap(newStruct());
-    }
-
 }
