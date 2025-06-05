@@ -12,16 +12,16 @@ public class FTBitmap extends FTStruct {
 
 
     // unsigned int rows;
-    private static native int getRows(long pointer);
+    private static native long getRows(long pointer);
 
-    public int getRows() {
+    public long getRows() {
         return getRows(super.pointer);
     }
 
     // unsigned int width;
-    private static native int getWidth(long pointer);
+    private static native long getWidth(long pointer);
 
-    public int getWidth() {
+    public long getWidth() {
         return getWidth(super.pointer);
     }
 
@@ -49,22 +49,27 @@ public class FTBitmap extends FTStruct {
     }
 
     // unsigned char pixel_mode;
-    private static native int getPixelMode(long pointer);
+    private static native short getPixelMode(long pointer);
 
     public FTPixelMode getPixelMode() {
-        final int raw = getPixelMode(super.pointer);
+        final short raw = getPixelMode(super.pointer);
         return FTPixelMode.byValue(raw);
     }
 
     // unsigned char palette_mode;
+    private static native short getPaletteMode(long pointer);
+
+    @Deprecated
+    public short getPaletteMode() {
+        return getPaletteMode(super.pointer);
+    }
 
     // void* palette;
+    private static native long getPalettePointer(long pointer);
 
-
-    private static native long newStruct();
-
-    public static FTBitmap newInstance() {
-        return new FTBitmap(newStruct());
+    @Deprecated
+    public long getPalettePointer() {
+        return getPalettePointer(super.pointer);
     }
 
 }

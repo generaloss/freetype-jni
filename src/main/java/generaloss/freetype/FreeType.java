@@ -35,6 +35,7 @@ public class FreeType {
     public static FTError ftDoneFreeType(FTLibrary library) {
         final int code = FT_Done_FreeType(FTStruct.getPointer(library));
         library.destroyPointer();
+        FTStructCache.clear();
         return FTError.byCode(code);
     }
 

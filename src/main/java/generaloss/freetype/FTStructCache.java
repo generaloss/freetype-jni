@@ -9,7 +9,7 @@ public class FTStructCache {
     private static final Map<Long, FTStruct> STRUCT_BY_POINTER_MAP = new ConcurrentHashMap<>();
 
     protected static void register(FTStruct struct) {
-        // registry debugging
+        // registry debugging. TODO: remove
         if(exists(struct.pointer))
             System.err.println("FTStruct double register attempt for pointer " + struct.pointer);
 
@@ -17,11 +17,15 @@ public class FTStructCache {
     }
 
     protected static void unregister(long pointer) {
-        // registry debugging
+        // registry debugging. TODO: remove
         if(!exists(pointer))
             System.err.println("FTStruct unregister attempt for unknown pointer: " + pointer);
 
         STRUCT_BY_POINTER_MAP.remove(pointer);
+    }
+
+    protected static void clear() {
+        STRUCT_BY_POINTER_MAP.clear();
     }
 
     public static boolean exists(long pointer) {

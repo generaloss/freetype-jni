@@ -10,17 +10,17 @@ extern "C" {
 /*
  * Class:     generaloss_freetype_image_FTBitmap
  * Method:    getRows
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTBitmap_getRows
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_image_FTBitmap_getRows
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_image_FTBitmap
  * Method:    getWidth
- * Signature: (J)I
+ * Signature: (J)J
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTBitmap_getWidth
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_image_FTBitmap_getWidth
   (JNIEnv *, jclass, jlong);
 
 /*
@@ -50,18 +50,26 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTBitmap_getNumGray
 /*
  * Class:     generaloss_freetype_image_FTBitmap
  * Method:    getPixelMode
- * Signature: (J)I
+ * Signature: (J)S
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTBitmap_getPixelMode
+JNIEXPORT jshort JNICALL Java_generaloss_freetype_image_FTBitmap_getPixelMode
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_image_FTBitmap
- * Method:    newStruct
- * Signature: ()J
+ * Method:    getPaletteMode
+ * Signature: (J)S
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_image_FTBitmap_newStruct
-  (JNIEnv *, jclass);
+JNIEXPORT jshort JNICALL Java_generaloss_freetype_image_FTBitmap_getPaletteMode
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_image_FTBitmap
+ * Method:    getPalettePointer
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_image_FTBitmap_getPalettePointer
+  (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus
 }
