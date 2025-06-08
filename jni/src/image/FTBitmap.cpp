@@ -50,7 +50,7 @@ JNIEXPORT jobject JNICALL Java_generaloss_freetype_image_FTBitmap_getBuffer
 }
 
 // unsigned short num_grays;
-JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTBitmap_getNumGray
+JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTBitmap_getNumGrays
   (JNIEnv *, jclass, jlong bitmapPtrRaw) {
 
     const FT_Bitmap* bitmap = reinterpret_cast<FT_Bitmap*>(bitmapPtrRaw);

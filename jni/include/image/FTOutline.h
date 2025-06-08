@@ -10,17 +10,17 @@ extern "C" {
 /*
  * Class:     generaloss_freetype_image_FTOutline
  * Method:    getNContours
- * Signature: (J)I
+ * Signature: (J)S
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTOutline_getNContours
+JNIEXPORT jshort JNICALL Java_generaloss_freetype_image_FTOutline_getNContours
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_image_FTOutline
  * Method:    getNPoints
- * Signature: (J)I
+ * Signature: (J)S
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTOutline_getNPoints
+JNIEXPORT jshort JNICALL Java_generaloss_freetype_image_FTOutline_getNPoints
   (JNIEnv *, jclass, jlong);
 
 /*
@@ -34,17 +34,17 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_image_FTOutline_getPoints
 /*
  * Class:     generaloss_freetype_image_FTOutline
  * Method:    getTags
- * Signature: (J)I
+ * Signature: (J)[S
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTOutline_getTags
+JNIEXPORT jshortArray JNICALL Java_generaloss_freetype_image_FTOutline_getTags
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_image_FTOutline
  * Method:    getContours
- * Signature: (J)[I
+ * Signature: (J)[S
  */
-JNIEXPORT jintArray JNICALL Java_generaloss_freetype_image_FTOutline_getContours
+JNIEXPORT jshortArray JNICALL Java_generaloss_freetype_image_FTOutline_getContours
   (JNIEnv *, jclass, jlong);
 
 /*
@@ -54,14 +54,6 @@ JNIEXPORT jintArray JNICALL Java_generaloss_freetype_image_FTOutline_getContours
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTOutline_getFlags
   (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_image_FTOutline
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_image_FTOutline_newStruct
-  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

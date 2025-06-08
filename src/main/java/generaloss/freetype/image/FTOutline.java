@@ -5,6 +5,7 @@ import generaloss.freetype.FTStructCache;
 import generaloss.freetype.FreeType;
 import generaloss.freetype.gload.FTSubGlyph;
 import generaloss.freetype.stroke.FTStrokerBorder;
+import generaloss.freetype.types.FTTag;
 import generaloss.freetype.types.FTVector;
 
 public class FTOutline extends FTStruct { // struct done.
@@ -15,16 +16,16 @@ public class FTOutline extends FTStruct { // struct done.
 
 
     // unsigned short n_contours;
-    private static native int getNContours(long pointer);
+    private static native short getNContours(long pointer);
 
-    public int getNContours() {
+    public short getNContours() {
         return getNContours(super.pointer);
     }
 
     // unsigned short n_points;
-    private static native int getNPoints(long pointer);
+    private static native short getNPoints(long pointer);
 
-    public int getNPoints() {
+    public short getNPoints() {
         return getNPoints(super.pointer);
     }
 
@@ -44,17 +45,35 @@ public class FTOutline extends FTStruct { // struct done.
     }
 
     // unsigned char* tags;
-    private static native int getTags(long pointer);
+    private static native short[] getTags(long pointer);
 
-    public int getTags() {
-        return getTags(super.pointer);
+    public short[] getTags() {
+        final short[] values = getTags(super.pointer);
+        if(values == null)
+            return new short[0];
+        return values;
+    }
+
+    public String[] getTagsString() {
+        final short[] values = getTags(super.pointer);
+        if(values == null)
+            return new String[0];
+
+        final String[] strings = new String[values.length];
+        for(int i = 0; i < strings.length; i++)
+            strings[i] = FTTag.decodeString(values[i]);
+
+        return strings;
     }
 
     // unsigned short* contours;
-    private static native int[] getContours(long pointer);
+    private static native short[] getContours(long pointer);
 
-    public int[] getContours() {
-        return getContours(super.pointer);
+    public short[] getContours() {
+        final short[] values = getContours(super.pointer);
+        if(values == null)
+            return new short[0];
+        return values;
     }
 
     // int flags;
@@ -76,13 +95,6 @@ public class FTOutline extends FTStruct { // struct done.
 
     public FTStrokerBorder getOutsideBorder(FTOutline outline) {
         return FreeType.ftOutlineGetOutsideBorder(this);
-    }
-
-
-    private static native long newStruct();
-
-    public static FTOutline newInstance() {
-        return new FTOutline(newStruct());
     }
 
 }

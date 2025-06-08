@@ -42,10 +42,10 @@ public class FTBitmap extends FTStruct {
     }
 
     // unsigned short num_grays;
-    private static native int getNumGray(long pointer);
+    private static native int getNumGrays(long pointer);
 
-    public int getNumGray() {
-        return getNumGray(super.pointer);
+    public int getNumGrays() {
+        return getNumGrays(super.pointer);
     }
 
     // unsigned char pixel_mode;
@@ -59,7 +59,6 @@ public class FTBitmap extends FTStruct {
     // unsigned char palette_mode;
     private static native short getPaletteMode(long pointer);
 
-    @Deprecated
     public short getPaletteMode() {
         return getPaletteMode(super.pointer);
     }
@@ -67,7 +66,6 @@ public class FTBitmap extends FTStruct {
     // void* palette;
     private static native long getPalettePointer(long pointer);
 
-    @Deprecated
     public long getPalettePointer() {
         return getPalettePointer(super.pointer);
     }

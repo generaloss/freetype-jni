@@ -20,4 +20,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "stb-image-jni-natives-android"
+rootProject.name = "freetype-jni-natives-android"

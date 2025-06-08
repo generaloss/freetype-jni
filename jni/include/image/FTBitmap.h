@@ -41,10 +41,10 @@ JNIEXPORT jobject JNICALL Java_generaloss_freetype_image_FTBitmap_getBuffer
 
 /*
  * Class:     generaloss_freetype_image_FTBitmap
- * Method:    getNumGray
+ * Method:    getNumGrays
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTBitmap_getNumGray
+JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTBitmap_getNumGrays
   (JNIEnv *, jclass, jlong);
 
 /*

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="compile &amp; run test (linux)" type="Application" factoryName="Application">
+  <configuration default="false" name="compile &amp; run Test (linux)" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="Test" />
     <module name="freetype-jni" />
     <method v="2">

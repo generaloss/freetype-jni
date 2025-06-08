@@ -248,7 +248,7 @@ public class FTFace extends FTStruct { // struct done.
     }
 
     public void loadGlyph(long glyphIndex) {
-        this.loadGlyph(glyphIndex, 0);
+        this.loadGlyph(glyphIndex, FTLoad.DEFAULT.value);
     }
 
     public void loadChar(int charcode, LoadFlags loadFlags) {
@@ -262,7 +262,7 @@ public class FTFace extends FTStruct { // struct done.
     }
 
     public void loadChar(int charcode) {
-        this.loadChar(charcode, 0);
+        this.loadChar(charcode, FTLoad.DEFAULT.value);
     }
 
     public void setTransform(FTMatrix matrix, FTVector delta) {

@@ -14,7 +14,7 @@ public class FTSize extends FTStruct { // struct done.
     private static native long getFace(long pointer);
 
     public FTFace getFace() {
-        final long pointer = getMetrics(super.pointer);
+        final long pointer = getFace(super.pointer);
         return FTStructCache.getOrCreate(pointer, FTFace::new);
     }
 

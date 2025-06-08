@@ -12,7 +12,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSize_getFace
     if(!size)
         return 0;
 
-    return reinterpret_cast<jlong>(&size->face);
+    return reinterpret_cast<jlong>(size->face);
 }
 
 // FT_Size_Metrics metrics;

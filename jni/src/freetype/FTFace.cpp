@@ -97,7 +97,10 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTFace_getAvailab
   (JNIEnv *env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
-    if(!face || !face->available_sizes)
+    if(!face)
+        return NULL;
+
+    if(!face->available_sizes || face->num_fixed_sizes == 0)
         return NULL;
 
     const jlongArray result = env->NewLongArray(face->num_fixed_sizes);
@@ -105,7 +108,7 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTFace_getAvailab
         return NULL;
 
     jlong* elements = env->GetLongArrayElements(result, NULL);
-    for(FT_Int i = 0; i < face->num_fixed_sizes; i++)
+    for(int i = 0; i < face->num_fixed_sizes; i++)
         elements[i] = reinterpret_cast<jlong>(&face->available_sizes[i]);
 
     env->ReleaseLongArrayElements(result, elements, 0);
@@ -129,7 +132,10 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTFace_getCharmap
   (JNIEnv *env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
-    if(!face || !face->charmaps)
+    if(!face)
+        return NULL;
+
+    if(!face->charmaps || face->num_charmaps == 0)
         return NULL;
 
     const jlongArray result = env->NewLongArray(face->num_charmaps);
@@ -137,7 +143,7 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTFace_getCharmap
         return NULL;
 
     jlong* elements = env->GetLongArrayElements(result, NULL);
-    for(FT_Int i = 0; i < face->num_charmaps; i++)
+    for(int i = 0; i < face->num_charmaps; i++)
         elements[i] = reinterpret_cast<jlong>(face->charmaps[i]);
 
     env->ReleaseLongArrayElements(result, elements, 0);

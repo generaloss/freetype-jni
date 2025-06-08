@@ -6,7 +6,7 @@
 
     <groupId>io.github.generaloss</groupId>
     <artifactId>freetype-jni-natives-windows</artifactId>
-    <version>25.5.1-SNAPSHOT-2</version>
+    <version>25.5.1-SNAPSHOT-4</version>
     <name>freetype-jni-natives-windows</name>
 
     <description>FreeType Library JNI windows native libraries</description>
