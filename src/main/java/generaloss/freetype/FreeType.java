@@ -151,11 +151,11 @@ public class FreeType {
         return FTError.byCode(code);
     }
 
-    public static FTError ftLoadGlyph(FTFace face, int glyphIndex, LoadFlags loadFlags) {
+    public static FTError ftLoadGlyph(FTFace face, long glyphIndex, LoadFlags loadFlags) {
         return ftLoadGlyph(face, glyphIndex, loadFlags.getBits());
     }
 
-    public static FTError ftLoadGlyph(FTFace face, int glyphIndex) {
+    public static FTError ftLoadGlyph(FTFace face, long glyphIndex) {
         return ftLoadGlyph(face, glyphIndex, 0);
     }
 
@@ -167,11 +167,11 @@ public class FreeType {
         return FTError.byCode(code);
     }
 
-    public static FTError ftLoadChar(FTFace face, int charcode, LoadFlags loadFlags) {
+    public static FTError ftLoadChar(FTFace face, long charcode, LoadFlags loadFlags) {
         return ftLoadChar(face, charcode, loadFlags.getBits());
     }
 
-    public static FTError ftLoadChar(FTFace face, int charcode) {
+    public static FTError ftLoadChar(FTFace face, long charcode) {
         return ftLoadChar(face, charcode, 0);
     }
 

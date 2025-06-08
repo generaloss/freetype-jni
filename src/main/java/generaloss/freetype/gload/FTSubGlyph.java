@@ -53,11 +53,4 @@ public class FTSubGlyph extends FTStruct { // struct done.
         return FTStructCache.getOrCreate(pointer, FTMatrix::new);
     }
 
-
-    private static native long newStruct();
-
-    public static FTSubGlyph newInstance() {
-        return new FTSubGlyph(newStruct());
-    }
-
 }

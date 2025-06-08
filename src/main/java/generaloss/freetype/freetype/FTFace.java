@@ -237,7 +237,7 @@ public class FTFace extends FTStruct { // struct done.
         error.checkError();
     }
 
-    public void loadGlyph(int glyphIndex, LoadFlags loadFlags) {
+    public void loadGlyph(long glyphIndex, LoadFlags loadFlags) {
         final FTError error = FreeType.ftLoadGlyph(this, glyphIndex, loadFlags);
         error.checkError();
     }

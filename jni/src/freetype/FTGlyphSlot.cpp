@@ -1,9 +1,10 @@
-// typedef struct FT_GlyphSlotRec_*  FT_GlyphSlot;
+// typedef struct FT_GlyphSlotRec_* FT_GlyphSlot;
 
 #include "freetype/FTGlyphSlot.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
+#include <freetype/internal/ftgloadr.h>
 #include <jni.h>
 
 // FT_Library library;
@@ -164,7 +165,27 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getNumSubg
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getSubglyphs
   (JNIEnv *env, jclass, jlong slotPtrRaw) {
 
-    return NULL; // TODO: ?
+    const FT_GlyphSlot slot = reinterpret_cast<FT_GlyphSlot>(slotPtrRaw);
+    if(!slot)
+        return NULL;
+
+    const FT_Int count = slot->num_subglyphs;
+    if(!slot->subglyphs || count == 0)
+        return NULL;
+
+    const jlongArray result = env->NewLongArray(count);
+    if(!result)
+        return NULL;
+
+    jlong* elements = new jlong[count];
+    for(int i = 0; i < count; i++)
+        elements[i] = reinterpret_cast<jlong>(&slot->subglyphs[i]);
+
+    env->SetLongArrayRegion(result, 0, count, elements);
+
+    delete[] elements;
+
+    return result;
 }
 
 // FT_Pos lsb_delta;

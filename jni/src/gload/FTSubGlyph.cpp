@@ -3,40 +3,59 @@
 #include "gload/FTSubGlyph.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include <freetype/internal/ftgloadr.h>
 
+// FT_Int index;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getIndex
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong subglyphPtrRaw) {
 
-    return 0;
+    const FT_SubGlyph subglyph = reinterpret_cast<FT_SubGlyph>(subglyphPtrRaw);
+    if(!subglyph)
+        return 0;
+
+    return static_cast<jint>(subglyph->index);
 }
 
+// FT_UShort flags;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getFlags
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong subglyphPtrRaw) {
 
-    return 0;
+    const FT_SubGlyph subglyph = reinterpret_cast<FT_SubGlyph>(subglyphPtrRaw);
+    if(!subglyph)
+        return 0;
+
+    return static_cast<jint>(subglyph->flags);
 }
 
+// FT_Int arg1;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getArg1
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong subglyphPtrRaw) {
 
-    return 0;
+    const FT_SubGlyph subglyph = reinterpret_cast<FT_SubGlyph>(subglyphPtrRaw);
+    if(!subglyph)
+        return 0;
+
+    return static_cast<jint>(subglyph->arg1);
 }
 
+// FT_Int arg2;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getArg2
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong subglyphPtrRaw) {
 
-    return 0;
+    const FT_SubGlyph subglyph = reinterpret_cast<FT_SubGlyph>(subglyphPtrRaw);
+    if(!subglyph)
+        return 0;
+
+    return static_cast<jint>(subglyph->arg2);
 }
 
+// FT_Matrix transform;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getTransform
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong subglyphPtrRaw) {
 
-    return 0;
-}
+    const FT_SubGlyph subglyph = reinterpret_cast<FT_SubGlyph>(subglyphPtrRaw);
+    if(!subglyph)
+        return 0;
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTSubGlyph_newStruct
-  (JNIEnv *, jclass) {
-
-    FT_SubGlyph* pointer = new FT_SubGlyph(nullptr);
-    return reinterpret_cast<jlong>(pointer);
+    return reinterpret_cast<jlong>(&subglyph->transform);
 }

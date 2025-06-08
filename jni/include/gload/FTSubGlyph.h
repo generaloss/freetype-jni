@@ -47,14 +47,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getArg2
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getTransform
   (JNIEnv *, jclass, jlong);
 
-/*
- * Class:     generaloss_freetype_gload_FTSubGlyph
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTSubGlyph_newStruct
-  (JNIEnv *, jclass);
-
 #ifdef __cplusplus
 }
 #endif
