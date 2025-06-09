@@ -20,23 +20,29 @@ void throwException(JNIEnv* env, const char* message) {
 
 
 // FT_Error FT_Init_FreeType(FT_Library *alibrary)
-// int FT_Init_FreeType(long alibrary);
+// int FT_Init_FreeType(long[] alibrary);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Init_1FreeType
   (JNIEnv *env, jclass, jlongArray libraryPtrRaw) {
+
+    if(!libraryPtrRaw) {
+        throwException(env, "Invalid FT_Library destination pointer array");
+        return 0;
+    }
+
+    const jsize length = env->GetArrayLength(libraryPtrRaw);
+    if(length < 1) {
+        throwException(env, "FT_Library destination pointer array length < 1");
+        return 0;
+    }
 
     FT_Library library;
     const FT_Error error = FT_Init_FreeType(&library);
 
-    if(error == 0 && libraryPtrRaw != nullptr) {
-        const jsize length = env->GetArrayLength(libraryPtrRaw);
-        if(length < 1) {
-            throwException(env, "FT_Face pointer array length < 1");
-            return static_cast<jint>(error);
-        }
+    if(error != 0)
+        return static_cast<jint>(error);
 
-        const jlong libraryPtr = reinterpret_cast<jlong>(library);
-        env->SetLongArrayRegion(libraryPtrRaw, 0, 1, &libraryPtr);
-    }
+    const jlong libraryPtr = reinterpret_cast<jlong>(library);
+    env->SetLongArrayRegion(libraryPtrRaw, 0, 1, &libraryPtr);
 
     return static_cast<jint>(error);
 }
@@ -57,9 +63,20 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1FreeType
 }
 
 // FT_Error FT_New_Face(FT_Library library, const char* filepathname, FT_Long face_index, FT_Face *aface)
-// int FT_New_Face(long library, String filepathname, long face_index, long aface);
+// int FT_New_Face(long library, String filepathname, long face_index, long[] aface);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Face
   (JNIEnv *env, jclass, jlong libraryPtrRaw, jstring filepathRaw, jlong faceIndexRaw, jlongArray facePtrRaw) {
+
+    if(!facePtrRaw) {
+        throwException(env, "Invalid FT_Face destination pointer array");
+        return 0;
+    }
+
+    const jsize length = env->GetArrayLength(facePtrRaw);
+    if(length < 1) {
+        throwException(env, "FT_Face destination pointer array length < 1");
+        return 0;
+    }
 
     const FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
     if(!library) {
@@ -78,26 +95,32 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Face
     FT_Face face;
     const FT_Error error = FT_New_Face(library, filepath, faceIndex, &face);
 
-    if(error == 0 && facePtrRaw != nullptr) {
-        const jsize length = env->GetArrayLength(facePtrRaw);
-        if(length < 1) {
-            throwException(env, "FT_Face pointer array length < 1");
-            return static_cast<jint>(error);
-        }
-
-        jlong facePtr = reinterpret_cast<jlong>(face);
-        env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
-    }
-
     env->ReleaseStringUTFChars(filepathRaw, filepath);
+
+    if(error != 0)
+        return static_cast<jint>(error);
+
+    const jlong facePtr = reinterpret_cast<jlong>(face);
+    env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
 
     return static_cast<jint>(error);
 }
 
 // FT_Error FT_New_Memory_Face(FT_Library library, const FT_Byte* file_base, FT_Long file_size, FT_Long face_index, FT_Face *aface)
-// int FT_New_Memory_Face(long library, ByteBuffer file_base, long file_size, long face_index, long aface);
+// int FT_New_Memory_Face(long library, ByteBuffer file_base, long file_size, long face_index, long[] aface);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Memory_1Face
   (JNIEnv *env, jclass, jlong libraryPtrRaw, jobject fileBaseBuffer, jlong fileSizeRaw, jlong faceIndexRaw, jlongArray facePtrRaw) {
+
+    if(!facePtrRaw) {
+        throwException(env, "Invalid FT_Face destination pointer array");
+        return 0;
+    }
+
+    const jsize length = env->GetArrayLength(facePtrRaw);
+    if(length < 1) {
+        throwException(env, "FT_Face destination pointer array length < 1");
+        return 0;
+    }
 
     const FT_Library libraryPtr = reinterpret_cast<FT_Library>(libraryPtrRaw);
     if(!libraryPtr) {
@@ -117,24 +140,30 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Memory_1Face
     FT_Face face;
     const FT_Error error = FT_New_Memory_Face(libraryPtr, fileBase, fileSize, faceIndex, &face);
 
-    if(error == 0 && facePtrRaw != nullptr) {
-        const jsize length = env->GetArrayLength(facePtrRaw);
-        if(length < 1) {
-            throwException(env, "FT_Face pointer array length < 1");
-            return static_cast<jint>(error);
-        }
+    if(error != 0)
+        return static_cast<jint>(error);
 
-        jlong facePtr = reinterpret_cast<jlong>(face);
-        env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
-    }
+    const jlong facePtr = reinterpret_cast<jlong>(face);
+    env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
 
     return static_cast<jint>(error);
 }
 
 // FT_Error FT_Open_Face(FT_Library library, const FT_Open_Args* args, FT_Long face_index, FT_Face *aface)
-// int FT_Open_Face(long library, long args, long face_index, long aface);
+// int FT_Open_Face(long library, long args, long face_index, long[] aface);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Open_1Face
   (JNIEnv *env, jclass, jlong libraryPtrRaw, jlong argsPtrRaw, jlong faceIndexRaw, jlongArray facePtrRaw) {
+
+    if(!facePtrRaw) {
+        throwException(env, "Invalid FT_Face destination pointer array");
+        return 0;
+    }
+
+    const jsize length = env->GetArrayLength(facePtrRaw);
+    if(length < 1) {
+        throwException(env, "FT_Face destination pointer array length < 1");
+        return 0;
+    }
 
     const FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
     if(!library) {
@@ -153,16 +182,11 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Open_1Face
     FT_Face face;
     const FT_Error error = FT_Open_Face(library, argsPtr, faceIndex, &face);
 
-    if(error == 0 && facePtrRaw != nullptr) {
-        const jsize length = env->GetArrayLength(facePtrRaw);
-        if(length < 1) {
-            throwException(env, "FT_Face pointer array length < 1");
-            return static_cast<jint>(error);
-        }
+    if(error != 0)
+        return static_cast<jint>(error);
 
-        jlong facePtr = reinterpret_cast<jlong>(face);
-        env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
-    }
+    const jlong facePtr = reinterpret_cast<jlong>(face);
+    env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
 
     return static_cast<jint>(error);
 }
@@ -797,71 +821,40 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVa
     return reinterpret_cast<jlong>(chars);
 }
 
-// FT_Long FT_MulDiv(FT_Long a, FT_Long b, FT_Long c)
-// long FT_MulDiv(long a, long b, long c);
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1MulDiv
-  (JNIEnv *, jclass, jlong aRaw, jlong bRaw, jlong cRaw) {
-
-    const FT_Long a = static_cast<FT_Long>(aRaw);
-    const FT_Long b = static_cast<FT_Long>(bRaw);
-    const FT_Long c = static_cast<FT_Long>(cRaw);
-
-    const FT_Long result = FT_MulDiv(a, b, c);
-    return static_cast<jlong>(result);
-}
-
-// FT_Long FT_MulFix(FT_Long a, FT_Long b)
-// long FT_MulFix(long a, long b);
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1MulFix
-  (JNIEnv *, jclass, jlong aRaw, jlong bRaw) {
-
-    const FT_Long a = static_cast<FT_Long>(aRaw);
-    const FT_Long b = static_cast<FT_Long>(bRaw);
-
-    const FT_Long result = FT_MulFix(a, b);
-    return static_cast<jlong>(result);
-}
-
-// FT_Long FT_DivFix(FT_Long a, FT_Long b)
-// long FT_DivFix(long a, long b);
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1DivFix
-  (JNIEnv *, jclass, jlong aRaw, jlong bRaw) {
-
-    const FT_Long a = static_cast<FT_Long>(aRaw);
-    const FT_Long b = static_cast<FT_Long>(bRaw);
-
-    const FT_Long result = FT_DivFix(a, b);
-    return static_cast<jlong>(result);
-}
-
 // FT_Fixed FT_RoundFix(FT_Fixed a)
-// long FT_RoundFix(long a);
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1RoundFix
+// int FT_RoundFix(long a);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1RoundFix
   (JNIEnv *, jclass, jlong aRaw) {
 
-    const FT_Fixed a = static_cast<FT_Fixed>(aRaw);
-    const FT_Fixed result = FT_RoundFix(a);
-    return static_cast<jlong>(result);
+    const FT_Fixed* aPtr = reinterpret_cast<FT_Fixed*>(aRaw);
+    if(!aPtr)
+        return 0;
+
+    return static_cast<jint>(FT_RoundFix(*aPtr));
 }
 
 // FT_Fixed FT_CeilFix(FT_Fixed a)
-// long FT_CeilFix(long a);
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1CeilFix
+// int FT_CeilFix(long a);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1CeilFix
   (JNIEnv *, jclass, jlong aRaw) {
 
-    const FT_Fixed a = static_cast<FT_Fixed>(aRaw);
-    const FT_Fixed result = FT_CeilFix(a);
-    return static_cast<jlong>(result);
+    const FT_Fixed* aPtr = reinterpret_cast<FT_Fixed*>(aRaw);
+    if(!aPtr)
+        return 0;
+
+    return static_cast<jint>(FT_CeilFix(*aPtr));
 }
 
 // FT_Fixed FT_FloorFix(FT_Fixed a)
-// long FT_FloorFix(long a);
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1FloorFix
+// int FT_FloorFix(long a);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1FloorFix
   (JNIEnv *, jclass, jlong aRaw) {
 
-    const FT_Fixed a = static_cast<FT_Fixed>(aRaw);
-    const FT_Fixed result = FT_FloorFix(a);
-    return static_cast<jlong>(result);
+    const FT_Fixed* aPtr = reinterpret_cast<FT_Fixed*>(aRaw);
+    if(!aPtr)
+        return 0;
+
+    return static_cast<jint>(FT_FloorFix(*aPtr));
 }
 
 // void FT_Vector_Transform(FT_Vector* vector, const FT_Matrix* matrix)
@@ -1101,6 +1094,17 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Add
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Glyph
   (JNIEnv *env, jclass, jlong libraryPtrRaw, jint formatRaw, jlongArray glyphPtrRaw) {
 
+    if(!glyphPtrRaw) {
+        throwException(env, "Invalid FT_Glyph destination pointer array");
+        return 0;
+    }
+
+    const jsize length = env->GetArrayLength(glyphPtrRaw);
+    if(length < 1) {
+        throwException(env, "FT_Glyph destination pointer array length < 1");
+        return 0;
+    }
+
     const FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
     if(!library) {
         throwException(env, "Invalid FT_Library pointer");
@@ -1112,14 +1116,11 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Glyph
     FT_Glyph glyph;
     const FT_Error error = FT_New_Glyph(library, format, &glyph);
 
-    if(error && glyphPtrRaw != nullptr) {
-        const jsize length = env->GetArrayLength(glyphPtrRaw);
-        if(length < 1)
-            throwException(env, "FT_Face pointer array length < 1");
+    if(error != 0)
+        return static_cast<jint>(error);
 
-        jlong glyphPtr = reinterpret_cast<jlong>(glyph);
-        env->SetLongArrayRegion(glyphPtrRaw, 0, 1, &glyphPtr);
-    }
+    const jlong glyphPtr = reinterpret_cast<jlong>(glyph);
+    env->SetLongArrayRegion(glyphPtrRaw, 0, 1, &glyphPtr);
 
     return static_cast<jint>(error);
 }
@@ -1128,6 +1129,17 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Glyph
 // int FT_Get_Glyph(long slot, long aglyph);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
   (JNIEnv *env, jclass, jlong slotPtrRaw, jlongArray glyphPtrRaw) {
+
+    if(!glyphPtrRaw) {
+        throwException(env, "Invalid FT_Glyph destination pointer array");
+        return 0;
+    }
+
+    const jsize length = env->GetArrayLength(glyphPtrRaw);
+    if(length < 1) {
+        throwException(env, "FT_Glyph destination pointer array length < 1");
+        return 0;
+    }
 
     const FT_GlyphSlot slot = reinterpret_cast<FT_GlyphSlot>(slotPtrRaw);
     if(!slot) {
@@ -1138,15 +1150,11 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
     FT_Glyph glyph = nullptr;
     const FT_Error error = FT_Get_Glyph(slot, &glyph);
 
-    if(error == 0 && glyphPtrRaw != nullptr) {
-        const jsize length = env->GetArrayLength(glyphPtrRaw);
-        if(length < 1) {
-            throwException(env, "FT_Face pointer array length < 1");
-            return static_cast<jint>(error);
-        }
-        jlong glyphPtr = reinterpret_cast<jlong>(glyph);
-        env->SetLongArrayRegion(glyphPtrRaw, 0, 1, &glyphPtr);
-    }
+    if(error != 0)
+        return static_cast<jint>(error);
+
+    const jlong glyphPtr = reinterpret_cast<jlong>(glyph);
+    env->SetLongArrayRegion(glyphPtrRaw, 0, 1, &glyphPtr);
 
     return static_cast<jint>(error);
 }
@@ -1322,9 +1330,9 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1GetOutside
 }
 
 // FT_Error FT_Stroker_New(FT_Library library, FT_Stroker *astroker)
-// int FT_Stroker_New(long library, long dstStroker);
+// int FT_Stroker_New(long library, long[] dstStrokerPointer);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1New
-  (JNIEnv *env, jclass, jlong libraryPtrRaw, jlong strokerPtrRaw) {
+  (JNIEnv *env, jclass, jlong libraryPtrRaw, jlongArray strokerPtrRaw) {
 
     const FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
     if(!library) {
@@ -1332,13 +1340,26 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1New
         return 0;
     }
 
-    FT_Stroker* stroker = reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
-    if(!stroker) {
-        throwException(env, "Invalid FT_Stroker pointer");
+    if(!strokerPtrRaw) {
+        throwException(env, "Invalid FT_Stroker destination pointer array");
         return 0;
     }
 
-    const FT_Error error = FT_Stroker_New(library, stroker);
+    const jsize length = env->GetArrayLength(strokerPtrRaw);
+    if(length < 1) {
+        throwException(env, "FT_Stroker destination pointer array length < 1");
+        return 0;
+    }
+
+    FT_Stroker stroker;
+    const FT_Error error = FT_Stroker_New(library, &stroker);
+
+    if(error != 0)
+        return static_cast<jint>(error);
+
+    const jlong strokerPtr = reinterpret_cast<jlong>(stroker);
+    env->SetLongArrayRegion(strokerPtrRaw, 0, 1, &strokerPtr);
+
     return static_cast<jint>(error);
 }
 

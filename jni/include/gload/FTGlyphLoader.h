@@ -9,6 +9,22 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_gload_FTGlyphLoader
+ * Method:    createPointer
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoader_createPointer
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     generaloss_freetype_gload_FTGlyphLoader
+ * Method:    freePointer
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoader_freePointer
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_gload_FTGlyphLoader
  * Method:    getMemory
  * Signature: (J)J
  */
@@ -62,14 +78,6 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoader_getBase
  */
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoader_getCurrent
   (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_gload_FTGlyphLoader
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoader_newStruct
-  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

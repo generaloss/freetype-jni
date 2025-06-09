@@ -12,6 +12,23 @@ public class FTGlyphLoader extends FTStruct { // struct done.
         super(pointer);
     }
 
+    public FTGlyphLoader() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
+    }
+
 
     // FT_Memory memory;
     private static native long getMemory(long pointer);
@@ -104,13 +121,6 @@ public class FTGlyphLoader extends FTStruct { // struct done.
 
     public void add() {
         FreeType.ftGlyphLoaderAdd(this);
-    }
-
-
-    private static native long newStruct();
-
-    public static FTGlyphLoader newInstance() {
-        return new FTGlyphLoader(newStruct());
     }
 
 }

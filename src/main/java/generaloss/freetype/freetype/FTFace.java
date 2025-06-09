@@ -1,7 +1,6 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.*;
-import generaloss.freetype.gload.FTSubGlyph;
 import generaloss.freetype.types.*;
 
 import java.nio.ByteBuffer;
@@ -279,7 +278,7 @@ public class FTFace extends FTStruct { // struct done.
     }
 
     public FTVector getKerning(int leftGlyph, int rightGlyph, FTKerningMode kerningMode) {
-        final FTVector dstKerning = FTVector.newInstance();
+        final FTVector dstKerning = new FTVector();
         this.getKerning(leftGlyph, rightGlyph, kerningMode, dstKerning);
         return dstKerning;
     }
@@ -290,7 +289,7 @@ public class FTFace extends FTStruct { // struct done.
     }
 
     public float getTrackKerning(int pointSize, int degree) {
-        final FTFixed dstKerning = FTFixed.newInstance();
+        final FTFixed dstKerning = new FTFixed();
         this.getTrackKerning(pointSize, degree, dstKerning);
         return dstKerning.getFloat();
     }

@@ -1,11 +1,29 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FreeType;
 
 public class FTSizeRequest extends FTStruct { // struct done.
 
     public FTSizeRequest(long pointer) {
         super(pointer);
+    }
+
+    public FTSizeRequest() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
     }
 
 
@@ -43,13 +61,6 @@ public class FTSizeRequest extends FTStruct { // struct done.
 
     public long getVertResolution() {
         return getVertResolution(super.pointer);
-    }
-
-
-    private static native long newStruct();
-
-    public static FTSizeRequest newInstance() {
-        return new FTSizeRequest(newStruct());
     }
 
 }

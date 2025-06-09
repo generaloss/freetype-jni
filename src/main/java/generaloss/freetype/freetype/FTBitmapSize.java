@@ -1,5 +1,6 @@
 package generaloss.freetype.freetype;
 
+import generaloss.freetype.FreeType;
 import generaloss.freetype.types.FTPos;
 import generaloss.freetype.FTStruct;
 
@@ -7,6 +8,23 @@ public class FTBitmapSize extends FTStruct { // struct done.
 
     public FTBitmapSize(long pointer) {
         super(pointer);
+    }
+
+    public FTBitmapSize() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
     }
 
 
@@ -46,13 +64,6 @@ public class FTBitmapSize extends FTStruct { // struct done.
     public float getYppem() {
         final int raw = getYppem(super.pointer);
         return FTPos.toFloat(raw);
-    }
-
-
-    private static native long newStruct();
-
-    public static FTBitmapSize newInstance() {
-        return new FTBitmapSize(newStruct());
     }
 
 }

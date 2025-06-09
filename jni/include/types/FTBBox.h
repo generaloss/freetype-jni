@@ -9,6 +9,22 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_types_FTBBox
+ * Method:    createPointer
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_createPointer
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     generaloss_freetype_types_FTBBox
+ * Method:    freePointer
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTBBox_freePointer
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_types_FTBBox
  * Method:    getXMin
  * Signature: (J)I
  */
@@ -38,14 +54,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMax
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMax
   (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_types_FTBBox
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_newStruct
-  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

@@ -12,9 +12,80 @@ import generaloss.freetype.stroke.FTStrokerLinejoin;
 import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.*;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class FreeType {
+
+    private static final String LIBRARY_NAME = "freetype_jni";
+
+    static {
+        loadNative();
+    }
+
+    public static void init() { }
+
+    @SuppressWarnings("UnsafeDynamicallyLoadedCode")
+    private static void loadNative() {
+        final String os = detectOS();
+
+        if(os.equals("android")) {
+            System.loadLibrary(LIBRARY_NAME);
+            return;
+        }
+
+        final String arch = detectArch();
+        final String libName = (os.equals("windows") ? LIBRARY_NAME + ".dll" : "lib" + LIBRARY_NAME + ".so");
+        final String pathInJar = String.format("/jni/%s/%s/%s", os, arch, libName);
+
+        try(InputStream in = FTLibrary.class.getResourceAsStream(pathInJar)) {
+            if(in == null)
+                throw new UnsatisfiedLinkError("Native library not found: " + pathInJar);
+
+            final Path temp = Files.createTempFile(LIBRARY_NAME, libName);
+            temp.toFile().deleteOnExit();
+
+            try(OutputStream out = Files.newOutputStream(temp)) {
+                final byte[] buffer = new byte[4096];
+                int read;
+                while((read = in.read(buffer)) != -1)
+                    out.write(buffer, 0, read);
+            }
+
+            System.load(temp.toAbsolutePath().toString());
+        }catch(IOException e) {
+            throw new RuntimeException("Failed to load native library", e);
+        }
+    }
+
+    private static String detectOS() {
+        final String os = System.getProperty("os.name").toLowerCase();
+        if(os.contains("win"))
+            return "windows";
+
+        if(os.contains("linux")) {
+            String vm = System.getProperty("java.vm.name").toLowerCase();
+            if(vm.contains("dalvik") || vm.contains("art"))
+                return "android";
+            return "linux";
+        }
+        throw new UnsupportedOperationException("Unsupported OS: " + os);
+    }
+
+    private static String detectArch() {
+        final String arch = System.getProperty("os.arch").toLowerCase();
+        if(arch.contains("amd64") || arch.contains("x86_64")) return "x86_64";
+        if(arch.contains("86")) return "i686";
+        if(arch.contains("aarch64") || arch.contains("arm64")) return "aarch64";
+        if(arch.contains("riscv")) return "riscv64";
+        if(arch.contains("x86")) return "x86";
+        throw new UnsupportedOperationException("Unsupported architecture: " + arch);
+    }
+
 
     // ------------------------------
     // ---      freetype.h        ---
@@ -34,8 +105,10 @@ public class FreeType {
 
     public static FTError ftDoneFreeType(FTLibrary library) {
         final int code = FT_Done_FreeType(FTStruct.getPointer(library));
-        library.destroyPointer();
-        FTStructCache.clear();
+        if(library != null) {
+            library.destroyPointer();
+            FTStructCache.clear();
+        }
         return FTError.byCode(code);
     }
 
@@ -60,6 +133,8 @@ public class FreeType {
     }
 
     public static FTError ftNewMemoryFace(FTLibrary library, byte[] data, long dataSize, long faceIndex, long[] dstFacePointer) {
+        if(data == null)
+            throw new NullPointerException("Data is null");
         final ByteBuffer buffer = ByteBuffer.allocateDirect(data.length);
         buffer.put(data);
         buffer.flip();
@@ -107,7 +182,8 @@ public class FreeType {
 
     public static FTError ftDoneFace(FTFace face) {
         final int code = FT_Done_Face(FTStruct.getPointer(face));
-        face.destroyPointer();
+        if(face != null)
+            face.destroyPointer();
         return FTError.byCode(code);
     }
 
@@ -152,7 +228,7 @@ public class FreeType {
     }
 
     public static FTError ftLoadGlyph(FTFace face, long glyphIndex, LoadFlags loadFlags) {
-        return ftLoadGlyph(face, glyphIndex, loadFlags.getBits());
+        return ftLoadGlyph(face, glyphIndex, BitMask.getBits(loadFlags));
     }
 
     public static FTError ftLoadGlyph(FTFace face, long glyphIndex) {
@@ -168,7 +244,7 @@ public class FreeType {
     }
 
     public static FTError ftLoadChar(FTFace face, long charcode, LoadFlags loadFlags) {
-        return ftLoadChar(face, charcode, loadFlags.getBits());
+        return ftLoadChar(face, charcode, BitMask.getBits(loadFlags));
     }
 
     public static FTError ftLoadChar(FTFace face, long charcode) {
@@ -193,6 +269,8 @@ public class FreeType {
     private static native int FT_Render_Glyph(long slot, int render_mode);
 
     public static FTError ftRenderGlyph(FTGlyphSlot slot, FTRenderMode renderMode) {
+        if(renderMode == null)
+            renderMode = FTRenderMode.NORMAL;
         final int code = FT_Render_Glyph(FTStruct.getPointer(slot), renderMode.value);
         return FTError.byCode(code);
     }
@@ -201,6 +279,8 @@ public class FreeType {
     private static native int FT_Get_Kerning(long face, long left_glyph, long right_glyph, int kern_mode, long akerning);
 
     public static FTError ftGetKerning(FTFace face, int leftGlyph, int rightGlyph, FTKerningMode kerningMode, FTVector dstKerning) {
+        if(kerningMode == null)
+            kerningMode = FTKerningMode.DEFAULT;
         final int code = FT_Get_Kerning(FTStruct.getPointer(face), leftGlyph, rightGlyph, kerningMode.value, FTStruct.getPointer(dstKerning));
         return FTError.byCode(code);
     }
@@ -217,6 +297,8 @@ public class FreeType {
     private static native int FT_Select_Charmap(long face, int encoding);
 
     public static FTError ftSelectCharmap(FTFace face, FTEncoding encoding) {
+        if(encoding == null)
+            encoding = FTEncoding.NONE;
         final int code = FT_Select_Charmap(FTStruct.getPointer(face), encoding.value);
         return FTError.byCode(code);
     }
@@ -260,14 +342,15 @@ public class FreeType {
     // FT_Error FT_Face_Properties(FT_Face face, FT_UInt num_properties, FT_Parameter* properties)
     private static native int FT_Face_Properties(long face, long num_properties, long[] properties);
 
-    public static FTError ftFaceProperties(FTFace face, int numProperties, FTParameter[] properties) {
+    public static FTError ftFaceProperties(FTFace face, int numProperties, FTParameter... properties) {
         final long[] pointers = FTStruct.makePointerArray(properties);
         final int code = FT_Face_Properties(FTStruct.getPointer(face), numProperties, pointers);
         return FTError.byCode(code);
     }
 
-    public static FTError ftFaceProperties(FTFace face, FTParameter[] properties) {
-        return ftFaceProperties(face, properties.length, properties);
+    public static FTError ftFaceProperties(FTFace face, FTParameter... properties) {
+        final int numProperties = (properties == null ? 0 : properties.length);
+        return ftFaceProperties(face, numProperties, properties);
     }
 
     // FT_UInt FT_Get_Name_Index(FT_Face face, const FT_String* glyph_name)
@@ -286,7 +369,8 @@ public class FreeType {
     }
 
     public static FTError ftGetGlyphName(FTFace face, long glyphIndex, ByteBuffer buffer) {
-        return ftGetGlyphName(face, glyphIndex, buffer, buffer.limit());
+        final long bufferMax = (buffer == null ? 0 : buffer.limit());
+        return ftGetGlyphName(face, glyphIndex, buffer, bufferMax);
     }
 
     // const char* FT_Get_Postscript_Name(FT_Face face)
@@ -351,48 +435,42 @@ public class FreeType {
     }
 
     // FT_Long FT_MulDiv(FT_Long a, FT_Long b, FT_Long c)
-    private static native long FT_MulDiv(long a, long b, long c);
-
     public static long ftMulDiv(long a, long b, long c) {
-        return FT_MulDiv(a, b, c);
+        return (a * b) / c;
     }
 
     // FT_Long FT_MulFix(FT_Long a, FT_Long b)
-    private static native long FT_MulFix(long a, long b);
-
     public static long ftMulFix(long a, long b) {
-        return FT_MulFix(a, b);
+        return (a * b) / 0x10000;
     }
 
     // FT_Long FT_DivFix(FT_Long a, FT_Long b)
-    private static native long FT_DivFix(long a, long b);
-
     public static long ftDivFix(long a, long b) {
-        return FT_DivFix(a, b);
+        return (a * 0x10000) / b;
     }
 
     // FT_Fixed FT_RoundFix(FT_Fixed a)
-    private static native long FT_RoundFix(long a);
+    private static native int FT_RoundFix(long a);
 
-    public static FTFixed ftRoundFix(FTFixed a) {
-        final long pointer = FT_RoundFix(FTStruct.getPointer(a));
-        return FTStructCache.getOrCreate(pointer, FTFixed::new);
+    public static float ftRoundFix(FTFixed a) {
+        final int raw = FT_RoundFix(FTStruct.getPointer(a));
+        return FTFixed.toFloat(raw);
     }
 
     // FT_Fixed FT_CeilFix(FT_Fixed a)
-    private static native long FT_CeilFix(long a);
+    private static native int FT_CeilFix(long a);
 
-    public static FTFixed ftCeilFix(FTFixed a) {
-        final long pointer = FT_CeilFix(FTStruct.getPointer(a));
-        return FTStructCache.getOrCreate(pointer, FTFixed::new);
+    public static float ftCeilFix(FTFixed a) {
+        final int raw = FT_CeilFix(FTStruct.getPointer(a));
+        return FTFixed.toFloat(raw);
     }
 
     // FT_Fixed FT_FloorFix(FT_Fixed a)
-    private static native long FT_FloorFix(long a);
+    private static native int FT_FloorFix(long a);
 
-    public static FTFixed ftFloorFix(FTFixed a) {
-        final long pointer = FT_FloorFix(FTStruct.getPointer(a));
-        return FTStructCache.getOrCreate(pointer, FTFixed::new);
+    public static float ftFloorFix(FTFixed a) {
+        final int raw = FT_FloorFix(FTStruct.getPointer(a));
+        return FTFixed.toFloat(raw);
     }
 
     // void FT_Vector_Transform(FT_Vector* vector, const FT_Matrix* matrix)
@@ -453,6 +531,9 @@ public class FreeType {
     private static native void FT_GlyphLoader_Done(long loader);
 
     public static void ftGlyphLoaderDone(FTGlyphLoader loader) {
+        if(loader == null)
+            return;
+
         FT_GlyphLoader_Done(FTStruct.getPointer(loader));
         loader.destroyPointer();
     }
@@ -511,6 +592,8 @@ public class FreeType {
     private static native int FT_New_Glyph(long library, int format, long[] aglyph);
 
     public static FTError ftNewGlyph(FTLibrary library, FTGlyphFormat format, long[] dstGlyphPointer) {
+        if(format == null)
+            format = FTGlyphFormat.NONE;
         final int code = FT_New_Glyph(FTStruct.getPointer(library), format.value, dstGlyphPointer);
         return FTError.byCode(code);
     }
@@ -550,9 +633,13 @@ public class FreeType {
     private static native int FT_Glyph_To_Bitmap(long the_glyph, int render_mode, long origin, boolean destroy, long[] dstBitmapGlyphPointer);
 
     public static FTError ftGlyphToBitmap(FTGlyph glyph, FTRenderMode renderMode, FTVector origin, boolean destroy, long[] dstBitmapGlyphPointer) {
+        if(renderMode == null)
+            renderMode = FTRenderMode.NORMAL;
+
         final int code = FT_Glyph_To_Bitmap(FTStruct.getPointer(glyph), renderMode.value, FTStruct.getPointer(origin), destroy, dstBitmapGlyphPointer);
-        if(destroy)
+        if(destroy && glyph != null)
             glyph.destroyPointer();
+
         return FTError.byCode(code);
     }
 
@@ -602,10 +689,10 @@ public class FreeType {
     }
 
     // FT_Error FT_Stroker_New(FT_Library library, FT_Stroker *astroker)
-    private static native int FT_Stroker_New(long library, long dstStroker);
+    private static native int FT_Stroker_New(long library, long[] astroker);
 
-    public static FTError ftStrokerNew(FTLibrary library, FTStroker dstStroker) {
-        final int code = FT_Stroker_New(FTStruct.getPointer(library), FTStruct.getPointer(dstStroker));
+    public static FTError ftStrokerNew(FTLibrary library, long[] dstStrokerPointer) {
+        final int code = FT_Stroker_New(FTStruct.getPointer(library), dstStrokerPointer);
         return FTError.byCode(code);
     }
 
@@ -613,6 +700,10 @@ public class FreeType {
     private static native void FT_Stroker_Set(long stroker, long radius, int line_cap, int line_join, long miter_limit);
 
     public static void ftStrokerSet(FTStroker stroker, float radius, FTStrokerLinecap lineCap, FTStrokerLinejoin lineJoin, float miterLimit) {
+        if(lineCap == null)
+            throw new NullPointerException("LineCap is null");
+        if(lineJoin == null)
+            throw new NullPointerException("LineJoin is null");
         FT_Stroker_Set(FTStruct.getPointer(stroker), FTFixed.of(radius), lineCap.value, lineJoin.value, FTFixed.of(miterLimit));
     }
 
@@ -675,6 +766,8 @@ public class FreeType {
     private static native int FT_Stroker_GetBorderCounts(long stroker, int border, long[] anum_points, long[] anum_contours);
 
     public static FTError ftStrokerGetBorderCounts(FTStroker stroker, FTStrokerBorder border, long[] dstNumPoint, long[] dstNumContours) {
+        if(border == null)
+            throw new NullPointerException("Border is null");
         final int code = FT_Stroker_GetBorderCounts(FTStruct.getPointer(stroker), border.value, dstNumPoint, dstNumContours);
         return FTError.byCode(code);
     }
@@ -683,6 +776,8 @@ public class FreeType {
     private static native void FT_Stroker_ExportBorder(long stroker, long border, long outline);
 
     public static void ftStrokerExportBorder(FTStroker stroker, FTStrokerBorder border, FTOutline outline) {
+        if(border == null)
+            throw new NullPointerException("Border is null");
         FT_Stroker_ExportBorder(FTStruct.getPointer(stroker), border.value, FTStruct.getPointer(outline));
     }
 
@@ -705,6 +800,8 @@ public class FreeType {
     private static native void FT_Stroker_Done(long stroker);
 
     public static void ftStrokerDone(FTStroker stroker) {
+        if(stroker == null)
+            return;
         FT_Stroker_Done(FTStruct.getPointer(stroker));
         stroker.destroyPointer();
     }

@@ -1,11 +1,29 @@
 package generaloss.freetype.types;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FreeType;
 
 public class FTBBox extends FTStruct { // struct done.
 
     public FTBBox(long pointer) {
         super(pointer);
+    }
+
+    public FTBBox() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
     }
 
 
@@ -39,13 +57,6 @@ public class FTBBox extends FTStruct { // struct done.
     public float getYMax() {
         final int raw = getYMax(super.pointer);
         return FTPos.toFloat(raw);
-    }
-
-
-    private static native long newStruct();
-
-    public static FTBBox newInstance() {
-        return new FTBBox(newStruct());
     }
 
 }

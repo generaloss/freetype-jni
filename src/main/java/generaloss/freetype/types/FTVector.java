@@ -9,6 +9,23 @@ public class FTVector extends FTStruct { // struct done.
         super(pointer);
     }
 
+    public FTVector() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
+    }
+
 
     // FT_Pos x;
     private static native int getRawX(long pointer);
@@ -49,13 +66,6 @@ public class FTVector extends FTStruct { // struct done.
     @Override
     public String toString() {
         return "FTVector{x=" + this.getX() + ", y=" + this.getY() + "}";
-    }
-
-
-    private static native long newStruct();
-
-    public static FTVector newInstance() {
-        return new FTVector(newStruct());
     }
 
 }

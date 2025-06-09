@@ -9,11 +9,19 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_system_FTMemory
- * Method:    newStruct
+ * Method:    createPointer
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_system_FTMemory_newStruct
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_system_FTMemory_createPointer
   (JNIEnv *, jclass);
+
+/*
+ * Class:     generaloss_freetype_system_FTMemory
+ * Method:    freePointer
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_system_FTMemory_freePointer
+  (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus
 }

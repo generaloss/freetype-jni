@@ -1,11 +1,29 @@
 package generaloss.freetype.types;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FreeType;
 
 public class FTPos extends FTStruct { // struct done.
 
     public FTPos(long pointer) {
         super(pointer);
+    }
+
+    public FTPos() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
     }
 
 
@@ -55,18 +73,11 @@ public class FTPos extends FTStruct { // struct done.
     }
 
 
-    private static native long newStruct();
-
-    public static FTPos newInstance() {
-        return new FTPos(newStruct());
-    }
-
-
-    private static final int BITS = 6;
-    private static final int UNIT = (1 << BITS); // 64
-    private static final int HALF_UNIT = (1 << (BITS - 1)); // 32
-    private static final int MASK = (UNIT - 1); // 0x3F
-    private static final float UNIT_FRAC = (1F / UNIT);
+    public static final int BITS = 6;
+    public static final int UNIT = (1 << BITS); // 64
+    public static final int HALF_UNIT = (1 << (BITS - 1)); // 32
+    public static final int MASK = (UNIT - 1); // 0x3F
+    public static final float UNIT_FRAC = (1F / UNIT);
 
     public static float toFloat(int rawValue) {
         return (rawValue * UNIT_FRAC);

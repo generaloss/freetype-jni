@@ -9,6 +9,22 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_freetype_FTOpenArgs
+ * Method:    createPointer
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_createPointer
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTOpenArgs
+ * Method:    freePointer
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_freePointer
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTOpenArgs
  * Method:    getFlags
  * Signature: (J)J
  */
@@ -54,14 +70,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getNumParams
  */
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getParams
   (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_freetype_FTOpenArgs
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_newStruct
-  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

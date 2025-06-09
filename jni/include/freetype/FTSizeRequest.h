@@ -9,6 +9,22 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_freetype_FTSizeRequest
+ * Method:    createPointer
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_createPointer
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTSizeRequest
+ * Method:    freePointer
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_freePointer
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTSizeRequest
  * Method:    getType
  * Signature: (J)I
  */
@@ -46,14 +62,6 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_getHoriR
  */
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_getVertResolution
   (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_freetype_FTSizeRequest
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_newStruct
-  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

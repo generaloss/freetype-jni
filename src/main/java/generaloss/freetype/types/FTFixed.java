@@ -1,11 +1,29 @@
 package generaloss.freetype.types;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FreeType;
 
 public class FTFixed extends FTStruct { // struct done.
 
     public FTFixed(long pointer) {
         super(pointer);
+    }
+
+    public FTFixed() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
     }
 
 
@@ -55,18 +73,11 @@ public class FTFixed extends FTStruct { // struct done.
     }
 
 
-    private static native long newStruct();
-
-    public static FTFixed newInstance() {
-        return new FTFixed(newStruct());
-    }
-
-
-    private static final int BITS = 16;
-    private static final int UNIT = (1 << BITS); // 65536
-    private static final int HALF_UNIT = (1 << (BITS - 1)); // 32768
-    private static final int MASK = (UNIT - 1); // 0xFFFF
-    private static final float UNIT_FRAC = (1F / UNIT);
+    public static final int BITS = 16;
+    public static final int UNIT = (1 << BITS); // 65536
+    public static final int HALF_UNIT = (1 << (BITS - 1)); // 32768
+    public static final int MASK = (UNIT - 1); // 0xFFFF
+    public static final float UNIT_FRAC = (1F / UNIT);
 
     public static float toFloat(int rawValue) {
         return (rawValue * UNIT_FRAC);

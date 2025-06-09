@@ -74,11 +74,4 @@ public class FTStroker extends FTStruct { // struct done.
         FreeType.ftStrokerDone(this);
     }
 
-
-    private static native long newStruct();
-
-    public static FTStroker newInstance() {
-        return new FTStroker(newStruct());
-    }
-
 }

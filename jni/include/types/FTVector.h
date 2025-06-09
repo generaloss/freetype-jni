@@ -9,6 +9,22 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_types_FTVector
+ * Method:    createPointer
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_createPointer
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     generaloss_freetype_types_FTVector
+ * Method:    freePointer
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_freePointer
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_types_FTVector
  * Method:    getRawX
  * Signature: (J)I
  */
@@ -38,14 +54,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTVector_getRawY
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_setRawY
   (JNIEnv *, jclass, jlong, jint);
-
-/*
- * Class:     generaloss_freetype_types_FTVector
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_newStruct
-  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

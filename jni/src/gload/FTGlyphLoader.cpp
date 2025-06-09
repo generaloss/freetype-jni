@@ -1,8 +1,27 @@
+// typedef struct FT_GlyphLoaderRec_ { ... } FT_GlyphLoaderRec, *FT_GlyphLoader;
+
 #include "gload/FTGlyphLoader.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include <freetype/internal/ftgloadr.h>
 
-typedef struct FT_GlyphLoaderRec_* FT_GlyphLoader;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoader_createPointer
+  (JNIEnv *, jclass) {
+
+    FT_GlyphLoader* pointer = new FT_GlyphLoader(nullptr);
+    return reinterpret_cast<jlong>(pointer);
+}
+
+JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoader_freePointer
+  (JNIEnv *, jclass, jlong loaderPtrRaw) {
+
+    FT_GlyphLoader* loader = reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    if(!loader)
+        return;
+
+    delete loader;
+}
+
 
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoader_getMemory
   (JNIEnv *, jclass, jlong) {
@@ -44,11 +63,4 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoader_getCurrent
   (JNIEnv *, jclass, jlong) {
 
     return 0;
-}
-
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoader_newStruct
-  (JNIEnv *, jclass) {
-
-    FT_GlyphLoader* pointer = new FT_GlyphLoader(nullptr);
-    return reinterpret_cast<jlong>(pointer);
 }

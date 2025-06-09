@@ -19,6 +19,22 @@ extern "C" {
 #define generaloss_freetype_types_FTF26Dot6_UNIT_FRAC 1.4901161E-8f
 /*
  * Class:     generaloss_freetype_types_FTF26Dot6
+ * Method:    createPointer
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTF26Dot6_createPointer
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     generaloss_freetype_types_FTF26Dot6
+ * Method:    freePointer
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTF26Dot6_freePointer
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_types_FTF26Dot6
  * Method:    getRawValue
  * Signature: (J)I
  */
@@ -32,14 +48,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTF26Dot6_getRawValue
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTF26Dot6_setRawValue
   (JNIEnv *, jclass, jlong, jint);
-
-/*
- * Class:     generaloss_freetype_types_FTF26Dot6
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTF26Dot6_newStruct
-  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

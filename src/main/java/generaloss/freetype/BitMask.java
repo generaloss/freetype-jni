@@ -43,4 +43,11 @@ public class BitMask {
         bits &= ~bit;
     }
 
+
+    public static int getBits(BitMask mask) {
+        if(mask == null)
+            return 0;
+        return mask.bits;
+    }
+
 }

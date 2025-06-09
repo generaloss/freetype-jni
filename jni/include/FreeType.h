@@ -305,50 +305,26 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVa
 
 /*
  * Class:     generaloss_freetype_FreeType
- * Method:    FT_MulDiv
- * Signature: (JJJ)J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1MulDiv
-  (JNIEnv *, jclass, jlong, jlong, jlong);
-
-/*
- * Class:     generaloss_freetype_FreeType
- * Method:    FT_MulFix
- * Signature: (JJ)J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1MulFix
-  (JNIEnv *, jclass, jlong, jlong);
-
-/*
- * Class:     generaloss_freetype_FreeType
- * Method:    FT_DivFix
- * Signature: (JJ)J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1DivFix
-  (JNIEnv *, jclass, jlong, jlong);
-
-/*
- * Class:     generaloss_freetype_FreeType
  * Method:    FT_RoundFix
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1RoundFix
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1RoundFix
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_CeilFix
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1CeilFix
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1CeilFix
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_FloorFix
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1FloorFix
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1FloorFix
   (JNIEnv *, jclass, jlong);
 
 /*
@@ -546,10 +522,10 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1GetOutside
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Stroker_New
- * Signature: (JJ)I
+ * Signature: (J[J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1New
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv *, jclass, jlong, jlongArray);
 
 /*
  * Class:     generaloss_freetype_FreeType

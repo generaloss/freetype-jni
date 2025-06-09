@@ -2,6 +2,7 @@ package generaloss.freetype.gload;
 
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FTStructCache;
+import generaloss.freetype.FreeType;
 import generaloss.freetype.image.FTOutline;
 import generaloss.freetype.types.FTVector;
 
@@ -10,6 +11,24 @@ public class FTGlyphLoad extends FTStruct { // struct done.
     public FTGlyphLoad(long pointer) {
         super(pointer);
     }
+
+    public FTGlyphLoad() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
+    }
+
 
     // FT_Outline outline;
     private static native long getOutline(long pointer);
@@ -55,13 +74,6 @@ public class FTGlyphLoad extends FTStruct { // struct done.
             objects[i] = FTStructCache.getOrCreate(pointers[i], FTSubGlyph::new);
 
         return objects;
-    }
-
-
-    private static native long newStruct();
-
-    public static FTGlyphLoad newInstance() {
-        return new FTGlyphLoad(newStruct());
     }
 
 }

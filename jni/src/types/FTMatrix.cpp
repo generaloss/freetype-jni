@@ -4,6 +4,24 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTMatrix_createPointer
+  (JNIEnv *, jclass) {
+
+    FT_Matrix* pointer = new FT_Matrix;
+    return reinterpret_cast<jlong>(pointer);
+}
+
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTMatrix_freePointer
+  (JNIEnv *, jclass, jlong matrixPtrRaw) {
+
+    FT_Matrix* matrix = reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
+    if(!matrix)
+        return;
+
+    delete matrix;
+}
+
+
 // FT_Fixed xx;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getXX
   (JNIEnv *, jclass, jlong matrixPtrRaw) {
@@ -13,6 +31,16 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getXX
         return 0;
 
     return static_cast<jint>(matrix->xx);
+}
+
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTMatrix_setXX
+  (JNIEnv *, jclass, jlong matrixPtrRaw, jint valueRaw) {
+
+    FT_Matrix* matrix = reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
+    if(!matrix)
+        return;
+
+    matrix->xx = static_cast<FT_Fixed>(valueRaw);
 }
 
 // FT_Fixed xy;
@@ -26,6 +54,16 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getXY
     return static_cast<jint>(matrix->xy);
 }
 
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTMatrix_setXY
+  (JNIEnv *, jclass, jlong matrixPtrRaw, jint valueRaw) {
+
+    FT_Matrix* matrix = reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
+    if(!matrix)
+        return;
+
+    matrix->xy = static_cast<FT_Fixed>(valueRaw);
+}
+
 // FT_Fixed yx;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getYX
   (JNIEnv *, jclass, jlong matrixPtrRaw) {
@@ -35,6 +73,16 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getYX
         return 0;
 
     return static_cast<jint>(matrix->yx);
+}
+
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTMatrix_setYX
+  (JNIEnv *, jclass, jlong matrixPtrRaw, jint valueRaw) {
+
+    FT_Matrix* matrix = reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
+    if(!matrix)
+        return;
+
+    matrix->yx = static_cast<FT_Fixed>(valueRaw);
 }
 
 // FT_Fixed yy;
@@ -48,10 +96,12 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getYY
     return static_cast<jint>(matrix->yy);
 }
 
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTMatrix_setYY
+  (JNIEnv *, jclass, jlong matrixPtrRaw, jint valueRaw) {
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTMatrix_newStruct
-  (JNIEnv *, jclass) {
+    FT_Matrix* matrix = reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
+    if(!matrix)
+        return;
 
-    FT_Matrix* pointer = new FT_Matrix;
-    return reinterpret_cast<jlong>(pointer);
+    matrix->yy = static_cast<FT_Fixed>(valueRaw);
 }

@@ -1,6 +1,7 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FreeType;
 import generaloss.freetype.types.FTTag;
 
 import java.nio.ByteBuffer;
@@ -9,6 +10,23 @@ public class FTParameter extends FTStruct { // struct done.
 
     public FTParameter(long pointer) {
         super(pointer);
+    }
+
+    public FTParameter() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
     }
 
 
@@ -50,13 +68,6 @@ public class FTParameter extends FTStruct { // struct done.
 
     public void setData(ByteBuffer buffer) {
         setData(super.pointer, buffer);
-    }
-
-
-    private static native long newStruct();
-
-    public static FTParameter newInstance() {
-        return new FTParameter(newStruct());
     }
 
 }

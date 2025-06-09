@@ -19,6 +19,22 @@ extern "C" {
 #define generaloss_freetype_types_FTPos_UNIT_FRAC 0.015625f
 /*
  * Class:     generaloss_freetype_types_FTPos
+ * Method:    createPointer
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTPos_createPointer
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     generaloss_freetype_types_FTPos
+ * Method:    freePointer
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTPos_freePointer
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_types_FTPos
  * Method:    getRawValue
  * Signature: (J)I
  */
@@ -32,14 +48,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTPos_getRawValue
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTPos_setRawValue
   (JNIEnv *, jclass, jlong, jint);
-
-/*
- * Class:     generaloss_freetype_types_FTPos
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTPos_newStruct
-  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

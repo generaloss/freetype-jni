@@ -2,12 +2,30 @@ package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FTStructCache;
+import generaloss.freetype.FreeType;
 import generaloss.freetype.gload.FTSubGlyph;
 
 public class FTOpenArgs extends FTStruct {
 
     public FTOpenArgs(long pointer) {
         super(pointer);
+    }
+
+    public FTOpenArgs() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
     }
 
 
@@ -63,13 +81,6 @@ public class FTOpenArgs extends FTStruct {
             objects[i] = FTStructCache.getOrCreate(pointers[i], FTParameter::new);
 
         return objects;
-    }
-
-
-    private static native long newStruct();
-
-    public static FTOpenArgs newInstance() {
-        return new FTOpenArgs(newStruct());
     }
 
 }

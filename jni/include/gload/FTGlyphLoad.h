@@ -9,6 +9,22 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_gload_FTGlyphLoad
+ * Method:    createPointer
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_createPointer
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     generaloss_freetype_gload_FTGlyphLoad
+ * Method:    freePointer
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_freePointer
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_gload_FTGlyphLoad
  * Method:    getOutline
  * Signature: (J)J
  */
@@ -46,14 +62,6 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getNumSubglyp
  */
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getSubglyphs
   (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_gload_FTGlyphLoad
- * Method:    newStruct
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_newStruct
-  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }

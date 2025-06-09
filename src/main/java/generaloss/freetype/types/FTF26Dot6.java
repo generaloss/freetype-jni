@@ -1,11 +1,29 @@
 package generaloss.freetype.types;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FreeType;
 
 public class FTF26Dot6 extends FTStruct { // struct done.
 
     public FTF26Dot6(long pointer) {
         super(pointer);
+    }
+
+    public FTF26Dot6() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
     }
 
 
@@ -55,18 +73,11 @@ public class FTF26Dot6 extends FTStruct { // struct done.
     }
 
 
-    private static native long newStruct();
-
-    public static FTF26Dot6 newInstance() {
-        return new FTF26Dot6(newStruct());
-    }
-
-
-    private static final int BITS = 26;
-    private static final int UNIT = (1 << BITS); // 67108864
-    private static final int HALF_UNIT = (1 << (BITS - 1)); // 33554432
-    private static final int MASK = (UNIT - 1); // 0x3FFFFFF
-    private static final float UNIT_FRAC = (1F / UNIT);
+    public static final int BITS = 26;
+    public static final int UNIT = (1 << BITS); // 67108864
+    public static final int HALF_UNIT = (1 << (BITS - 1)); // 33554432
+    public static final int MASK = (UNIT - 1); // 0x3FFFFFF
+    public static final float UNIT_FRAC = (1F / UNIT);
 
     public static float toFloat(int rawValue) {
         return (rawValue * UNIT_FRAC);

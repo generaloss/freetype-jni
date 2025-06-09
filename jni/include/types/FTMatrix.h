@@ -9,11 +9,35 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_types_FTMatrix
+ * Method:    createPointer
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTMatrix_createPointer
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     generaloss_freetype_types_FTMatrix
+ * Method:    freePointer
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTMatrix_freePointer
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_types_FTMatrix
  * Method:    getXX
  * Signature: (J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getXX
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_types_FTMatrix
+ * Method:    setXX
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTMatrix_setXX
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     generaloss_freetype_types_FTMatrix
@@ -25,11 +49,27 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getXY
 
 /*
  * Class:     generaloss_freetype_types_FTMatrix
+ * Method:    setXY
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTMatrix_setXY
+  (JNIEnv *, jclass, jlong, jint);
+
+/*
+ * Class:     generaloss_freetype_types_FTMatrix
  * Method:    getYX
  * Signature: (J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getYX
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_types_FTMatrix
+ * Method:    setYX
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTMatrix_setYX
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     generaloss_freetype_types_FTMatrix
@@ -41,11 +81,11 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTMatrix_getYY
 
 /*
  * Class:     generaloss_freetype_types_FTMatrix
- * Method:    newStruct
- * Signature: ()J
+ * Method:    setYY
+ * Signature: (JI)V
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTMatrix_newStruct
-  (JNIEnv *, jclass);
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTMatrix_setYY
+  (JNIEnv *, jclass, jlong, jint);
 
 #ifdef __cplusplus
 }
