@@ -16,7 +16,7 @@ public class FTCharMap extends FTStruct { // struct done.
 
     public FTFace getFace() {
         final long pointer = getFace(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTFace::new);
+        return FTStructCache.getOrCreate(FTFace.class, pointer, FTFace::new);
     }
 
     // FT_Encoding encoding;

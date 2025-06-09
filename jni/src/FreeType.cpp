@@ -38,9 +38,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Init_1FreeType
     FT_Library library;
     const FT_Error error = FT_Init_FreeType(&library);
 
-    if(error != 0)
-        return static_cast<jint>(error);
-
     const jlong libraryPtr = reinterpret_cast<jlong>(library);
     env->SetLongArrayRegion(libraryPtrRaw, 0, 1, &libraryPtr);
 
@@ -97,9 +94,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Face
 
     env->ReleaseStringUTFChars(filepathRaw, filepath);
 
-    if(error != 0)
-        return static_cast<jint>(error);
-
     const jlong facePtr = reinterpret_cast<jlong>(face);
     env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
 
@@ -140,9 +134,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Memory_1Face
     FT_Face face;
     const FT_Error error = FT_New_Memory_Face(libraryPtr, fileBase, fileSize, faceIndex, &face);
 
-    if(error != 0)
-        return static_cast<jint>(error);
-
     const jlong facePtr = reinterpret_cast<jlong>(face);
     env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
 
@@ -181,9 +172,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Open_1Face
 
     FT_Face face;
     const FT_Error error = FT_Open_Face(library, argsPtr, faceIndex, &face);
-
-    if(error != 0)
-        return static_cast<jint>(error);
 
     const jlong facePtr = reinterpret_cast<jlong>(face);
     env->SetLongArrayRegion(facePtrRaw, 0, 1, &facePtr);
@@ -945,7 +933,7 @@ JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1SetUnpate
 // FT_Error FT_GlyphLoader_New(FT_Memory memory, FT_GlyphLoader *aloader)
 // int FT_GlyphLoader_New(long memory, long aloader);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1New
-  (JNIEnv *env, jclass, jlong memoryPtrRaw, jlong loaderPtrRaw) {
+  (JNIEnv *env, jclass, jlong memoryPtrRaw, jlongArray dstLoaderPtrRaw) {
 
     const FT_Memory memory = *reinterpret_cast<FT_Memory*>(memoryPtrRaw);
     if(!memory) {
@@ -953,13 +941,12 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1New
         return 0;
     }
 
-    FT_GlyphLoader* loader = reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
-    if(!loader) {
-        throwException(env, "Invalid FT_GlyphLoader pointer");
-        return 0;
-    }
+    FT_GlyphLoader loader;
+    const FT_Error error = FT_GlyphLoader_New(memory, &loader);
 
-    const FT_Error error = FT_GlyphLoader_New(memory, loader);
+    const jlong loaderPtr = reinterpret_cast<jlong>(loader);
+    env->SetLongArrayRegion(dstLoaderPtrRaw, 0, 1, &loaderPtr);
+
     return static_cast<jint>(error);
 }
 
@@ -1116,9 +1103,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Glyph
     FT_Glyph glyph;
     const FT_Error error = FT_New_Glyph(library, format, &glyph);
 
-    if(error != 0)
-        return static_cast<jint>(error);
-
     const jlong glyphPtr = reinterpret_cast<jlong>(glyph);
     env->SetLongArrayRegion(glyphPtrRaw, 0, 1, &glyphPtr);
 
@@ -1149,9 +1133,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
 
     FT_Glyph glyph = nullptr;
     const FT_Error error = FT_Get_Glyph(slot, &glyph);
-
-    if(error != 0)
-        return static_cast<jint>(error);
 
     const jlong glyphPtr = reinterpret_cast<jlong>(glyph);
     env->SetLongArrayRegion(glyphPtrRaw, 0, 1, &glyphPtr);
@@ -1223,7 +1204,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Get_1CBox
 // FT_Error FT_Glyph_To_Bitmap(FT_Glyph* the_glyph, FT_Render_Mode render_mode, const FT_Vector* origin, FT_Bool destroy)
 // int FT_Glyph_To_Bitmap(long the_glyph, int render_mode, long origin, boolean destroy, long[] dstBitmapGlyphPointer);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1To_1Bitmap
-  (JNIEnv *env, jclass, jlong glyphPtrRaw, jint renderModeRaw, jlong originPtrRaw, jboolean destroyRaw, jlongArray dstGlyphPtrArray) {
+  (JNIEnv *env, jclass, jlong glyphPtrRaw, jint renderModeRaw, jlong originPtrRaw, jboolean destroyRaw, jlongArray dstGlyphPtrRaw) {
 
     FT_Glyph glyph = reinterpret_cast<FT_Glyph>(glyphPtrRaw);
     if(!glyph) {
@@ -1235,7 +1216,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1To_1Bitmap
     const FT_Vector* origin = reinterpret_cast<FT_Vector*>(originPtrRaw);
     const FT_Bool destroy = static_cast<FT_Bool>(destroyRaw);
 
-    jlong* dstGlyphPtr = env->GetLongArrayElements(dstGlyphPtrArray, NULL);
+    jlong* dstGlyphPtr = env->GetLongArrayElements(dstGlyphPtrRaw, NULL);
     if(!dstGlyphPtr) {
         throwException(env, "Invalid destination array");
         return 0;
@@ -1244,7 +1225,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1To_1Bitmap
     const FT_Error error = FT_Glyph_To_Bitmap(&glyph, renderMode, origin, destroy);
     dstGlyphPtr[0] = reinterpret_cast<jlong>(glyph);
 
-    env->ReleaseLongArrayElements(dstGlyphPtrArray, dstGlyphPtr, 0);
+    env->ReleaseLongArrayElements(dstGlyphPtrRaw, dstGlyphPtr, 0);
 
     return static_cast<jint>(error);
 }
@@ -1354,9 +1335,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1New
     FT_Stroker stroker;
     const FT_Error error = FT_Stroker_New(library, &stroker);
 
-    if(error != 0)
-        return static_cast<jint>(error);
-
     const jlong strokerPtr = reinterpret_cast<jlong>(stroker);
     env->SetLongArrayRegion(strokerPtrRaw, 0, 1, &strokerPtr);
 
@@ -1366,9 +1344,9 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1New
 // void FT_Stroker_Set(FT_Stroker stroker, FT_Fixed radius, FT_Stroker_LineCap line_cap, FT_Stroker_LineJoin line_join, FT_Fixed miter_limit)
 // void FT_Stroker_Set(long stroker, int radius, int line_cap, int line_join, int miter_limit);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Set
-  (JNIEnv *env, jclass, jlong strokerPtrRaw, jint radiusRaw, jint lineCapRaw, jint lineJoinRaw, jint miterLimitRaw) {
+  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong radiusRaw, jint lineCapRaw, jint lineJoinRaw, jlong miterLimitRaw) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return;
@@ -1387,7 +1365,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Set
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Rewind
   (JNIEnv *env, jclass, jlong strokerPtrRaw) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return;
@@ -1401,7 +1379,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Rewind
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ParseOutline
   (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong outlinePtrRaw, jboolean openedRaw) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return 0;
@@ -1424,7 +1402,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ParseOutli
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1BeginSubPath
   (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong toPtrRaw, jboolean openRaw) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return 0;
@@ -1447,7 +1425,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1BeginSubPa
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1EndSubPath
   (JNIEnv *env, jclass, jlong strokerPtrRaw) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return 0;
@@ -1462,7 +1440,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1EndSubPath
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1LineTo
   (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong toPtrRaw) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return 0;
@@ -1483,7 +1461,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1LineTo
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ConicTo
   (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong controlPtrRaw, jlong toPtrRaw) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return 0;
@@ -1505,7 +1483,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ConicTo
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1CubicTo
   (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong control1PtrRaw, jlong control2PtrRaw, jlong toPtrRaw) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return 0;
@@ -1528,7 +1506,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1CubicTo
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1GetBorderCounts
   (JNIEnv *env, jclass, jlong strokerPtrRaw, jint borderRaw, jlongArray numPointsArray, jlongArray numContoursArray) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return 0;
@@ -1555,7 +1533,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1GetBorderC
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ExportBorder
   (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong borderRaw, jlong outlinePtrRaw) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return;
@@ -1576,7 +1554,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ExportBord
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1GetCounts
   (JNIEnv *env, jclass, jlong strokerPtrRaw, jlongArray numPointsArray, jlongArray numContoursArray) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return 0;
@@ -1602,7 +1580,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1GetCounts
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Export
   (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong outlinePtrRaw) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return;
@@ -1622,7 +1600,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Export
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Done
   (JNIEnv *env, jclass, jlong strokerPtrRaw) {
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return;
@@ -1634,7 +1612,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Done
 // FT_Error FT_Glyph_Stroke(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool destroy)
 // int FT_Glyph_Stroke(long pglyph, long stroker, boolean destroy);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Stroke
-  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong strokerPtrRaw, jboolean destroyRaw) {
+  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong strokerPtrRaw, jboolean destroyRaw, jlongArray dstGlyphPtrRaw) {
 
     FT_Glyph glyph = reinterpret_cast<FT_Glyph>(glyphPtrRaw);
     if(!glyph) {
@@ -1642,7 +1620,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Stroke
         return 0;
     }
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return 0;
@@ -1651,13 +1629,17 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Stroke
     const FT_Bool destroy = static_cast<FT_Bool>(destroyRaw);
 
     const FT_Error error = FT_Glyph_Stroke(&glyph, stroker, destroy);
+
+    const jlong dstGlyphPtr = reinterpret_cast<jlong>(glyph);
+    env->SetLongArrayRegion(dstGlyphPtrRaw, 0, 1, &dstGlyphPtr);
+
     return static_cast<jint>(error);
 }
 
 // FT_Error FT_Glyph_StrokeBorder(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool inside, FT_Bool destroy)
 // int FT_Glyph_StrokeBorder(long pglyph, long stroker, boolean inside, boolean destroy);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1StrokeBorder
-  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong strokerPtrRaw, jboolean insideRaw, jboolean destroyRaw) {
+  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong strokerPtrRaw, jboolean insideRaw, jboolean destroyRaw, jlongArray dstGlyphPtrRaw) {
 
     FT_Glyph glyph = reinterpret_cast<FT_Glyph>(glyphPtrRaw);
     if(!glyph) {
@@ -1665,7 +1647,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1StrokeBorder
         return 0;
     }
 
-    const FT_Stroker stroker = *reinterpret_cast<FT_Stroker*>(strokerPtrRaw);
+    const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
         throwException(env, "Invalid FT_Stroker pointer");
         return 0;
@@ -1675,5 +1657,9 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1StrokeBorder
     const FT_Bool destroy = static_cast<FT_Bool>(destroyRaw);
 
     const FT_Error error = FT_Glyph_StrokeBorder(&glyph, stroker, inside, destroy);
+
+    const jlong dstGlyphPtr = reinterpret_cast<jlong>(glyph);
+    env->SetLongArrayRegion(dstGlyphPtrRaw, 0, 1, &dstGlyphPtr);
+
     return static_cast<jint>(error);
 }

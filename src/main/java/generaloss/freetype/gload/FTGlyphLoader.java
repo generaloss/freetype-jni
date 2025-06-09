@@ -12,30 +12,13 @@ public class FTGlyphLoader extends FTStruct { // struct done.
         super(pointer);
     }
 
-    public FTGlyphLoader() {
-        this(createPointer());
-    }
-
-    static {
-        FreeType.init();
-    }
-
-    private static native long createPointer();
-
-    private static native void freePointer(long pointer);
-
-    public void free() {
-        freePointer(this.pointer);
-        super.destroyPointer();
-    }
-
 
     // FT_Memory memory;
     private static native long getMemory(long pointer);
 
     public FTMemory getMemory() {
         final long pointer = getMemory(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTMemory::new);
+        return FTStructCache.getOrCreate(FTMemory.class, pointer, FTMemory::new); 
     }
 
     // FT_UInt max_points;
@@ -71,7 +54,7 @@ public class FTGlyphLoader extends FTStruct { // struct done.
 
     public FTGlyphLoad getBase() {
         final long pointer = getBase(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTGlyphLoad::new);
+        return FTStructCache.getOrCreate(FTGlyphLoad.class, pointer, FTGlyphLoad::new); 
     }
 
     // FT_GlyphLoadRec current;
@@ -79,14 +62,9 @@ public class FTGlyphLoader extends FTStruct { // struct done.
 
     public FTGlyphLoad getCurrent() {
         final long pointer = getCurrent(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTGlyphLoad::new);
+        return FTStructCache.getOrCreate(FTGlyphLoad.class, pointer, FTGlyphLoad::new); 
     }
 
-
-    public void newGlyphLoader(FTMemory memory) {
-        final FTError error = FreeType.ftGlyphLoaderNew(memory, this);
-        error.checkError();
-    }
 
     public void createExtra() {
         final FTError error = FreeType.ftGlyphLoaderCreateExtra(this);

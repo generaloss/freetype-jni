@@ -65,6 +65,12 @@ public class FTF26Dot6 extends FTStruct { // struct done.
         setRawValue(super.pointer, raw);
     }
 
+    public void set(FTF26Dot6 value) {
+        if(value == null)
+            throw new NullPointerException("Value is null");
+        this.set(value.getFloat());
+    }
+
 
     @Override
     public String toString() {

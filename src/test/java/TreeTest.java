@@ -1,5 +1,12 @@
 import generaloss.freetype.freetype.*;
+import generaloss.freetype.gload.FTGlyphLoader;
 import generaloss.freetype.gload.FTSubGlyph;
+import generaloss.freetype.glyph.FTBitmapGlyph;
+import generaloss.freetype.glyph.FTGlyph;
+import generaloss.freetype.stroke.FTStroker;
+import generaloss.freetype.stroke.FTStrokerLinecap;
+import generaloss.freetype.stroke.FTStrokerLinejoin;
+import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.FTVector;
 import jpize.util.res.Resource;
 
@@ -10,9 +17,12 @@ public class TreeTest {
 
     public static void main(String[] args) {
         final FTLibrary library = new FTLibrary();
-        final ByteBuffer data = Resource.internal("/DejaVuSans.ttf").readByteBuffer();
+        final ByteBuffer data = Resource.internal("/main.ttf").readByteBuffer();
         final FTFace face = library.newMemoryFace(data, 0);
         face.setPixelSizes(32, 32);
+
+        final FTStroker stroker = library.newStroker();
+        stroker.set(4, FTStrokerLinecap.BUTT, FTStrokerLinejoin.ROUND, 0);
 
         final char c = 'Ǽ';
         face.loadChar(c);
@@ -20,7 +30,48 @@ public class TreeTest {
         final long charIndex = face.getCharIndex(c);
         face.loadGlyph(charIndex);
         final FTGlyphSlot slot = face.getGlyph();
+
+        final FTGlyph glyph = slot.getGlyph();
+        final FTGlyph strokedGlyph = glyph.strokeBorder(stroker, false, false);
+
         slot.renderGlyph(FTRenderMode.NORMAL);
+
+        final FTMemory memory = FTMemory.getDefault();
+
+        final FTGlyphLoader loader = memory.newGlyphLoader();
+
+        loader.done();
+
+
+        // un    :
+        //   used:
+
+        //   BitmapSize
+        //   CharMap
+        //   Face
+        //   GlyphMetrics
+        //   GlyphSlot
+        //   Library
+        // OpenArgs
+        // Parameter
+        //   Size
+        //   SizeMetrics
+        // SizeRequest
+        // GlyphLoad
+        // GlyphLoader
+        //   SubGlyph
+        //   BitmapGlyph
+        //   Glyph
+        //   Bitmap
+        //   Outline
+        //   Stroker
+        // Memory
+        //   BBox
+        // F26Dot6 (tesed)
+        //   Fixed
+        //   Matrix
+        //   Pos
+        //   Vector
 
         System.out.println("FTFace {");
         System.out.println("  FT_Long         num_faces = " + face.getNumFaces());
@@ -121,6 +172,21 @@ public class TreeTest {
         System.out.println("    ]");
         System.out.println("    FT_Pos           lsb_delta = " + face.getGlyph().getLsbDelta());
         System.out.println("    FT_Pos           rsb_delta = " + face.getGlyph().getRsbDelta());
+        System.out.println("    FT_GetGlyph() => FTGlyph {");
+        System.out.println("      FT_Library      library = " + glyph.getLibrary());
+        System.out.println("      FT_Glyph_Format format = " + glyph.getFormat());
+        System.out.println("      FT_Vector       advance = {");
+        System.out.println("        FT_Pos x = " + glyph.getAdvance().getX());
+        System.out.println("        FT_Pos y = " + glyph.getAdvance().getY());
+        System.out.println("      }");
+        final FTBitmapGlyph bitmapGlyph = glyph.toBitmap(FTRenderMode.NORMAL, null, false);
+        System.out.println("      FT_Glyph_To_Bitmap => FT_BitmapGlyph {");
+        System.out.println("        FT_GlyphRec root = " + bitmapGlyph.getRoot());
+        System.out.println("        FT_Int      left = " + bitmapGlyph.getLeft());
+        System.out.println("        FT_Int      top = " + bitmapGlyph.getTop());
+        System.out.println("        FT_Bitmap   bitmap = " + bitmapGlyph.getBitmap());
+        System.out.println("      }");
+        System.out.println("    }");
         System.out.println("  }");
         System.out.println("  FT_Size         size = {");
         System.out.println("    FT_Face         face = " + face.getSize().getFace());
@@ -143,6 +209,7 @@ public class TreeTest {
         System.out.println("  }");
         System.out.println("}");
 
+        stroker.done();
         face.done();
         library.done();
     }

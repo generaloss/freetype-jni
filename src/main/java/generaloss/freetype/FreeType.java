@@ -508,15 +508,15 @@ public class FreeType {
 
 
     // FT_Error FT_GlyphLoader_New(FT_Memory memory, FT_GlyphLoader *aloader)
-    private static native int FT_GlyphLoader_New(long memory, long aloader);
+    private static native int FT_GlyphLoader_New(long memory, long[] aloader);
 
-    public static FTError ftGlyphLoaderNew(FTMemory memory, FTGlyphLoader dstLoader) {
-        final int code = FT_GlyphLoader_New(FTStruct.getPointer(memory), FTStruct.getPointer(dstLoader));
+    public static FTError ftGlyphLoaderNew(FTMemory memory, long[] dstLoaderPointer) {
+        final int code = FT_GlyphLoader_New(FTStruct.getPointer(memory), dstLoaderPointer);
         return FTError.byCode(code);
     }
 
-    public static FTError ftGlyphLoaderNew(FTGlyphLoader dstLoader) {
-        return ftGlyphLoaderNew(FTMemory.getDefault(), dstLoader);
+    public static FTError ftGlyphLoaderNew(long[] dstLoaderPointer) {
+        return ftGlyphLoaderNew(FTMemory.getDefault(), dstLoaderPointer);
     }
 
     // FT_Error FT_GlyphLoader_CreateExtra(FT_GlyphLoader loader)
@@ -807,18 +807,24 @@ public class FreeType {
     }
 
     // FT_Error FT_Glyph_Stroke(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool destroy)
-    private static native int FT_Glyph_Stroke(long pglyph, long stroker, boolean destroy);
+    private static native int FT_Glyph_Stroke(long pglyph, long stroker, boolean destroy, long[] dstStrokeGlyphPointer);
 
-    public static FTError ftGlyphStroke(FTGlyph pGlyph, FTStroker stroker, boolean destroy) {
-        final int code = FT_Glyph_Stroke(FTStruct.getPointer(pGlyph), FTStruct.getPointer(stroker), destroy);
+    public static FTError ftGlyphStroke(FTGlyph pGlyph, FTStroker stroker, boolean destroy, long[] dstStrokeGlyphPointer) {
+        final int code = FT_Glyph_Stroke(FTStruct.getPointer(pGlyph), FTStruct.getPointer(stroker), destroy, dstStrokeGlyphPointer);
+        if(destroy && pGlyph != null) // check error code?
+            pGlyph.destroyPointer();
+
         return FTError.byCode(code);
     }
 
     // FT_Error FT_Glyph_StrokeBorder(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool inside, FT_Bool destroy)
-    private static native int FT_Glyph_StrokeBorder(long pglyph, long stroker, boolean inside, boolean destroy);
+    private static native int FT_Glyph_StrokeBorder(long pglyph, long stroker, boolean inside, boolean destroy, long[] dstStrokeGlyphPointer);
 
-    public static FTError ftGlyphStrokeBorder(FTGlyph pGlyph, FTStroker stroker, boolean inside, boolean destroy) {
-        final int code = FT_Glyph_StrokeBorder(FTStruct.getPointer(pGlyph), FTStruct.getPointer(stroker), inside, destroy);
+    public static FTError ftGlyphStrokeBorder(FTGlyph pGlyph, FTStroker stroker, boolean inside, boolean destroy, long[] dstStrokeGlyphPointer) {
+        final int code = FT_Glyph_StrokeBorder(FTStruct.getPointer(pGlyph), FTStruct.getPointer(stroker), inside, destroy, dstStrokeGlyphPointer);
+        if(destroy && pGlyph != null)
+            pGlyph.destroyPointer();
+
         return FTError.byCode(code);
     }
 

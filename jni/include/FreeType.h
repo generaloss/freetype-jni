@@ -362,10 +362,10 @@ JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1SetUnpate
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_GlyphLoader_New
- * Signature: (JJ)I
+ * Signature: (J[J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1New
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv *, jclass, jlong, jlongArray);
 
 /*
  * Class:     generaloss_freetype_FreeType
@@ -634,18 +634,18 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Done
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Glyph_Stroke
- * Signature: (JJZ)I
+ * Signature: (JJZ[J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Stroke
-  (JNIEnv *, jclass, jlong, jlong, jboolean);
+  (JNIEnv *, jclass, jlong, jlong, jboolean, jlongArray);
 
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Glyph_StrokeBorder
- * Signature: (JJZZ)I
+ * Signature: (JJZZ[J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1StrokeBorder
-  (JNIEnv *, jclass, jlong, jlong, jboolean, jboolean);
+  (JNIEnv *, jclass, jlong, jlong, jboolean, jboolean, jlongArray);
 
 #ifdef __cplusplus
 }

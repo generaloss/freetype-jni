@@ -39,7 +39,7 @@ public class FTOutline extends FTStruct { // struct done.
 
         final FTVector[] objects = new FTVector[pointers.length];
         for(int i = 0; i < objects.length; i++)
-            objects[i] = FTStructCache.getOrCreate(pointers[i], FTVector::new);
+            objects[i] = FTStructCache.getOrCreate(FTVector.class, pointers[i], FTVector::new); 
 
         return objects;
     }

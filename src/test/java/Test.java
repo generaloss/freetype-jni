@@ -1,9 +1,7 @@
-import generaloss.freetype.FreeType;
 import generaloss.freetype.freetype.*;
 import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.image.FTBitmap;
 import generaloss.freetype.glyph.FTBitmapGlyph;
-import generaloss.freetype.types.FTFixed;
 import generaloss.freetype.types.FTVector;
 import jpize.util.res.Resource;
 
@@ -12,16 +10,10 @@ import java.nio.ByteBuffer;
 public class Test {
 
     public static void main(String[] args) {
-        FTFixed val = new FTFixed();
-        val.set(235.54335F);
-        System.out.println(val.getFloat());
-
-        System.out.println(FreeType.ftFloorFix(val));
-
-        // for(int i = 0; i < 1; i++) {
-        //     System.out.println("--------- ITERATE " + i + " ---------");
-        //     test();
-        // }
+        for(int i = 0; i < 1; i++) {
+            System.out.println("--------- ITERATE " + i + " ---------");
+            test();
+        }
     }
 
     private static final String CHARS = "\0ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890\"!`?'.,;:()[]{}<>|/@\\^$-%+=#_&~*�?�?�?�?�? ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿À�?ÂÃÄÅÆÇÈÉÊËÌ�?Î�?�?ÑÒÓÔÕÖ×ØÙÚÛÜ�?Þßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ";

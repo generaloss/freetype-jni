@@ -24,7 +24,7 @@ public class FTGlyph extends FTStruct { // struct done.
 
     public FTLibrary getLibrary() {
         final long pointer = getLibrary(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTLibrary::new);
+        return FTStructCache.getOrCreate(FTLibrary.class, pointer, FTLibrary::new); 
     }
 
     // FT_Glyph_Format format;
@@ -40,7 +40,7 @@ public class FTGlyph extends FTStruct { // struct done.
 
     public FTVector getAdvance() {
         final long pointer = getAdvance(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTVector::new);
+        return FTStructCache.getOrCreate(FTVector.class, pointer, FTVector::new); 
     }
 
 
@@ -62,21 +62,25 @@ public class FTGlyph extends FTStruct { // struct done.
         final long[] dstPointer = new long[1];
         final FTError error = FreeType.ftGlyphToBitmap(this, renderMode, origin, destroy, dstPointer);
         error.checkError();
-        return FTStructCache.getOrCreate(dstPointer[0], FTBitmapGlyph::new);
+        return FTStructCache.getOrCreate(FTBitmapGlyph.class, dstPointer[0], FTBitmapGlyph::new);
     }
 
     public void done() {
         FreeType.ftDoneGlyph(this);
     }
 
-    public void stroke(FTStroker stroker, boolean destroy) {
-        final FTError error = FreeType.ftGlyphStroke(this, stroker, destroy);
+    public FTGlyph stroke(FTStroker stroker, boolean destroy) {
+        final long[] dstStrokeGlyphPointer = new long[1];
+        final FTError error = FreeType.ftGlyphStroke(this, stroker, destroy, dstStrokeGlyphPointer);
         error.checkError();
+        return FTStructCache.getOrCreate(FTGlyph.class, dstStrokeGlyphPointer[0], FTGlyph::new);
     }
 
-    public void strokeBorder(FTStroker stroker, boolean inside, boolean destroy) {
-        final FTError error = FreeType.ftGlyphStrokeBorder(this, stroker, inside, destroy);
+    public FTGlyph strokeBorder(FTStroker stroker, boolean inside, boolean destroy) {
+        final long[] dstStrokeGlyphPointer = new long[1];
+        final FTError error = FreeType.ftGlyphStrokeBorder(this, stroker, inside, destroy, dstStrokeGlyphPointer);
         error.checkError();
+        return FTStructCache.getOrCreate(FTGlyph.class, dstStrokeGlyphPointer[0], FTGlyph::new);
     }
 
 }

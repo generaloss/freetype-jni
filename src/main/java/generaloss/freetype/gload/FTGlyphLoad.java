@@ -35,7 +35,7 @@ public class FTGlyphLoad extends FTStruct { // struct done.
 
     public FTOutline getOutline() {
         final long pointer = getOutline(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTOutline::new);
+        return FTStructCache.getOrCreate(FTOutline.class, pointer, FTOutline::new); 
     }
 
     // FT_Vector* extra_points;
@@ -43,7 +43,7 @@ public class FTGlyphLoad extends FTStruct { // struct done.
 
     public FTVector getExtraPoints() {
         final long pointer = getExtraPoints(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTVector::new);
+        return FTStructCache.getOrCreate(FTVector.class, pointer, FTVector::new); 
     }
 
     // FT_Vector* extra_points2;
@@ -51,7 +51,7 @@ public class FTGlyphLoad extends FTStruct { // struct done.
 
     public FTVector getExtraPoints2() {
         final long pointer = getExtraPoints2(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTVector::new);
+        return FTStructCache.getOrCreate(FTVector.class, pointer, FTVector::new); 
     }
 
     // FT_UInt num_subglyphs;
@@ -71,7 +71,7 @@ public class FTGlyphLoad extends FTStruct { // struct done.
 
         final FTSubGlyph[] objects = new FTSubGlyph[pointers.length];
         for(int i = 0; i < objects.length; i++)
-            objects[i] = FTStructCache.getOrCreate(pointers[i], FTSubGlyph::new);
+            objects[i] = FTStructCache.getOrCreate(FTSubGlyph.class, pointers[i], FTSubGlyph::new); 
 
         return objects;
     }

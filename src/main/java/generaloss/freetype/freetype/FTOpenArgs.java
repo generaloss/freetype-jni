@@ -78,7 +78,7 @@ public class FTOpenArgs extends FTStruct {
 
         final FTParameter[] objects = new FTParameter[pointers.length];
         for(int i = 0; i < pointers.length; i++)
-            objects[i] = FTStructCache.getOrCreate(pointers[i], FTParameter::new);
+            objects[i] = FTStructCache.getOrCreate(FTParameter.class, pointers[i], FTParameter::new); 
 
         return objects;
     }

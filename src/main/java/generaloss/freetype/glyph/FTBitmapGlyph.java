@@ -16,7 +16,7 @@ public class FTBitmapGlyph extends FTStruct { // struct done.
 
     public FTGlyph getRoot() {
         final long pointer = getRoot(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTGlyph::new);
+        return FTStructCache.getOrCreate(FTGlyph.class, pointer, FTGlyph::new); 
     }
 
     // FT_Int left;
@@ -38,7 +38,7 @@ public class FTBitmapGlyph extends FTStruct { // struct done.
 
     public FTBitmap getBitmap() {
         final long pointer = getBitmap(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTBitmap::new);
+        return FTStructCache.getOrCreate(FTBitmap.class, pointer, FTBitmap::new); 
     }
 
 }

@@ -42,6 +42,12 @@ public class FTMatrix extends FTStruct { // struct done.
         setXX(super.pointer, raw);
     }
 
+    public void setXX(FTFixed value) {
+        if(value == null)
+            throw new NullPointerException("Value is null");
+        this.setXX(value.getFloat());
+    }
+
     // FT_Fixed xy;
     private static native int getXY(long pointer);
 
@@ -55,6 +61,12 @@ public class FTMatrix extends FTStruct { // struct done.
     public void setXY(float value) {
         final int raw = FTFixed.of(value);
         setXY(super.pointer, raw);
+    }
+
+    public void setXY(FTFixed value) {
+        if(value == null)
+            throw new NullPointerException("Value is null");
+        this.setXY(value.getFloat());
     }
 
     // FT_Fixed yx;
@@ -72,6 +84,12 @@ public class FTMatrix extends FTStruct { // struct done.
         setYX(super.pointer, raw);
     }
 
+    public void setYX(FTFixed value) {
+        if(value == null)
+            throw new NullPointerException("Value is null");
+        this.setYX(value.getFloat());
+    }
+
     // FT_Fixed yy;
     private static native int getYY(long pointer);
 
@@ -85,6 +103,18 @@ public class FTMatrix extends FTStruct { // struct done.
     public void setYY(float value) {
         final int raw = FTFixed.of(value);
         setYY(super.pointer, raw);
+    }
+
+    public void setYY(FTFixed value) {
+        if(value == null)
+            throw new NullPointerException("Value is null");
+        this.setYY(value.getFloat());
+    }
+
+
+    @Override
+    public String toString() {
+        return "FTMatrix {xx=" + this.getXX() + ", xy=" + this.getXY() + ", yx=" + this.getYX() + ", yy=" + this.getYY() + '}';
     }
 
 

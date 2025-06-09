@@ -42,6 +42,12 @@ public class FTVector extends FTStruct { // struct done.
         setRawX(super.pointer, raw);
     }
 
+    public void setX(FTPos value) {
+        if(value == null)
+            throw new NullPointerException("Value is null");
+        this.setX(value.getFloat());
+    }
+
     // FT_Pos y;
     private static native int getRawY(long pointer);
 
@@ -55,6 +61,36 @@ public class FTVector extends FTStruct { // struct done.
     public void setY(float value) {
         final int raw = FTPos.of(value);
         setRawY(super.pointer, raw);
+    }
+
+    public void setY(FTPos value) {
+        if(value == null)
+            throw new NullPointerException("Value is null");
+        this.setY(value.getFloat());
+    }
+
+
+    public void set(float x, float y) {
+        this.setX(x);
+        this.setY(y);
+    }
+
+    public void set(float xy) {
+        this.setX(xy);
+        this.setY(xy);
+    }
+
+    public void set(FTPos x, FTPos y) {
+        if(FTStruct.equals(x, y)) {
+            this.set(x);
+            return;
+        }
+        this.setX(x.getFloat());
+        this.setY(y.getFloat());
+    }
+
+    public void set(FTPos xy) {
+        this.set(xy.getFloat());
     }
 
 

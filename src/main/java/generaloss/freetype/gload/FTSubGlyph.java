@@ -50,7 +50,7 @@ public class FTSubGlyph extends FTStruct { // struct done.
 
     public FTMatrix getTransform() {
         final long pointer = getTransform(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTMatrix::new);
+        return FTStructCache.getOrCreate(FTMatrix.class, pointer, FTMatrix::new); 
     }
 
 }

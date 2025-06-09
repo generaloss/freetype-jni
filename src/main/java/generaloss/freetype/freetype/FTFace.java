@@ -80,7 +80,7 @@ public class FTFace extends FTStruct { // struct done.
 
         final FTBitmapSize[] objects = new FTBitmapSize[pointers.length];
         for(int i = 0; i < pointers.length; i++)
-            objects[i] = FTStructCache.getOrCreate(pointers[i], FTBitmapSize::new);
+            objects[i] = FTStructCache.getOrCreate(FTBitmapSize.class, pointers[i], FTBitmapSize::new); 
 
         return objects;
     }
@@ -102,7 +102,7 @@ public class FTFace extends FTStruct { // struct done.
 
         final FTCharMap[] objects = new FTCharMap[pointers.length];
         for(int i = 0; i < pointers.length; i++)
-            objects[i] = FTStructCache.getOrCreate(pointers[i], FTCharMap::new);
+            objects[i] = FTStructCache.getOrCreate(FTCharMap.class, pointers[i], FTCharMap::new); 
 
         return objects;
     }
@@ -112,7 +112,7 @@ public class FTFace extends FTStruct { // struct done.
 
     public FTBBox getBBox() {
         final long pointer = getBBox(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTBBox::new);
+        return FTStructCache.getOrCreate(FTBBox.class, pointer, FTBBox::new); 
     }
 
     // FT_UShort units_per_EM;
@@ -176,7 +176,7 @@ public class FTFace extends FTStruct { // struct done.
 
     public FTGlyphSlot getGlyph() {
         final long pointer = getGlyph(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTGlyphSlot::new);
+        return FTStructCache.getOrCreate(FTGlyphSlot.class, pointer, FTGlyphSlot::new); 
     }
 
     // FT_Size size;
@@ -184,7 +184,7 @@ public class FTFace extends FTStruct { // struct done.
 
     public FTSize getSize() {
         final long pointer = getSize(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTSize::new);
+        return FTStructCache.getOrCreate(FTSize.class, pointer, FTSize::new); 
     }
 
     // FT_CharMap charmap;
@@ -192,7 +192,7 @@ public class FTFace extends FTStruct { // struct done.
 
     public FTCharMap getCharmap() {
         final long pointer = getCharmap(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTCharMap::new);
+        return FTStructCache.getOrCreate(FTCharMap.class, pointer, FTCharMap::new); 
     }
 
 

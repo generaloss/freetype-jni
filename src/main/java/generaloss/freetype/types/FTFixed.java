@@ -65,6 +65,12 @@ public class FTFixed extends FTStruct { // struct done.
         setRawValue(super.pointer, raw);
     }
 
+    public void set(FTFixed value) {
+        if(value == null)
+            throw new NullPointerException("Value is null");
+        this.set(value.getFloat());
+    }
+
 
     @Override
     public String toString() {

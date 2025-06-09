@@ -4,7 +4,6 @@ import generaloss.freetype.FTStruct;
 import generaloss.freetype.FreeType;
 import generaloss.freetype.image.FTOutline;
 import generaloss.freetype.types.FTError;
-import generaloss.freetype.types.FTFixed;
 import generaloss.freetype.types.FTVector;
 
 public class FTStroker extends FTStruct { // struct done.
@@ -15,7 +14,7 @@ public class FTStroker extends FTStruct { // struct done.
 
 
     public void set(float radius, FTStrokerLinecap lineCap, FTStrokerLinejoin lineJoin, float miterLimit) {
-        FreeType.ftStrokerSet(this, FTFixed.of(radius), lineCap, lineJoin, FTFixed.of(miterLimit));
+        FreeType.ftStrokerSet(this, radius, lineCap, lineJoin, miterLimit);
     }
 
     public void rewind() {

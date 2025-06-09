@@ -1,5 +1,7 @@
 package generaloss.freetype;
 
+import java.util.Objects;
+
 public class FTStruct {
 
     protected long pointer;
@@ -38,6 +40,25 @@ public class FTStruct {
         return (this.getClass().getSimpleName() + "[" + pointer + "]");
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if(object == null || this.getClass() != object.getClass())
+            return false;
+        final FTStruct struct = (FTStruct) object;
+        return (pointer == struct.pointer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(pointer);
+    }
+
+
+    public static boolean equals(FTStruct a, FTStruct b) {
+        if(a == null || b == null || a.isDestroyed() || b.isDestroyed())
+            return false;
+        return (a.pointer == b.pointer);
+    }
 
     public static long getPointer(FTStruct struct) {
         if(struct == null)

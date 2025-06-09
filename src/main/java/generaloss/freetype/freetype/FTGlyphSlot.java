@@ -20,7 +20,7 @@ public class FTGlyphSlot extends FTStruct { // struct done.
 
     public FTLibrary getLibrary() {
         final long pointer = getLibrary(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTLibrary::new);
+        return FTStructCache.getOrCreate(FTLibrary.class, pointer, FTLibrary::new); 
     }
 
     // FT_Face face;
@@ -28,7 +28,7 @@ public class FTGlyphSlot extends FTStruct { // struct done.
 
     public FTFace getFace() {
         final long pointer = getFace(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTFace::new);
+        return FTStructCache.getOrCreate(FTFace.class, pointer, FTFace::new); 
     }
 
     // FT_GlyphSlot next;
@@ -36,7 +36,7 @@ public class FTGlyphSlot extends FTStruct { // struct done.
 
     public FTGlyphSlot getNext() {
         final long pointer = getNext(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTGlyphSlot::new);
+        return FTStructCache.getOrCreate(FTGlyphSlot.class, pointer, FTGlyphSlot::new); 
     }
 
     // FT_UInt glyph_index;
@@ -51,7 +51,7 @@ public class FTGlyphSlot extends FTStruct { // struct done.
 
     public FTGlyphMetrics getMetrics() {
         final long pointer = getMetrics(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTGlyphMetrics::new);
+        return FTStructCache.getOrCreate(FTGlyphMetrics.class, pointer, FTGlyphMetrics::new); 
     }
 
     // FT_Fixed linearHoriAdvance;
@@ -75,7 +75,7 @@ public class FTGlyphSlot extends FTStruct { // struct done.
 
     public FTVector getAdvance() {
         final long pointer = getAdvance(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTVector::new);
+        return FTStructCache.getOrCreate(FTVector.class, pointer, FTVector::new); 
     }
 
     // FT_Glyph_Format format;
@@ -91,7 +91,7 @@ public class FTGlyphSlot extends FTStruct { // struct done.
 
     public FTBitmap getBitmap() {
         final long pointer = getBitmap(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTBitmap::new);
+        return FTStructCache.getOrCreate(FTBitmap.class, pointer, FTBitmap::new); 
     }
 
     // FT_Int bitmap_left;
@@ -113,7 +113,7 @@ public class FTGlyphSlot extends FTStruct { // struct done.
 
     public FTOutline getOutline() {
         final long pointer = getOutline(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTOutline::new);
+        return FTStructCache.getOrCreate(FTOutline.class, pointer, FTOutline::new); 
     }
 
     // FT_UInt num_subglyphs;
@@ -133,7 +133,7 @@ public class FTGlyphSlot extends FTStruct { // struct done.
 
         final FTSubGlyph[] objects = new FTSubGlyph[pointers.length];
         for(int i = 0; i < pointers.length; i++)
-            objects[i] = FTStructCache.getOrCreate(pointers[i], FTSubGlyph::new);
+            objects[i] = FTStructCache.getOrCreate(FTSubGlyph.class, pointers[i], FTSubGlyph::new); 
 
         return objects;
     }
@@ -169,7 +169,7 @@ public class FTGlyphSlot extends FTStruct { // struct done.
         final long[] dstGlyphPointer = new long[1];
         final FTError error = FreeType.ftGetGlyph(this, dstGlyphPointer);
         error.checkError();
-        return FTStructCache.getOrCreate(dstGlyphPointer[0], FTGlyph::new);
+        return FTStructCache.getOrCreate(FTGlyph.class, dstGlyphPointer[0], FTGlyph::new); 
     }
 
 }

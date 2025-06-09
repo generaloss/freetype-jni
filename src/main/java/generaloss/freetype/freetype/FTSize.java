@@ -15,7 +15,7 @@ public class FTSize extends FTStruct { // struct done.
 
     public FTFace getFace() {
         final long pointer = getFace(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTFace::new);
+        return FTStructCache.getOrCreate(FTFace.class, pointer, FTFace::new); 
     }
 
     // FT_Size_Metrics metrics;
@@ -23,7 +23,7 @@ public class FTSize extends FTStruct { // struct done.
 
     public FTSizeMetrics getMetrics() {
         final long pointer = getMetrics(super.pointer);
-        return FTStructCache.getOrCreate(pointer, FTSizeMetrics::new);
+        return FTStructCache.getOrCreate(FTSizeMetrics.class, pointer, FTSizeMetrics::new); 
     }
 
 }
