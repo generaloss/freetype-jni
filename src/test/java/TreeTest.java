@@ -36,16 +36,6 @@ public class TreeTest {
 
         slot.renderGlyph(FTRenderMode.NORMAL);
 
-        final FTMemory memory = library.getMemory();
-
-        final FTGlyphLoader loader = memory.newGlyphLoader();
-
-        // loader.getBase();
-        // // FT_Memory memory;
-
-        loader.done();
-
-
         // un    :
         //   used:
 
@@ -61,14 +51,14 @@ public class TreeTest {
         //   SizeMetrics
         // SizeRequest
         // GlyphLoad
-        // GlyphLoader
+        //   GlyphLoader
         //   SubGlyph
         //   BitmapGlyph
         //   Glyph
         //   Bitmap
         //   Outline
         //   Stroker
-        // Memory
+        //   Memory
         //   BBox
         // F26Dot6 (tesed)
         //   Fixed
@@ -76,7 +66,15 @@ public class TreeTest {
         //   Pos
         //   Vector
 
-        System.out.println("FTFace {");
+        final FTMemory memory = library.getMemory();
+        final FTGlyphLoader loader = memory.newGlyphLoader();
+        loader.done();
+
+        System.out.println("FT_Library {");
+        System.out.println("  FT_Memory memory = " + library.getMemory());
+
+
+        System.out.println("FT_Face {");
         System.out.println("  FT_Long         num_faces = " + face.getNumFaces());
         System.out.println("  FT_Long         face_index = " + face.getFaceIndex());
         System.out.println("  FT_Long         face_flags = " + face.getFaceFlags());
