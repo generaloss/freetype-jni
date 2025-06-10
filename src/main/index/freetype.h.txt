@@ -18,6 +18,10 @@ struct FTBitmapSize { [x]
     FT_Pos   y_ppem; [x] FTPos getYppem()
 }
 
+struct FT_Library {
+    FT_Memory memory;
+}
+
 enum FTEncoding { [x]
     NONE
     MS_SYMBOL

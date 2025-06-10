@@ -36,9 +36,12 @@ public class TreeTest {
 
         slot.renderGlyph(FTRenderMode.NORMAL);
 
-        final FTMemory memory = FTMemory.getDefault();
+        final FTMemory memory = library.getMemory();
 
         final FTGlyphLoader loader = memory.newGlyphLoader();
+
+        // loader.getBase();
+        // // FT_Memory memory;
 
         loader.done();
 

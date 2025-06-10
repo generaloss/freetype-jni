@@ -515,10 +515,6 @@ public class FreeType {
         return FTError.byCode(code);
     }
 
-    public static FTError ftGlyphLoaderNew(long[] dstLoaderPointer) {
-        return ftGlyphLoaderNew(FTMemory.getDefault(), dstLoaderPointer);
-    }
-
     // FT_Error FT_GlyphLoader_CreateExtra(FT_GlyphLoader loader)
     private static native int FT_GlyphLoader_CreateExtra(long loader);
 

@@ -6,6 +6,7 @@ import generaloss.freetype.FreeType;
 import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.image.FTGlyphFormat;
 import generaloss.freetype.stroke.FTStroker;
+import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.FTError;
 
 import java.nio.ByteBuffer;
@@ -25,6 +26,15 @@ public class FTLibrary extends FTStruct { // struct done.
         final FTError error = FreeType.ftInitFreeType(dstLibraryPointer);
         error.checkError();
         return dstLibraryPointer[0];
+    }
+
+
+    // FT_Memory memory;
+    private static native long getMemory(long pointer);
+
+    public FTMemory getMemory() {
+        final long pointer = getMemory(super.pointer);
+        return FTStructCache.getOrCreate(FTMemory.class, pointer, FTMemory::new);
     }
 
 

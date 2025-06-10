@@ -935,7 +935,7 @@ JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1SetUnpate
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1New
   (JNIEnv *env, jclass, jlong memoryPtrRaw, jlongArray dstLoaderPtrRaw) {
 
-    const FT_Memory memory = *reinterpret_cast<FT_Memory*>(memoryPtrRaw);
+    const FT_Memory memory = reinterpret_cast<FT_Memory>(memoryPtrRaw);
     if(!memory) {
         throwException(env, "Invalid FT_Memory pointer");
         return 0;
@@ -955,7 +955,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1New
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CreateExtra
   (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
-    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
         throwException(env, "Invalid FT_GlyphLoader pointer");
         return 0;
@@ -970,7 +970,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Create
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Done
   (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
-    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
         throwException(env, "Invalid FT_GlyphLoader pointer");
         return;
@@ -984,7 +984,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Done
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Reset
   (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
-    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
         throwException(env, "Invalid FT_GlyphLoader pointer");
         return;
@@ -998,7 +998,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Reset
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Rewind
   (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
-    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
         throwException(env, "Invalid FT_GlyphLoader pointer");
         return;
@@ -1012,7 +1012,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Rewind
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CheckPoints
   (JNIEnv *env, jclass, jlong loaderPtrRaw, jlong nPointsRaw, jlong nContoursRaw) {
 
-    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
         throwException(env, "Invalid FT_GlyphLoader pointer");
         return 0;
@@ -1030,7 +1030,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CheckP
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CheckSubGlyphs
   (JNIEnv *env, jclass, jlong loaderPtrRaw, jlong nSubsRaw) {
 
-    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
         throwException(env, "Invalid FT_GlyphLoader pointer");
         return 0;
@@ -1047,7 +1047,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CheckS
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Prepare
   (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
-    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
         throwException(env, "Invalid FT_GlyphLoader pointer");
         return;
@@ -1061,7 +1061,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Prepar
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Add
   (JNIEnv *env, jclass, jlong loaderPtrRaw) {
 
-    const FT_GlyphLoader loader = *reinterpret_cast<FT_GlyphLoader*>(loaderPtrRaw);
+    const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
         throwException(env, "Invalid FT_GlyphLoader pointer");
         return;
