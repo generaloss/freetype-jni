@@ -71,7 +71,17 @@ public class TreeTest {
         loader.done();
 
         System.out.println("FT_Library {");
-        System.out.println("  FT_Memory memory = " + library.getMemory());
+        System.out.println("  FT_Memory memory {");
+        System.out.println("    NewGlyphLoader() => {");
+        System.out.println("      FT_Memory       memory = " + loader.getMemory());
+        System.out.println("      FT_UInt         max_points = " + loader.getMaxPoints());
+        System.out.println("      FT_UInt         max_contours = " + loader.getMaxContours());
+        System.out.println("      FT_UInt         max_subglyphs = " + loader.getMaxSubglyphs());
+        System.out.println("      FT_Bool         use_extra = " + loader.getUseExtra());
+        System.out.println("      FT_GlyphLoadRec base = " + loader.getBase());
+        System.out.println("      FT_GlyphLoadRec current = " + loader.getCurrent());
+        System.out.println("    }");
+        System.out.println("  }");
 
 
         System.out.println("FT_Face {");
