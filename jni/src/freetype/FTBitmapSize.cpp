@@ -4,50 +4,57 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_createPointer
-  (JNIEnv *, jclass) {
-
-    FT_Bitmap_Size* pointer = new FT_Bitmap_Size;
-    return reinterpret_cast<jlong>(pointer);
-}
-
-JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_freePointer
+// FT_Short height;
+JNIEXPORT jshort JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getHeight
   (JNIEnv *, jclass, jlong sizePtrRaw) {
 
-    FT_Bitmap_Size* size = reinterpret_cast<FT_Bitmap_Size*>(sizePtrRaw);
+    const FT_Bitmap_Size* size = reinterpret_cast<FT_Bitmap_Size*>(sizePtrRaw);
     if(!size)
-        return;
+        return 0;
 
-    delete size;
+    return static_cast<jshort>(size->height);
 }
 
-
-JNIEXPORT jshort JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getHeight
-  (JNIEnv *, jclass, jlong) {
-
-    return 0;
-}
-
+// FT_Short width;
 JNIEXPORT jshort JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getWidth
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong sizePtrRaw) {
 
-    return 0;
+    const FT_Bitmap_Size* size = reinterpret_cast<FT_Bitmap_Size*>(sizePtrRaw);
+    if(!size)
+        return 0;
+
+    return static_cast<jshort>(size->width);
 }
 
+// FT_Pos size;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getSize
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong sizePtrRaw) {
 
-    return 0;
+    const FT_Bitmap_Size* size = reinterpret_cast<FT_Bitmap_Size*>(sizePtrRaw);
+    if(!size)
+        return 0;
+
+    return static_cast<jint>(size->size);
 }
 
+// FT_Pos x_ppem;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getXppem
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong sizePtrRaw) {
 
-    return 0;
+    const FT_Bitmap_Size* size = reinterpret_cast<FT_Bitmap_Size*>(sizePtrRaw);
+    if(!size)
+        return 0;
+
+    return static_cast<jint>(size->x_ppem);
 }
 
+// FT_Pos y_ppem;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getYppem
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong sizePtrRaw) {
 
-    return 0;
+    const FT_Bitmap_Size* size = reinterpret_cast<FT_Bitmap_Size*>(sizePtrRaw);
+    if(!size)
+        return 0;
+
+    return static_cast<jint>(size->y_ppem);
 }

@@ -43,7 +43,7 @@ JNIEXPORT jobject JNICALL Java_generaloss_freetype_image_FTBitmap_getBuffer
 
     const FT_Bitmap* bitmap = reinterpret_cast<FT_Bitmap*>(bitmapPtrRaw);
     if(!bitmap || !bitmap->buffer)
-        return 0;
+        return NULL;
 
     const unsigned int size = (bitmap->rows * bitmap->pitch);
     return env->NewDirectByteBuffer(bitmap->buffer, size);

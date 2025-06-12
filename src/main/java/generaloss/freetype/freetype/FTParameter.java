@@ -41,7 +41,7 @@ public class FTParameter extends FTStruct { // struct done.
         return FTTag.decodeString(this.getTag());
     }
 
-    // FT_ULong tag;
+
     private static native void setTag(long pointer, long tag);
 
     public void setTag(long tag) {
@@ -56,14 +56,7 @@ public class FTParameter extends FTStruct { // struct done.
         this.setTag(FTTag.encode(tag));
     }
 
-    // FT_Pointer data;
-    private static native ByteBuffer getData(long pointer);
 
-    public ByteBuffer getData() {
-        return getData(super.pointer);
-    }
-
-    // FT_Pointer data;
     private static native void setData(long pointer, ByteBuffer buffer);
 
     public void setData(ByteBuffer buffer) {

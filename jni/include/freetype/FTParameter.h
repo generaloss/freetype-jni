@@ -41,14 +41,6 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTParameter_setTag
 
 /*
  * Class:     generaloss_freetype_freetype_FTParameter
- * Method:    getData
- * Signature: (J)Ljava/nio/ByteBuffer;
- */
-JNIEXPORT jobject JNICALL Java_generaloss_freetype_freetype_FTParameter_getData
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_freetype_FTParameter
  * Method:    setData
  * Signature: (JLjava/nio/ByteBuffer;)V
  */

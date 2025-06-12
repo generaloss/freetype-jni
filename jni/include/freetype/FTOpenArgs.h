@@ -26,10 +26,18 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_freePointer
 /*
  * Class:     generaloss_freetype_freetype_FTOpenArgs
  * Method:    getFlags
- * Signature: (J)J
+ * Signature: (J)I
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getFlags
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getFlags
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTOpenArgs
+ * Method:    setFlags
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_setFlags
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     generaloss_freetype_freetype_FTOpenArgs
@@ -38,6 +46,14 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getFlags
  */
 JNIEXPORT jbyte JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getMemoryBase
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTOpenArgs
+ * Method:    setMemoryBase
+ * Signature: (JLjava/nio/ByteBuffer;J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_setMemoryBase
+  (JNIEnv *, jclass, jlong, jobject, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTOpenArgs
@@ -57,6 +73,14 @@ JNIEXPORT jstring JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getPathna
 
 /*
  * Class:     generaloss_freetype_freetype_FTOpenArgs
+ * Method:    setPathname
+ * Signature: (JLjava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_setPathname
+  (JNIEnv *, jclass, jlong, jstring);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTOpenArgs
  * Method:    getNumParams
  * Signature: (J)I
  */
@@ -70,6 +94,14 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getNumParams
  */
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getParams
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTOpenArgs
+ * Method:    setParams
+ * Signature: (J[J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_setParams
+  (JNIEnv *, jclass, jlong, jlongArray);
 
 #ifdef __cplusplus
 }

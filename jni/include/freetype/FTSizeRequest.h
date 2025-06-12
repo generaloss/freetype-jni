@@ -33,11 +33,27 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_getType
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeRequest
+ * Method:    setType
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_setType
+  (JNIEnv *, jclass, jlong, jint);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTSizeRequest
  * Method:    getWidth
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_getWidth
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTSizeRequest
+ * Method:    setWidth
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_setWidth
+  (JNIEnv *, jclass, jlong, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeRequest
@@ -49,6 +65,14 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_getHeigh
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeRequest
+ * Method:    setHeight
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_setHeight
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTSizeRequest
  * Method:    getHoriResolution
  * Signature: (J)J
  */
@@ -57,11 +81,27 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_getHoriR
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeRequest
+ * Method:    setHoriResolution
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_setHoriResolution
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTSizeRequest
  * Method:    getVertResolution
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_getVertResolution
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTSizeRequest
+ * Method:    setVertResolution
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_setVertResolution
+  (JNIEnv *, jclass, jlong, jlong);
 
 #ifdef __cplusplus
 }

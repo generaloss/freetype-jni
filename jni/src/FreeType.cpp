@@ -274,7 +274,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Select_1Size
 // FT_Error FT_Request_Size(FT_Face face, FT_Size_Request req)
 // int FT_Request_Size(long face, long req);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Request_1Size
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong reqPtrRaw) {
+  (JNIEnv *env, jclass, jlong facePtrRaw, jlong requestPtrRaw) {
 
    const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
    if(!face) {
@@ -282,13 +282,13 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Request_1Size
        return 0;
    }
 
-   const FT_Size_Request req = *reinterpret_cast<FT_Size_Request*>(reqPtrRaw);
-   if(!req) {
+   const FT_Size_Request request = reinterpret_cast<FT_Size_Request>(requestPtrRaw);
+   if(!request) {
        throwException(env, "Invalid FT_Size_Request pointer");
        return 0;
    }
 
-   const FT_Error error = FT_Request_Size(face, req);
+   const FT_Error error = FT_Request_Size(face, request);
    return static_cast<jint>(error);
 }
 
@@ -812,11 +812,13 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVa
 // FT_Fixed FT_RoundFix(FT_Fixed a)
 // int FT_RoundFix(long a);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1RoundFix
-  (JNIEnv *, jclass, jlong aRaw) {
+  (JNIEnv *env, jclass, jlong aRaw) {
 
     const FT_Fixed* aPtr = reinterpret_cast<FT_Fixed*>(aRaw);
-    if(!aPtr)
+    if(!aPtr) {
+        throwException(env, "Invalid FT_Fixed pointer");
         return 0;
+    }
 
     return static_cast<jint>(FT_RoundFix(*aPtr));
 }
@@ -824,11 +826,13 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1RoundFix
 // FT_Fixed FT_CeilFix(FT_Fixed a)
 // int FT_CeilFix(long a);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1CeilFix
-  (JNIEnv *, jclass, jlong aRaw) {
+  (JNIEnv *env, jclass, jlong aRaw) {
 
     const FT_Fixed* aPtr = reinterpret_cast<FT_Fixed*>(aRaw);
-    if(!aPtr)
-        return 0;
+    if(!aPtr) {
+         throwException(env, "Invalid FT_Fixed pointer");
+         return 0;
+     }
 
     return static_cast<jint>(FT_CeilFix(*aPtr));
 }
@@ -836,11 +840,13 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1CeilFix
 // FT_Fixed FT_FloorFix(FT_Fixed a)
 // int FT_FloorFix(long a);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1FloorFix
-  (JNIEnv *, jclass, jlong aRaw) {
+  (JNIEnv *env, jclass, jlong aRaw) {
 
     const FT_Fixed* aPtr = reinterpret_cast<FT_Fixed*>(aRaw);
-    if(!aPtr)
+    if(!aPtr) {
+        throwException(env, "Invalid FT_Fixed pointer");
         return 0;
+    }
 
     return static_cast<jint>(FT_FloorFix(*aPtr));
 }

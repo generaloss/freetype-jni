@@ -37,7 +37,7 @@ public class FTStructCache {
 
     public static <T extends FTStruct> T getOrCreate(Class<T> type, long pointer, Function<Long, T> consumer) {
         if(pointer == 0L)
-            throw new IllegalArgumentException("Pointer is 0L");
+            return null;
 
         if(exists(pointer)) {
             final T struct = get(pointer);

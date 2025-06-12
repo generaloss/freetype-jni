@@ -12,23 +12,6 @@ public class FTGlyphLoad extends FTStruct { // struct done.
         super(pointer);
     }
 
-    public FTGlyphLoad() {
-        this(createPointer());
-    }
-
-    static {
-        FreeType.init();
-    }
-
-    private static native long createPointer();
-
-    private static native void freePointer(long pointer);
-
-    public void free() {
-        freePointer(this.pointer);
-        super.destroyPointer();
-    }
-
 
     // FT_Outline outline;
     private static native long getOutline(long pointer);
@@ -39,19 +22,33 @@ public class FTGlyphLoad extends FTStruct { // struct done.
     }
 
     // FT_Vector* extra_points;
-    private static native long getExtraPoints(long pointer);
+    private static native long[] getExtraPoints(long pointer);
 
-    public FTVector getExtraPoints() {
-        final long pointer = getExtraPoints(super.pointer);
-        return FTStructCache.getOrCreate(FTVector.class, pointer, FTVector::new); 
+    public FTVector[] getExtraPoints() {
+        final long[] pointers = getExtraPoints(super.pointer);
+        if(pointers == null)
+            return new FTVector[0];
+
+        final FTVector[] objects = new FTVector[pointers.length];
+        for(int i = 0; i < pointers.length; i++)
+            objects[i] = FTStructCache.getOrCreate(FTVector.class, pointer, FTVector::new);
+
+        return objects;
     }
 
     // FT_Vector* extra_points2;
-    private static native long getExtraPoints2(long pointer);
+    private static native long[] getExtraPoints2(long pointer);
 
-    public FTVector getExtraPoints2() {
-        final long pointer = getExtraPoints2(super.pointer);
-        return FTStructCache.getOrCreate(FTVector.class, pointer, FTVector::new); 
+    public FTVector[] getExtraPoints2() {
+        final long[] pointers = getExtraPoints2(super.pointer);
+        if(pointers == null)
+            return new FTVector[0];
+
+        final FTVector[] objects = new FTVector[pointers.length];
+        for(int i = 0; i < pointers.length; i++)
+            objects[i] = FTStructCache.getOrCreate(FTVector.class, pointer, FTVector::new);
+
+        return objects;
     }
 
     // FT_UInt num_subglyphs;

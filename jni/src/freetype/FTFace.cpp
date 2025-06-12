@@ -1,4 +1,4 @@
-// typedef struct FT_FaceRec_*  FT_Face;
+// typedef struct FT_FaceRec_* FT_Face;
 
 #include "freetype/FTFace.h"
 #include <ft2build.h>

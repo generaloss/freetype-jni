@@ -2,8 +2,8 @@
 
 #include "gload/FTSubGlyph.h"
 #include <ft2build.h>
-#include FT_FREETYPE_H
 #include <freetype/internal/ftgloadr.h>
+#include FT_FREETYPE_H
 
 // FT_Int index;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getIndex

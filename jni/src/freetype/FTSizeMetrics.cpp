@@ -1,4 +1,4 @@
-// typedef struct  FT_Size_Metrics_ { ... } FT_Size_Metrics;
+// typedef struct FT_Size_Metrics_ { ... } FT_Size_Metrics;
 
 #include "freetype/FTSizeMetrics.h"
 #include <ft2build.h>

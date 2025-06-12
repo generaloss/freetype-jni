@@ -1,4 +1,4 @@
-// typedef struct FT_CharMapRec_*  FT_CharMap;
+// typedef struct FT_CharMapRec_* FT_CharMap;
 
 #include "freetype/FTCharMap.h"
 #include <ft2build.h>

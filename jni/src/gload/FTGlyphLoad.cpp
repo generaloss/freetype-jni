@@ -2,53 +2,91 @@
 
 #include "gload/FTGlyphLoad.h"
 #include <ft2build.h>
-#include FT_FREETYPE_H
 #include <freetype/internal/ftgloadr.h>
+#include FT_FREETYPE_H
+#include <jni.h>
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_createPointer
-  (JNIEnv *, jclass) {
-
-    FT_GlyphLoad* pointer = new FT_GlyphLoad(nullptr);
-    return reinterpret_cast<jlong>(pointer);
-}
-
-JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_freePointer
+// FT_Outline outline;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getOutline
   (JNIEnv *, jclass, jlong gloadPtrRaw) {
 
-    FT_GlyphLoad* gload = reinterpret_cast<FT_GlyphLoad*>(gloadPtrRaw);
+    const FT_GlyphLoad gload = reinterpret_cast<FT_GlyphLoad>(gloadPtrRaw);
     if(!gload)
-        return;
+        return 0;
 
-    delete gload;
+    return reinterpret_cast<jlong>(&gload->outline);
 }
 
+// FT_Vector* extra_points;
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtraPoints
+  (JNIEnv *env, jclass, jlong gloadPtrRaw) {
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getOutline
-  (JNIEnv *, jclass, jlong) {
+    const FT_GlyphLoad gload = reinterpret_cast<FT_GlyphLoad>(gloadPtrRaw);
+    if(!gload)
+        return NULL;
 
-    return 0;
+    const FT_UInt count = gload->outline.n_points;
+    jlongArray result = env->NewLongArray(count);
+    if(!result)
+        return NULL;
+
+    jlong* elements = env->GetLongArrayElements(result, NULL);
+    for(FT_UInt i = 0; i < count; i++)
+        elements[i] = reinterpret_cast<jlong>(&gload->extra_points[i]);
+
+    env->ReleaseLongArrayElements(result, elements, 0);
+    return result;
 }
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtraPoints
-  (JNIEnv *, jclass, jlong) {
+// FT_Vector* extra_points2;
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtraPoints2
+  (JNIEnv *env, jclass, jlong gloadPtrRaw) {
 
-    return 0;
+    const FT_GlyphLoad gload = reinterpret_cast<FT_GlyphLoad>(gloadPtrRaw);
+    if(!gload)
+        return NULL;
+
+    const FT_UInt count = gload->outline.n_points;
+    jlongArray result = env->NewLongArray(count);
+    if(!result)
+        return NULL;
+
+    jlong* elements = env->GetLongArrayElements(result, NULL);
+    for(FT_UInt i = 0; i < count; i++)
+        elements[i] = reinterpret_cast<jlong>(&gload->extra_points2[i]);
+
+    env->ReleaseLongArrayElements(result, elements, 0);
+    return result;
 }
 
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtraPoints2
-  (JNIEnv *, jclass, jlong) {
-
-    return 0;
-}
-
+// FT_UInt num_subglyphs;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getNumSubglyphs
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong gloadPtrRaw) {
 
-    return 0;
+    const FT_GlyphLoad gload = reinterpret_cast<FT_GlyphLoad>(gloadPtrRaw);
+    if(!gload)
+        return 0;
+
+    return static_cast<jlong>(gload->num_subglyphs);
 }
 
+// FT_SubGlyph subglyphs;
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getSubglyphs
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *env, jclass, jlong gloadPtrRaw) {
 
-    return NULL;
+    const FT_GlyphLoad gload = reinterpret_cast<FT_GlyphLoad>(gloadPtrRaw);
+    if(!gload)
+        return NULL;
+
+    const FT_UInt count = gload->num_subglyphs;
+    jlongArray result = env->NewLongArray(count);
+    if(!result)
+        return NULL;
+
+    jlong* elements = env->GetLongArrayElements(result, NULL);
+    for(FT_UInt i = 0; i < count; i++)
+        elements[i] = reinterpret_cast<jlong>(&gload->subglyphs[i]);
+
+    env->ReleaseLongArrayElements(result, elements, 0);
+    return result;
 }

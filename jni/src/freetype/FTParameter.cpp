@@ -8,6 +8,8 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTParameter_createPoin
   (JNIEnv *, jclass) {
 
     FT_Parameter* pointer = new FT_Parameter;
+    pointer->tag = 0;
+    pointer->data = nullptr;
     return reinterpret_cast<jlong>(pointer);
 }
 
@@ -22,24 +24,40 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTParameter_freePointer
 }
 
 
+// FT_ULong tag;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTParameter_getTag
-  (JNIEnv *, jclass, jlong) {
+  (JNIEnv *, jclass, jlong parameterPtrRaw) {
 
-    return 0;
+    const FT_Parameter* parameter = reinterpret_cast<FT_Parameter*>(parameterPtrRaw);
+    if(!parameter)
+        return 0;
+
+    return static_cast<jlong>(parameter->tag);
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTParameter_setTag
-  (JNIEnv *, jclass, jlong, jlong) {
+  (JNIEnv *, jclass, jlong parameterPtrRaw, jlong tag) {
 
+    FT_Parameter* parameter = reinterpret_cast<FT_Parameter*>(parameterPtrRaw);
+    if(!parameter)
+        return;
+
+    parameter->tag = static_cast<FT_ULong>(tag);
 }
 
-JNIEXPORT jobject JNICALL Java_generaloss_freetype_freetype_FTParameter_getData
-  (JNIEnv *, jclass, jlong) {
-
-    return NULL;
-}
-
+// FT_Pointer data;
 JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTParameter_setData
-  (JNIEnv *, jclass, jlong, jobject) {
+  (JNIEnv *env, jclass, jlong parameterPtrRaw, jobject byteBuffer) {
 
+    FT_Parameter* parameter = reinterpret_cast<FT_Parameter*>(parameterPtrRaw);
+    if(!parameter)
+        return;
+
+    if(!byteBuffer) {
+        parameter->data = nullptr;
+        return;
+    }
+
+    void* bufferPtr = env->GetDirectBufferAddress(byteBuffer);
+    parameter->data = bufferPtr;
 }

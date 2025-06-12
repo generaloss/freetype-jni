@@ -1,4 +1,4 @@
-// typedef struct FT_SizeRec_*  FT_Size;
+// typedef struct FT_SizeRec_* FT_Size;
 
 #include "freetype/FTSize.h"
 #include <ft2build.h>

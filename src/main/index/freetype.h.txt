@@ -18,8 +18,8 @@ struct FTBitmapSize { [x]
     FT_Pos   y_ppem; [x] FTPos getYppem()
 }
 
-struct FT_Library {
-    FT_Memory memory;
+struct FT_Library { [x]
+    FT_Memory memory; [x]
 }
 
 enum FTEncoding { [x]
@@ -141,12 +141,12 @@ struct FTGlyphSlot { [x]
     FT_Pos           rsb_delta;         [x] FTPos getRsbDelta()
 }
 
-flags FTOpen { [ ]
-    MEMORY
-    STREAM
-    PATHNAME
-    DRIVER
-    PARAMS
+flags FTOpen { [x]
+    MEMORY   0x1
+    STREAM   0x2
+    PATHNAME 0x4
+    DRIVER   0x8
+    PARAMS   0x10
 }
 
 struct FTParameter { [x]

@@ -9,22 +9,6 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_gload_FTGlyphLoad
- * Method:    createPointer
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_createPointer
-  (JNIEnv *, jclass);
-
-/*
- * Class:     generaloss_freetype_gload_FTGlyphLoad
- * Method:    freePointer
- * Signature: (J)V
- */
-JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_freePointer
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_gload_FTGlyphLoad
  * Method:    getOutline
  * Signature: (J)J
  */
@@ -34,17 +18,17 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getOutline
 /*
  * Class:     generaloss_freetype_gload_FTGlyphLoad
  * Method:    getExtraPoints
- * Signature: (J)J
+ * Signature: (J)[J
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtraPoints
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtraPoints
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_gload_FTGlyphLoad
  * Method:    getExtraPoints2
- * Signature: (J)J
+ * Signature: (J)[J
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtraPoints2
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtraPoints2
   (JNIEnv *, jclass, jlong);
 
 /*

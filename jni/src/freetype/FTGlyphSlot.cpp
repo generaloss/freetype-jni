@@ -2,9 +2,9 @@
 
 #include "freetype/FTGlyphSlot.h"
 #include <ft2build.h>
+#include <freetype/internal/ftgloadr.h>
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
-#include <freetype/internal/ftgloadr.h>
 #include <jni.h>
 
 // FT_Library library;

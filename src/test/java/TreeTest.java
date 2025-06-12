@@ -11,15 +11,23 @@ import generaloss.freetype.types.FTVector;
 import jpize.util.res.Resource;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Arrays;
 
 public class TreeTest {
 
     public static void main(String[] args) {
         final FTLibrary library = new FTLibrary();
-        final ByteBuffer data = Resource.internal("/main.ttf").readByteBuffer();
-        final FTFace face = library.newMemoryFace(data, 0);
-        face.setPixelSizes(32, 32);
+
+        final FTOpenArgs openargs = new FTOpenArgs();
+        openargs.setFlags(new OpenFlags().set(FTOpen.MEMORY));
+        openargs.setMemoryBase(Resource.internal("/main.ttf").readByteBuffer());
+
+        final FTFace face = library.openFace(openargs, 0);
+
+        // final ByteBuffer data = Resource.internal("/main.ttf").readByteBuffer();
+        // final FTFace face = library.newMemoryFace(data, 0);
+        // face.setPixelSizes(32, 32);
 
         final FTStroker stroker = library.newStroker();
         stroker.set(4, FTStrokerLinecap.BUTT, FTStrokerLinejoin.ROUND, 0);
@@ -36,39 +44,8 @@ public class TreeTest {
 
         slot.renderGlyph(FTRenderMode.NORMAL);
 
-        // un    :
-        //   used:
-
-        //   BitmapSize
-        //   CharMap
-        //   Face
-        //   GlyphMetrics
-        //   GlyphSlot
-        //   Library
-        // OpenArgs
-        // Parameter
-        //   Size
-        //   SizeMetrics
-        // SizeRequest
-        // GlyphLoad
-        //   GlyphLoader
-        //   SubGlyph
-        //   BitmapGlyph
-        //   Glyph
-        //   Bitmap
-        //   Outline
-        //   Stroker
-        //   Memory
-        //   BBox
-        // F26Dot6 (tesed)
-        //   Fixed
-        //   Matrix
-        //   Pos
-        //   Vector
-
         final FTMemory memory = library.getMemory();
         final FTGlyphLoader loader = memory.newGlyphLoader();
-        loader.done();
 
         System.out.println("FT_Library {");
         System.out.println("  FT_Memory memory {");
@@ -78,7 +55,42 @@ public class TreeTest {
         System.out.println("      FT_UInt         max_contours = " + loader.getMaxContours());
         System.out.println("      FT_UInt         max_subglyphs = " + loader.getMaxSubglyphs());
         System.out.println("      FT_Bool         use_extra = " + loader.getUseExtra());
-        System.out.println("      FT_GlyphLoadRec base = " + loader.getBase());
+        System.out.println("      FT_GlyphLoadRec base = {");
+        System.out.println("        FT_Outline outline = " + loader.getBase().getOutline());
+        System.out.println("        FT_Vector* extra_points = {");
+        for(FTVector point: loader.getBase().getExtraPoints()) {
+            System.out.println("          FT_Vector {");
+            System.out.println("            FT_Pos x = " + point.getX());
+            System.out.println("            FT_Pos y = " + point.getY());
+            System.out.println("          }");
+        }
+        System.out.println("        }");
+        System.out.println("        FT_Vector* extra_points2 = {");
+        for(FTVector point: loader.getBase().getExtraPoints2()) {
+            System.out.println("          FT_Vector {");
+            System.out.println("            FT_Pos x = " + point.getX());
+            System.out.println("            FT_Pos y = " + point.getY());
+            System.out.println("          }");
+        }
+        System.out.println("        }");
+        System.out.println("        FT_UInt num_subglyphs = " + loader.getBase().getNumSubglyphs());
+        System.out.println("        FT_SubGlyph subglyphs = [");
+        for(FTSubGlyph subglyph: loader.getBase().getSubglyphs()) {
+            System.out.println("        FT_SubGlyph {");
+            System.out.println("          FT_Int    index = " + subglyph.getIndex());
+            System.out.println("          FT_UShort flags = " + subglyph.getFlags());
+            System.out.println("          FT_Int    arg1 = " + subglyph.getArg1());
+            System.out.println("          FT_Int    arg2 = " + subglyph.getArg2());
+            System.out.println("          FT_Matrix transform = {");
+            System.out.println("            FT_Fixed xx = " + subglyph.getTransform().getXX());
+            System.out.println("            FT_Fixed xy = " + subglyph.getTransform().getXY());
+            System.out.println("            FT_Fixed yx = " + subglyph.getTransform().getYX());
+            System.out.println("            FT_Fixed yy = " + subglyph.getTransform().getYY());
+            System.out.println("          }");
+            System.out.println("        }");
+        }
+        System.out.println("        ]");
+        System.out.println("      }");
         System.out.println("      FT_GlyphLoadRec current = " + loader.getCurrent());
         System.out.println("    }");
         System.out.println("  }");
@@ -91,6 +103,20 @@ public class TreeTest {
         System.out.println("  FT_String*      family_name = " + face.getFamilyName());
         System.out.println("  FT_String*      style_name = " + face.getStyleName());
         System.out.println("  FT_Int          num_fixed_sizes = " + face.getNumFixedSizes());
+        System.out.println("  RequestSize() => {");
+        final FTSizeRequest request = new FTSizeRequest();
+        request.setType(FTSizeRequestType.REAL_DIM);
+        request.setWidth(0);
+        request.setHeight(64 * 12); // 12 pt в 1/64th точках (внутренний формат FreeType)
+        request.setHoriResolution(72); // DPI
+        request.setVertResolution(72); // DPI
+        face.requestSize(request);
+        System.out.println("    FT_Size_Request_Type type = " + request.getType());
+        System.out.println("    FT_Long              width = " + request.getWidth());
+        System.out.println("    FT_Long              height = " + request.getHeight());
+        System.out.println("    FT_UInt              horiResolution = " + request.getHoriResolution());
+        System.out.println("    FT_UInt              vertResolution = " + request.getVertResolution());
+        System.out.println("  }");
         System.out.println("  FT_Bitmap_Size* available_sizes = [");
         for(FTBitmapSize size: face.getAvailableSizes()) {
             System.out.println("    FT_Bitmap_Size {");
