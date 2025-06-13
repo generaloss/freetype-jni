@@ -615,7 +615,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1Properties
         return 0;
     }
 
-    // Создаём копии FT_Parameter
     FT_Parameter* properties = new FT_Parameter[numProperties];
     for(FT_UInt i = 0; i < numProperties; i++) {
         FT_Parameter* src = reinterpret_cast<FT_Parameter*>(pointerArray[i]);
