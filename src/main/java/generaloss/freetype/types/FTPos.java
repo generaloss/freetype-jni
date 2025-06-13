@@ -56,19 +56,20 @@ public class FTPos extends FTStruct { // struct done.
 
     private static native void setRawValue(long pointer, int value);
 
-    public void setRawValue(int value) {
+    public FTPos setRawValue(int value) {
         setRawValue(super.pointer, value);
+        return this;
     }
 
-    public void set(float value) {
+    public FTPos set(float value) {
         final int raw = of(value);
-        setRawValue(super.pointer, raw);
+        return this.setRawValue(raw);
     }
 
-    public void set(FTPos value) {
+    public FTPos set(FTPos value) {
         if(value == null)
             throw new NullPointerException("Value is null");
-        this.set(value.getFloat());
+        return this.set(value.getFloat());
     }
 
 

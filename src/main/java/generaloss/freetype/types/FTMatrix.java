@@ -37,15 +37,16 @@ public class FTMatrix extends FTStruct { // struct done.
 
     private static native void setXX(long pointer, int valueRaw);
 
-    public void setXX(float value) {
+    public FTMatrix setXX(float value) {
         final int raw = FTFixed.of(value);
         setXX(super.pointer, raw);
+        return this;
     }
 
-    public void setXX(FTFixed value) {
+    public FTMatrix setXX(FTFixed value) {
         if(value == null)
             throw new NullPointerException("Value is null");
-        this.setXX(value.getFloat());
+        return this.setXX(value.getFloat());
     }
 
     // FT_Fixed xy;
@@ -58,15 +59,16 @@ public class FTMatrix extends FTStruct { // struct done.
 
     private static native void setXY(long pointer, int valueRaw);
 
-    public void setXY(float value) {
+    public FTMatrix setXY(float value) {
         final int raw = FTFixed.of(value);
         setXY(super.pointer, raw);
+        return this;
     }
 
-    public void setXY(FTFixed value) {
+    public FTMatrix setXY(FTFixed value) {
         if(value == null)
             throw new NullPointerException("Value is null");
-        this.setXY(value.getFloat());
+        return this.setXY(value.getFloat());
     }
 
     // FT_Fixed yx;
@@ -79,15 +81,16 @@ public class FTMatrix extends FTStruct { // struct done.
 
     private static native void setYX(long pointer, int valueRaw);
 
-    public void setYX(float value) {
+    public FTMatrix setYX(float value) {
         final int raw = FTFixed.of(value);
         setYX(super.pointer, raw);
+        return this;
     }
 
-    public void setYX(FTFixed value) {
+    public FTMatrix setYX(FTFixed value) {
         if(value == null)
             throw new NullPointerException("Value is null");
-        this.setYX(value.getFloat());
+        return this.setYX(value.getFloat());
     }
 
     // FT_Fixed yy;
@@ -100,15 +103,16 @@ public class FTMatrix extends FTStruct { // struct done.
 
     private static native void setYY(long pointer, int valueRaw);
 
-    public void setYY(float value) {
+    public FTMatrix setYY(float value) {
         final int raw = FTFixed.of(value);
         setYY(super.pointer, raw);
+        return this;
     }
 
-    public void setYY(FTFixed value) {
+    public FTMatrix setYY(FTFixed value) {
         if(value == null)
             throw new NullPointerException("Value is null");
-        this.setYY(value.getFloat());
+        return this.setYY(value.getFloat());
     }
 
 

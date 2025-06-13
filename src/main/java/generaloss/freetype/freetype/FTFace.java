@@ -316,12 +316,12 @@ public class FTFace extends FTStruct { // struct done.
         return FreeType.ftGetNextChar(this, charcode, dstGIndex);
     }
 
-    public void properties(int numProperties, FTParameter[] properties) {
+    public void properties(int numProperties, FTParameter... properties) {
         final FTError error = FreeType.ftFaceProperties(this, numProperties, properties);
         error.checkError();
     }
 
-    public void properties(FTParameter[] properties) {
+    public void properties(FTParameter... properties) {
         final FTError error = FreeType.ftFaceProperties(this, properties);
         error.checkError();
     }
@@ -330,12 +330,12 @@ public class FTFace extends FTStruct { // struct done.
         return FreeType.ftGetNameIndex(this, glyphName);
     }
 
-    public void getGlyphName(int glyphIndex, ByteBuffer buffer, long bufferMax) {
+    public void getGlyphName(long glyphIndex, ByteBuffer buffer, long bufferMax) {
         final FTError error = FreeType.ftGetGlyphName(this, glyphIndex, buffer, bufferMax);
         error.checkError();
     }
 
-    public void getGlyphName(int glyphIndex, ByteBuffer buffer) {
+    public void getGlyphName(long glyphIndex, ByteBuffer buffer) {
         final FTError error = FreeType.ftGetGlyphName(this, glyphIndex, buffer);
         error.checkError();
     }

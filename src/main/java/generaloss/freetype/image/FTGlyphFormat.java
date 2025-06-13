@@ -28,7 +28,7 @@ public enum FTGlyphFormat {
     }
 
     FTGlyphFormat(char a, char b, char c, char d) {
-        this.value = FTTag.encode(a, b, c, d);
+        this.value = FTTag.ftMakeTag(a, b, c, d);
     }
 
     public static FTGlyphFormat byValue(int value) {

@@ -44,12 +44,13 @@ public class FTOpenArgs extends FTStruct {
 
     private static native void setFlags(long pointer, int flags);
 
-    public void setFlags(int flags) {
+    public FTOpenArgs setFlags(int flags) {
         setFlags(super.pointer, flags);
+        return this;
     }
 
-    public void setFlags(OpenFlags flags) {
-        this.setFlags(flags.getBits());
+    public FTOpenArgs setFlags(OpenFlags flags) {
+        return this.setFlags(flags.getBits());
     }
 
     // const FT_Byte* memory_base;
@@ -61,8 +62,9 @@ public class FTOpenArgs extends FTStruct {
 
     public static native void setMemoryBase(long pointer, ByteBuffer memory_base, long size);
 
-    public void setMemoryBase(ByteBuffer memoryBase) {
+    public FTOpenArgs setMemoryBase(ByteBuffer memoryBase) {
         setMemoryBase(super.pointer, memoryBase, memoryBase.limit());
+        return this;
     }
 
     // FT_Long memory_size;
@@ -81,8 +83,9 @@ public class FTOpenArgs extends FTStruct {
 
     private static native void setPathname(long pointer, String pathname);
 
-    public void setPathname(String pathname) {
+    public FTOpenArgs setPathname(String pathname) {
         setPathname(super.pointer, pathname);
+        return this;
     }
 
     // FT_Int num_params;
@@ -109,9 +112,10 @@ public class FTOpenArgs extends FTStruct {
 
     private static native void setParams(long pointer, long[] params);
 
-    public void setParams(FTParameter... params) {
+    public FTOpenArgs setParams(FTParameter... params) {
         final long[] pointers = FTStruct.makePointerArray(params);
         setParams(super.pointer, pointers);
+        return this;
     }
 
 }

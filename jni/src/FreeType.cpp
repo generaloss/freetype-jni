@@ -600,16 +600,33 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1Properties
     }
 
     const FT_UInt numProperties = static_cast<FT_UInt>(numPropertiesRaw);
-    jlong* propertiesArray = env->GetLongArrayElements(propertiesArrayRaw, NULL);
-    if(!propertiesArray) {
-        throwException(env, "Invalid properties array");
+    if(numProperties == 0)
+        return 0;
+
+    const jsize arrayLength = env->GetArrayLength(propertiesArrayRaw);
+    if(arrayLength < static_cast<jsize>(numProperties)) {
+        throwException(env, "Too few property pointers in array");
         return 0;
     }
 
-    FT_Parameter* properties = reinterpret_cast<FT_Parameter*>(propertiesArray);
+    jlong* pointerArray = env->GetLongArrayElements(propertiesArrayRaw, nullptr);
+    if(!pointerArray) {
+        throwException(env, "Failed to get array elements");
+        return 0;
+    }
+
+    // Создаём копии FT_Parameter
+    FT_Parameter* properties = new FT_Parameter[numProperties];
+    for(FT_UInt i = 0; i < numProperties; i++) {
+        FT_Parameter* src = reinterpret_cast<FT_Parameter*>(pointerArray[i]);
+        properties[i] = *src;
+    }
+
+    env->ReleaseLongArrayElements(propertiesArrayRaw, pointerArray, JNI_ABORT);
+
     const FT_Error error = FT_Face_Properties(face, numProperties, properties);
 
-    env->ReleaseLongArrayElements(propertiesArrayRaw, propertiesArray, 0);
+    delete[] properties;
 
     return static_cast<jint>(error);
 }
@@ -650,13 +667,14 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph_1Name
     }
 
     const FT_UInt glyphIndex = static_cast<FT_UInt>(glyphIndexRaw);
-    const FT_UInt bufferMax = static_cast<FT_UInt>(bufferMaxRaw);
 
     const FT_Pointer buffer = env->GetDirectBufferAddress(bufferRaw);
     if(!buffer) {
         throwException(env, "Invalid buffer");
         return 0;
     }
+
+    const FT_UInt bufferMax = static_cast<FT_UInt>(bufferMaxRaw);
 
     const FT_Error error = FT_Get_Glyph_Name(face, glyphIndex, buffer, bufferMax);
     return static_cast<jint>(error);

@@ -37,15 +37,16 @@ public class FTVector extends FTStruct { // struct done.
 
     private static native void setRawX(long pointer, int value);
 
-    public void setX(float value) {
+    public FTVector setX(float value) {
         final int raw = FTPos.of(value);
         setRawX(super.pointer, raw);
+        return this;
     }
 
-    public void setX(FTPos value) {
+    public FTVector setX(FTPos value) {
         if(value == null)
             throw new NullPointerException("Value is null");
-        this.setX(value.getFloat());
+        return this.setX(value.getFloat());
     }
 
     // FT_Pos y;
@@ -58,39 +59,40 @@ public class FTVector extends FTStruct { // struct done.
 
     private static native void setRawY(long pointer, int value);
 
-    public void setY(float value) {
+    public FTVector setY(float value) {
         final int raw = FTPos.of(value);
         setRawY(super.pointer, raw);
+        return this;
     }
 
-    public void setY(FTPos value) {
+    public FTVector setY(FTPos value) {
         if(value == null)
             throw new NullPointerException("Value is null");
-        this.setY(value.getFloat());
+        return this.setY(value.getFloat());
     }
 
 
-    public void set(float x, float y) {
+    public FTVector set(float x, float y) {
         this.setX(x);
         this.setY(y);
+        return this;
     }
 
-    public void set(float xy) {
+    public FTVector set(float xy) {
         this.setX(xy);
         this.setY(xy);
+        return this;
     }
 
-    public void set(FTPos x, FTPos y) {
-        if(FTStruct.equals(x, y)) {
-            this.set(x);
-            return;
-        }
-        this.setX(x.getFloat());
-        this.setY(y.getFloat());
+    public FTVector set(FTPos x, FTPos y) {
+        if(FTStruct.equals(x, y))
+            return this.set(x);
+
+        return this.set(x.getFloat(), y.getFloat());
     }
 
-    public void set(FTPos xy) {
-        this.set(xy.getFloat());
+    public FTVector set(FTPos xy) {
+        return this.set(xy.getFloat());
     }
 
 

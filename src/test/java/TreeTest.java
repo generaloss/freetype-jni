@@ -107,7 +107,7 @@ public class TreeTest {
         final FTSizeRequest request = new FTSizeRequest();
         request.setType(FTSizeRequestType.REAL_DIM);
         request.setWidth(0);
-        request.setHeight(64 * 12); // 12 pt в 1/64th точках (внутренний формат FreeType)
+        request.setHeight(12 * 64); // 12pt in 1/64th points (internal FreeType format)
         request.setHoriResolution(72); // DPI
         request.setVertResolution(72); // DPI
         face.requestSize(request);

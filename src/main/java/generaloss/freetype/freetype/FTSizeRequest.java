@@ -37,8 +37,9 @@ public class FTSizeRequest extends FTStruct { // struct done.
 
     private static native void setType(long pointer, int type);
 
-    public void setType(FTSizeRequestType type) {
+    public FTSizeRequest setType(FTSizeRequestType type) {
         setType(super.pointer, type.value);
+        return this;
     }
 
     // FT_Long width;
@@ -50,8 +51,9 @@ public class FTSizeRequest extends FTStruct { // struct done.
 
     private static native void setWidth(long pointer, long width);
 
-    public void setWidth(long width) {
+    public FTSizeRequest setWidth(long width) {
         setWidth(super.pointer, width);
+        return this;
     }
 
     // FT_Long height;
@@ -63,8 +65,9 @@ public class FTSizeRequest extends FTStruct { // struct done.
 
     private static native void setHeight(long pointer, long height);
 
-    public void setHeight(long height) {
+    public FTSizeRequest setHeight(long height) {
         setHeight(super.pointer, height);
+        return this;
     }
 
     // FT_UInt horiResolution;
@@ -76,8 +79,9 @@ public class FTSizeRequest extends FTStruct { // struct done.
 
     private static native void setHoriResolution(long pointer, long horiResolution);
 
-    public void setHoriResolution(long horiResolution) {
+    public FTSizeRequest setHoriResolution(long horiResolution) {
         setHoriResolution(super.pointer, horiResolution);
+        return this;
     }
 
     // FT_UInt vertResolution;
@@ -89,8 +93,9 @@ public class FTSizeRequest extends FTStruct { // struct done.
 
     private static native void setVertResolution(long pointer, long vertResolution);
 
-    public void setVertResolution(long vertResolution) {
+    public FTSizeRequest setVertResolution(long vertResolution) {
         setVertResolution(super.pointer, vertResolution);
+        return this;
     }
 
 }

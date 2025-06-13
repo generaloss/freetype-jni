@@ -1,6 +1,13 @@
 
+import generaloss.freetype.FreeType;
+import generaloss.freetype.freetype.*;
+import generaloss.freetype.stroke.FTStroker;
+import generaloss.freetype.types.FTFixed;
+import jpize.util.res.Resource;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.nio.ByteBuffer;
 
 public class MethodsTest {
 
@@ -16,43 +23,96 @@ public class MethodsTest {
 
 
     private static void test_ftNewMemoryFace() {
-
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        face.done();
+        lib.done();
     }
 
     private static void test_ftLoadGlyph() {
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        long glyphIndex = face.getCharIndex('A');
+        face.loadGlyph(glyphIndex);
+
+        face.done();
+        lib.done();
     }
 
     private static void test_ftLoadChar() {
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        face.loadChar('A');
+
+        face.done();
+        lib.done();
     }
 
     private static void test_ftFaceProperties() {
+        FTLibrary lib = new FTLibrary();
 
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+
+        FTParameter property1 = new FTParameter()
+                .setTag(FTParamTag.STEM_DARKENING)
+                .setData(true);
+
+        FTParameter property2 = new FTParameter()
+                .setTag(FTParamTag.LCD_FILTER_WEIGHTS)
+                .setData(new byte[] { 0x11, 0x44, 0x56, 0x44, 0x11 });
+
+        FTParameter property3 = new FTParameter()
+                .setTag(FTParamTag.RANDOM_SEED)
+                .setData(314159265);
+
+        face.properties(property1, property2, property3);
+
+        face.done();
+        lib.done();
     }
 
     private static void test_ftGetGlyphName() {
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
-    }
+        long glyphIndex = face.getCharIndex('A');
+        ByteBuffer buffer = ByteBuffer.allocateDirect(2);
+        face.getGlyphName(glyphIndex, buffer);
+        assert (buffer.getChar() == '䄀');
 
-    private static void test_ftGetFSTypeFlagsRaw() {
-
+        face.done();
+        lib.done();
     }
 
     private static void test_ftInitFreeType() {
-
+        FTLibrary lib = new FTLibrary();
+        lib.done();
     }
 
     private static void test_ftDoneFreeType() {
-
+        FTLibrary lib = new FTLibrary();
+        lib.done();
     }
 
     private static void test_ftNewFace() {
-
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newFace("src/test/resources/droidsans.ttf", 0);
+        face.done();
+        lib.done();
     }
 
     private static void test_ftOpenFace() {
+        FTLibrary lib = new FTLibrary();
 
+        FTOpenArgs args = new FTOpenArgs();
+        args.setFlags(new OpenFlags().set(FTOpen.PATHNAME));
+        args.setPathname("src/test/resources/droidsans.ttf");
+
+        FTFace face = lib.openFace(args, 0);
+        face.done();
+        lib.done();
     }
 
     private static void test_ftAttachFile() {
@@ -68,15 +128,39 @@ public class MethodsTest {
     }
 
     private static void test_ftDoneFace() {
-
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        face.done();
+        lib.done();
     }
 
     private static void test_ftSelectSize() {
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        // face.selectSize();
+
+        face.done();
+        lib.done();
     }
 
     private static void test_ftRequestSize() {
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        FTSizeRequest request = new FTSizeRequest();
+        request.setType(FTSizeRequestType.REAL_DIM);
+        request.setWidth(0);
+        request.setHeight(12 * 64); // 12pt in 1/64th points (internal FreeType format)
+        request.setHoriResolution(72); // 72 DPI
+        request.setVertResolution(72); // 72 DPI
+
+        face.requestSize(request);
+
+        assert (face.getHeight() == 2384);
+
+        face.done();
+        lib.done();
     }
 
     private static void test_ftSetCharSize() {
@@ -168,27 +252,33 @@ public class MethodsTest {
     }
 
     private static void test_ftMulDiv() {
-
+        assert (FreeType.ftMulDiv(4, 5, 10) == 2);
     }
 
     private static void test_ftMulFix() {
-
+        assert (FreeType.ftMulFix(1024, 512) == 8);
     }
 
     private static void test_ftDivFix() {
-
+        assert (FreeType.ftDivFix(8, 512) == 1024);
     }
 
     private static void test_ftRoundFix() {
-
+        FTFixed num = new FTFixed().set(1.5F);
+        assert (FreeType.ftRoundFix(num) == 2F);
+        num.free();
     }
 
     private static void test_ftCeilFix() {
-
+        FTFixed num = new FTFixed().set(1.5F);
+        assert (FreeType.ftCeilFix(num) == 2F);
+        num.free();
     }
 
     private static void test_ftFloorFix() {
-
+        FTFixed num = new FTFixed().set(1.5F);
+        assert (FreeType.ftFloorFix(num) == 1F);
+        num.free();
     }
 
     private static void test_ftVectorTransform() {
@@ -288,7 +378,10 @@ public class MethodsTest {
     }
 
     private static void test_ftStrokerNew() {
-
+        FTLibrary lib = new FTLibrary();
+        FTStroker stroker = lib.newStroker();
+        stroker.done();
+        lib.done();
     }
 
     private static void test_ftStrokerSet() {
@@ -340,7 +433,10 @@ public class MethodsTest {
     }
 
     private static void test_ftStrokerDone() {
-
+        FTLibrary lib = new FTLibrary();
+        FTStroker stroker = lib.newStroker();
+        stroker.done();
+        lib.done();
     }
 
     private static void test_ftGlyphStroke() {

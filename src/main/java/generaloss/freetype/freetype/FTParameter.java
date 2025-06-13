@@ -44,23 +44,56 @@ public class FTParameter extends FTStruct { // struct done.
 
     private static native void setTag(long pointer, long tag);
 
-    public void setTag(long tag) {
+    public FTParameter setTag(long tag) {
         setTag(super.pointer, tag);
+        return this;
     }
 
-    public void setTag(char a, char b, char c, char d) {
-        this.setTag(FTTag.encode(a, b, c, d));
+    public FTParameter setTag(char x1, char x2, char x3, char x4) {
+        return this.setTag(FTTag.ftMakeTag(x1, x2, x3, x4));
     }
 
-    public void setTag(String tag) {
-        this.setTag(FTTag.encode(tag));
+    public FTParameter setTag(String tag) {
+        return this.setTag(FTTag.ftMakeTag(tag));
+    }
+
+    public FTParameter setTag(FTParamTag tag) {
+        return this.setTag(tag.value);
     }
 
 
-    private static native void setData(long pointer, ByteBuffer buffer);
+    private static native void setData(long pointer, ByteBuffer dataBuffer);
 
-    public void setData(ByteBuffer buffer) {
-        setData(super.pointer, buffer);
+    public FTParameter setData(ByteBuffer dataBuffer) {
+        setData(super.pointer, dataBuffer);
+        return this;
+    }
+
+    public FTParameter setDataNull() {
+        return this.setData((ByteBuffer) null);
+    }
+
+    public FTParameter setData(byte... data) {
+        final ByteBuffer buffer = ByteBuffer.allocateDirect(data.length);
+        buffer.put(data);
+        buffer.flip();
+        return this.setData(buffer);
+    }
+
+    public FTParameter setData(boolean... data) {
+        final ByteBuffer buffer = ByteBuffer.allocateDirect(data.length);
+        for(boolean flag: data)
+            buffer.put((byte) (flag ? 1 : 0));
+        buffer.flip();
+        return this.setData(buffer);
+    }
+
+    public FTParameter setData(int... data) {
+        final ByteBuffer buffer = ByteBuffer.allocateDirect(4 * data.length);
+        for(int value: data)
+            buffer.putInt(value);
+        buffer.flip();
+        return this.setData(buffer);
     }
 
 }
