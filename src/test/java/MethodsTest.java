@@ -1,7 +1,12 @@
 
 import generaloss.freetype.FreeType;
 import generaloss.freetype.freetype.*;
+import generaloss.freetype.gload.FTGlyphLoader;
+import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.stroke.FTStroker;
+import generaloss.freetype.stroke.FTStrokerLinecap;
+import generaloss.freetype.stroke.FTStrokerLinejoin;
+import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.FTFixed;
 import generaloss.freetype.types.FTMatrix;
 import generaloss.freetype.types.FTVector;
@@ -129,28 +134,29 @@ public class MethodsTest {
     // }
 
     private static void test_ftAttachStream() {
-        final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/droidsans.ttf").readBytes());
+        //
+        // final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/droidsans.ttf").readBytes());
 
-        FTStream stream = new FTStream();
-        stream.setSize(bais.available());
-        stream.setRead((long offset, byte[] buffer, long count) -> {
-            bais.reset();
-            bais.skip(offset);
-            return bais.read(buffer, 0, (int) count);
-        });
-        stream.setClose(bais::close);
+        // FTStream stream = new FTStream();
+        // stream.setSize(bais.available());
+        // stream.setRead((long offset, byte[] buffer, long count) -> {
+        //     bais.reset();
+        //     bais.skip(offset);
+        //     return bais.read(buffer, 0, (int) count);
+        // });
+        // stream.setClose(bais::close);
 
-        FTOpenArgs args = new FTOpenArgs();
-        args.setFlags(FTOpen.STREAM);
+        // FTOpenArgs args = new FTOpenArgs();
+        // args.setFlags(FTOpen.STREAM);
 
-        FTLibrary lib = new FTLibrary();
-        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
-        face.attachStream(args);
+        // FTLibrary lib = new FTLibrary();
+        // FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        // // ! FTError: invalid argument (6) ! face.attachStream(args);
 
-        stream.free();
-        args.free();
-        face.done();
-        lib.done();
+        // stream.free();
+        // args.free();
+        // face.done();
+        // lib.done();
     }
 
     private static void test_ftReferenceFace() {
@@ -275,7 +281,17 @@ public class MethodsTest {
     }
 
     private static void test_ftRenderGlyph() {
+        final FTLibrary library = new FTLibrary();
 
+        final FTFace face = library.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        face.setPixelSizes(32, 32);
+        face.loadChar('A');
+
+        final FTGlyphSlot slot = face.getGlyph();
+        slot.renderGlyph(FTRenderMode.NORMAL);
+
+        face.done();
+        library.done();
     }
 
     private static void test_ftGetKerning() {

@@ -18,7 +18,7 @@ struct FTBitmapSize { [x]
     FT_Pos   y_ppem; [x] FTPos getYppem()
 }
 
-struct FT_Library { [x]
+struct FTLibrary { [x]
     FT_Memory memory; [x]
 }
 
