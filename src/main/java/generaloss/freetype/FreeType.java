@@ -231,8 +231,16 @@ public class FreeType {
         return ftLoadGlyph(face, glyphIndex, BitMask.getBits(loadFlags));
     }
 
+    public static FTError ftLoadGlyph(FTFace face, long glyphIndex, FTLoad loadFlag) {
+        return ftLoadGlyph(face, glyphIndex, loadFlag.getBit());
+    }
+
+    public static FTError ftLoadGlyph(FTFace face, long glyphIndex, FTLoadTarget loadFlag) {
+        return ftLoadGlyph(face, glyphIndex, loadFlag.value);
+    }
+
     public static FTError ftLoadGlyph(FTFace face, long glyphIndex) {
-        return ftLoadGlyph(face, glyphIndex, 0);
+        return ftLoadGlyph(face, glyphIndex, FTLoad.DEFAULT);
     }
 
     // FT_Error FT_Load_Char(FT_Face face, FT_ULong char_code, FT_Int32 load_flags)
@@ -247,8 +255,16 @@ public class FreeType {
         return ftLoadChar(face, charcode, BitMask.getBits(loadFlags));
     }
 
+    public static FTError ftLoadChar(FTFace face, long charcode, FTLoad loadFlag) {
+        return ftLoadChar(face, charcode, loadFlag.getBit());
+    }
+
+    public static FTError ftLoadChar(FTFace face, long charcode, FTLoadTarget loadFlag) {
+        return ftLoadChar(face, charcode, loadFlag.value);
+    }
+
     public static FTError ftLoadChar(FTFace face, long charcode) {
-        return ftLoadChar(face, charcode, 0);
+        return ftLoadChar(face, charcode, FTLoad.DEFAULT);
     }
 
     // void FT_Set_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta)

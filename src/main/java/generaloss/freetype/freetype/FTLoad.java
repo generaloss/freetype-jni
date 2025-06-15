@@ -1,6 +1,8 @@
 package generaloss.freetype.freetype;
 
-public enum FTLoad {
+import generaloss.freetype.BitMaskable;
+
+public enum FTLoad implements BitMaskable {
 
     /** In this case, the following happens:
       *     1. freetype.h.txt looks for a bitmap for the glyph corresponding to the face's current size. If one is found, the function returns. The bitmap data can be accessed from the glyph slot.
@@ -81,10 +83,15 @@ public enum FTLoad {
     /** Ignore SVG glyph data when loading. */
     NO_SVG                      (1 << 24); // 16777216
 
-    public final int value;
+    private final int bit;
 
-    FTLoad(int value) {
-        this.value = value;
+    FTLoad(int bit) {
+        this.bit = bit;
+    }
+
+    @Override
+    public int getBit() {
+        return bit;
     }
 
 }

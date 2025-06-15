@@ -2,9 +2,7 @@ package generaloss.freetype.freetype;
 
 import generaloss.freetype.BitMask;
 
-import java.util.StringJoiner;
-
-public class FSTypeFlags extends BitMask {
+public class FSTypeFlags extends BitMask<FTFSType> {
 
     public FSTypeFlags() { }
 
@@ -13,52 +11,34 @@ public class FSTypeFlags extends BitMask {
     }
 
 
-    public boolean has(FTFSType flag) {
-        return super.has(flag.value);
-    }
-
-    public FSTypeFlags set(FTFSType flag) {
-        super.set(flag.value);
-        return this;
-    }
-
-    public FSTypeFlags clear(FTFSType flag) {
-        super.clear(flag.value);
-        return this;
-    }
-
-
     public boolean hasInstallableEmbedding() {
-        return this.has(FTFSType.INSTALLABLE_EMBEDDING);
+        return super.has(FTFSType.INSTALLABLE_EMBEDDING);
     }
 
     public boolean hasRestrictedLicenseEmbedding() {
-        return this.has(FTFSType.RESTRICTED_LICENSE_EMBEDDING);
+        return super.has(FTFSType.RESTRICTED_LICENSE_EMBEDDING);
     }
 
     public boolean hasPreviewAndPrintEmbedding() {
-        return this.has(FTFSType.PREVIEW_AND_PRINT_EMBEDDING);
+        return super.has(FTFSType.PREVIEW_AND_PRINT_EMBEDDING);
     }
 
     public boolean hasEditableEmbedding() {
-        return this.has(FTFSType.EDITABLE_EMBEDDING);
+        return super.has(FTFSType.EDITABLE_EMBEDDING);
     }
 
     public boolean hasNoSubsetting() {
-        return this.has(FTFSType.NO_SUBSETTING);
+        return super.has(FTFSType.NO_SUBSETTING);
     }
 
     public boolean hasBitmapEmbeddingOnly() {
-        return this.has(FTFSType.BITMAP_EMBEDDING_ONLY);
+        return super.has(FTFSType.BITMAP_EMBEDDING_ONLY);
     }
 
 
     @Override
     public String toString() {
-        final StringJoiner joiner = new StringJoiner(", ");
-        for(FTFSType flag: FTFSType.values())
-            joiner.add(flag.toString() + "=" + this.has(flag));
-        return "FaceFlags{" + joiner + "}";
+        return super.toString(FTFSType.class);
     }
 
 }

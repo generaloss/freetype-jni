@@ -3,8 +3,11 @@ import generaloss.freetype.FreeType;
 import generaloss.freetype.freetype.*;
 import generaloss.freetype.stroke.FTStroker;
 import generaloss.freetype.types.FTFixed;
+import generaloss.freetype.types.FTMatrix;
+import generaloss.freetype.types.FTVector;
 import jpize.util.res.Resource;
 
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
@@ -56,16 +59,16 @@ public class MethodsTest {
         FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
         FTParameter property1 = new FTParameter()
-                .setTag(FTParamTag.STEM_DARKENING)
-                .setData(true);
+            .setTag(FTParamTag.STEM_DARKENING)
+            .setData(true);
 
         FTParameter property2 = new FTParameter()
-                .setTag(FTParamTag.LCD_FILTER_WEIGHTS)
-                .setData(new byte[] { 0x11, 0x44, 0x56, 0x44, 0x11 });
+            .setTag(FTParamTag.LCD_FILTER_WEIGHTS)
+            .setData(new byte[] { 0x11, 0x44, 0x56, 0x44, 0x11 });
 
         FTParameter property3 = new FTParameter()
-                .setTag(FTParamTag.RANDOM_SEED)
-                .setData(314159265);
+            .setTag(FTParamTag.RANDOM_SEED)
+            .setData(314159265);
 
         face.properties(property1, property2, property3);
 
@@ -115,16 +118,50 @@ public class MethodsTest {
         lib.done();
     }
 
-    private static void test_ftAttachFile() {
+    // private static void test_ftAttachFile() {
+    //     FTLibrary lib = new FTLibrary();
+    //     FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
-    }
+    //     face.attachFile("src/test/resources/accanthis.pfb");
+
+    //     face.done();
+    //     lib.done();
+    // }
 
     private static void test_ftAttachStream() {
+        final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/droidsans.ttf").readBytes());
 
+        FTStream stream = new FTStream();
+        stream.setSize(bais.available());
+        stream.setRead((long offset, byte[] buffer, long count) -> {
+            bais.reset();
+            bais.skip(offset);
+            return bais.read(buffer, 0, (int) count);
+        });
+        stream.setClose(bais::close);
+
+        FTOpenArgs args = new FTOpenArgs();
+        args.setFlags(FTOpen.STREAM);
+
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        face.attachStream(args);
+
+        stream.free();
+        args.free();
+        face.done();
+        lib.done();
     }
 
     private static void test_ftReferenceFace() {
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        face.referenceFace();
+        // ! face.done();
+
+        face.done();
+        lib.done();
     }
 
     private static void test_ftDoneFace() {
@@ -164,19 +201,77 @@ public class MethodsTest {
     }
 
     private static void test_ftSetCharSize() {
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        // ! FTError: invalid pixel size (23) ! face.setCharSize(0, 16 * 64, 300, 300); // height 16pt, 300dpi
+
+        // FTSizeMetrics metrics = face.getSize().getMetrics();
+        // assert metrics.getHeight() > 0;
+
+        face.done();
+        lib.done();
     }
 
     private static void test_ftSetPixelSizes() {
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        face.setPixelSizes(0, 24);
+
+        FTSizeMetrics metrics = face.getSize().getMetrics();
+        assert metrics.getHeight() > 0;
+
+        face.done();
+        lib.done();
     }
 
     private static void test_ftSetTransform() {
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        FTMatrix matrix = new FTMatrix().setIdentity();
+        FTVector delta = new FTVector().set(10 * 64, 20 * 64);
+        face.setTransform(matrix, delta);
+
+        matrix.setXX(0F).setYY(0F);
+        delta.set(0F);
+
+        face.getTransform(matrix, delta);
+        assert matrix.getXX() == 1F;
+        assert matrix.getYY() == 1F;
+        assert delta.getX() == 10 * 64;
+        assert delta.getY() == 20 * 64;
+
+        matrix.free();
+        delta.free();
+
+        face.done();
+        lib.done();
     }
 
     private static void test_ftGetTransform() {
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        FTMatrix matrix = new FTMatrix().setIdentity();
+        FTVector delta = new FTVector().set(10 * 64, 20 * 64);
+        face.setTransform(matrix, delta);
+
+        matrix.setXX(0F).setYY(0F);
+        delta.set(0F);
+
+        face.getTransform(matrix, delta);
+        assert matrix.getXX() == 1F;
+        assert matrix.getYY() == 1F;
+        assert delta.getX() == 10 * 64;
+        assert delta.getY() == 20 * 64;
+
+        matrix.free();
+        delta.free();
+
+        face.done();
+        lib.done();
     }
 
     private static void test_ftRenderGlyph() {

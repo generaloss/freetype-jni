@@ -1,6 +1,8 @@
 package generaloss.freetype.image;
 
-public enum FTOutlineFlag {
+import generaloss.freetype.BitMaskable;
+
+public enum FTOutlineFlag implements BitMaskable {
 
     NONE            (0),
     OWNER           (1),
@@ -14,10 +16,15 @@ public enum FTOutlineFlag {
     SINGLE_PASS     (512);
 
 
-    public final int value;
+    private final int bit;
 
-    FTOutlineFlag(int value) {
-        this.value = value;
+    FTOutlineFlag(int bit) {
+        this.bit = bit;
+    }
+
+    @Override
+    public int getBit() {
+        return bit;
     }
 
 }

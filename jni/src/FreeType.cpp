@@ -190,9 +190,14 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Attach_1File
         return 0;
     }
 
+    if(!filepathRaw) {
+        throwException(env, "Filepath is null");
+        return 0;
+    }
+
     const char* filepath = env->GetStringUTFChars(filepathRaw, NULL);
     if(!filepath) {
-        throwException(env, "Invalid filepath");
+        throwException(env, "Failed to get UTF-8 string from filepath string");
         return 0;
     }
 
@@ -200,7 +205,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Attach_1File
 
     env->ReleaseStringUTFChars(filepathRaw, filepath);
 
-    return static_cast<jint>(error);;
+    return static_cast<jint>(error);
 }
 
 // FT_Error FT_Attach_Stream(FT_Face face, const FT_Open_Args* parameters)
@@ -609,7 +614,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1Properties
         return 0;
     }
 
-    jlong* pointerArray = env->GetLongArrayElements(propertiesArrayRaw, nullptr);
+    jlong* pointerArray = env->GetLongArrayElements(propertiesArrayRaw, NULL);
     if(!pointerArray) {
         throwException(env, "Failed to get array elements");
         return 0;

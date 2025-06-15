@@ -10,24 +10,30 @@ import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.FTVector;
 import jpize.util.res.Resource;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 
 public class TreeTest {
 
     public static void main(String[] args) {
-        final FTLibrary library = new FTLibrary();
+        final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/main.ttf").readBytes());
+
+        FTStream stream = new FTStream();
+        stream.setSize(bais.available());
+        stream.setRead((long offset, byte[] buffer, long count) -> {
+            bais.reset();
+            bais.skip(offset);
+            return bais.read(buffer, 0, (int) count);
+        });
+        stream.setClose(bais::close);
 
         final FTOpenArgs openargs = new FTOpenArgs();
-        openargs.setFlags(new OpenFlags().set(FTOpen.MEMORY));
-        openargs.setMemoryBase(Resource.internal("/main.ttf").readByteBuffer());
+        openargs.setFlags(FTOpen.STREAM);
+        openargs.setStream(stream);
 
+        final FTLibrary library = new FTLibrary();
         final FTFace face = library.openFace(openargs, 0);
-
-        // final ByteBuffer data = Resource.internal("/main.ttf").readByteBuffer();
-        // final FTFace face = library.newMemoryFace(data, 0);
-        // face.setPixelSizes(32, 32);
+        face.setPixelSizes(32, 32);
 
         final FTStroker stroker = library.newStroker();
         stroker.set(4, FTStrokerLinecap.BUTT, FTStrokerLinejoin.ROUND, 0);

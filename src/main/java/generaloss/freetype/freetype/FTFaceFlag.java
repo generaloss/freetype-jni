@@ -1,6 +1,8 @@
 package generaloss.freetype.freetype;
 
-public enum FTFaceFlag {
+import generaloss.freetype.BitMaskable;
+
+public enum FTFaceFlag implements BitMaskable {
 
     /** The face contains outline glyphs. Note that a face can contain bitmap strikes also, i.e., a face can have both this flag and FTFaceFlag.FIXED_SIZES set. */
     SCALABLE,         // 1
@@ -65,11 +67,17 @@ public enum FTFaceFlag {
     SBIX_OVERLAY;     // 262144
 
 
-    public final int value;
+    private final int bit;
 
     FTFaceFlag() {
-        this.value = (1 << this.ordinal());
+        this.bit = (1 << this.ordinal());
     }
+
+    @Override
+    public int getBit() {
+        return bit;
+    }
+
 
     public static FTFaceFlag byValue(int value) {
         final int index = Integer.numberOfTrailingZeros(value);

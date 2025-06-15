@@ -2,9 +2,7 @@ package generaloss.freetype.freetype;
 
 import generaloss.freetype.BitMask;
 
-import java.util.StringJoiner;
-
-public class LoadFlags extends BitMask {
+public class LoadFlags extends BitMask<FTLoad> {
 
     public LoadFlags() { }
 
@@ -13,139 +11,126 @@ public class LoadFlags extends BitMask {
     }
 
 
-    public boolean has(FTLoad flag) {
-        return super.has(flag.value);
-    }
-
-    public LoadFlags set(FTLoad flag) {
-       super.set(flag.value);
-        return this;
-    }
-
-    public LoadFlags clear(FTLoad flag) {
-        super.clear(flag.value);
-        return this;
-    }
-
-
     public boolean has(FTLoadTarget target) {
-        return super.has(target.value);
+        final int targetBits = (super.getBits() & FTLoadTarget.MASK);
+        return (targetBits == target.value);
     }
 
     public LoadFlags set(FTLoadTarget target) {
+        this.clearTarget();
         super.set(target.value);
         return this;
     }
 
-    public LoadFlags clear(FTLoadTarget target) {
-        super.clear(target.value);
+    public LoadFlags clearTarget() {
+        super.clear(FTLoadTarget.MASK);
         return this;
+    }
+
+    public FTLoadTarget getTarget() {
+        final int value = (super.getBits() & FTLoadTarget.MASK);
+        return FTLoadTarget.byValue(value);
     }
 
 
     public boolean hasNoScale() {
-        return this.has(FTLoad.NO_SCALE);
+        return super.has(FTLoad.NO_SCALE);
     }
 
     public boolean hasNoHinting() {
-        return this.has(FTLoad.NO_HINTING);
+        return super.has(FTLoad.NO_HINTING);
     }
 
     public boolean hasRender() {
-        return this.has(FTLoad.RENDER);
+        return super.has(FTLoad.RENDER);
     }
 
     public boolean hasNoBitmap() {
-        return this.has(FTLoad.NO_BITMAP);
+        return super.has(FTLoad.NO_BITMAP);
     }
 
     public boolean hasVerticalLayout() {
-        return this.has(FTLoad.VERTICAL_LAYOUT);
+        return super.has(FTLoad.VERTICAL_LAYOUT);
     }
 
     public boolean hasForceAutohint() {
-        return this.has(FTLoad.FORCE_AUTOHINT);
+        return super.has(FTLoad.FORCE_AUTOHINT);
     }
 
     public boolean hasCropBitmap() {
-        return this.has(FTLoad.CROP_BITMAP);
+        return super.has(FTLoad.CROP_BITMAP);
     }
 
     public boolean hasPedantic() {
-        return this.has(FTLoad.PEDANTIC);
+        return super.has(FTLoad.PEDANTIC);
     }
 
     public boolean hasIgnoreGlobalAdvanceWidth() {
-        return this.has(FTLoad.IGNORE_GLOBAL_ADVANCE_WIDTH);
+        return super.has(FTLoad.IGNORE_GLOBAL_ADVANCE_WIDTH);
     }
 
     public boolean hasNoRecurse() {
-        return this.has(FTLoad.NO_RECURSE);
+        return super.has(FTLoad.NO_RECURSE);
     }
 
     public boolean hasIgnoreTransform() {
-        return this.has(FTLoad.IGNORE_TRANSFORM);
+        return super.has(FTLoad.IGNORE_TRANSFORM);
     }
 
     public boolean hasMonochrome() {
-        return this.has(FTLoad.MONOCHROME);
+        return super.has(FTLoad.MONOCHROME);
     }
 
     public boolean hasLinearDesign() {
-        return this.has(FTLoad.LINEAR_DESIGN);
+        return super.has(FTLoad.LINEAR_DESIGN);
     }
 
     public boolean hasSBitsOnly() {
-        return this.has(FTLoad.SBITS_ONLY);
+        return super.has(FTLoad.SBITS_ONLY);
     }
 
     public boolean hasNoAutohint() {
-        return this.has(FTLoad.NO_AUTOHINT);
+        return super.has(FTLoad.NO_AUTOHINT);
     }
 
     public boolean hasColor() {
-        return this.has(FTLoad.COLOR);
+        return super.has(FTLoad.COLOR);
     }
 
     public boolean hasComputeMetrics() {
-        return this.has(FTLoad.COMPUTE_METRICS);
+        return super.has(FTLoad.COMPUTE_METRICS);
     }
 
     public boolean hasBitmapMetricsOnly() {
-        return this.has(FTLoad.BITMAP_METRICS_ONLY);
+        return super.has(FTLoad.BITMAP_METRICS_ONLY);
     }
 
     public boolean hasNoSVG() {
-        return this.has(FTLoad.NO_SVG);
+        return super.has(FTLoad.NO_SVG);
     }
 
 
-    public boolean hasTargetLight() {
+    public boolean isTargetLight() {
         return this.has(FTLoadTarget.LIGHT);
     }
 
-    public boolean hasTargetMono() {
+    public boolean isTargetMono() {
         return this.has(FTLoadTarget.MONO);
     }
 
-    public boolean hasTargetLCD() {
+    public boolean isTargetLCD() {
         return this.has(FTLoadTarget.LCD);
     }
 
-    public boolean hasTargetLCD_V() {
+    public boolean isTargetLCDV() {
         return this.has(FTLoadTarget.LCD_V);
     }
 
 
     @Override
     public String toString() {
-        final StringJoiner joiner = new StringJoiner(", ");
-        for(FTLoad flag: FTLoad.values())
-            joiner.add(flag.toString() + "=" + this.has(flag));
-        for(FTLoadTarget flag: FTLoadTarget.values())
-            joiner.add(flag.toString() + "=" + this.has(flag));
-        return "FaceFlags{" + joiner + "}";
+        final String string = super.toString(FTLoad.class);
+        return string.substring(0, string.length() - 1) + ", FTLoadTarget=" + this.getTarget() + "}";
     }
-
 
 }

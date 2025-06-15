@@ -1,6 +1,8 @@
 package generaloss.freetype.freetype;
 
-public enum FTStyleFlag {
+import generaloss.freetype.BitMaskable;
+
+public enum FTStyleFlag implements BitMaskable {
 
     /** The face style is italic or oblique. */
     ITALIC, // 1
@@ -8,10 +10,15 @@ public enum FTStyleFlag {
     /** The face is bold. */
     BOLD;   // 2
 
-    public final int value;
+    private final int bit;
 
     FTStyleFlag() {
-        this.value = (1 << this.ordinal());
+        this.bit = (1 << this.ordinal());
+    }
+
+    @Override
+    public int getBit() {
+        return bit;
     }
 
 

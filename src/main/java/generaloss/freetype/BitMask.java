@@ -1,6 +1,8 @@
 package generaloss.freetype;
 
-public class BitMask {
+import java.util.StringJoiner;
+
+public abstract class BitMask<M extends BitMaskable> {
 
     private int bits;
 
@@ -25,26 +27,60 @@ public class BitMask {
     }
 
 
-    public boolean has(int bit) {
-        if(bit == 0)
+    public boolean has(int bits) {
+        if(bits == 0)
             return this.isDefault();
-        return (bits & bit) != 0;
+        return (this.bits & bits) == bits;
     }
 
-    public void set(int bit) {
-        if(bit == 0) {
-            bits = 0;
+    public void set(int bits) {
+        if(bits == 0) {
+            this.clear();
         }else{
-            bits |= bit;
+            this.bits |= bits;
         }
     }
 
-    public void clear(int bit) {
-        bits &= ~bit;
+    public void clear(int bits) {
+        this.bits &= ~bits;
+    }
+
+    public void clear() {
+        bits = 0;
     }
 
 
-    public static int getBits(BitMask mask) {
+    public boolean has(M maskable) {
+        return this.has(maskable.getBit());
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends BitMask<M>> T set(M... maskables) {
+        for(M maskable: maskables)
+            this.set(maskable.getBit());
+
+        return (T) this;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends BitMask<M>> T clear(M... maskables) {
+        for(M maskable: maskables)
+            this.clear(maskable.getBit());
+
+        return (T) this;
+    }
+
+
+    protected String toString(Class<M> enumClass) {
+        final StringJoiner flags = new StringJoiner(", ");
+        for(M maskable: enumClass.getEnumConstants())
+            flags.add(maskable.toString() + "=" + this.has(maskable));
+
+        return this.getClass().getSimpleName() + "{" + flags + "}";
+    }
+
+
+    public static int getBits(BitMask<?> mask) {
         if(mask == null)
             return 0;
         return mask.bits;

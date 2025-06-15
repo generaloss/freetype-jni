@@ -1,6 +1,8 @@
 package generaloss.freetype.freetype;
 
-public enum FTFSType {
+import generaloss.freetype.BitMaskable;
+
+public enum FTFSType implements BitMaskable {
 
     INSTALLABLE_EMBEDDING        (0),
     RESTRICTED_LICENSE_EMBEDDING (2),
@@ -9,10 +11,15 @@ public enum FTFSType {
     NO_SUBSETTING                (256),
     BITMAP_EMBEDDING_ONLY        (512);
 
-    public final int value;
+    public final int bit;
 
-    FTFSType(int value) {
-        this.value = value;
+    FTFSType(int bit) {
+        this.bit = bit;
+    }
+
+    @Override
+    public int getBit() {
+        return bit;
     }
 
 }

@@ -1,6 +1,8 @@
 package generaloss.freetype.freetype;
 
-public enum FTSubglyphFlag {
+import generaloss.freetype.BitMaskable;
+
+public enum FTSubglyphFlag implements BitMaskable {
 
     ARGS_ARE_WORDS     (1),
     ARGS_ARE_XY_VALUES (2),
@@ -10,11 +12,15 @@ public enum FTSubglyphFlag {
     FLAG_2X2           (128), // 2X2
     USE_MY_METRICS     (512);
 
+    private final int bit;
 
-    public final int value;
+    FTSubglyphFlag(int bit) {
+        this.bit = bit;
+    }
 
-    FTSubglyphFlag(int value) {
-        this.value = value;
+    @Override
+    public int getBit() {
+        return bit;
     }
 
 }

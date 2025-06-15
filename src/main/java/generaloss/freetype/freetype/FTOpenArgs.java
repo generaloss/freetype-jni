@@ -1,5 +1,6 @@
 package generaloss.freetype.freetype;
 
+import generaloss.freetype.BitMaskable;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FTStructCache;
 import generaloss.freetype.FreeType;
@@ -53,6 +54,10 @@ public class FTOpenArgs extends FTStruct {
         return this.setFlags(flags.getBits());
     }
 
+    public FTOpenArgs setFlags(FTOpen... flags) {
+        return this.setFlags(BitMaskable.makeMask(flags));
+    }
+
     // const FT_Byte* memory_base;
     private static native byte getMemoryBase(long pointer);
 
@@ -86,6 +91,20 @@ public class FTOpenArgs extends FTStruct {
     public FTOpenArgs setPathname(String pathname) {
         setPathname(super.pointer, pathname);
         return this;
+    }
+
+    // FT_Stream stream;
+    private static native long getStream(long pointer);
+
+    public FTStream getStream() {
+        final long pointer = getStream(super.pointer);
+        return FTStructCache.getOrCreate(FTStream.class, pointer, FTStream::new);
+    }
+
+    private static native void setStream(long pointer, long stream);
+
+    public void setStream(FTStream stream) {
+        setStream(super.pointer, FTStream.getPointer(stream));
     }
 
     // FT_Int num_params;

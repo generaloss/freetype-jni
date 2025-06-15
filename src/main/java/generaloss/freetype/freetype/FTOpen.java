@@ -1,6 +1,8 @@
 package generaloss.freetype.freetype;
 
-public enum FTOpen {
+import generaloss.freetype.BitMaskable;
+
+public enum FTOpen implements BitMaskable {
 
     /** This is a memory-based stream. */
     MEMORY,
@@ -13,10 +15,15 @@ public enum FTOpen {
     /** Use the num_params and params fields. */
     PARAMS;
 
-    public final int value;
+    private final int bit;
 
     FTOpen() {
-        this.value = (1 << super.ordinal());
+        this.bit = (1 << super.ordinal());
+    }
+
+    @Override
+    public int getBit() {
+        return bit;
     }
 
 }

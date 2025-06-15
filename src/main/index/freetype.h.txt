@@ -159,7 +159,7 @@ sturct FTOpenArgs { [ ]
     const FT_Byte* memory_base; [x] byte getMemoryBase()
     FT_Long        memory_size; [x] long getMemorySize()
     FT_String*     pathname;    [x] String getPathname()
-    FT_Stream      stream;      [ ] FTStream getStream()
+    FT_Stream      stream;      [x] FTStream getStream()
     FT_Module      driver;      [ ] FTModule getDriver()
     FT_Int         num_params;  [x] int getNumParams()
     FT_Parameter*  params;      [x] FTParameter[] getParams()

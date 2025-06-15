@@ -2,9 +2,7 @@ package generaloss.freetype.freetype;
 
 import generaloss.freetype.BitMask;
 
-import java.util.StringJoiner;
-
-public class OpenFlags extends BitMask {
+public class OpenFlags extends BitMask<FTOpen> {
 
     public OpenFlags() { }
 
@@ -13,48 +11,30 @@ public class OpenFlags extends BitMask {
     }
 
 
-    public boolean has(FTOpen flag) {
-        return super.has(flag.value);
-    }
-
-    public OpenFlags set(FTOpen flag) {
-        super.set(flag.value);
-        return this;
-    }
-
-    public OpenFlags clear(FTOpen flag) {
-        super.clear(flag.value);
-        return this;
-    }
-
-
     public boolean hasMemory() {
-        return this.has(FTOpen.MEMORY);
+        return super.has(FTOpen.MEMORY);
     }
 
     public boolean hasStream() {
-        return this.has(FTOpen.STREAM);
+        return super.has(FTOpen.STREAM);
     }
 
     public boolean hasPathname() {
-        return this.has(FTOpen.PATHNAME);
+        return super.has(FTOpen.PATHNAME);
     }
 
     public boolean hasDriver() {
-        return this.has(FTOpen.DRIVER);
+        return super.has(FTOpen.DRIVER);
     }
 
     public boolean hasParams() {
-        return this.has(FTOpen.PARAMS);
+        return super.has(FTOpen.PARAMS);
     }
 
 
     @Override
     public String toString() {
-        final StringJoiner joiner = new StringJoiner(", ");
-        for(FTOpen flag: FTOpen.values())
-            joiner.add(flag.toString() + "=" + this.has(flag));
-        return "FaceFlags{" + joiner + "}";
+        return super.toString(FTOpen.class);
     }
 
 }

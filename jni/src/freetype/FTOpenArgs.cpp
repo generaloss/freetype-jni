@@ -8,7 +8,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_createPoint
   (JNIEnv *, jclass) {
 
     FT_Open_Args* pointer = new FT_Open_Args;
-    // std::memset(pointer, 0, sizeof(FT_Open_Args));
+    memset(pointer, 0, sizeof(FT_Open_Args));
     return reinterpret_cast<jlong>(pointer);
 }
 
@@ -104,6 +104,31 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_setPathname
         return;
 
     args->pathname = const_cast<FT_String*>(str);
+}
+
+// FT_Stream stream;
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getStream
+  (JNIEnv *, jclass, jlong argsPtrRaw) {
+
+    const FT_Open_Args* args = reinterpret_cast<FT_Open_Args*>(argsPtrRaw);
+    if(!args || !args->stream)
+        return 0;
+
+    return reinterpret_cast<jlong>(args->stream);
+}
+
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_setStream
+  (JNIEnv *, jclass, jlong argsPtrRaw, jlong streamPtrRaw) {
+
+    FT_Open_Args* args = reinterpret_cast<FT_Open_Args*>(argsPtrRaw);
+    if(!args)
+        return;
+
+    const FT_Stream stream = reinterpret_cast<FT_Stream>(streamPtrRaw);
+    if(!stream)
+        return;
+
+    args->stream = stream;
 }
 
 // FT_Int num_params;

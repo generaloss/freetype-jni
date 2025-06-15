@@ -241,17 +241,37 @@ public class FTFace extends FTStruct { // struct done.
         error.checkError();
     }
 
+    public void loadGlyph(long glyphIndex, FTLoad loadFlag) {
+        final FTError error = FreeType.ftLoadGlyph(this, glyphIndex, loadFlag);
+        error.checkError();
+    }
+
+    public void loadGlyph(long glyphIndex, FTLoadTarget loadFlag) {
+        final FTError error = FreeType.ftLoadGlyph(this, glyphIndex, loadFlag);
+        error.checkError();
+    }
+
     public void loadGlyph(long glyphIndex, int loadFlags) {
         final FTError error = FreeType.ftLoadGlyph(this, glyphIndex, loadFlags);
         error.checkError();
     }
 
     public void loadGlyph(long glyphIndex) {
-        this.loadGlyph(glyphIndex, FTLoad.DEFAULT.value);
+        this.loadGlyph(glyphIndex, FTLoad.DEFAULT);
     }
 
     public void loadChar(int charcode, LoadFlags loadFlags) {
         final FTError error = FreeType.ftLoadChar(this, charcode, loadFlags);
+        error.checkError();
+    }
+
+    public void loadChar(int charcode, FTLoad loadFlag) {
+        final FTError error = FreeType.ftLoadChar(this, charcode, loadFlag);
+        error.checkError();
+    }
+
+    public void loadChar(int charcode, FTLoadTarget loadFlag) {
+        final FTError error = FreeType.ftLoadChar(this, charcode, loadFlag);
         error.checkError();
     }
 
@@ -261,7 +281,7 @@ public class FTFace extends FTStruct { // struct done.
     }
 
     public void loadChar(int charcode) {
-        this.loadChar(charcode, FTLoad.DEFAULT.value);
+        this.loadChar(charcode, FTLoad.DEFAULT);
     }
 
     public void setTransform(FTMatrix matrix, FTVector delta) {

@@ -116,6 +116,13 @@ public class FTMatrix extends FTStruct { // struct done.
     }
 
 
+    public FTMatrix setIdentity() {
+        this.setXX(1F);
+        this.setYY(1F);
+        return this;
+    }
+
+
     @Override
     public String toString() {
         return "FTMatrix {xx=" + this.getXX() + ", xy=" + this.getXY() + ", yx=" + this.getYX() + ", yy=" + this.getYY() + '}';

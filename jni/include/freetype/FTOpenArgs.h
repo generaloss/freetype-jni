@@ -81,6 +81,22 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_setPathname
 
 /*
  * Class:     generaloss_freetype_freetype_FTOpenArgs
+ * Method:    getStream
+ * Signature: (J)J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getStream
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTOpenArgs
+ * Method:    setStream
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_setStream
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     generaloss_freetype_freetype_FTOpenArgs
  * Method:    getNumParams
  * Signature: (J)I
  */
