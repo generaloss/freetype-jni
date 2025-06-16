@@ -33,18 +33,18 @@ public class FTBitmapSize extends FTStruct { // struct done.
     }
 
     // FT_Pos x_ppem;
-    private static native int getXppem(long pointer);
+    private static native int getXPpem(long pointer);
 
-    public float getXppem() {
-        final int raw = getXppem(super.pointer);
+    public float getXPpem() {
+        final int raw = getXPpem(super.pointer);
         return FTPos.toFloat(raw);
     }
 
     // FT_Pos y_ppem;
-    private static native int getYppem(long pointer);
+    private static native int getYPpem(long pointer);
 
-    public float getYppem() {
-        final int raw = getYppem(super.pointer);
+    public float getYPpem() {
+        final int raw = getYPpem(super.pointer);
         return FTPos.toFloat(raw);
     }
 

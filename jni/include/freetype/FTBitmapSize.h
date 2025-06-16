@@ -33,18 +33,18 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getSize
 
 /*
  * Class:     generaloss_freetype_freetype_FTBitmapSize
- * Method:    getXppem
+ * Method:    getXPpem
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getXppem
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getXPpem
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTBitmapSize
- * Method:    getYppem
+ * Method:    getYPpem
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getYppem
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getYPpem
   (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus

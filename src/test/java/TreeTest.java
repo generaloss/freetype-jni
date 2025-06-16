@@ -129,8 +129,8 @@ public class TreeTest {
             System.out.println("      FT_Short height = " + size.getHeight());
             System.out.println("      FT_Short width = " + size.getWidth());
             System.out.println("      FT_Pos   size = " + size.getSize());
-            System.out.println("      FT_Pos   x_ppem = " + size.getXppem());
-            System.out.println("      FT_Pos   y_ppem = " + size.getYppem());
+            System.out.println("      FT_Pos   x_ppem = " + size.getXPpem());
+            System.out.println("      FT_Pos   y_ppem = " + size.getYPpem());
             System.out.println("    }");
         }
         System.out.println("  ]");

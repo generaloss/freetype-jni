@@ -2,6 +2,7 @@
 
 #include <ft2build.h>
 #include <freetype/internal/ftgloadr.h>
+#include <freetype/internal/ftobjs.h>
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 #include FT_OUTLINE_H
@@ -250,14 +251,16 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Face
   (JNIEnv *env, jclass, jlong facePtrRaw, jbooleanArray dstDestroyFlag) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
-    if(!dstDestroyFlag || !face) {
+    if(!face) {
         throwException(env, "Invalid FT_Face pointer");
         return 0;
     }
 
+    const FT_Long refcount = face->internal->refcount;
+
     const FT_Error error = FT_Done_Face(face);
 
-    if(!face && error == FT_Err_Ok && dstDestroyFlag) {
+    if(dstDestroyFlag && error == FT_Err_Ok && refcount == 1) {
         jboolean isDestroyed = JNI_TRUE;
         env->SetBooleanArrayRegion(dstDestroyFlag, 0, 1, &isDestroyed);
     }

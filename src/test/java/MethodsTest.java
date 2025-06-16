@@ -1,12 +1,8 @@
 
 import generaloss.freetype.FreeType;
 import generaloss.freetype.freetype.*;
-import generaloss.freetype.gload.FTGlyphLoader;
-import generaloss.freetype.glyph.FTGlyph;
+import generaloss.freetype.image.FTGlyphFormat;
 import generaloss.freetype.stroke.FTStroker;
-import generaloss.freetype.stroke.FTStrokerLinecap;
-import generaloss.freetype.stroke.FTStrokerLinejoin;
-import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.FTFixed;
 import generaloss.freetype.types.FTMatrix;
 import generaloss.freetype.types.FTVector;
@@ -19,12 +15,16 @@ import java.nio.ByteBuffer;
 
 public class MethodsTest {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         for(Method method: MethodsTest.class.getDeclaredMethods()) {
-            if(Modifier.isPrivate(method.getModifiers()) && Modifier.isStatic(method.getModifiers())) {
+            if(Modifier.isPrivate(method.getModifiers()) && Modifier.isStatic(method.getModifiers()) && method.getParameterCount() == 0) {
                 System.out.println("Invoke " + method.getName());
                 method.setAccessible(true);
-                method.invoke(null);
+                try {
+                    method.invoke(null);
+                }catch(Throwable t) {
+                    throw new RuntimeException("Test " + method.getName() + " failed.", t);
+                }
             }
         }
     }
@@ -111,11 +111,11 @@ public class MethodsTest {
         lib.done();
     }
 
-    private static void test_ftOpenFace() {
+    private static void test_ftOpenFace_FILE() {
         FTLibrary lib = new FTLibrary();
 
         FTOpenArgs args = new FTOpenArgs();
-        args.setFlags(new OpenFlags().set(FTOpen.PATHNAME));
+        args.setFlags(FTOpen.PATHNAME);
         args.setPathname("src/test/resources/droidsans.ttf");
 
         FTFace face = lib.openFace(args, 0);
@@ -123,49 +123,91 @@ public class MethodsTest {
         lib.done();
     }
 
-    // private static void test_ftAttachFile() {
-    //     FTLibrary lib = new FTLibrary();
-    //     FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+    private static void test_ftOpenFace_MEMORY() {
+        FTLibrary lib = new FTLibrary();
 
-    //     face.attachFile("src/test/resources/accanthis.pfb");
+        FTOpenArgs args = new FTOpenArgs();
+        args.setFlags(FTOpen.MEMORY);
+        args.setMemoryBase(Resource.internal("/droidsans.ttf").readByteBuffer());
 
-    //     face.done();
-    //     lib.done();
-    // }
+        FTFace face = lib.openFace(args, 0);
+        face.done();
+        lib.done();
+    }
 
-    // private static void test_ftAttachStream() {
-    //     final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/droidsans.ttf").readBytes());
+    private static void test_ftOpenFace_STREAM() {
+        FTLibrary lib = new FTLibrary();
 
-    //     FTStream stream = new FTStream();
-    //     stream.setSize(bais.available());
-    //     stream.setRead((long offset, byte[] buffer, long count) -> {
-    //         bais.reset();
-    //         bais.skip(offset);
-    //         return bais.read(buffer, 0, (int) count);
-    //     });
-    //     stream.setClose(bais::close);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/main.ttf").readBytes());
+        FTStream stream = new FTStream();
+        stream.setSize(bais.available());
+        stream.setRead((long offset, byte[] buffer, long count) -> {
+            bais.reset();
+            bais.skip(offset);
+            return bais.read(buffer, 0, (int) count);
+        });
+        stream.setClose(bais::close);
 
-    //     FTOpenArgs args = new FTOpenArgs();
-    //     args.setFlags(FTOpen.STREAM);
+        FTOpenArgs args = new FTOpenArgs();
+        args.setFlags(FTOpen.STREAM);
+        args.setStream(stream);
 
-    //     FTLibrary lib = new FTLibrary();
-    //     FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
-    //     // ! FTError: invalid argument (6) ! face.attachStream(args);
+        FTFace face = lib.openFace(args, 0);
+        face.done();
+        lib.done();
+    }
 
-    //     stream.free();
-    //     args.free();
-    //     face.done();
-    //     lib.done();
-    // }
+    private static void test_ftAttachFile() {
+        // (postscript type 1 font)
+
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/cennp.pfb").readByteBuffer(), 0);
+
+        face.attachFile("src/test/resources/cennp.pfm");
+
+        face.done();
+        lib.done();
+    }
+
+    private static void test_ftAttachStream() {
+        // (postscript type 1 font)
+
+        final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/cennp.pfm").readBytes());
+        FTStream stream = new FTStream();
+        stream.setSize(bais.available());
+        stream.setRead((long offset, byte[] buffer, long count) -> {
+            bais.reset();
+            bais.skip(offset);
+            return bais.read(buffer, 0, (int) count);
+        });
+        stream.setClose(bais::close);
+
+        FTOpenArgs args = new FTOpenArgs();
+        args.setFlags(FTOpen.STREAM);
+        args.setStream(stream);
+
+        FTLibrary lib = new FTLibrary();
+        FTFace face = lib.newMemoryFace(Resource.internal("/cennp.pfb").readByteBuffer(), 0);
+        face.attachStream(args);
+
+        stream.free();
+        args.free();
+        face.done();
+        lib.done();
+    }
 
     private static void test_ftReferenceFace() {
         FTLibrary lib = new FTLibrary();
-        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0); // new => refcount=1
 
-        face.referenceFace();
-        face.done();
-        face.done();
+        face.referenceFace(); // refcount++ = 2
+        face.referenceFace(); // refcount++ = 3
+        face.done();          // refcount-- = 2
+        face.referenceFace(); // refcount++ = 3
+        face.done();          // refcount-- = 2
+        face.done();          // refcount-- = 1
 
+        face.done(); // refcount=0 => done
         lib.done();
     }
 
@@ -178,9 +220,20 @@ public class MethodsTest {
 
     private static void test_ftSelectSize() {
         FTLibrary lib = new FTLibrary();
-        FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        FTFace face = lib.newMemoryFace(Resource.internal("/ter-u32n.bdf").readByteBuffer(), 0);
 
-        // face.selectSize();
+        int strikeCount = face.getNumFixedSizes();
+        if(strikeCount == 0)
+            throw new RuntimeException("Face has no available bitmap sizes");
+
+        FreeType.ftSelectSize(face, 0);
+
+        FreeType.ftLoadGlyph(face, face.getCharIndex('A'));
+
+        // Load bitmap glyph using FT_Select_Size strike[0]
+        FTGlyphSlot glyph = face.getGlyph();
+        if(glyph.getFormat() != FTGlyphFormat.BITMAP)
+            throw new RuntimeException("Expected bitmap glyph, but got: " + glyph.getFormat());
 
         face.done();
         lib.done();

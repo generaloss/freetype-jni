@@ -38,7 +38,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getSize
 }
 
 // FT_Pos x_ppem;
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getXppem
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getXPpem
   (JNIEnv *, jclass, jlong sizePtrRaw) {
 
     const FT_Bitmap_Size* size = reinterpret_cast<FT_Bitmap_Size*>(sizePtrRaw);
@@ -49,7 +49,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getXppem
 }
 
 // FT_Pos y_ppem;
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getYppem
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTBitmapSize_getYPpem
   (JNIEnv *, jclass, jlong sizePtrRaw) {
 
     const FT_Bitmap_Size* size = reinterpret_cast<FT_Bitmap_Size*>(sizePtrRaw);
