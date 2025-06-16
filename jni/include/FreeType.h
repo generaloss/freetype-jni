@@ -74,10 +74,10 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Reference_1Face
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Done_Face
- * Signature: (J)I
+ * Signature: (J[Z)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Face
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv *, jclass, jlong, jbooleanArray);
 
 /*
  * Class:     generaloss_freetype_FreeType

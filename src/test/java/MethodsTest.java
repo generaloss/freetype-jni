@@ -133,40 +133,39 @@ public class MethodsTest {
     //     lib.done();
     // }
 
-    private static void test_ftAttachStream() {
-        //
-        // final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/droidsans.ttf").readBytes());
+    // private static void test_ftAttachStream() {
+    //     final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/droidsans.ttf").readBytes());
 
-        // FTStream stream = new FTStream();
-        // stream.setSize(bais.available());
-        // stream.setRead((long offset, byte[] buffer, long count) -> {
-        //     bais.reset();
-        //     bais.skip(offset);
-        //     return bais.read(buffer, 0, (int) count);
-        // });
-        // stream.setClose(bais::close);
+    //     FTStream stream = new FTStream();
+    //     stream.setSize(bais.available());
+    //     stream.setRead((long offset, byte[] buffer, long count) -> {
+    //         bais.reset();
+    //         bais.skip(offset);
+    //         return bais.read(buffer, 0, (int) count);
+    //     });
+    //     stream.setClose(bais::close);
 
-        // FTOpenArgs args = new FTOpenArgs();
-        // args.setFlags(FTOpen.STREAM);
+    //     FTOpenArgs args = new FTOpenArgs();
+    //     args.setFlags(FTOpen.STREAM);
 
-        // FTLibrary lib = new FTLibrary();
-        // FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
-        // // ! FTError: invalid argument (6) ! face.attachStream(args);
+    //     FTLibrary lib = new FTLibrary();
+    //     FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+    //     // ! FTError: invalid argument (6) ! face.attachStream(args);
 
-        // stream.free();
-        // args.free();
-        // face.done();
-        // lib.done();
-    }
+    //     stream.free();
+    //     args.free();
+    //     face.done();
+    //     lib.done();
+    // }
 
     private static void test_ftReferenceFace() {
         FTLibrary lib = new FTLibrary();
         FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
         face.referenceFace();
-        // ! face.done();
-
         face.done();
+        face.done();
+
         lib.done();
     }
 

@@ -178,12 +178,14 @@ public class FreeType {
     }
 
     // FT_Error FT_Done_Face(FT_Face face)
-    private static native int FT_Done_Face(long face);
+    private static native int FT_Done_Face(long face, boolean[] dstDestroyFlag);
 
     public static FTError ftDoneFace(FTFace face) {
-        final int code = FT_Done_Face(FTStruct.getPointer(face));
-        if(face != null)
+        final boolean[] dstDestroyFlag = new boolean[1];
+        final int code = FT_Done_Face(FTStruct.getPointer(face), dstDestroyFlag);
+        if(dstDestroyFlag[0])
             face.destroyPointer();
+
         return FTError.byCode(code);
     }
 

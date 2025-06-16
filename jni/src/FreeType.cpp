@@ -247,15 +247,21 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Reference_1Face
 // FT_Error FT_Done_Face(FT_Face face)
 // int FT_Done_Face(long face);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Face
-  (JNIEnv *env, jclass, jlong facePtrRaw) {
+  (JNIEnv *env, jclass, jlong facePtrRaw, jbooleanArray dstDestroyFlag) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
-    if(!face) {
+    if(!dstDestroyFlag || !face) {
         throwException(env, "Invalid FT_Face pointer");
         return 0;
     }
 
     const FT_Error error = FT_Done_Face(face);
+
+    if(!face && error == FT_Err_Ok && dstDestroyFlag) {
+        jboolean isDestroyed = JNI_TRUE;
+        env->SetBooleanArrayRegion(dstDestroyFlag, 0, 1, &isDestroyed);
+    }
+
     return static_cast<jint>(error);
 }
 
