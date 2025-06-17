@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Test" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="Test" />
+    <option name="MAIN_CLASS_NAME" value="RenderTest" />
     <module name="freetype-jni" />
     <method v="2">
       <option name="Make" enabled="true" />
