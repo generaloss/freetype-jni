@@ -9,18 +9,18 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_freetype_FTSizeMetrics
- * Method:    getXppem
+ * Method:    getXPpem
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXppem
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXPpem
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_freetype_FTSizeMetrics
- * Method:    getYppem
+ * Method:    getYPpem
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYppem
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYPpem
   (JNIEnv *, jclass, jlong);
 
 /*

@@ -12,17 +12,17 @@ public class FTSizeMetrics extends FTStruct { // struct done.
 
 
     // FT_UShort x_ppem;
-    private static native int getXppem(long pointer);
+    private static native int getXPpem(long pointer);
 
-    public int getXppem() {
-        return getXppem(super.pointer);
+    public int getXPpem() {
+        return getXPpem(super.pointer);
     }
 
     // FT_UShort y_ppem;
-    private static native int getYppem(long pointer);
+    private static native int getYPpem(long pointer);
 
-    public int getYppem() {
-        return getYppem(super.pointer);
+    public int getYPpem() {
+        return getYPpem(super.pointer);
     }
 
     // FT_Fixed x_scale;

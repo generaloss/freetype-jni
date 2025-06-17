@@ -5,7 +5,7 @@
 #include FT_FREETYPE_H
 
 // FT_UShort x_ppem;
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXppem
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXPpem
   (JNIEnv *, jclass, jlong metricsPtrRaw) {
 
     const FT_Size_Metrics* metrics = reinterpret_cast<FT_Size_Metrics*>(metricsPtrRaw);
@@ -16,7 +16,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getXppem
 }
 
 // FT_UShort y_ppem;
-JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYppem
+JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTSizeMetrics_getYPpem
   (JNIEnv *, jclass, jlong metricsPtrRaw) {
 
     const FT_Size_Metrics* metrics = reinterpret_cast<FT_Size_Metrics*>(metricsPtrRaw);

@@ -226,12 +226,12 @@ public class FTFace extends FTStruct { // struct done.
         error.checkError();
     }
 
-    public void setCharSize(int charWidth, int charHeight, int horzResolution, int vertResolution) {
+    public void setCharSize(float charWidth, float charHeight, long horzResolution, long vertResolution) {
         final FTError error = FreeType.ftSetCharSize(this, charWidth, charHeight, horzResolution, vertResolution);
         error.checkError();
     }
 
-    public void setPixelSizes(int pixelWidth, int pixelHeight) {
+    public void setPixelSizes(long pixelWidth, long pixelHeight) {
         final FTError error = FreeType.ftSetPixelSizes(this, pixelWidth, pixelHeight);
         error.checkError();
     }
@@ -260,27 +260,27 @@ public class FTFace extends FTStruct { // struct done.
         this.loadGlyph(glyphIndex, FTLoad.DEFAULT);
     }
 
-    public void loadChar(int charcode, LoadFlags loadFlags) {
+    public void loadChar(long charcode, LoadFlags loadFlags) {
         final FTError error = FreeType.ftLoadChar(this, charcode, loadFlags);
         error.checkError();
     }
 
-    public void loadChar(int charcode, FTLoad loadFlag) {
+    public void loadChar(long charcode, FTLoad loadFlag) {
         final FTError error = FreeType.ftLoadChar(this, charcode, loadFlag);
         error.checkError();
     }
 
-    public void loadChar(int charcode, FTLoadTarget loadFlag) {
+    public void loadChar(long charcode, FTLoadTarget loadFlag) {
         final FTError error = FreeType.ftLoadChar(this, charcode, loadFlag);
         error.checkError();
     }
 
-    public void loadChar(int charcode, int loadFlags) {
+    public void loadChar(long charcode, int loadFlags) {
         final FTError error = FreeType.ftLoadChar(this, charcode, loadFlags);
         error.checkError();
     }
 
-    public void loadChar(int charcode) {
+    public void loadChar(long charcode) {
         this.loadChar(charcode, FTLoad.DEFAULT);
     }
 
@@ -292,23 +292,23 @@ public class FTFace extends FTStruct { // struct done.
         FreeType.ftGetTransform(this, dstMatrix, dstDelta);
     }
 
-    public void getKerning(int leftGlyph, int rightGlyph, FTKerningMode kerningMode, FTVector dstKerning) {
+    public void getKerning(long leftGlyph, long rightGlyph, FTKerningMode kerningMode, FTVector dstKerning) {
         final FTError error = FreeType.ftGetKerning(this, leftGlyph, rightGlyph, kerningMode, dstKerning);
         error.checkError();
     }
 
-    public FTVector getKerning(int leftGlyph, int rightGlyph, FTKerningMode kerningMode) {
+    public FTVector getKerning(long leftGlyph, long rightGlyph, FTKerningMode kerningMode) {
         final FTVector dstKerning = new FTVector();
         this.getKerning(leftGlyph, rightGlyph, kerningMode, dstKerning);
         return dstKerning;
     }
 
-    public void getTrackKerning(int pointSize, int degree, FTFixed dstKerning) {
+    public void getTrackKerning(long pointSize, int degree, FTFixed dstKerning) {
         final FTError error = FreeType.ftGetTrackKerning(this, pointSize, degree, dstKerning);
         error.checkError();
     }
 
-    public float getTrackKerning(int pointSize, int degree) {
+    public float getTrackKerning(long pointSize, int degree) {
         final FTFixed dstKerning = new FTFixed();
         this.getTrackKerning(pointSize, degree, dstKerning);
         return dstKerning.getFloat();
@@ -324,7 +324,7 @@ public class FTFace extends FTStruct { // struct done.
         error.checkError();
     }
 
-    public long getCharIndex(int charcode) {
+    public long getCharIndex(long charcode) {
         return FreeType.ftGetCharIndex(this, charcode);
     }
 

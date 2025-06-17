@@ -262,10 +262,10 @@ public class MethodsTest {
         FTLibrary lib = new FTLibrary();
         FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
-        // ! FTError: invalid pixel size (23) ! face.setCharSize(0, 16 * 64, 300, 300); // height 16pt, 300dpi
+        face.setCharSize(0F, 16F, 300, 300); // 16pt, 300dpi
 
-        // FTSizeMetrics metrics = face.getSize().getMetrics();
-        // assert metrics.getHeight() > 0;
+        FTSizeMetrics metrics = face.getSize().getMetrics();
+        assert metrics.getHeight() > 0;
 
         face.done();
         lib.done();

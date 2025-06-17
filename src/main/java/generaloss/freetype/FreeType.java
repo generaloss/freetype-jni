@@ -296,7 +296,7 @@ public class FreeType {
     // FT_Error FT_Get_Kerning(FT_Face face, FT_UInt left_glyph, FT_UInt right_glyph, FT_UInt kern_mode, FT_Vector *akerning)
     private static native int FT_Get_Kerning(long face, long left_glyph, long right_glyph, int kern_mode, long akerning);
 
-    public static FTError ftGetKerning(FTFace face, int leftGlyph, int rightGlyph, FTKerningMode kerningMode, FTVector dstKerning) {
+    public static FTError ftGetKerning(FTFace face, long leftGlyph, long rightGlyph, FTKerningMode kerningMode, FTVector dstKerning) {
         if(kerningMode == null)
             kerningMode = FTKerningMode.DEFAULT;
         final int code = FT_Get_Kerning(FTStruct.getPointer(face), leftGlyph, rightGlyph, kerningMode.value, FTStruct.getPointer(dstKerning));

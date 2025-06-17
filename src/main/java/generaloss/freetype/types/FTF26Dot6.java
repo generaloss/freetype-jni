@@ -80,10 +80,10 @@ public class FTF26Dot6 extends FTStruct { // struct done.
     }
 
 
-    public static final int BITS = 26;
-    public static final int UNIT = (1 << BITS); // 67108864
-    public static final int HALF_UNIT = (1 << (BITS - 1)); // 33554432
-    public static final int MASK = (UNIT - 1); // 0x3FFFFFF
+    public static final int BITS = 6;
+    public static final int UNIT = (1 << BITS); // 64
+    public static final int HALF_UNIT = (1 << (BITS - 1)); // 32
+    public static final int MASK = (UNIT - 1); // 0x3F
     public static final float UNIT_FRAC = (1F / UNIT);
 
     public static float toFloat(int rawValue) {

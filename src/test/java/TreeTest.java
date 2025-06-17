@@ -234,8 +234,8 @@ public class TreeTest {
         System.out.println("  FT_Size         size = {");
         System.out.println("    FT_Face         face = " + face.getSize().getFace());
         System.out.println("    FT_Size_Metrics metrics = {");
-        System.out.println("      FT_UShort x_ppem = " + face.getSize().getMetrics().getXppem());
-        System.out.println("      FT_UShort y_ppem = " + face.getSize().getMetrics().getYppem());
+        System.out.println("      FT_UShort x_ppem = " + face.getSize().getMetrics().getXPpem());
+        System.out.println("      FT_UShort y_ppem = " + face.getSize().getMetrics().getYPpem());
         System.out.println("      FT_Fixed  x_scale = " + face.getSize().getMetrics().getXScale());
         System.out.println("      FT_Fixed  y_scale = " + face.getSize().getMetrics().getYScale());
         System.out.println("      FT_Pos    ascender = " + face.getSize().getMetrics().getAscender());
