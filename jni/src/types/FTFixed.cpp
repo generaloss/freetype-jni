@@ -8,6 +8,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTFixed_createPointer
   (JNIEnv *, jclass) {
 
     FT_Fixed* pointer = new FT_Fixed;
+    memset(pointer, 0, sizeof(FT_Fixed));
     return reinterpret_cast<jlong>(pointer);
 }
 

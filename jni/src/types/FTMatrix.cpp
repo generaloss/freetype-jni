@@ -8,6 +8,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTMatrix_createPointer
   (JNIEnv *, jclass) {
 
     FT_Matrix* pointer = new FT_Matrix;
+    memset(pointer, 0, sizeof(FT_Matrix));
     return reinterpret_cast<jlong>(pointer);
 }
 

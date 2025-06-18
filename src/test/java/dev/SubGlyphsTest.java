@@ -1,3 +1,5 @@
+package dev;
+
 import generaloss.freetype.freetype.*;
 import generaloss.freetype.gload.FTSubGlyph;
 import jpize.util.res.Resource;

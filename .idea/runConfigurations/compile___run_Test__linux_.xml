@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="compile &amp; run Test (linux)" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="RenderTest" />
+    <option name="MAIN_CLASS_NAME" value="dev.RenderTest" />
     <module name="freetype-jni" />
     <method v="2">
       <option name="RunConfigurationTask" enabled="true" run_configuration_name="dev compile natives (linux)" run_configuration_type="ShConfigurationType" />

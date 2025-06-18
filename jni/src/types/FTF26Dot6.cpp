@@ -8,6 +8,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTF26Dot6_createPointer
   (JNIEnv *, jclass) {
 
     FT_F26Dot6* pointer = new FT_F26Dot6;
+    memset(pointer, 0, sizeof(FT_F26Dot6));
     return reinterpret_cast<jlong>(pointer);
 }
 

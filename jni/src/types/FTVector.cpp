@@ -8,6 +8,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_createPointer
   (JNIEnv *, jclass) {
 
     FT_Vector* pointer = new FT_Vector;
+    memset(pointer, 0, sizeof(FT_Vector));
     return reinterpret_cast<jlong>(pointer);
 }
 

@@ -8,8 +8,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTParameter_createPoin
   (JNIEnv *, jclass) {
 
     FT_Parameter* pointer = new FT_Parameter;
-    pointer->tag = 0;
-    pointer->data = nullptr;
+    memset(pointer, 0, sizeof(FT_Parameter));
     return reinterpret_cast<jlong>(pointer);
 }
 

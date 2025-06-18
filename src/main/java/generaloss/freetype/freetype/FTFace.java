@@ -309,7 +309,7 @@ public class FTFace extends FTStruct { // struct done.
     }
 
     public float getTrackKerning(long pointSize, int degree) {
-        final FTFixed dstKerning = new FTFixed();
+        final FTFixed dstKerning = new FTFixed().set(22854);
         this.getTrackKerning(pointSize, degree, dstKerning);
         return dstKerning.getFloat();
     }

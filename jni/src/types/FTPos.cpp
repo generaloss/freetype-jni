@@ -8,6 +8,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTPos_createPointer
   (JNIEnv *, jclass) {
 
     FT_Pos* pointer = new FT_Pos;
+    memset(pointer, 0, sizeof(FT_Pos));
     return reinterpret_cast<jlong>(pointer);
 }
 

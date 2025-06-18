@@ -9,22 +9,6 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_types_FTBBox
- * Method:    createPointer
- * Signature: ()J
- */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_createPointer
-  (JNIEnv *, jclass);
-
-/*
- * Class:     generaloss_freetype_types_FTBBox
- * Method:    freePointer
- * Signature: (J)V
- */
-JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTBBox_freePointer
-  (JNIEnv *, jclass, jlong);
-
-/*
- * Class:     generaloss_freetype_types_FTBBox
  * Method:    getXMin
  * Signature: (J)I
  */

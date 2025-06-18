@@ -158,9 +158,9 @@ public class FuncTests {
     public void ftAttachFile() {
         // (postscript type 1 font)
         final FTLibrary lib = new FTLibrary();
-        final FTFace face = lib.newMemoryFace(Resource.internal("/cennp.pfb").readByteBuffer(), 0);
+        final FTFace face = lib.newMemoryFace(Resource.internal("/cryst.pfb").readByteBuffer(), 0);
 
-        face.attachFile("src/test/resources/cennp.pfm");
+        face.attachFile("src/test/resources/cryst.afm");
 
         face.done();
         lib.done();
@@ -169,7 +169,7 @@ public class FuncTests {
     @Test
     public void ftAttachStream() {
         // (postscript type 1 font)
-        final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/cennp.pfm").readBytes());
+        final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/cryst.afm").readBytes());
         final FTStream stream = new FTStream();
         stream.setSize(bais.available());
         stream.setRead((long offset, byte[] buffer, long count) -> {
@@ -184,7 +184,7 @@ public class FuncTests {
         args.setStream(stream);
 
         final FTLibrary lib = new FTLibrary();
-        final FTFace face = lib.newMemoryFace(Resource.internal("/cennp.pfb").readByteBuffer(), 0);
+        final FTFace face = lib.newMemoryFace(Resource.internal("/cryst.pfb").readByteBuffer(), 0);
         face.attachStream(args);
 
         stream.free();
@@ -373,7 +373,30 @@ public class FuncTests {
 
     @Test
     public void ftGetTrackKerning() {
+        final FTLibrary library = new FTLibrary();
 
+        final FTFace face = library.newMemoryFace(Resource.internal("/cryst.pfb").readByteBuffer(), 0);
+
+        final FTStream stream = new FTStream();
+        stream.set(Resource.internal("/cryst.afm").readBytes());
+
+        final FTOpenArgs args = new FTOpenArgs();
+        args.setFlags(FTOpen.STREAM);
+        args.setStream(stream);
+
+        face.attachStream(args);
+
+        stream.free();
+        args.free();
+
+        face.setPixelSizes(0, 16);
+
+        System.out.println(face.getTrackKerning(16, 1));
+
+        // Assert.assertEquals(-2F, dstKerning.getX(), 0F);
+
+        face.done();
+        library.done();
     }
 
     @Test

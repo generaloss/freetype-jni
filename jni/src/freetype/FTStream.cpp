@@ -15,9 +15,8 @@ struct StreamUserData {
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTStream_createPointer
   (JNIEnv *env, jclass) {
 
-    FT_Stream stream = new FT_StreamRec_();
+    FT_Stream stream = new FT_StreamRec();
     memset(stream, 0, sizeof(FT_StreamRec));
-
     return reinterpret_cast<jlong>(stream);
 }
 

@@ -1,3 +1,5 @@
+package dev;
+
 import generaloss.freetype.freetype.*;
 import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.image.FTBitmap;

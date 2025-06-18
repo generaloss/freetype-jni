@@ -8,6 +8,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_createPo
   (JNIEnv *, jclass) {
 
     FT_Size_Request pointer = new FT_Size_RequestRec();
+    memset(pointer, 0, sizeof(FT_Size_RequestRec));
     return reinterpret_cast<jlong>(pointer);
 }
 

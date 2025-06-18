@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="SubGlyphsTest" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="SubGlyphsTest" />
+    <option name="MAIN_CLASS_NAME" value="dev.SubGlyphsTest" />
     <module name="freetype-jni" />
     <method v="2">
       <option name="Make" enabled="true" />

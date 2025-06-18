@@ -5,6 +5,8 @@ import generaloss.freetype.FTStructCache;
 import generaloss.freetype.FreeType;
 import generaloss.freetype.system.FTMemory;
 
+import java.io.ByteArrayInputStream;
+
 public class FTStream extends FTStruct {
 
     private boolean readSet;
@@ -84,6 +86,19 @@ public class FTStream extends FTStruct {
     public FTMemory getMemory() {
         final long pointer = getMemory(this.pointer);
         return FTStructCache.getOrCreate(FTMemory.class, pointer, FTMemory::new);
+    }
+
+
+    public void set(byte[] data) {
+        final ByteArrayInputStream stream = new ByteArrayInputStream(data);
+        this.setSize(stream.available());
+
+        this.setRead((long offset, byte[] buffer, long count) -> {
+            stream.reset();
+            stream.skip(offset);
+            return stream.read(buffer, 0, (int) count);
+        });
+        this.setClose(stream::close);
     }
 
 }

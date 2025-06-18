@@ -304,7 +304,7 @@ public class FreeType {
     }
 
     // FT_Error FT_Get_Track_Kerning(FT_Face face, FT_Fixed point_size, FT_Int degree, FT_Fixed* akerning)
-    private static native int FT_Get_Track_Kerning(long face, long point_size, int degree, long akerning);
+    private static native int FT_Get_Track_Kerning(long face, int point_size, int degree, long akerning);
 
     public static FTError ftGetTrackKerning(FTFace face, float pointSize, int degree, FTFixed dstKerning) {
         final int code = FT_Get_Track_Kerning(FTStruct.getPointer(face), FTFixed.of(pointSize), degree, FTStruct.getPointer(dstKerning));

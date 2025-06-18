@@ -162,10 +162,10 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Kerning
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Get_Track_Kerning
- * Signature: (JJIJ)I
+ * Signature: (JIIJ)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Track_1Kerning
-  (JNIEnv *, jclass, jlong, jlong, jint, jlong);
+  (JNIEnv *, jclass, jlong, jint, jint, jlong);
 
 /*
  * Class:     generaloss_freetype_FreeType
