@@ -11,6 +11,9 @@ import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FuncTests {
 
@@ -158,9 +161,9 @@ public class FuncTests {
     public void ftAttachFile() {
         // (postscript type 1 font)
         final FTLibrary lib = new FTLibrary();
-        final FTFace face = lib.newMemoryFace(Resource.internal("/cryst.pfb").readByteBuffer(), 0);
+        final FTFace face = lib.newMemoryFace(Resource.internal("/bchb8i.pfb").readByteBuffer(), 0);
 
-        face.attachFile("src/test/resources/cryst.afm");
+        face.attachFile("src/test/resources/bchb8i.afm");
 
         face.done();
         lib.done();
@@ -169,7 +172,7 @@ public class FuncTests {
     @Test
     public void ftAttachStream() {
         // (postscript type 1 font)
-        final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/cryst.afm").readBytes());
+        final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/bchb8i.afm").readBytes());
         final FTStream stream = new FTStream();
         stream.setSize(bais.available());
         stream.setRead((long offset, byte[] buffer, long count) -> {
@@ -184,7 +187,7 @@ public class FuncTests {
         args.setStream(stream);
 
         final FTLibrary lib = new FTLibrary();
-        final FTFace face = lib.newMemoryFace(Resource.internal("/cryst.pfb").readByteBuffer(), 0);
+        final FTFace face = lib.newMemoryFace(Resource.internal("/bchb8i.pfb").readByteBuffer(), 0);
         face.attachStream(args);
 
         stream.free();
@@ -372,13 +375,13 @@ public class FuncTests {
     }
 
     @Test
-    public void ftGetTrackKerning() {
+    public void ftGetTrackKerning() { // old enough postscript type1 font was not found => 0F track kerning
         final FTLibrary library = new FTLibrary();
 
-        final FTFace face = library.newMemoryFace(Resource.internal("/cryst.pfb").readByteBuffer(), 0);
+        final FTFace face = library.newMemoryFace(Resource.internal("/bchb8i.pfb").readByteBuffer(), 0);
 
         final FTStream stream = new FTStream();
-        stream.set(Resource.internal("/cryst.afm").readBytes());
+        stream.set(Resource.internal("/bchb8i.afm").readBytes());
 
         final FTOpenArgs args = new FTOpenArgs();
         args.setFlags(FTOpen.STREAM);
@@ -391,9 +394,7 @@ public class FuncTests {
 
         face.setPixelSizes(0, 16);
 
-        System.out.println(face.getTrackKerning(16, 1));
-
-        // Assert.assertEquals(-2F, dstKerning.getX(), 0F);
+        Assert.assertEquals(0F, face.getTrackKerning(32, 0), 0F);
 
         face.done();
         library.done();
@@ -401,47 +402,144 @@ public class FuncTests {
 
     @Test
     public void ftSelectCharmap() {
+        final FTLibrary library = new FTLibrary();
+        final FTFace face = library.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        face.selectCharmap(FTEncoding.APPLE_ROMAN);
+        Assert.assertEquals(FTEncoding.APPLE_ROMAN, face.getCharmap().getEncoding());
+
+        face.selectCharmap(FTEncoding.UNICODE);
+        Assert.assertEquals(FTEncoding.UNICODE, face.getCharmap().getEncoding());
+
+        face.done();
+        library.done();
     }
 
     @Test
     public void ftSetCharmap() {
+        final FTLibrary library = new FTLibrary();
+        final FTFace face = library.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        final List<FTCharMap> list = new ArrayList<>(Arrays.asList(face.getCharmaps()));
+        list.remove(face.getCharmap());
+
+        final FTCharMap target = list.get(0);
+        face.setCharmap(target);
+        Assert.assertEquals(target, face.getCharmap());
+
+        face.done();
+        library.done();
     }
 
     @Test
     public void ftGetCharmapIndex() {
+        final FTLibrary library = new FTLibrary();
+        final FTFace face = library.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        final FTCharMap[] charmaps = face.getCharmaps();
+
+        final int index = (charmaps.length - 1); // last
+        final FTCharMap charmap = face.getCharmaps()[index];
+        Assert.assertEquals(index, charmap.getIndex());
+
+        face.done();
+        library.done();
     }
 
     @Test
     public void ftGetCharIndex() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        final long indexA = face.getCharIndex('A');
+        final long indexZ = face.getCharIndex('Z');
+        final long invalidChar = face.getCharIndex(0xFFFF);
+
+        Assert.assertTrue(indexA > 0);
+        Assert.assertTrue(indexZ > 0);
+        Assert.assertEquals(0, invalidChar);
+
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftGetFirstChar() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        final long[] dstGlyphIndex = new long[1];
+        final long charcode = face.getFirstChar(dstGlyphIndex);
+
+        Assert.assertTrue(charcode > 0);
+        Assert.assertEquals(face.getCharIndex(charcode), dstGlyphIndex[0]);
+
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftGetNextChar() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        final long first = face.getFirstChar(null);
+        final long next = face.getNextChar(first, null);
+
+        Assert.assertTrue(next > first);
+        Assert.assertTrue(next > 0);
+
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftGetNameIndex() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        final long index = face.getNameIndex("copyright");
+        Assert.assertTrue(index >= 0);
+
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftGetPostscriptName() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        final String postscriptName = face.getPostscriptName();
+        Assert.assertEquals("DroidSans", postscriptName);
+
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftGetSubGlyphInfo() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        face.loadChar('A', FTLoad.NO_RECURSE);
+        final FTGlyphSlot glyph = face.getGlyph();
+
+        // if(glyph.getFormat() != FTGlyphFormat.COMPOSITE)
+        //     throw new RuntimeException("Expected composite glyph");
+
+        final int[] dstPIndex = new int[1];
+        final long[] dstPFlags = new long[1];
+        final int[] dstPArg1 = new int[1];
+        final int[] dstPArg2 = new int[1];
+        final FTMatrix dstPTransform = new FTMatrix();
+
+        glyph.getSubGlyphInfo(0L, dstPIndex, dstPFlags, dstPArg1, dstPArg2, dstPTransform);
+
+        System.out.println();
+
+        face.done();
+        lib.done();
     }
 
     @Test

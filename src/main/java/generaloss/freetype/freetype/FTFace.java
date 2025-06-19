@@ -297,10 +297,18 @@ public class FTFace extends FTStruct { // struct done.
         error.checkError();
     }
 
+    public void getKerning(long leftGlyph, long rightGlyph, FTVector dstKerning) {
+        getKerning(leftGlyph, rightGlyph, FTKerningMode.DEFAULT, dstKerning);
+    }
+
     public FTVector getKerning(long leftGlyph, long rightGlyph, FTKerningMode kerningMode) {
         final FTVector dstKerning = new FTVector();
         this.getKerning(leftGlyph, rightGlyph, kerningMode, dstKerning);
         return dstKerning;
+    }
+
+    public FTVector getKerning(long leftGlyph, long rightGlyph) {
+        return this.getKerning(leftGlyph, rightGlyph, FTKerningMode.DEFAULT);
     }
 
     public void getTrackKerning(long pointSize, int degree, FTFixed dstKerning) {
@@ -309,7 +317,7 @@ public class FTFace extends FTStruct { // struct done.
     }
 
     public float getTrackKerning(long pointSize, int degree) {
-        final FTFixed dstKerning = new FTFixed().set(22854);
+        final FTFixed dstKerning = new FTFixed();
         this.getTrackKerning(pointSize, degree, dstKerning);
         return dstKerning.getFloat();
     }
@@ -328,12 +336,12 @@ public class FTFace extends FTStruct { // struct done.
         return FreeType.ftGetCharIndex(this, charcode);
     }
 
-    public long getFirstChar(long[] dstGIndex) {
-        return FreeType.ftGetFirstChar(this, dstGIndex);
+    public long getFirstChar(long[] dstGlyphIndex) {
+        return FreeType.ftGetFirstChar(this, dstGlyphIndex);
     }
 
-    public long getNextChar(long charcode, long[] dstGIndex) {
-        return FreeType.ftGetNextChar(this, charcode, dstGIndex);
+    public long getNextChar(long charcode, long[] dstGlyphIndex) {
+        return FreeType.ftGetNextChar(this, charcode, dstGlyphIndex);
     }
 
     public void properties(int numProperties, FTParameter... properties) {

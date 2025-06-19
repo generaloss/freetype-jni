@@ -303,6 +303,10 @@ public class FreeType {
         return FTError.byCode(code);
     }
 
+    public static FTError ftGetKerning(FTFace face, long leftGlyph, long rightGlyph, FTVector dstKerning) {
+        return ftGetKerning(face, leftGlyph, rightGlyph, FTKerningMode.DEFAULT, dstKerning);
+    }
+
     // FT_Error FT_Get_Track_Kerning(FT_Face face, FT_Fixed point_size, FT_Int degree, FT_Fixed* akerning)
     private static native int FT_Get_Track_Kerning(long face, int point_size, int degree, long akerning);
 
@@ -346,15 +350,15 @@ public class FreeType {
     // FT_ULong FT_Get_First_Char(FT_Face face, FT_UInt *agindex)
     private static native long FT_Get_First_Char(long face, long[] agindex);
 
-    public static long ftGetFirstChar(FTFace face, long[] dstGIndex) {
-        return FT_Get_First_Char(FTStruct.getPointer(face), dstGIndex);
+    public static long ftGetFirstChar(FTFace face, long[] dstGlyphIndex) {
+        return FT_Get_First_Char(FTStruct.getPointer(face), dstGlyphIndex);
     }
 
     // FT_ULong FT_Get_Next_Char(FT_Face face, FT_ULong char_code, FT_UInt *agindex)
     private static native long FT_Get_Next_Char(long face, long char_code, long[] agindex);
 
-    public static long ftGetNextChar(FTFace face, long charcode, long[] dstGIndex) {
-        return FT_Get_Next_Char(FTStruct.getPointer(face), charcode, dstGIndex);
+    public static long ftGetNextChar(FTFace face, long charcode, long[] dstGlyphIndex) {
+        return FT_Get_Next_Char(FTStruct.getPointer(face), charcode, dstGlyphIndex);
     }
 
     // FT_Error FT_Face_Properties(FT_Face face, FT_UInt num_properties, FT_Parameter* properties)

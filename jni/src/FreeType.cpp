@@ -561,17 +561,18 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1First_1Char
         return 0;
     }
 
-    jlong* gindexArray = env->GetLongArrayElements(gindexArrayRaw, NULL);
-    if(!gindexArray) {
-        throwException(env, "Invalid gindex array");
-        return 0;
-    }
-
-    FT_UInt agindex = 0;
+    FT_UInt agindex;
     const FT_ULong charcode = FT_Get_First_Char(face, &agindex);
-    gindexArray[0] = static_cast<jlong>(agindex);
 
-    env->ReleaseLongArrayElements(gindexArrayRaw, gindexArray, 0);
+    if(gindexArrayRaw != nullptr) {
+        jlong* gindexArray = env->GetLongArrayElements(gindexArrayRaw, NULL);
+
+        const jsize length = env->GetArrayLength(gindexArrayRaw);
+        if(length > 0) {
+            gindexArray[0] = static_cast<jlong>(agindex);
+            env->ReleaseLongArrayElements(gindexArrayRaw, gindexArray, 0);
+        }
+    }
 
     return static_cast<jlong>(charcode);
 }
@@ -587,17 +588,18 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Next_1Char
         return 0;
     }
 
-    jlong* gindexArray = env->GetLongArrayElements(gindexArrayRaw, NULL);
-    if(!gindexArray) {
-        throwException(env, "Invalid gindex array");
-        return 0;
-    }
-
-    FT_UInt agindex = 0;
+    FT_UInt agindex;
     const FT_ULong nextCharcode = FT_Get_Next_Char(face, static_cast<FT_ULong>(charCodeRaw), &agindex);
-    gindexArray[0] = static_cast<jlong>(agindex);
 
-    env->ReleaseLongArrayElements(gindexArrayRaw, gindexArray, 0);
+    if(gindexArrayRaw != nullptr) {
+        jlong* gindexArray = env->GetLongArrayElements(gindexArrayRaw, NULL);
+
+        const jsize length = env->GetArrayLength(gindexArrayRaw);
+        if(length > 0) {
+            gindexArray[0] = static_cast<jlong>(agindex);
+            env->ReleaseLongArrayElements(gindexArrayRaw, gindexArray, 0);
+        }
+    }
 
     return static_cast<jlong>(nextCharcode);
 }
