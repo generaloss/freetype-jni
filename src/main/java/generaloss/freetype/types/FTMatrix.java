@@ -118,6 +118,14 @@ public class FTMatrix extends FTStruct { // struct done.
     }
 
 
+    public FTMatrix set(float xx, float xy, float yx, float yy) {
+        this.setXX(xx);
+        this.setXY(xy);
+        this.setYX(yx);
+        this.setYY(yy);
+        return this;
+    }
+
     public FTMatrix setIdentity() {
         this.setXX(1F);
         this.setYY(1F);
@@ -127,11 +135,7 @@ public class FTMatrix extends FTStruct { // struct done.
     public FTMatrix setRotationRad(double angleRad) {
         final float cos = (float) Math.cos(angleRad);
         final float sin = (float) Math.sin(angleRad);
-        this.setXX(cos);
-        this.setXY(-sin);
-        this.setYX(sin);
-        this.setYY(cos);
-        return this;
+        return this.set(cos, -sin, sin, cos);
     }
 
     public FTMatrix setRotation(double angleDeg) {
@@ -145,10 +149,18 @@ public class FTMatrix extends FTStruct { // struct done.
         return this;
     }
 
+    public FTMatrix setScale(float scale) {
+        return this.setScale(scale, scale);
+    }
+
     public FTMatrix scale(float scaleX, float scaleY) {
         final float x = (this.getXX() * scaleX);
         final float y = (this.getYY() * scaleY);
         return this.setScale(x, y);
+    }
+
+    public FTMatrix scale(float scale) {
+        return this.scale(scale, scale);
     }
 
 

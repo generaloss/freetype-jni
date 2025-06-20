@@ -353,14 +353,6 @@ JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1CheckTrue
 
 /*
  * Class:     generaloss_freetype_FreeType
- * Method:    FT_Face_SetUnpatentedHinting
- * Signature: (JZ)Z
- */
-JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1SetUnpatentedHinting
-  (JNIEnv *, jclass, jlong, jboolean);
-
-/*
- * Class:     generaloss_freetype_FreeType
  * Method:    FT_GlyphLoader_New
  * Signature: (J[J)I
  */

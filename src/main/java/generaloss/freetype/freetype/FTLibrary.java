@@ -83,6 +83,14 @@ public class FTLibrary extends FTStruct { // struct done.
         FreeType.ftLibraryVersion(this, dstMajor, dstMinor, dstPatch);
     }
 
+    public String getVersion() {
+        final int[] dstMajor = new int[1];
+        final int[] dstMinor = new int[1];
+        final int[] dstPatch = new int[1];
+        this.getVersion(dstMajor, dstMinor, dstPatch);
+        return (dstMajor[0] + "." + dstMinor[0] + "." + dstPatch[0]);
+    }
+
     public FTGlyph newGlyph(FTGlyphFormat format) {
         final long[] dstGlyphPointer = new long[1];
         final FTError error = FreeType.ftNewGlyph(this, format, dstGlyphPointer);

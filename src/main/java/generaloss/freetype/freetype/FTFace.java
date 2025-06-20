@@ -1,5 +1,6 @@
 package generaloss.freetype.freetype;
 
+import generaloss.freetype.UnicodeVariationSelector;
 import generaloss.freetype.*;
 import generaloss.freetype.types.*;
 
@@ -384,8 +385,16 @@ public class FTFace extends FTStruct { // struct done.
         return FreeType.ftFaceGetCharVariantIndex(this, charcode, variantSelector);
     }
 
+    public long getCharVariantIndex(long charcode, UnicodeVariationSelector variantSelector) {
+        return this.getCharVariantIndex(charcode, variantSelector.code);
+    }
+
     public int getCharVariantIsDefault(long charcode, long variantSelector) {
         return FreeType.ftFaceGetCharVariantIsDefault(this, charcode, variantSelector);
+    }
+
+    public int getCharVariantIsDefault(long charcode, UnicodeVariationSelector variantSelector) {
+        return this.getCharVariantIsDefault(charcode, variantSelector.code);
     }
 
     public long[] getVariantSelectors() {
@@ -402,10 +411,6 @@ public class FTFace extends FTStruct { // struct done.
 
     public boolean checkTrueTypePatents() {
         return FreeType.ftFaceCheckTrueTypePatents(this);
-    }
-
-    public boolean setUnpatentedHinting(boolean value) {
-        return FreeType.ftFaceSetUnpatentedHinting(this, value);
     }
 
 }

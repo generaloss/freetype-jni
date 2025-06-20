@@ -1006,23 +1006,6 @@ JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1CheckTrue
     return static_cast<jboolean>(result);
 }
 
-// FT_Bool FT_Face_SetUnpatentedHinting(FT_Face face, FT_Bool value)
-// boolean FT_Face_SetUnpatentedHinting(long face, boolean value);
-JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1SetUnpatentedHinting
-  (JNIEnv *env, jclass, jlong facePtrRaw, jboolean valueRaw) {
-
-    const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
-    if(!face) {
-        throwException(env, "Invalid FT_Face pointer");
-        return JNI_FALSE;
-    }
-
-    const FT_Bool value = static_cast<FT_Bool>(valueRaw);
-
-    const FT_Bool result = FT_Face_SetUnpatentedHinting(face, value);
-    return static_cast<jboolean>(result);
-}
-
 
 // ------------------------------
 // ---      ftgloadr.h        ---

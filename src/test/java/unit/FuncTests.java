@@ -1,10 +1,15 @@
 package unit;
 
 import generaloss.freetype.FreeType;
+import generaloss.freetype.UnicodeVariationSelector;
 import generaloss.freetype.freetype.*;
+import generaloss.freetype.gload.FTGlyphLoader;
 import generaloss.freetype.gload.FTSubGlyph;
 import generaloss.freetype.image.FTGlyphFormat;
 import generaloss.freetype.stroke.FTStroker;
+import generaloss.freetype.stroke.FTStrokerLinecap;
+import generaloss.freetype.stroke.FTStrokerLinejoin;
+import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.*;
 import jpize.util.res.Resource;
 import org.junit.Assert;
@@ -173,15 +178,8 @@ public class FuncTests {
     @Test
     public void ftAttachStream() {
         // (postscript type 1 font)
-        final ByteArrayInputStream bais = new ByteArrayInputStream(Resource.internal("/bchb8i.afm").readBytes());
         final FTStream stream = new FTStream();
-        stream.setSize(bais.available());
-        stream.setRead((long offset, byte[] buffer, long count) -> {
-            bais.reset();
-            bais.skip(offset);
-            return bais.read(buffer, 0, (int) count);
-        });
-        stream.setClose(bais::close);
+        stream.set(Resource.internal("/bchb8i.afm").readBytes());
 
         final FTOpenArgs args = new FTOpenArgs();
         args.setFlags(FTOpen.STREAM);
@@ -250,10 +248,10 @@ public class FuncTests {
 
         final FTSizeRequest request = new FTSizeRequest();
         request.setType(FTSizeRequestType.REAL_DIM);
-        request.setWidth(0);
-        request.setHeight(12 * 64); // 12pt in 1/64th points (internal FreeType format)
-        request.setHoriResolution(72); // 72 DPI
-        request.setVertResolution(72); // 72 DPI
+        request.setWidth(0L);
+        request.setHeight(12L * 64L); // 12pt in 1/64th points (internal FreeType format)
+        request.setHoriResolution(72L); // 72 DPI
+        request.setVertResolution(72L); // 72 DPI
 
         face.requestSize(request);
 
@@ -282,7 +280,7 @@ public class FuncTests {
         final FTLibrary lib = new FTLibrary();
         final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
-        face.setPixelSizes(0, 24);
+        face.setPixelSizes(0L, 24L);
 
         final FTSizeMetrics metrics = face.getSize().getMetrics();
         Assert.assertEquals(28F, metrics.getHeight(), 0F);
@@ -297,7 +295,7 @@ public class FuncTests {
         final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
         final FTMatrix matrix = new FTMatrix().setIdentity();
-        final FTVector delta = new FTVector().set(10 * 64, 20 * 64);
+        final FTVector delta = new FTVector().set(10F * 64F, 20F * 64F);
         face.setTransform(matrix, delta);
 
         matrix.setXX(0F).setYY(0F);
@@ -306,8 +304,8 @@ public class FuncTests {
         face.getTransform(matrix, delta);
         Assert.assertEquals(1F, matrix.getXX(), 0F);
         Assert.assertEquals(1F, matrix.getYY(), 0F);
-        Assert.assertEquals(10 * 64, delta.getX(), 0F);
-        Assert.assertEquals(20 * 64, delta.getY(), 0F);
+        Assert.assertEquals(10F * 64F, delta.getX(), 0F);
+        Assert.assertEquals(20F * 64F, delta.getY(), 0F);
 
         matrix.free();
         delta.free();
@@ -322,7 +320,7 @@ public class FuncTests {
         final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
         final FTMatrix matrix = new FTMatrix().setIdentity();
-        final FTVector delta = new FTVector().set(10 * 64, 20 * 64);
+        final FTVector delta = new FTVector().set(10F * 64F, 20F * 64F);
         face.setTransform(matrix, delta);
 
         matrix.setXX(0F).setYY(0F);
@@ -331,8 +329,8 @@ public class FuncTests {
         face.getTransform(matrix, delta);
         Assert.assertEquals(1F, matrix.getXX(), 0F);
         Assert.assertEquals(1F, matrix.getYY(), 0F);
-        Assert.assertEquals(10 * 64, delta.getX(), 0F);
-        Assert.assertEquals(20 * 64, delta.getY(), 0F);
+        Assert.assertEquals(10F * 64F, delta.getX(), 0F);
+        Assert.assertEquals(20F * 64F, delta.getY(), 0F);
 
         matrix.free();
         delta.free();
@@ -346,7 +344,7 @@ public class FuncTests {
         final FTLibrary library = new FTLibrary();
 
         final FTFace face = library.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
-        face.setPixelSizes(32, 32);
+        face.setPixelSizes(32L, 32L);
         face.loadChar('A');
 
         final FTGlyphSlot slot = face.getGlyph();
@@ -361,7 +359,7 @@ public class FuncTests {
         final FTLibrary library = new FTLibrary();
 
         final FTFace face = library.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
-        face.setPixelSizes(0, 64);
+        face.setPixelSizes(0L, 64L);
 
         final long left = face.getCharIndex('A');
         final long right = face.getCharIndex('V');
@@ -393,9 +391,9 @@ public class FuncTests {
         stream.free();
         args.free();
 
-        face.setPixelSizes(0, 16);
+        face.setPixelSizes(0L, 16L);
 
-        Assert.assertEquals(0F, face.getTrackKerning(32, 0), 0F);
+        Assert.assertEquals(0F, face.getTrackKerning(32L, 0), 0F);
 
         face.done();
         library.done();
@@ -456,9 +454,9 @@ public class FuncTests {
         final long indexZ = face.getCharIndex('Z');
         final long invalidChar = face.getCharIndex(0xFFFF);
 
-        Assert.assertTrue(indexA > 0);
-        Assert.assertTrue(indexZ > 0);
-        Assert.assertEquals(0, invalidChar);
+        Assert.assertTrue(indexA > 0L);
+        Assert.assertTrue(indexZ > 0L);
+        Assert.assertEquals(0L, invalidChar);
 
         face.done();
         lib.done();
@@ -472,7 +470,7 @@ public class FuncTests {
         final long[] dstGlyphIndex = new long[1];
         final long charcode = face.getFirstChar(dstGlyphIndex);
 
-        Assert.assertTrue(charcode > 0);
+        Assert.assertTrue(charcode > 0L);
         Assert.assertEquals(face.getCharIndex(charcode), dstGlyphIndex[0]);
 
         face.done();
@@ -488,7 +486,7 @@ public class FuncTests {
         final long next = face.getNextChar(first, null);
 
         Assert.assertTrue(next > first);
-        Assert.assertTrue(next > 0);
+        Assert.assertTrue(next > 0L);
 
         face.done();
         lib.done();
@@ -500,7 +498,7 @@ public class FuncTests {
         final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
         final long index = face.getNameIndex("copyright");
-        Assert.assertTrue(index >= 0);
+        Assert.assertTrue(index >= 0L);
 
         face.done();
         lib.done();
@@ -563,10 +561,10 @@ public class FuncTests {
     @Test
     public void ftFaceGetCharVariantIndex() {
         final FTLibrary lib = new FTLibrary();
-        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        final FTFace face = lib.newMemoryFace(Resource.internal("/apple-color-emoji.ttf").readByteBuffer(), 0);
 
-        // tag? final long variantIndex = face.getCharVariantIndex('A', "latn");
-        // Assert.assertTrue(variantIndex >= 0);
+        final long variantIndex = face.getCharVariantIndex('❤', UnicodeVariationSelector.VS16_EMOJI);
+        Assert.assertEquals(168L, variantIndex);
 
         face.done();
         lib.done();
@@ -575,10 +573,10 @@ public class FuncTests {
     @Test
     public void ftFaceGetCharVariantIsDefault() {
         final FTLibrary lib = new FTLibrary();
-        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        final FTFace face = lib.newMemoryFace(Resource.internal("/apple-color-emoji.ttf").readByteBuffer(), 0);
 
-        // tag? final boolean isDefault = face.getCharVariantIsDefault('A', "latn");
-        // Assert.assertTrue(isDefault);
+        final int isDefault = face.getCharVariantIsDefault('❤', UnicodeVariationSelector.VS16_EMOJI);
+        Assert.assertEquals(1, isDefault);
 
         face.done();
         lib.done();
@@ -587,12 +585,11 @@ public class FuncTests {
     @Test
     public void ftFaceGetVariantSelectors() {
         final FTLibrary lib = new FTLibrary();
-        final FTFace face = lib.newMemoryFace(Resource.internal("/main.ttf").readByteBuffer(), 0);
+        final FTFace face = lib.newMemoryFace(Resource.internal("/apple-color-emoji.ttf").readByteBuffer(), 0);
 
         final long[] selectors = face.getVariantSelectors();
-        for(long selector: selectors)
-            System.out.print((char) selector + ", ");
-        System.out.println();
+        Assert.assertTrue(selectors.length > 0);
+        Assert.assertEquals(UnicodeVariationSelector.VS16_EMOJI.code, selectors[0]);
 
         face.done();
         lib.done();
@@ -604,8 +601,7 @@ public class FuncTests {
         final FTFace face = lib.newMemoryFace(Resource.internal("/apple-color-emoji.ttf").readByteBuffer(), 0);
 
         final long[] variants = face.getVariantsOfChar('❤');
-        for(long variant: variants)
-            System.out.println("'" + (char) variant + "'");
+        Assert.assertTrue(variants.length > 0);
 
         face.done();
         lib.done();
@@ -617,9 +613,7 @@ public class FuncTests {
         final FTFace face = lib.newMemoryFace(Resource.internal("/main.ttf").readByteBuffer(), 0);
 
         final long[] chars = face.getCharsOfVariant(face.getVariantSelectors()[0]);
-        for(long c: chars)
-            System.out.print((char) c + ", ");
-        System.out.println();
+        Assert.assertTrue(chars.length > 0);
 
         face.done();
         lib.done();
@@ -627,17 +621,17 @@ public class FuncTests {
 
     @Test
     public void ftMulDiv() {
-        Assert.assertEquals(2, FreeType.ftMulDiv(4, 5, 10));
+        Assert.assertEquals(2L, FreeType.ftMulDiv(4L, 5L, 10L));
     }
 
     @Test
     public void ftMulFix() {
-        Assert.assertEquals(8, FreeType.ftMulFix(1024, 512));
+        Assert.assertEquals(8L, FreeType.ftMulFix(1024L, 512L));
     }
 
     @Test
     public void ftDivFix() {
-        Assert.assertEquals(1024, FreeType.ftDivFix(8, 512));
+        Assert.assertEquals(1024L, FreeType.ftDivFix(8L, 512L));
     }
 
     @Test
@@ -663,37 +657,72 @@ public class FuncTests {
 
     @Test
     public void ftVectorTransform() {
+        final FTVector vector = new FTVector().set(10F, 20F);
+        final FTMatrix matrix = new FTMatrix().setScale(2F);
 
+        vector.transform(matrix);
+
+        Assert.assertEquals(20F, vector.getX(), 0F);
+        Assert.assertEquals(40F, vector.getY(), 0F);
+
+        vector.free();
+        matrix.free();
     }
 
     @Test
     public void ftLibraryVersion() {
+        final FTLibrary lib = new FTLibrary();
 
+        final String version = lib.getVersion();
+        Assert.assertTrue(version.matches("\\d+\\.\\d+\\.\\d+"));
+
+        lib.done();
     }
 
     @Test
     public void ftFaceCheckTrueTypePatents() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
-    }
+        final boolean hasPatents = face.checkTrueTypePatents();
+        Assert.assertFalse(hasPatents);
 
-    @Test
-    public void ftFaceSetUnpatentedHinting() {
-
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftGlyphLoaderNew() {
+        final FTLibrary lib = new FTLibrary();
+        final FTMemory memory = lib.getMemory();
 
+        final FTGlyphLoader loader = memory.newGlyphLoader();
+        loader.done();
+
+        lib.done();
     }
 
     @Test
     public void ftGlyphLoaderCreateExtra() {
+        final FTLibrary lib = new FTLibrary();
+        final FTMemory memory = lib.getMemory();
+        final FTGlyphLoader loader = memory.newGlyphLoader();
 
+        loader.createExtra();
+
+        loader.done();
+        lib.done();
     }
 
     @Test
     public void ftGlyphLoaderDone() {
+        final FTLibrary lib = new FTLibrary();
+        final FTStroker stroker = lib.newStroker();
 
+        stroker.set(64F, FTStrokerLinecap.BUTT, FTStrokerLinejoin.ROUND, 0F);
+
+        stroker.done();
+        lib.done();
     }
 
     @Test
@@ -784,8 +813,10 @@ public class FuncTests {
     @Test
     public void ftStrokerNew() {
         final FTLibrary lib = new FTLibrary();
+
         final FTStroker stroker = lib.newStroker();
         stroker.done();
+
         lib.done();
     }
 
@@ -816,7 +847,16 @@ public class FuncTests {
 
     @Test
     public void ftStrokerLineTo() {
+        final FTLibrary lib = new FTLibrary();
+        final FTStroker stroker = lib.newStroker();
 
+        stroker.set(10F, FTStrokerLinecap.BUTT, FTStrokerLinejoin.ROUND, 0F);
+        stroker.beginSubPath(new FTVector().set(0F, 0F), false);
+        stroker.lineTo(new FTVector().set(100F, 0F));
+        stroker.endSubPath();
+
+        stroker.done();
+        lib.done();
     }
 
     @Test

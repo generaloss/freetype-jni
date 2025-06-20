@@ -428,11 +428,18 @@ public class FreeType {
         return FT_Face_GetCharVariantIndex(FTStruct.getPointer(face), charcode, variantSelector);
     }
 
+    public static long ftFaceGetCharVariantIndex(FTFace face, long charcode, UnicodeVariationSelector variantSelector) {
+        return ftFaceGetCharVariantIndex(face, charcode, variantSelector.code);
+    }
+
     // FT_Int FT_Face_GetCharVariantIsDefault(FT_Face face, FT_ULong charcode, FT_ULong variantSelector)
     private static native int FT_Face_GetCharVariantIsDefault(long face, long charcode, long variantSelector);
 
     public static int ftFaceGetCharVariantIsDefault(FTFace face, long charcode, long variantSelector) {
         return FT_Face_GetCharVariantIsDefault(FTStruct.getPointer(face), charcode, variantSelector);
+    }
+    public static int ftFaceGetCharVariantIsDefault(FTFace face, long charcode, UnicodeVariationSelector variantSelector) {
+        return ftFaceGetCharVariantIsDefault(face, charcode, variantSelector.code);
     }
 
     // FT_UInt32* FT_Face_GetVariantSelectors(FT_Face face)
@@ -523,13 +530,6 @@ public class FreeType {
 
     public static boolean ftFaceCheckTrueTypePatents(FTFace face) {
         return FT_Face_CheckTrueTypePatents(FTStruct.getPointer(face));
-    }
-
-    // FT_Bool FT_Face_SetUnpatentedHinting(FT_Face face, FT_Bool value)
-    private static native boolean FT_Face_SetUnpatentedHinting(long face, boolean value);
-
-    public static boolean ftFaceSetUnpatentedHinting(FTFace face, boolean value) {
-        return FT_Face_SetUnpatentedHinting(FTStruct.getPointer(face), value);
     }
 
 

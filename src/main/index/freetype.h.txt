@@ -394,6 +394,7 @@ void FTLibraryVersion(FTLibrary library, int* major, int* minor, int* patch)
 FT_Bool FT_Face_CheckTrueTypePatents(FT_Face face)
 boolean FTFaceCheckTrueTypePatents(FTFace face)
 
+@DEPRECATED
 FT_Bool FT_Face_SetUnpatentedHinting(FT_Face face, FT_Bool value)
 boolean FTFaceSetUnpatentedHinting(FTFace face, boolean value)
 
@@ -441,7 +442,7 @@ object FTFace {
     int getVariantsOfChar(FTFace face, long charcode)
     int getCharsOfVariant(FTFace face, long variantSelector)
     boolean checkTrueTypePatents(FTFace face)
-    boolean setUnpatentedHinting(FTFace face, boolean value)
+    @DEPRECATED boolean setUnpatentedHinting(FTFace face, boolean value)
 }
 
 object FTGlyphSlot {
