@@ -388,15 +388,15 @@ public class FTFace extends FTStruct { // struct done.
         return FreeType.ftFaceGetCharVariantIsDefault(this, charcode, variantSelector);
     }
 
-    public long getVariantSelectors() {
+    public long[] getVariantSelectors() {
         return FreeType.ftFaceGetVariantSelectors(this);
     }
 
-    public long getVariantsOfChar(long charcode) {
+    public long[] getVariantsOfChar(long charcode) {
         return FreeType.ftFaceGetVariantsOfChar(this, charcode);
     }
 
-    public long getCharsOfVariant(long variantSelector) {
+    public long[] getCharsOfVariant(long variantSelector) {
         return FreeType.ftFaceGetCharsOfVariant(this, variantSelector);
     }
 

@@ -795,7 +795,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharVarian
 
 // FT_UInt32* FT_Face_GetVariantSelectors(FT_Face face)
 // long FT_Face_GetVariantSelectors(long face);
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSelectors
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSelectors
   (JNIEnv *env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
@@ -805,12 +805,32 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSe
     }
 
     const FT_UInt32* selectors = FT_Face_GetVariantSelectors(face);
-    return reinterpret_cast<jlong>(selectors);
+    if(!selectors)
+        return NULL;
+
+    int count = 0;
+    while(selectors[count] != 0)
+        count++;
+
+    const jlongArray result = env->NewLongArray(count);
+    if(!result) {
+        throwException(env, "Failed to allocate jlongArray");
+        return NULL;
+    }
+
+    jlong* buffer = new jlong[count];
+    for(int i = 0; i < count; i++)
+        buffer[i] = static_cast<jlong>(selectors[i]);
+
+    env->SetLongArrayRegion(result, 0, count, buffer);
+    delete[] buffer;
+
+    return result;
 }
 
 // FT_UInt32* FT_Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode)
 // long FT_Face_GetVariantsOfChar(long face, long charcode);
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsOfChar
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsOfChar
   (JNIEnv *env, jclass, jlong facePtrRaw, jlong charCodeRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
@@ -822,12 +842,32 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsO
     const FT_ULong charCode = static_cast<FT_ULong>(charCodeRaw);
 
     const FT_UInt32* variants = FT_Face_GetVariantsOfChar(face, charCode);
-    return reinterpret_cast<jlong>(variants);
+    if(!variants)
+        return NULL;
+
+    int count = 0;
+    while(variants[count] != 0)
+        count++;
+
+    const jlongArray result = env->NewLongArray(count);
+    if(!result) {
+        throwException(env, "Failed to allocate jlongArray");
+        return NULL;
+    }
+
+    jlong* buffer = new jlong[count];
+    for(int i = 0; i < count; i++)
+        buffer[i] = static_cast<jlong>(variants[i]);
+
+    env->SetLongArrayRegion(result, 0, count, buffer);
+    delete[] buffer;
+
+    return result;
 }
 
 // FT_UInt32* FT_Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector)
 // long FT_Face_GetCharsOfVariant(long face, long variantSelector);
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVariant
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVariant
   (JNIEnv *env, jclass, jlong facePtrRaw, jlong variantSelectorRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
@@ -839,7 +879,27 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVa
     const FT_ULong variantSelector = static_cast<FT_ULong>(variantSelectorRaw);
 
     const FT_UInt32* chars = FT_Face_GetCharsOfVariant(face, variantSelector);
-    return reinterpret_cast<jlong>(chars);
+    if(!chars)
+        return NULL;
+
+    int count = 0;
+    while(chars[count] != 0)
+        count++;
+
+    const jlongArray result = env->NewLongArray(count);
+    if(!result) {
+        throwException(env, "Failed to allocate jlongArray");
+        return NULL;
+    }
+
+    jlong* buffer = new jlong[count];
+    for(int i = 0; i < count; i++)
+        buffer[i] = static_cast<jlong>(chars[i]);
+
+    env->SetLongArrayRegion(result, 0, count, buffer);
+    delete[] buffer;
+
+    return result;
 }
 
 // FT_Fixed FT_RoundFix(FT_Fixed a)

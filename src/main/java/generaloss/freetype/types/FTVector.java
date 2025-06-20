@@ -3,6 +3,8 @@ package generaloss.freetype.types;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FreeType;
 
+import java.util.Objects;
+
 public class FTVector extends FTStruct { // struct done.
 
     public FTVector(long pointer) {
@@ -103,7 +105,20 @@ public class FTVector extends FTStruct { // struct done.
 
     @Override
     public String toString() {
-        return "FTVector{x=" + this.getX() + ", y=" + this.getY() + "}";
+        return (super.toString() + "{x=" + this.getX() + ", y=" + this.getY() + "}");
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object == null || this.getClass() != object.getClass())
+            return false;
+        final FTVector vector = (FTVector) object;
+        return (this.getX() == vector.getX() && this.getY() == vector.getY());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getX(), this.getY());
     }
 
 }

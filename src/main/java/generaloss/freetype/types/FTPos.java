@@ -3,6 +3,8 @@ package generaloss.freetype.types;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FreeType;
 
+import java.util.Objects;
+
 public class FTPos extends FTStruct { // struct done.
 
     public FTPos(long pointer) {
@@ -76,7 +78,20 @@ public class FTPos extends FTStruct { // struct done.
     @Override
     public String toString() {
         final int raw = this.getRawValue();
-        return "FTFixed{float=" + toFloat(raw) + ", raw=0x" + Integer.toHexString(raw) + "}";
+        return (super.toString() + "{float=" + toFloat(raw) + ", raw=" + raw + "}");
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object == null || this.getClass() != object.getClass())
+            return false;
+        final FTPos pos = (FTPos) object;
+        return (this.getRawValue() == pos.getRawValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getRawValue();
     }
 
 

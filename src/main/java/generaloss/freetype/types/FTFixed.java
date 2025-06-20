@@ -76,7 +76,20 @@ public class FTFixed extends FTStruct { // struct done.
     @Override
     public String toString() {
         final int raw = this.getRawValue();
-        return "FTFixed{float=" + toFloat(raw) + ", raw=0x" + Integer.toHexString(raw) + "}";
+        return (super.toString() + "{float=" + toFloat(raw) + ", raw=" + raw + "}");
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object == null || this.getClass() != object.getClass())
+            return false;
+        final FTFixed fixed = (FTFixed) object;
+        return (this.getRawValue() == fixed.getRawValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getRawValue();
     }
 
 

@@ -436,24 +436,33 @@ public class FreeType {
     }
 
     // FT_UInt32* FT_Face_GetVariantSelectors(FT_Face face)
-    private static native long FT_Face_GetVariantSelectors(long face);
+    private static native long[] FT_Face_GetVariantSelectors(long face);
 
-    public static long ftFaceGetVariantSelectors(FTFace face) {
-        return FT_Face_GetVariantSelectors(FTStruct.getPointer(face));
+    public static long[] ftFaceGetVariantSelectors(FTFace face) {
+        final long[] array = FT_Face_GetVariantSelectors(FTStruct.getPointer(face));
+        if(array == null)
+            return new long[0];
+        return array;
     }
 
     // FT_UInt32* FT_Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode)
-    private static native long FT_Face_GetVariantsOfChar(long face, long charcode);
+    private static native long[] FT_Face_GetVariantsOfChar(long face, long charcode);
 
-    public static long ftFaceGetVariantsOfChar(FTFace face, long charcode) {
-        return FT_Face_GetVariantsOfChar(FTStruct.getPointer(face), charcode);
+    public static long[] ftFaceGetVariantsOfChar(FTFace face, long charcode) {
+        final long[] array = FT_Face_GetVariantsOfChar(FTStruct.getPointer(face), charcode);
+        if(array == null)
+            return new long[0];
+        return array;
     }
 
     // FT_UInt32* FT_Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector)
-    private static native long FT_Face_GetCharsOfVariant(long face, long variantSelector);
+    private static native long[] FT_Face_GetCharsOfVariant(long face, long variantSelector);
 
-    public static long ftFaceGetCharsOfVariant(FTFace face, long variantSelector) {
-        return FT_Face_GetCharsOfVariant(FTStruct.getPointer(face), variantSelector);
+    public static long[] ftFaceGetCharsOfVariant(FTFace face, long variantSelector) {
+        final long[] array = FT_Face_GetCharsOfVariant(FTStruct.getPointer(face), variantSelector);
+        if(array == null)
+            return new long[0];
+        return array;
     }
 
     // FT_Long FT_MulDiv(FT_Long a, FT_Long b, FT_Long c)

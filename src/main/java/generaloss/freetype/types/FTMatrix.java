@@ -3,6 +3,8 @@ package generaloss.freetype.types;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FreeType;
 
+import java.util.Objects;
+
 public class FTMatrix extends FTStruct { // struct done.
 
     public FTMatrix(long pointer) {
@@ -122,19 +124,62 @@ public class FTMatrix extends FTStruct { // struct done.
         return this;
     }
 
+    public FTMatrix setRotationRad(double angleRad) {
+        final float cos = (float) Math.cos(angleRad);
+        final float sin = (float) Math.sin(angleRad);
+        this.setXX(cos);
+        this.setXY(-sin);
+        this.setYX(sin);
+        this.setYY(cos);
+        return this;
+    }
+
+    public FTMatrix setRotation(double angleDeg) {
+        final double angleRad = Math.toRadians(angleDeg);
+        return this.setRotationRad(angleRad);
+    }
+
+    public FTMatrix setScale(float scaleX, float scaleY) {
+        this.setXX(scaleX);
+        this.setYY(scaleY);
+        return this;
+    }
+
+    public FTMatrix scale(float scaleX, float scaleY) {
+        final float x = (this.getXX() * scaleX);
+        final float y = (this.getYY() * scaleY);
+        return this.setScale(x, y);
+    }
+
 
     @Override
     public String toString() {
-        return "FTMatrix {xx=" + this.getXX() + ", xy=" + this.getXY() + ", yx=" + this.getYX() + ", yy=" + this.getYY() + '}';
+        return (super.toString() + "{xx=" + this.getXX() + ", xy=" + this.getXY() + ", yx=" + this.getYX() + ", yy=" + this.getYY() + '}');
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object == null || this.getClass() != object.getClass())
+            return false;
+        final FTMatrix matrix = (FTMatrix) object;
+        return (
+            this.getXX() == matrix.getXX() && this.getXY() == matrix.getXY() &&
+            this.getYX() == matrix.getYX() && this.getYY() == matrix.getYY()
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getXX(), this.getXY(), this.getYX(), this.getYY());
     }
 
 
-    public void multiply(FTMatrix a, FTMatrix b) {
-        FreeType.ftMatrixMultiply(a, b);
+    public void multiply(FTMatrix b) {
+        FreeType.ftMatrixMultiply(this, b);
     }
 
-    public void invert(FTMatrix matrix) {
-        final FTError error = FreeType.ftMatrixInvert(matrix);
+    public void invert() {
+        final FTError error = FreeType.ftMatrixInvert(this);
         error.checkError();
     }
 

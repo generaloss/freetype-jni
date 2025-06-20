@@ -282,25 +282,25 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharVarian
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Face_GetVariantSelectors
- * Signature: (J)J
+ * Signature: (J)[J
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSelectors
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSelectors
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Face_GetVariantsOfChar
- * Signature: (JJ)J
+ * Signature: (JJ)[J
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsOfChar
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsOfChar
   (JNIEnv *, jclass, jlong, jlong);
 
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Face_GetCharsOfVariant
- * Signature: (JJ)J
+ * Signature: (JJ)[J
  */
-JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVariant
+JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVariant
   (JNIEnv *, jclass, jlong, jlong);
 
 /*

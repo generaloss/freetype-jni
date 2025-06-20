@@ -76,7 +76,20 @@ public class FTF26Dot6 extends FTStruct { // struct done.
     @Override
     public String toString() {
         final int raw = this.getRawValue();
-        return "FTFixed{float=" + toFloat(raw) + ", raw=0x" + Integer.toHexString(raw) + "}";
+        return (super.toString() + "{float=" + toFloat(raw) + ", raw=" + raw + "}");
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object == null || this.getClass() != object.getClass())
+            return false;
+        final FTF26Dot6 f26dot6 = (FTF26Dot6) object;
+        return (this.getRawValue() == f26dot6.getRawValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getRawValue();
     }
 
 

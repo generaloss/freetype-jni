@@ -2,6 +2,7 @@ package unit;
 
 import generaloss.freetype.FreeType;
 import generaloss.freetype.freetype.*;
+import generaloss.freetype.gload.FTSubGlyph;
 import generaloss.freetype.image.FTGlyphFormat;
 import generaloss.freetype.stroke.FTStroker;
 import generaloss.freetype.types.*;
@@ -522,11 +523,12 @@ public class FuncTests {
         final FTLibrary lib = new FTLibrary();
         final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
-        face.loadChar('A', FTLoad.NO_RECURSE);
+        face.loadChar('Ǽ', FTLoad.NO_RECURSE);
         final FTGlyphSlot glyph = face.getGlyph();
 
-        // if(glyph.getFormat() != FTGlyphFormat.COMPOSITE)
-        //     throw new RuntimeException("Expected composite glyph");
+        final FTSubGlyph[] subglyphs = glyph.getSubglyphs();
+        final int index = (subglyphs.length - 1); // last
+        final FTSubGlyph target = subglyphs[index];
 
         final int[] dstPIndex = new int[1];
         final long[] dstPFlags = new long[1];
@@ -534,9 +536,13 @@ public class FuncTests {
         final int[] dstPArg2 = new int[1];
         final FTMatrix dstPTransform = new FTMatrix();
 
-        glyph.getSubGlyphInfo(0L, dstPIndex, dstPFlags, dstPArg1, dstPArg2, dstPTransform);
+        glyph.getSubGlyphInfo(index, dstPIndex, dstPFlags, dstPArg1, dstPArg2, dstPTransform);
 
-        System.out.println();
+        Assert.assertEquals(target.getIndex(), dstPIndex[0]);
+        Assert.assertEquals(target.getFlagsRaw(), dstPFlags[0]);
+        Assert.assertEquals(target.getArg1(), dstPArg1[0]);
+        Assert.assertEquals(target.getArg2(), dstPArg2[0]);
+        Assert.assertEquals(target.getTransform(), dstPTransform);
 
         face.done();
         lib.done();
@@ -544,67 +550,114 @@ public class FuncTests {
 
     @Test
     public void ftGetFSTypeFlags() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        final FSTypeFlags flags = face.getFSTypeFlags();
+        Assert.assertFalse(flags.isDefault());
+
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftFaceGetCharVariantIndex() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        // tag? final long variantIndex = face.getCharVariantIndex('A', "latn");
+        // Assert.assertTrue(variantIndex >= 0);
+
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftFaceGetCharVariantIsDefault() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        // tag? final boolean isDefault = face.getCharVariantIsDefault('A', "latn");
+        // Assert.assertTrue(isDefault);
+
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftFaceGetVariantSelectors() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/main.ttf").readByteBuffer(), 0);
 
+        final long[] selectors = face.getVariantSelectors();
+        for(long selector: selectors)
+            System.out.print((char) selector + ", ");
+        System.out.println();
+
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftFaceGetVariantsOfChar() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/apple-color-emoji.ttf").readByteBuffer(), 0);
 
+        final long[] variants = face.getVariantsOfChar('❤');
+        for(long variant: variants)
+            System.out.println("'" + (char) variant + "'");
+
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftFaceGetCharsOfVariant() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/main.ttf").readByteBuffer(), 0);
 
+        final long[] chars = face.getCharsOfVariant(face.getVariantSelectors()[0]);
+        for(long c: chars)
+            System.out.print((char) c + ", ");
+        System.out.println();
+
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftMulDiv() {
-        assert (FreeType.ftMulDiv(4, 5, 10) == 2);
+        Assert.assertEquals(2, FreeType.ftMulDiv(4, 5, 10));
     }
 
     @Test
     public void ftMulFix() {
-        assert (FreeType.ftMulFix(1024, 512) == 8);
+        Assert.assertEquals(8, FreeType.ftMulFix(1024, 512));
     }
 
     @Test
     public void ftDivFix() {
-        assert (FreeType.ftDivFix(8, 512) == 1024);
+        Assert.assertEquals(1024, FreeType.ftDivFix(8, 512));
     }
 
     @Test
     public void ftRoundFix() {
-        FTFixed num = new FTFixed().set(1.5F);
-        assert (FreeType.ftRoundFix(num) == 2F);
+        final FTFixed num = new FTFixed().set(1.5F);
+        Assert.assertEquals(2F, FreeType.ftRoundFix(num), 0F);
         num.free();
     }
 
     @Test
     public void ftCeilFix() {
-        FTFixed num = new FTFixed().set(1.5F);
-        assert (FreeType.ftCeilFix(num) == 2F);
+        final FTFixed num = new FTFixed().set(1.5F);
+        Assert.assertEquals(2F, FreeType.ftCeilFix(num), 0F);
         num.free();
     }
 
     @Test
     public void ftFloorFix() {
-        FTFixed num = new FTFixed().set(1.5F);
-        assert (FreeType.ftFloorFix(num) == 1F);
+        final FTFixed num = new FTFixed().set(1.5F);
+        Assert.assertEquals(1F, FreeType.ftFloorFix(num), 0F);
         num.free();
     }
 
@@ -730,8 +783,8 @@ public class FuncTests {
 
     @Test
     public void ftStrokerNew() {
-        FTLibrary lib = new FTLibrary();
-        FTStroker stroker = lib.newStroker();
+        final FTLibrary lib = new FTLibrary();
+        final FTStroker stroker = lib.newStroker();
         stroker.done();
         lib.done();
     }
@@ -798,8 +851,8 @@ public class FuncTests {
 
     @Test
     public void ftStrokerDone() {
-        FTLibrary lib = new FTLibrary();
-        FTStroker stroker = lib.newStroker();
+        final FTLibrary lib = new FTLibrary();
+        final FTStroker stroker = lib.newStroker();
         stroker.done();
         lib.done();
     }

@@ -2,6 +2,8 @@ package generaloss.freetype.types;
 
 import generaloss.freetype.FTStruct;
 
+import java.util.Objects;
+
 public class FTBBox extends FTStruct { // struct done.
 
     public FTBBox(long pointer) {
@@ -39,6 +41,28 @@ public class FTBBox extends FTStruct { // struct done.
     public float getYMax() {
         final int raw = getYMax(super.pointer);
         return FTPos.toFloat(raw);
+    }
+
+
+    @Override
+    public String toString() {
+        return (super.toString() + "{xMin=" + this.getXMin() + ", yMin=" + this.getYMin() + ", xMax=" + this.getXMax() + ", yMax=" + this.getYMax() + "}");
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object == null || this.getClass() != object.getClass())
+            return false;
+        final FTBBox bbox = (FTBBox) object;
+        return (
+            this.getXMin() == bbox.getXMin() && this.getYMin() == bbox.getYMin() &&
+            this.getXMax() == bbox.getXMax() && this.getYMax() == bbox.getYMax()
+        );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getXMin(), this.getYMin(), this.getXMax(), this.getYMax());
     }
 
 }
