@@ -25,6 +25,14 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtra
 
 /*
  * Class:     generaloss_freetype_gload_FTGlyphLoad
+ * Method:    setExtraPoints
+ * Signature: (J[J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_setExtraPoints
+  (JNIEnv *, jclass, jlong, jlongArray);
+
+/*
+ * Class:     generaloss_freetype_gload_FTGlyphLoad
  * Method:    getExtraPoints2
  * Signature: (J)[J
  */
@@ -33,11 +41,27 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtra
 
 /*
  * Class:     generaloss_freetype_gload_FTGlyphLoad
+ * Method:    setExtraPoints2
+ * Signature: (J[J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_setExtraPoints2
+  (JNIEnv *, jclass, jlong, jlongArray);
+
+/*
+ * Class:     generaloss_freetype_gload_FTGlyphLoad
  * Method:    getNumSubglyphs
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getNumSubglyphs
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_gload_FTGlyphLoad
+ * Method:    setNumSubglyphs
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_setNumSubglyphs
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     generaloss_freetype_gload_FTGlyphLoad

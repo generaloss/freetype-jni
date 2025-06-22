@@ -36,6 +36,13 @@ public class FTGlyphLoad extends FTStruct { // struct done.
         return objects;
     }
 
+    private static native void setExtraPoints(long pointer, long[] extraPoints);
+
+    public void setExtraPoints(FTVector... extraPoints) {
+        final long[] pointers = FTStruct.makePointerArray(extraPoints);
+        setExtraPoints(super.pointer, pointers);
+    }
+
     // FT_Vector* extra_points2;
     private static native long[] getExtraPoints2(long pointer);
 
@@ -51,11 +58,24 @@ public class FTGlyphLoad extends FTStruct { // struct done.
         return objects;
     }
 
+    private static native void setExtraPoints2(long pointer, long[] extraPoints2);
+
+    public void setExtraPoints2(FTVector... extraPoints2) {
+        final long[] pointers = FTStruct.makePointerArray(extraPoints2);
+        setExtraPoints2(super.pointer, pointers);
+    }
+
     // FT_UInt num_subglyphs;
     private static native long getNumSubglyphs(long pointer);
 
     public long getNumSubglyphs() {
         return getNumSubglyphs(super.pointer);
+    }
+
+    private static native void setNumSubglyphs(long pointer, int numSubglyphs);
+
+    public void setNumSubglyphs(int numSubglyphs) {
+        setNumSubglyphs(super.pointer, numSubglyphs);
     }
 
     // FT_SubGlyph subglyphs;

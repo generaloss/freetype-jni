@@ -5,6 +5,7 @@ import generaloss.freetype.FTStructCache;
 import generaloss.freetype.FreeType;
 import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.image.FTGlyphFormat;
+import generaloss.freetype.image.FTOutline;
 import generaloss.freetype.stroke.FTStroker;
 import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.FTError;
@@ -96,6 +97,13 @@ public class FTLibrary extends FTStruct { // struct done.
         final FTError error = FreeType.ftNewGlyph(this, format, dstGlyphPointer);
         error.checkError();
         return FTStructCache.getOrCreate(FTGlyph.class, dstGlyphPointer[0], FTGlyph::new); 
+    }
+
+    public FTOutline newOutline(long numPoints, long numContours) {
+        final long[] dstOutlinePointer = new long[1];
+        final FTError error = FreeType.ftOutlineNew(this, numPoints, numContours, dstOutlinePointer);
+        error.checkError();
+        return FTStructCache.getOrCreate(FTOutline.class, dstOutlinePointer[0], FTOutline::new);
     }
 
     public FTStroker newStroker() {

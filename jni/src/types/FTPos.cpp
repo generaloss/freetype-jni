@@ -15,11 +15,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTPos_createPointer
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTPos_freePointer
   (JNIEnv *, jclass, jlong posPtrRaw) {
 
-    FT_Matrix* pos = reinterpret_cast<FT_Matrix*>(posPtrRaw);
-    if(!pos)
-        return;
-
-    delete pos;
+    delete reinterpret_cast<FT_Matrix*>(posPtrRaw);
 }
 
 

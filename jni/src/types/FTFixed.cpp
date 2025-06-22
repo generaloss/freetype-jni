@@ -15,11 +15,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTFixed_createPointer
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTFixed_freePointer
   (JNIEnv *, jclass, jlong fixedPtrRaw) {
 
-    FT_Fixed* fixed = reinterpret_cast<FT_Fixed*>(fixedPtrRaw);
-    if(!fixed)
-        return;
-
-    delete fixed;
+    delete reinterpret_cast<FT_Fixed*>(fixedPtrRaw);
 }
 
 

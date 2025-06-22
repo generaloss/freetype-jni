@@ -1,6 +1,6 @@
 package generaloss.freetype.stroke;
 
-public enum FTStrokerLinecap {
+public enum FTStrokerLineCap {
 
     /** The end of lines is rendered as a full stop on the last point itself. */
     BUTT,   // 0
@@ -13,11 +13,11 @@ public enum FTStrokerLinecap {
 
     public final int value;
 
-    FTStrokerLinecap() {
+    FTStrokerLineCap() {
         this.value = this.ordinal();
     }
 
-    public static FTStrokerLinecap byValue(int value) {
+    public static FTStrokerLineCap byValue(int value) {
         return values()[value];
     }
 

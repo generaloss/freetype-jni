@@ -17,11 +17,27 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getIndex
 
 /*
  * Class:     generaloss_freetype_gload_FTSubGlyph
+ * Method:    setIndex
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTSubGlyph_setIndex
+  (JNIEnv *, jclass, jlong, jint);
+
+/*
+ * Class:     generaloss_freetype_gload_FTSubGlyph
  * Method:    getFlags
  * Signature: (J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getFlags
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_gload_FTSubGlyph
+ * Method:    setFlags
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTSubGlyph_setFlags
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     generaloss_freetype_gload_FTSubGlyph
@@ -33,11 +49,27 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getArg1
 
 /*
  * Class:     generaloss_freetype_gload_FTSubGlyph
+ * Method:    setArg1
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTSubGlyph_setArg1
+  (JNIEnv *, jclass, jlong, jint);
+
+/*
+ * Class:     generaloss_freetype_gload_FTSubGlyph
  * Method:    getArg2
  * Signature: (J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_gload_FTSubGlyph_getArg2
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_gload_FTSubGlyph
+ * Method:    setArg2
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTSubGlyph_setArg2
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     generaloss_freetype_gload_FTSubGlyph

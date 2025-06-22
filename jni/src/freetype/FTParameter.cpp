@@ -15,11 +15,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTParameter_createPoin
 JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTParameter_freePointer
   (JNIEnv *, jclass, jlong parameterPtrRaw) {
 
-    FT_Parameter* parameter = reinterpret_cast<FT_Parameter*>(parameterPtrRaw);
-    if(!parameter)
-        return;
-
-    delete parameter;
+    delete reinterpret_cast<FT_Parameter*>(parameterPtrRaw);
 }
 
 

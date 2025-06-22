@@ -15,11 +15,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_createPoint
 JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_freePointer
   (JNIEnv *, jclass, jlong argsPtrRaw) {
 
-    FT_Open_Args* args = reinterpret_cast<FT_Open_Args*>(argsPtrRaw);
-    if(!args)
-        return;
-
-    delete args;
+    delete reinterpret_cast<FT_Open_Args*>(argsPtrRaw);
 }
 
 

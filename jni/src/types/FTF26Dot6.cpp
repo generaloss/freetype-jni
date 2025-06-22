@@ -15,11 +15,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTF26Dot6_createPointer
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTF26Dot6_freePointer
   (JNIEnv *, jclass, jlong f26dot6PtrRaw) {
 
-    FT_F26Dot6* f26dot6 = reinterpret_cast<FT_F26Dot6*>(f26dot6PtrRaw);
-    if(!f26dot6)
-        return;
-
-    delete f26dot6;
+    delete reinterpret_cast<FT_F26Dot6*>(f26dot6PtrRaw);
 }
 
 

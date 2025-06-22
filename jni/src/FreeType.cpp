@@ -1,5 +1,6 @@
 #include "FreeType.h"
 
+#include <jni.h>
 #include <ft2build.h>
 #include <freetype/internal/ftgloadr.h>
 #include <freetype/internal/ftobjs.h>
@@ -1213,11 +1214,13 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
         return 0;
     }
 
-    FT_Glyph glyph = nullptr;
+    FT_Glyph glyph;
     const FT_Error error = FT_Get_Glyph(slot, &glyph);
 
-    const jlong glyphPtr = reinterpret_cast<jlong>(glyph);
-    env->SetLongArrayRegion(glyphPtrRaw, 0, 1, &glyphPtr);
+    if(glyph && error == FT_Err_Ok) {
+        const jlong glyphPtr = reinterpret_cast<jlong>(glyph);
+        env->SetLongArrayRegion(glyphPtrRaw, 0, 1, &glyphPtr);
+    }
 
     return static_cast<jint>(error);
 }
@@ -1225,7 +1228,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
 // FT_Error FT_Glyph_Copy(FT_Glyph source, FT_Glyph *target)
 // int FT_Glyph_Copy(long source, long target);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Copy
-  (JNIEnv *env, jclass, jlong sourcePtrRaw, jlong targetPtrRaw) {
+  (JNIEnv *env, jclass, jlong sourcePtrRaw, jlongArray dstTargetPtrRaw) {
 
     const FT_Glyph source = reinterpret_cast<FT_Glyph>(sourcePtrRaw);
     if(!source) {
@@ -1233,13 +1236,19 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Copy
         return 0;
     }
 
-    FT_Glyph target = reinterpret_cast<FT_Glyph>(targetPtrRaw);
-    if(!target) {
-        throwException(env, "Invalid target FT_Glyph pointer");
+    if(!dstTargetPtrRaw || env->GetArrayLength(dstTargetPtrRaw) < 1) {
+        throwException(env, "Invalid FT_Glyph destination pointer array");
         return 0;
     }
 
+    FT_Glyph target;
     const FT_Error error = FT_Glyph_Copy(source, &target);
+
+    if(target && error == FT_Err_Ok) {
+        const jlong targetPtr = reinterpret_cast<jlong>(target);
+        env->SetLongArrayRegion(dstTargetPtrRaw, 0, 1, &targetPtr);
+    }
+
     return static_cast<jint>(error);
 }
 
@@ -1353,6 +1362,82 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Invert
     }
 
     const FT_Error error = FT_Matrix_Invert(matrix);
+    return static_cast<jint>(error);
+}
+
+
+// ------------------------------
+// ---      ftoutln.h        ---
+// ------------------------------
+
+
+// FT_Error FT_Outline_New(FT_Library library, FT_UInt numPoints, FT_Int numContours, FT_Outline *anoutline)
+// int FT_Outline_New(long library, long numPoints, int numContours, long[] dstOutlinePointer);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1New
+  (JNIEnv *env, jclass, jlong libraryPtrRaw, jlong numPointsRaw, jlong numContoursRaw, jlongArray dstOutlinePointer) {
+
+    if(libraryPtrRaw == 0) {
+        throwException(env, "Invalid FT_Library pointer");
+        return static_cast<jint>(FT_Err_Invalid_Library_Handle);
+    }
+
+    if(dstOutlinePointer == nullptr) {
+        throwException(env, "Destination array is null");
+        return static_cast<jint>(FT_Err_Invalid_Argument);
+    }
+
+    const jsize arrayLen = env->GetArrayLength(dstOutlinePointer);
+    if(arrayLen < 1) {
+        throwException(env, "Destination array length < 1");
+        return static_cast<jint>(FT_Err_Invalid_Argument);
+    }
+
+    const FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
+    const FT_UInt numPoints = static_cast<FT_UInt>(numPointsRaw);
+    const FT_Int numContours = static_cast<FT_Int>(numContoursRaw);
+
+    FT_Outline* outline = static_cast<FT_Outline*>(malloc(sizeof(FT_Outline)));
+    if(!outline) {
+        throwException(env, "Memory allocation failed");
+        return static_cast<jint>(FT_Err_Out_Of_Memory);
+    }
+
+    memset(outline, 0, sizeof(FT_Outline));
+
+    const FT_Error error = FT_Outline_New(library, numPoints, numContours, outline);
+
+    if(error == FT_Err_Ok) {
+        jlong resultPtr = reinterpret_cast<jlong>(outline);
+        env->SetLongArrayRegion(dstOutlinePointer, 0, 1, &resultPtr);
+    }else{
+        free(outline);
+        outline = nullptr;
+    }
+
+    return static_cast<jint>(error);
+}
+
+// FT_Error FT_Outline_Done(FT_Library library, FT_Outline* outline)
+// int FT_Outline_Done(long library, long outline);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Done
+  (JNIEnv *env, jclass, jlong libraryPtrRaw, jlong outlinePtrRaw) {
+
+    const FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
+    if(!library) {
+        throwException(env, "Invalid FT_Library pointer");
+        return 0;
+    }
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Outline_Done(library, outline);
+
+    free(outline);
+
     return static_cast<jint>(error);
 }
 

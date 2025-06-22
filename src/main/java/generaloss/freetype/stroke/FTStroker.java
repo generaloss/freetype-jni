@@ -13,7 +13,7 @@ public class FTStroker extends FTStruct { // struct done.
     }
 
 
-    public void set(float radius, FTStrokerLinecap lineCap, FTStrokerLinejoin lineJoin, float miterLimit) {
+    public void set(float radius, FTStrokerLineCap lineCap, FTStrokerLineJoin lineJoin, float miterLimit) {
         FreeType.ftStrokerSet(this, radius, lineCap, lineJoin, miterLimit);
     }
 
@@ -51,8 +51,8 @@ public class FTStroker extends FTStruct { // struct done.
         error.checkError();
     }
 
-    public void borderCounts(FTStrokerBorder border, long[] anumPoints, long[] anumContours) {
-        final FTError error = FreeType.ftStrokerGetBorderCounts(this, border, anumPoints, anumContours);
+    public void getBorderCounts(FTStrokerBorder border, long[] dstNumPoints, long[] dstNumContours) {
+        final FTError error = FreeType.ftStrokerGetBorderCounts(this, border, dstNumPoints, dstNumContours);
         error.checkError();
     }
 
@@ -60,8 +60,8 @@ public class FTStroker extends FTStruct { // struct done.
         FreeType.ftStrokerExportBorder(this, border, outline);
     }
 
-    public void getCounts(long[] anumPoints, long[] anumContours) {
-        final FTError error = FreeType.ftStrokerGetCounts(this, anumPoints, anumContours);
+    public void getCounts(long[] dstNumPoints, long[] dstNumContours) {
+        final FTError error = FreeType.ftStrokerGetCounts(this, dstNumPoints, dstNumContours);
         error.checkError();
     }
 

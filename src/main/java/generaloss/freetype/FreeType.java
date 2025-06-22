@@ -3,12 +3,13 @@ package generaloss.freetype;
 import generaloss.freetype.freetype.*;
 import generaloss.freetype.gload.FTGlyphLoader;
 import generaloss.freetype.glyph.FTGlyph;
+import generaloss.freetype.glyph.FTGlyphBBoxMode;
 import generaloss.freetype.image.FTGlyphFormat;
 import generaloss.freetype.image.FTOutline;
 import generaloss.freetype.stroke.FTStroker;
 import generaloss.freetype.stroke.FTStrokerBorder;
-import generaloss.freetype.stroke.FTStrokerLinecap;
-import generaloss.freetype.stroke.FTStrokerLinejoin;
+import generaloss.freetype.stroke.FTStrokerLineCap;
+import generaloss.freetype.stroke.FTStrokerLineJoin;
 import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.*;
 
@@ -634,10 +635,10 @@ public class FreeType {
     }
 
     // FT_Error FT_Glyph_Copy(FT_Glyph source, FT_Glyph *target)
-    private static native int FT_Glyph_Copy(long source, long target);
+    private static native int FT_Glyph_Copy(long source, long[] target);
 
-    public static FTError ftGlyphCopy(FTGlyph source, FTGlyph target) {
-        final int code = FT_Glyph_Copy(FTStruct.getPointer(source), FTStruct.getPointer(target));
+    public static FTError ftGlyphCopy(FTGlyph source, long[] dstTargetPointer) {
+        final int code = FT_Glyph_Copy(FTStruct.getPointer(source), dstTargetPointer);
         return FTError.byCode(code);
     }
 
@@ -652,8 +653,8 @@ public class FreeType {
     // void FT_Glyph_Get_CBox(FT_Glyph glyph, FT_UInt bbox_mode, FT_BBox *acbox)
     private static native void FT_Glyph_Get_CBox(long glyph, long bboxMode, long acbox);
 
-    public static void ftGlyphGetCBox(FTGlyph glyph, long bboxMode, FTBBox dstCbox) {
-        FT_Glyph_Get_CBox(FTStruct.getPointer(glyph), bboxMode, FTStruct.getPointer(dstCbox));
+    public static void ftGlyphGetCBox(FTGlyph glyph, FTGlyphBBoxMode bboxMode, FTBBox dstCbox) {
+        FT_Glyph_Get_CBox(FTStruct.getPointer(glyph), bboxMode.value, FTStruct.getPointer(dstCbox));
     }
 
     // FT_Error FT_Glyph_To_Bitmap(FT_Glyph* the_glyph, FT_Render_Mode render_mode, const FT_Vector* origin, FT_Bool destroy)
@@ -695,6 +696,64 @@ public class FreeType {
 
 
     // ------------------------------
+    // ---      ftoutln.h        ---
+    // ------------------------------
+
+
+    // FT_Error FT_Outline_Decompose(FT_Outline* outline, const FT_Outline_Funcs* func_interface, void* user)
+    // FTError ftOutlineDecompose(FTOutline outline, FTOutlineFuncs funcInterface, void* user)
+
+    // FT_Error FT_Outline_New(FT_Library library, FT_UInt numPoints, FT_Int numContours, FT_Outline *anoutline)
+    private static native int FT_Outline_New(long library, long numPoints, long numContours, long[] dstOutlinePointer);
+
+    public static FTError ftOutlineNew(FTLibrary library, long numPoints, long numContours, long[] dstOutlinePointer) {
+        final int code = FT_Outline_New(FTStruct.getPointer(library), numPoints, numContours, dstOutlinePointer);
+        return FTError.byCode(code);
+    }
+
+    // FT_Error FT_Outline_Done(FT_Library library, FT_Outline* outline)
+    private static native int FT_Outline_Done(long library, long outline);
+
+    public static FTError ftOutlineDone(FTLibrary library, FTOutline outline) {
+        final int code = FT_Outline_Done(FTStruct.getPointer(library), FTStruct.getPointer(outline));
+        return FTError.byCode(code);
+    }
+
+    // FT_Error FT_Outline_Check(FT_Outline* outline)
+    // FTError ftOutlineCheck(FTOutline outline)
+
+    // void FT_Outline_Get_CBox(const FT_Outline* outline, FT_BBox *acbox)
+    // void ftOutlineGetCBox(FTOutline outline, FTBBox dstCbox)
+
+    // void FT_Outline_Translate(const FT_Outline* outline, FT_Pos xOffset, FT_Pos yOffset)
+    // void ftOutlineTranslate(FTOutline outline, float xOffset, float yOffset)
+
+    // FT_Error FT_Outline_Copy(const FT_Outline* source, FT_Outline *target)
+    // FTError ftOutlineCopy(FTOutline source, FTOutline target)
+
+    // void FT_Outline_Transform(const FT_Outline* outline, const FT_Matrix* matrix)
+    // void ftOutlineTransform(FTOutline outline, FTMatrix matrix)
+
+    // FT_Error FT_Outline_Embolden(FT_Outline* outline, FT_Pos strength)
+    // FTError ftOutlineEmbolden(FTOutline outline, float strength)
+
+    // FT_Error FT_Outline_EmboldenXY(FT_Outline* outline, FT_Pos xstrength, FT_Pos ystrength)
+    // FTError ftOutlineEmbolden(FTOutline outline, float xStrength, float yStrength)
+
+    // void FT_Outline_Reverse(FT_Outline* outline)
+    // void ftOutlineReverse(FTOutline outline)
+
+    // FT_Error FT_Outline_Get_Bitmap(FT_Library library, FT_Outline* outline, const FT_Bitmap *abitmap)
+    // FTError ftOutlineGetBitmap(FTLibrary library, FTOutline outline, FTBitmap dstBitmap)
+
+    // FT_Error FT_Outline_Render(FT_Library library, FT_Outline* outline, FT_Raster_Params* params)
+    // FTError ftOutlineRender(FTLibrary library, FTOutline outline, FTRasterParams params)
+
+    // FT_Orientation FT_Outline_Get_Orientation(FT_Outline* outline)
+    // FTOrientation ftOutlineGetOrientation(FTOutline outline)
+
+
+    // ------------------------------
     // ---      ftstroke.h        ---
     // ------------------------------
 
@@ -726,7 +785,7 @@ public class FreeType {
     // void FT_Stroker_Set(FT_Stroker stroker, FT_Fixed radius, FT_Stroker_LineCap line_cap, FT_Stroker_LineJoin line_join, FT_Fixed miter_limit)
     private static native void FT_Stroker_Set(long stroker, long radius, int line_cap, int line_join, long miter_limit);
 
-    public static void ftStrokerSet(FTStroker stroker, float radius, FTStrokerLinecap lineCap, FTStrokerLinejoin lineJoin, float miterLimit) {
+    public static void ftStrokerSet(FTStroker stroker, float radius, FTStrokerLineCap lineCap, FTStrokerLineJoin lineJoin, float miterLimit) {
         if(lineCap == null)
             throw new NullPointerException("LineCap is null");
         if(lineJoin == null)
@@ -792,10 +851,10 @@ public class FreeType {
     // FT_Error FT_Stroker_GetBorderCounts(FT_Stroker stroker, FT_StrokerBorder border, FT_UInt *anum_points, FT_UInt *anum_contours)
     private static native int FT_Stroker_GetBorderCounts(long stroker, int border, long[] anum_points, long[] anum_contours);
 
-    public static FTError ftStrokerGetBorderCounts(FTStroker stroker, FTStrokerBorder border, long[] dstNumPoint, long[] dstNumContours) {
+    public static FTError ftStrokerGetBorderCounts(FTStroker stroker, FTStrokerBorder border, long[] dstNumPoints, long[] dstNumContours) {
         if(border == null)
             throw new NullPointerException("Border is null");
-        final int code = FT_Stroker_GetBorderCounts(FTStruct.getPointer(stroker), border.value, dstNumPoint, dstNumContours);
+        final int code = FT_Stroker_GetBorderCounts(FTStruct.getPointer(stroker), border.value, dstNumPoints, dstNumContours);
         return FTError.byCode(code);
     }
 

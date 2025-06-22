@@ -15,11 +15,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTMatrix_createPointer
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTMatrix_freePointer
   (JNIEnv *, jclass, jlong matrixPtrRaw) {
 
-    FT_Matrix* matrix = reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
-    if(!matrix)
-        return;
-
-    delete matrix;
+    delete reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
 }
 
 

@@ -4,6 +4,19 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTBBox_createPointer
+  (JNIEnv *, jclass) {
+
+    FT_BBox* pointer = new FT_BBox();
+    return reinterpret_cast<jlong>(pointer);
+}
+
+JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTBBox_freePointer
+  (JNIEnv *, jclass, jlong bboxPtrRaw) {
+
+    delete reinterpret_cast<FT_BBox*>(bboxPtrRaw);
+}
+
 
 // FT_Pos xMin;
 JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMin

@@ -1,6 +1,6 @@
 package generaloss.freetype.stroke;
 
-public enum FTStrokerLinejoin {
+public enum FTStrokerLineJoin {
 
     /** Used to render rounded line joins. Circular arcs are used to join two lines smoothly. */
     ROUND          (0),
@@ -17,11 +17,11 @@ public enum FTStrokerLinejoin {
 
     public final int value;
 
-    FTStrokerLinejoin(int value) {
+    FTStrokerLineJoin(int value) {
         this.value = value;
     }
 
-    public static FTStrokerLinejoin byValue(int value) {
+    public static FTStrokerLineJoin byValue(int value) {
         if(value > 2)
             value++;
         return values()[value];

@@ -1,6 +1,7 @@
 package generaloss.freetype.types;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FreeType;
 
 import java.util.Objects;
 
@@ -8,6 +9,23 @@ public class FTBBox extends FTStruct { // struct done.
 
     public FTBBox(long pointer) {
         super(pointer);
+    }
+
+    public FTBBox() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
     }
 
 

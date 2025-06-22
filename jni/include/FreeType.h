@@ -442,10 +442,10 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Glyph_Copy
- * Signature: (JJ)I
+ * Signature: (J[J)I
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Copy
-  (JNIEnv *, jclass, jlong, jlong);
+  (JNIEnv *, jclass, jlong, jlongArray);
 
 /*
  * Class:     generaloss_freetype_FreeType
@@ -494,6 +494,22 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Multiply
  */
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Invert
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_New
+ * Signature: (JJJ[J)I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1New
+  (JNIEnv *, jclass, jlong, jlong, jlong, jlongArray);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Done
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Done
+  (JNIEnv *, jclass, jlong, jlong);
 
 /*
  * Class:     generaloss_freetype_FreeType

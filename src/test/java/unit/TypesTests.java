@@ -2,8 +2,8 @@ package unit;
 
 import generaloss.freetype.FreeType;
 import generaloss.freetype.types.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class TypesTests {
 
@@ -11,15 +11,15 @@ public class TypesTests {
     public void ftFixed() {
         final FTFixed num = new FTFixed().set(235.54335F);
 
-        Assert.assertEquals(235.54335F, num.getFloat(), 0F);
+        Assertions.assertEquals(235.54335F, num.getFloat(), 0F);
 
-        Assert.assertEquals(235, num.getIntFloor());
-        Assert.assertEquals(236, num.getIntRound());
-        Assert.assertEquals(236, num.getIntCeil());
+        Assertions.assertEquals(235, num.getIntFloor());
+        Assertions.assertEquals(236, num.getIntRound());
+        Assertions.assertEquals(236, num.getIntCeil());
 
-        Assert.assertEquals(235F, FreeType.ftFloorFix(num), 0F);
-        Assert.assertEquals(236F, FreeType.ftRoundFix(num), 0F);
-        Assert.assertEquals(236F, FreeType.ftCeilFix(num), 0F);
+        Assertions.assertEquals(235F, FreeType.ftFloorFix(num), 0F);
+        Assertions.assertEquals(236F, FreeType.ftRoundFix(num), 0F);
+        Assertions.assertEquals(236F, FreeType.ftCeilFix(num), 0F);
 
         num.free();
     }
@@ -28,8 +28,8 @@ public class TypesTests {
     public void ftVector() {
         final FTVector vec = new FTVector().set(65535.25F, 1323.125F);
 
-        Assert.assertEquals(65535.25F, vec.getX(), 0F);
-        Assert.assertEquals(1323.125F, vec.getY(), 0F);
+        Assertions.assertEquals(65535.25F, vec.getX(), 0F);
+        Assertions.assertEquals(1323.125F, vec.getY(), 0F);
 
         vec.free();
     }
@@ -43,10 +43,10 @@ public class TypesTests {
         mat.setYX(1.25F);
         mat.setYY(-0.25F);
 
-        Assert.assertEquals(1.5F, mat.getXX(), 0F);
-        Assert.assertEquals(-0.5F, mat.getXY(), 0F);
-        Assert.assertEquals(1.25F, mat.getYX(), 0F);
-        Assert.assertEquals(-0.25F, mat.getYY(), 0F);
+        Assertions.assertEquals(1.5F, mat.getXX(), 0F);
+        Assertions.assertEquals(-0.5F, mat.getXY(), 0F);
+        Assertions.assertEquals(1.25F, mat.getYX(), 0F);
+        Assertions.assertEquals(-0.25F, mat.getYY(), 0F);
 
         mat.free();
     }
@@ -55,7 +55,7 @@ public class TypesTests {
     public void ftF26Dot6() {
         FTF26Dot6 num = new FTF26Dot6().set(-17234.25F);
 
-        Assert.assertEquals(-17234.25F, num.getFloat(), 0F);
+        Assertions.assertEquals(-17234.25F, num.getFloat(), 0F);
 
         num.free();
     }
@@ -64,7 +64,7 @@ public class TypesTests {
     public void ftPos() {
         FTPos pos = new FTPos().set(65535.25F);
 
-        Assert.assertEquals(65535.25F, pos.getFloat(), 0F);
+        Assertions.assertEquals(65535.25F, pos.getFloat(), 0F);
 
         pos.free();
     }

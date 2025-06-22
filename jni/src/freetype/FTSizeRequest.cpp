@@ -15,11 +15,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_createPo
 JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTSizeRequest_freePointer
   (JNIEnv *, jclass, jlong requestPtrRaw) {
 
-    FT_Size_Request request = reinterpret_cast<FT_Size_Request>(requestPtrRaw);
-    if(!request)
-        return;
-
-    delete request;
+    delete reinterpret_cast<FT_Size_Request>(requestPtrRaw);
 }
 
 

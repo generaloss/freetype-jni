@@ -15,11 +15,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_types_FTVector_createPointer
 JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTVector_freePointer
   (JNIEnv *, jclass, jlong vectorPtrRaw) {
 
-    FT_Vector* vector = reinterpret_cast<FT_Vector*>(vectorPtrRaw);
-    if(!vector)
-        return;
-
-    delete vector;
+    delete reinterpret_cast<FT_Vector*>(vectorPtrRaw);
 }
 
 

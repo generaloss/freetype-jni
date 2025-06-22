@@ -30,7 +30,7 @@ struct FTSvgGlyph { [ ]
     FT_Vector       delta;               [ ] FTVector getDelta()
 }
 
-enum FTGlyphBBoxMode { [ ]
+enum FTGlyphBBoxMode { [x]
     UNSCALED  = 0
     SUBPIXELS = 0
     GRIDFIT   = 1

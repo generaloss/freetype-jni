@@ -6,8 +6,8 @@ import generaloss.freetype.gload.FTSubGlyph;
 import generaloss.freetype.glyph.FTBitmapGlyph;
 import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.stroke.FTStroker;
-import generaloss.freetype.stroke.FTStrokerLinecap;
-import generaloss.freetype.stroke.FTStrokerLinejoin;
+import generaloss.freetype.stroke.FTStrokerLineCap;
+import generaloss.freetype.stroke.FTStrokerLineJoin;
 import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.FTVector;
 import jpize.util.res.Resource;
@@ -38,7 +38,7 @@ public class TreeTest {
         face.setPixelSizes(32, 32);
 
         final FTStroker stroker = library.newStroker();
-        stroker.set(4, FTStrokerLinecap.BUTT, FTStrokerLinejoin.ROUND, 0);
+        stroker.set(4, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0);
 
         final char c = 'Ǽ';
         face.loadChar(c);

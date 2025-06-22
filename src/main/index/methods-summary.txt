@@ -9,6 +9,8 @@ object FTLibrary {
     [x] void FTLibraryVersion(FTLibrary library, int* major, int* minor, int* patch)
     --- ftglyph.h ---
     [x] FTError newGlyph(FTLibrary library, FTGlyphFormat format, FTGlyph* glyph)
+    --- ftoutln.h ---
+    FTError ftOutlineNew(FTLibrary library, long numPoints, int numContours, FTOutline* anOutline)
     --- ftstroke.h ---
     [x] FTError strokerNew(FTLibrary library, FTStroker* stroker)
 }
@@ -98,6 +100,20 @@ object FTMatrix {
 }
 
 object FTOutline {
+    --- ftoutln.h ---
+    FTError ftOutlineDecompose(FTOutline outline, FTOutlineFuncs funcInterface, void* user)
+    FTError ftOutlineDone(FTLibrary library, FTOutline outline)
+    FTError ftOutlineCheck(FTOutline outline)
+    void ftOutlineGetCBox(FTOutline outline, FTBBox dstCbox)
+    void ftOutlineTranslate(FTOutline outline, float xOffset, float yOffset)
+    FTError ftOutlineCopy(FTOutline source, FTOutline target)
+    void ftOutlineTransform(FTOutline outline, FTMatrix matrix)
+    FTError ftOutlineEmbolden(FTOutline outline, float strength)
+    FTError ftOutlineEmbolden(FTOutline outline, float xStrength, float yStrength)
+    void ftOutlineReverse(FTOutline outline)
+    FTError ftOutlineGetBitmap(FTLibrary library, FTOutline outline, FTBitmap dstBitmap)
+    FTError ftOutlineRender(FTLibrary library, FTOutline outline, FTRasterParams params)
+    FTOrientation ftOutlineGetOrientation(FTOutline outline)
     --- ftstroke.h ---
     [x] FTStrokerBorder getInsideBorder(FTOutline outline)
     [x] FTStrokerBorder getOutsideBorder(FTOutline outline)
