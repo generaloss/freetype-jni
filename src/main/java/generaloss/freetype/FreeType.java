@@ -563,7 +563,8 @@ public class FreeType {
             return;
 
         FT_GlyphLoader_Done(FTStruct.getPointer(loader));
-        loader.destroyPointer();
+        if(loader != null)
+            loader.destroyPointer();
     }
 
     // void FT_GlyphLoader_Reset(FT_GlyphLoader loader)
@@ -676,7 +677,8 @@ public class FreeType {
 
     public static void ftDoneGlyph(FTGlyph glyph) {
         FT_Done_Glyph(FTStruct.getPointer(glyph));
-        glyph.destroyPointer();
+        if(glyph != null)
+            glyph.destroyPointer();
     }
 
     // void FT_Matrix_Multiply(const FT_Matrix* a, FT_Matrix* b)
@@ -716,6 +718,8 @@ public class FreeType {
 
     public static FTError ftOutlineDone(FTLibrary library, FTOutline outline) {
         final int code = FT_Outline_Done(FTStruct.getPointer(library), FTStruct.getPointer(outline));
+        if(outline != null)
+            outline.destroyPointer();
         return FTError.byCode(code);
     }
 
@@ -886,10 +890,9 @@ public class FreeType {
     private static native void FT_Stroker_Done(long stroker);
 
     public static void ftStrokerDone(FTStroker stroker) {
-        if(stroker == null)
-            return;
         FT_Stroker_Done(FTStruct.getPointer(stroker));
-        stroker.destroyPointer();
+        if(stroker != null)
+            stroker.destroyPointer();
     }
 
     // FT_Error FT_Glyph_Stroke(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool destroy)

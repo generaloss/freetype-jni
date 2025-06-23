@@ -1,6 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="FuncTests" type="JUnit" factoryName="JUnit">
     <module name="freetype-jni" />
+    <projectPathOnTarget name="projectPathOnTarget" value="$USER_HOME$/dev/freetype-jni" />
+    <target name="@@@LOCAL@@@" />
     <option name="PACKAGE_NAME" value="unit" />
     <option name="MAIN_CLASS_NAME" value="unit.FuncTests" />
     <option name="METHOD_NAME" value="" />

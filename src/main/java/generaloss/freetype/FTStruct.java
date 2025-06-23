@@ -26,7 +26,7 @@ public class FTStruct {
     }
 
     protected void destroyPointer() {
-        FTStructCache.unregister(pointer);
+        FTStructCache.unregister(this);
         pointer = 0L;
     }
 

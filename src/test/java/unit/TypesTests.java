@@ -53,7 +53,7 @@ public class TypesTests {
 
     @Test
     public void ftF26Dot6() {
-        FTF26Dot6 num = new FTF26Dot6().set(-17234.25F);
+        final FTF26Dot6 num = new FTF26Dot6().set(-17234.25F);
 
         Assertions.assertEquals(-17234.25F, num.getFloat(), 0F);
 
@@ -62,7 +62,7 @@ public class TypesTests {
 
     @Test
     public void ftPos() {
-        FTPos pos = new FTPos().set(65535.25F);
+        final FTPos pos = new FTPos().set(65535.25F);
 
         Assertions.assertEquals(65535.25F, pos.getFloat(), 0F);
 

@@ -48,7 +48,7 @@ public class FTGlyph extends FTStruct { // struct done.
         final long[] dstTargetPointer = new long[1];
         final FTError error = FreeType.ftGlyphCopy(this, dstTargetPointer);
         error.checkError();
-        return new FTGlyph(dstTargetPointer[0]);
+        return FTStructCache.getOrCreate(FTGlyph.class, dstTargetPointer[0], FTGlyph::new);
     }
 
     public void transform(FTMatrix matrix, FTVector delta) {

@@ -57,6 +57,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1FreeType
         return 0;
     }
 
+    printf("Freeing Library %p\n", library);
     const FT_Error error = FT_Done_FreeType(library);
     return static_cast<jint>(error);
 }
@@ -259,6 +260,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Face
 
     const FT_Long refcount = face->internal->refcount;
 
+    printf("Freeing Face %p\n", face);
     const FT_Error error = FT_Done_Face(face);
 
     if(dstDestroyFlag && error == FT_Err_Ok && refcount == 1) {
@@ -1059,6 +1061,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Done
         return;
     }
 
+    printf("Freeing GlyphLoader %p\n", loader);
     FT_GlyphLoader_Done(loader);
 }
 
@@ -1332,6 +1335,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Glyph
         return;
     }
 
+    printf("Freeing Glyph %p\n", glyph);
     FT_Done_Glyph(glyph);
 }
 
@@ -1396,22 +1400,14 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1New
     const FT_UInt numPoints = static_cast<FT_UInt>(numPointsRaw);
     const FT_Int numContours = static_cast<FT_Int>(numContoursRaw);
 
-    FT_Outline* outline = static_cast<FT_Outline*>(malloc(sizeof(FT_Outline)));
-    if(!outline) {
-        throwException(env, "Memory allocation failed");
-        return static_cast<jint>(FT_Err_Out_Of_Memory);
-    }
-
-    memset(outline, 0, sizeof(FT_Outline));
-
+    FT_Outline* outline = new FT_Outline();
     const FT_Error error = FT_Outline_New(library, numPoints, numContours, outline);
 
     if(error == FT_Err_Ok) {
         jlong resultPtr = reinterpret_cast<jlong>(outline);
         env->SetLongArrayRegion(dstOutlinePointer, 0, 1, &resultPtr);
     }else{
-        free(outline);
-        outline = nullptr;
+        delete outline;
     }
 
     return static_cast<jint>(error);
@@ -1434,10 +1430,9 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Done
         return 0;
     }
 
+    printf("Freeing outline: %p (points=%p, tags=%p, contours=%p)\n", outline, outline->points, outline->tags, outline->contours);
     const FT_Error error = FT_Outline_Done(library, outline);
-
-    free(outline);
-
+    delete outline;
     return static_cast<jint>(error);
 }
 
@@ -1707,6 +1702,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ExportBord
     }
 
     const FT_StrokerBorder border = static_cast<FT_StrokerBorder>(borderRaw);
+
     FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline) {
         throwException(env, "Invalid FT_Outline pointer");
@@ -1773,6 +1769,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Done
         return;
     }
 
+    printf("FT_Stroker_Done: %p\n", stroker);
     FT_Stroker_Done(stroker);
 }
 

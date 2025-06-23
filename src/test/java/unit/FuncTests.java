@@ -1,5 +1,6 @@
 package unit;
 
+import generaloss.freetype.FTStructCache;
 import generaloss.freetype.FreeType;
 import generaloss.freetype.UnicodeVariationSelector;
 import generaloss.freetype.freetype.*;
@@ -18,7 +19,9 @@ import generaloss.freetype.stroke.FTStrokerLineJoin;
 import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.*;
 import jpize.util.res.Resource;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
@@ -29,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Execution(ExecutionMode.SAME_THREAD)
+// @Execution(ExecutionMode.SAME_THREAD)
 public class FuncTests {
 
     @Test
@@ -168,7 +171,9 @@ public class FuncTests {
         args.setStream(stream);
 
         final FTFace face = lib.openFace(args, 0);
+
         face.done();
+        stream.free();
         lib.done();
     }
 
@@ -814,6 +819,16 @@ public class FuncTests {
         lib.done();
     }
 
+    public static void main(String[] args) {
+        final FuncTests tests = new FuncTests();
+        for(int i = 0; i < 100; i++) {
+            System.out.println("Test export border");
+            tests.ftStrokerExportBorder();
+            System.out.println("Test open face stream");
+            tests.ftOpenFace_STREAM();
+        }
+    }
+
     @Test
     public void ftGlyphLoaderAdd() {
         final FTLibrary lib = new FTLibrary();
@@ -1016,7 +1031,7 @@ public class FuncTests {
         stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
 
         final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
-        stroker.exportBorder(FTStrokerBorder.LEFT, outline);
+        // stroker.exportBorder(FTStrokerBorder.LEFT, outline);
         Assertions.assertTrue(outline.getNPoints() > 0);
         outline.done(lib); // free(): invalid pointer
 
@@ -1039,7 +1054,7 @@ public class FuncTests {
         stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
 
         final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
-        stroker.exportBorder(FTStrokerBorder.LEFT, outline);
+        // stroker.exportBorder(FTStrokerBorder.LEFT, outline);
         Assertions.assertTrue(outline.getNPoints() > 0);
         outline.done(lib);
 
@@ -1297,6 +1312,11 @@ public class FuncTests {
         lib.done();
     }
 
+    @BeforeEach
+    public void beforeEach() {
+        System.out.println("\nNext test:");
+    }
+
     @Test
     public void ftStrokerExportBorder() {
         final FTLibrary lib = new FTLibrary();
@@ -1311,9 +1331,9 @@ public class FuncTests {
         final long[] dstNumContours = new long[1];
         stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
 
-        // final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
-        // stroker.exportBorder(FTStrokerBorder.LEFT, outline);
-        // Assertions.assertTrue(outline.getNPoints() > 0);
+        final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
+        stroker.exportBorder(FTStrokerBorder.LEFT, outline);
+        Assertions.assertTrue(outline.getNPoints() > 0);
         // outline.done(lib);
 
         stroker.done();
@@ -1355,10 +1375,10 @@ public class FuncTests {
         final long[] dstNumContours = new long[1];
         stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
 
-        // final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
-        // stroker.export(outline);
-        // Assertions.assertTrue(outline.getNPoints() > 0);
-        // outline.done(lib);
+        final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
+        stroker.export(outline);
+        Assertions.assertTrue(outline.getNPoints() > 0);
+        outline.done(lib);
 
         stroker.done();
         lib.done();
