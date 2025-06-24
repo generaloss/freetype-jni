@@ -1400,14 +1400,12 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1New
     const FT_UInt numPoints = static_cast<FT_UInt>(numPointsRaw);
     const FT_Int numContours = static_cast<FT_Int>(numContoursRaw);
 
-    FT_Outline* outline = new FT_Outline();
+    FT_Outline* outline = NULL;
     const FT_Error error = FT_Outline_New(library, numPoints, numContours, outline);
 
     if(error == FT_Err_Ok) {
         jlong resultPtr = reinterpret_cast<jlong>(outline);
         env->SetLongArrayRegion(dstOutlinePointer, 0, 1, &resultPtr);
-    }else{
-        delete outline;
     }
 
     return static_cast<jint>(error);
@@ -1432,7 +1430,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Done
 
     printf("Freeing outline: %p (points=%p, tags=%p, contours=%p)\n", outline, outline->points, outline->tags, outline->contours);
     const FT_Error error = FT_Outline_Done(library, outline);
-    delete outline;
     return static_cast<jint>(error);
 }
 

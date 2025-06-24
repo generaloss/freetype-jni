@@ -1,6 +1,5 @@
 package unit;
 
-import generaloss.freetype.FTStructCache;
 import generaloss.freetype.FreeType;
 import generaloss.freetype.UnicodeVariationSelector;
 import generaloss.freetype.freetype.*;
@@ -19,7 +18,6 @@ import generaloss.freetype.stroke.FTStrokerLineJoin;
 import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.*;
 import jpize.util.res.Resource;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,8 +30,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// @Execution(ExecutionMode.SAME_THREAD)
+@Execution(ExecutionMode.SAME_THREAD)
 public class FuncTests {
+
+    @BeforeEach
+    public void beforeEach() {
+        System.out.println("\nNext test:");
+    }
+
 
     @Test
     public void ftNewMemoryFace() {
@@ -819,15 +823,60 @@ public class FuncTests {
         lib.done();
     }
 
-    public static void main(String[] args) {
+
+    public static void main(String[] _args) {
         final FuncTests tests = new FuncTests();
-        for(int i = 0; i < 100; i++) {
-            System.out.println("Test export border");
-            tests.ftStrokerExportBorder();
-            System.out.println("Test open face stream");
-            tests.ftOpenFace_STREAM();
+
+        for(int i = 0; i < 5; i++) {
+            System.out.println(i);
+            {
+                final FTLibrary lib = new FTLibrary();
+                final FTFace face = lib.newMemoryFace(Resource.internal("/main.ttf").readByteBuffer(), 0);
+
+                final FTStroker stroker = lib.newStroker();
+                stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
+
+                stroker.beginSubPath(new FTVector().set(0F, 0F), true);
+                stroker.lineTo(new FTVector().set(100F, 0F));
+                stroker.endSubPath();
+
+                final long[] dstNumPoints = new long[1];
+                final long[] dstNumContours = new long[1];
+                stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
+
+                final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
+                stroker.exportBorder(FTStrokerBorder.LEFT, outline);
+
+                stroker.done();
+                face.done();
+                lib.done();
+            }
+            {
+                final FTLibrary lib = new FTLibrary();
+                final FTMemory memory = lib.getMemory();
+                final FTGlyphLoader loader = memory.newGlyphLoader();
+
+                loader.prepare(); // prepare current
+
+                loader.checkPoints(1, 1); // allocate 1 point + 1 contour
+                final FTOutline currentOutline = loader.getCurrent().getOutline();
+                currentOutline.setNPoints(1);
+                currentOutline.setNContours(1);
+                currentOutline.getPoints()[0].set(100F, 200F);
+
+                loader.add(); // copy current -> base
+
+                final FTOutline baseOutline = loader.getBase().getOutline();
+                Assertions.assertEquals(1, baseOutline.getNPoints());
+                Assertions.assertEquals(100F, baseOutline.getPoints()[0].getX(), 0F);
+                Assertions.assertEquals(200F, baseOutline.getPoints()[0].getY(), 0F);
+
+                loader.done();
+                lib.done();
+            }
         }
     }
+
 
     @Test
     public void ftGlyphLoaderAdd() {
@@ -1310,11 +1359,6 @@ public class FuncTests {
 
         stroker.done();
         lib.done();
-    }
-
-    @BeforeEach
-    public void beforeEach() {
-        System.out.println("\nNext test:");
     }
 
     @Test
