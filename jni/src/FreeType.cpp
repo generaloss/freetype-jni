@@ -1400,11 +1400,11 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1New
     const FT_UInt numPoints = static_cast<FT_UInt>(numPointsRaw);
     const FT_Int numContours = static_cast<FT_Int>(numContoursRaw);
 
-    FT_Outline* outline = NULL;
+    FT_Outline* outline = new FT_Outline();
     const FT_Error error = FT_Outline_New(library, numPoints, numContours, outline);
 
     if(error == FT_Err_Ok) {
-        jlong resultPtr = reinterpret_cast<jlong>(outline);
+        const jlong resultPtr = reinterpret_cast<jlong>(outline);
         env->SetLongArrayRegion(dstOutlinePointer, 0, 1, &resultPtr);
     }
 
