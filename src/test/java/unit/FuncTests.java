@@ -826,54 +826,51 @@ public class FuncTests {
 
     public static void main(String[] _args) {
         final FuncTests tests = new FuncTests();
+        for(int i = 0; i < 500; i++) {
 
-        for(int i = 0; i < 5; i++) {
-            System.out.println(i);
-            {
-                final FTLibrary lib = new FTLibrary();
-                final FTFace face = lib.newMemoryFace(Resource.internal("/main.ttf").readByteBuffer(), 0);
+            final FTLibrary lib = new FTLibrary();
+            final FTFace face = lib.newMemoryFace(Resource.internal("/main.ttf").readByteBuffer(), 0);
 
-                final FTStroker stroker = lib.newStroker();
-                stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
+            final FTStroker stroker = lib.newStroker();
+            stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
-                stroker.beginSubPath(new FTVector().set(0F, 0F), true);
-                stroker.lineTo(new FTVector().set(100F, 0F));
-                stroker.endSubPath();
+            stroker.beginSubPath(new FTVector().set(0F, 0F), true);
+            stroker.lineTo(new FTVector().set(100F, 0F));
+            stroker.endSubPath();
 
-                final long[] dstNumPoints = new long[1];
-                final long[] dstNumContours = new long[1];
-                stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
+            final long[] dstNumPoints = new long[1];
+            final long[] dstNumContours = new long[1];
+            stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
 
-                final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
-                stroker.exportBorder(FTStrokerBorder.LEFT, outline);
+            final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
+            outline.setNPoints(0);
+            outline.setNContours(0);
+            stroker.exportBorder(FTStrokerBorder.LEFT, outline);
 
-                stroker.done();
-                face.done();
-                lib.done();
-            }
-            {
-                final FTLibrary lib = new FTLibrary();
-                final FTMemory memory = lib.getMemory();
-                final FTGlyphLoader loader = memory.newGlyphLoader();
+            stroker.done();
+            face.done();
 
-                loader.prepare(); // prepare current
+            final FTMemory memory = lib.getMemory();
+            final FTGlyphLoader loader = memory.newGlyphLoader();
 
-                loader.checkPoints(1, 1); // allocate 1 point + 1 contour
-                final FTOutline currentOutline = loader.getCurrent().getOutline();
-                currentOutline.setNPoints(1);
-                currentOutline.setNContours(1);
-                currentOutline.getPoints()[0].set(100F, 200F);
+            loader.prepare(); // prepare current
 
-                loader.add(); // copy current -> base
+            loader.checkPoints(1, 1); // allocate 1 point + 1 contour
+            final FTOutline currentOutline = loader.getCurrent().getOutline();
+            currentOutline.setNPoints(1);
+            currentOutline.setNContours(1);
+            currentOutline.getPoints()[0].set(100F, 200F);
 
-                final FTOutline baseOutline = loader.getBase().getOutline();
-                Assertions.assertEquals(1, baseOutline.getNPoints());
-                Assertions.assertEquals(100F, baseOutline.getPoints()[0].getX(), 0F);
-                Assertions.assertEquals(200F, baseOutline.getPoints()[0].getY(), 0F);
+            loader.add(); // copy current -> base
 
-                loader.done();
-                lib.done();
-            }
+            final FTOutline baseOutline = loader.getBase().getOutline();
+            Assertions.assertEquals(1, baseOutline.getNPoints());
+            Assertions.assertEquals(100F, baseOutline.getPoints()[0].getX(), 0F);
+            Assertions.assertEquals(200F, baseOutline.getPoints()[0].getY(), 0F);
+
+            loader.done();
+
+            lib.done();
         }
     }
 

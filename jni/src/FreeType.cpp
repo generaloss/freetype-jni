@@ -57,7 +57,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1FreeType
         return 0;
     }
 
-    printf("Freeing Library %p\n", library);
     const FT_Error error = FT_Done_FreeType(library);
     return static_cast<jint>(error);
 }
@@ -260,7 +259,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Face
 
     const FT_Long refcount = face->internal->refcount;
 
-    printf("Freeing Face %p\n", face);
     const FT_Error error = FT_Done_Face(face);
 
     if(dstDestroyFlag && error == FT_Err_Ok && refcount == 1) {
@@ -1061,7 +1059,6 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Done
         return;
     }
 
-    printf("Freeing GlyphLoader %p\n", loader);
     FT_GlyphLoader_Done(loader);
 }
 
@@ -1335,7 +1332,6 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Glyph
         return;
     }
 
-    printf("Freeing Glyph %p\n", glyph);
     FT_Done_Glyph(glyph);
 }
 
@@ -1428,7 +1424,6 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Done
         return 0;
     }
 
-    printf("Freeing outline: %p (points=%p, tags=%p, contours=%p)\n", outline, outline->points, outline->tags, outline->contours);
     const FT_Error error = FT_Outline_Done(library, outline);
     return static_cast<jint>(error);
 }
@@ -1766,7 +1761,6 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Done
         return;
     }
 
-    printf("FT_Stroker_Done: %p\n", stroker);
     FT_Stroker_Done(stroker);
 }
 
