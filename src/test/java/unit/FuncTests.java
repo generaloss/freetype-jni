@@ -33,10 +33,10 @@ import java.util.List;
 @Execution(ExecutionMode.SAME_THREAD)
 public class FuncTests {
 
-    @BeforeEach
-    public void beforeEach() {
-        System.out.println("\nNext test:");
-    }
+    // @BeforeEach
+    // public void beforeEach() {
+    //     System.out.println("\nNext test:");
+    // }
 
 
     @Test
@@ -823,58 +823,6 @@ public class FuncTests {
         lib.done();
     }
 
-
-    public static void main(String[] _args) {
-        final FuncTests tests = new FuncTests();
-        for(int i = 0; i < 500; i++) {
-
-            final FTLibrary lib = new FTLibrary();
-            final FTFace face = lib.newMemoryFace(Resource.internal("/main.ttf").readByteBuffer(), 0);
-
-            final FTStroker stroker = lib.newStroker();
-            stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
-
-            stroker.beginSubPath(new FTVector().set(0F, 0F), true);
-            stroker.lineTo(new FTVector().set(100F, 0F));
-            stroker.endSubPath();
-
-            final long[] dstNumPoints = new long[1];
-            final long[] dstNumContours = new long[1];
-            stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
-
-            final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
-            outline.setNPoints(0);
-            outline.setNContours(0);
-            stroker.exportBorder(FTStrokerBorder.LEFT, outline);
-
-            stroker.done();
-            face.done();
-
-            final FTMemory memory = lib.getMemory();
-            final FTGlyphLoader loader = memory.newGlyphLoader();
-
-            loader.prepare(); // prepare current
-
-            loader.checkPoints(1, 1); // allocate 1 point + 1 contour
-            final FTOutline currentOutline = loader.getCurrent().getOutline();
-            currentOutline.setNPoints(1);
-            currentOutline.setNContours(1);
-            currentOutline.getPoints()[0].set(100F, 200F);
-
-            loader.add(); // copy current -> base
-
-            final FTOutline baseOutline = loader.getBase().getOutline();
-            Assertions.assertEquals(1, baseOutline.getNPoints());
-            Assertions.assertEquals(100F, baseOutline.getPoints()[0].getX(), 0F);
-            Assertions.assertEquals(200F, baseOutline.getPoints()[0].getY(), 0F);
-
-            loader.done();
-
-            lib.done();
-        }
-    }
-
-
     @Test
     public void ftGlyphLoaderAdd() {
         final FTLibrary lib = new FTLibrary();
@@ -1366,17 +1314,37 @@ public class FuncTests {
 
         stroker.beginSubPath(new FTVector().set(0F, 0F), true);
         stroker.lineTo(new FTVector().set(100F, 0F));
+        stroker.lineTo(new FTVector().set(100F, 100F));
+        stroker.lineTo(new FTVector().set(0F, 100F));
         stroker.endSubPath();
 
-        final long[] dstNumPoints = new long[1];
-        final long[] dstNumContours = new long[1];
-        stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
+        final long[] dstPoints = new long[1];
+        final long[] dstContours = new long[1];
+        stroker.getBorderCounts(FTStrokerBorder.LEFT, dstPoints, dstContours);
 
-        final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
+        Assertions.assertTrue(dstContours[0] > 0, "Expected at least 1 contour");
+        Assertions.assertTrue(dstPoints[0] >= 4, "Expected at least 4 points");
+
+        final FTOutline outline = lib.newOutline(dstPoints[0], dstContours[0]);
+
+        outline.setNPoints(0);
+        outline.setNContours(0);
+
         stroker.exportBorder(FTStrokerBorder.LEFT, outline);
-        Assertions.assertTrue(outline.getNPoints() > 0);
-        // outline.done(lib);
 
+        Assertions.assertTrue(outline.getNPoints() > 0, "Outline should have points");
+        Assertions.assertTrue(outline.getNContours() > 0, "Outline should have contours");
+
+        final FTVector[] points = outline.getPoints();
+        Assertions.assertNotNull(points);
+        Assertions.assertTrue(points.length > 0);
+
+        for(FTVector pt: points) {
+            Assertions.assertFalse(Float.isNaN(pt.getX()), "X should not be NaN");
+            Assertions.assertFalse(Float.isNaN(pt.getY()), "Y should not be NaN");
+        }
+
+        outline.done(lib);
         stroker.done();
         lib.done();
     }
@@ -1435,12 +1403,57 @@ public class FuncTests {
 
     @Test
     public void ftGlyphStroke() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        final FTStroker stroker = lib.newStroker();
 
+        stroker.set(10F, FTStrokerLineCap.ROUND, FTStrokerLineJoin.ROUND, 0F);
+
+        face.setPixelSizes(0L, 24L);
+        face.loadChar('B');
+        final FTGlyph glyph = face.getGlyph().getGlyph();
+
+        final FTGlyph strokedGlyph = glyph.stroke(stroker, true);
+        Assertions.assertNotNull(strokedGlyph);
+
+        final FTBBox bbox = new FTBBox();
+        strokedGlyph.getCBox(FTGlyphBBoxMode.TRUNCATE, bbox);
+        Assertions.assertTrue(bbox.getXMax() > bbox.getXMin());
+
+        bbox.free();
+        strokedGlyph.done();
+        stroker.done();
+        face.done();
+        lib.done();
     }
 
     @Test
     public void ftGlyphStrokeBorder() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        final FTStroker stroker = lib.newStroker();
 
+        stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
+
+        face.setPixelSizes(0L, 24L);
+        face.loadChar('C');
+        final FTGlyph glyph = face.getGlyph().getGlyph();
+
+        final FTGlyph strokedGlyph = glyph.strokeBorder(stroker, true, false);
+        Assertions.assertNotNull(strokedGlyph);
+
+        final FTBBox originalBox = glyph.getCBox(FTGlyphBBoxMode.TRUNCATE);
+        final FTBBox strokedBox = strokedGlyph.getCBox(FTGlyphBBoxMode.TRUNCATE);
+
+        Assertions.assertNotEquals(originalBox.getXMax(), strokedBox.getXMax());
+
+        originalBox.free();
+        strokedBox.free();
+        strokedGlyph.done();
+        glyph.done();
+        stroker.done();
+        face.done();
+        lib.done();
     }
 
 }

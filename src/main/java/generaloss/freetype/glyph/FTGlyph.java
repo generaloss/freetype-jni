@@ -56,8 +56,14 @@ public class FTGlyph extends FTStruct { // struct done.
         error.checkError();
     }
 
-    public void getCBox(FTGlyphBBoxMode bboxMode, FTBBox cbox) {
-        FreeType.ftGlyphGetCBox(this, bboxMode, cbox);
+    public void getCBox(FTGlyphBBoxMode bboxMode, FTBBox dstCbox) {
+        FreeType.ftGlyphGetCBox(this, bboxMode, dstCbox);
+    }
+
+    public FTBBox getCBox(FTGlyphBBoxMode bboxMode) {
+        final FTBBox dstCbox = new FTBBox();
+        FreeType.ftGlyphGetCBox(this, bboxMode, dstCbox);
+        return dstCbox;
     }
 
     public FTBitmapGlyph toBitmap(FTRenderMode renderMode, FTVector origin, boolean destroy) {

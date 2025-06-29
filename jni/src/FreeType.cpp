@@ -1701,6 +1701,11 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ExportBord
         return;
     }
 
+    if(outline->n_points != 0 || outline->n_contours != 0) {
+        throwException(env, "FT_Outline n_points and n_contours must be zero before calling FT_Stroker_ExportBorder.");
+        return;
+    }
+
     FT_Stroker_ExportBorder(stroker, border, outline);
 }
 
