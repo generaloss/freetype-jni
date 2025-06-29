@@ -64,13 +64,13 @@ flags FTCurveTag { [ ]
     TOUCH_BOTH
 }
 
-struct FTOutlineFuncs { [ ]
-    FT_Outline_MoveToFunc  move_to;  [ ] FTOutlineMoveToFunc getMoveTo()
-    FT_Outline_LineToFunc  line_to;  [ ] FTOutlineLineToFunc getLineTo()
-    FT_Outline_ConicToFunc conic_to; [ ] FTOutlineConicToFunc getConicTo()
-    FT_Outline_CubicToFunc cubic_to; [ ] FTOutlineCubicToFunc getCubicTo()
-    int                    shift;    [ ] int getShift()
-    FT_Pos                 delta;    [ ] FTPos getDelta()
+struct FTOutlineFuncs { [x]
+    FT_Outline_MoveToFunc  move_to;  [x] FTOutlineMoveToFunc getMoveTo()
+    FT_Outline_LineToFunc  line_to;  [x] FTOutlineLineToFunc getLineTo()
+    FT_Outline_ConicToFunc conic_to; [x] FTOutlineConicToFunc getConicTo()
+    FT_Outline_CubicToFunc cubic_to; [x] FTOutlineCubicToFunc getCubicTo()
+    int                    shift;    [x] int getShift()
+    FT_Pos                 delta;    [x] FTPos getDelta()
 }
 
 enum FTGlyphFormat { [ ]

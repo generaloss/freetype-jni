@@ -6,6 +6,7 @@ import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.glyph.FTGlyphBBoxMode;
 import generaloss.freetype.image.FTGlyphFormat;
 import generaloss.freetype.image.FTOutline;
+import generaloss.freetype.image.FTOutlineFuncs;
 import generaloss.freetype.stroke.FTStroker;
 import generaloss.freetype.stroke.FTStrokerBorder;
 import generaloss.freetype.stroke.FTStrokerLineCap;
@@ -703,7 +704,12 @@ public class FreeType {
 
 
     // FT_Error FT_Outline_Decompose(FT_Outline* outline, const FT_Outline_Funcs* func_interface, void* user)
-    // FTError ftOutlineDecompose(FTOutline outline, FTOutlineFuncs funcInterface, void* user)
+    private static native int FT_Outline_Decompose(long outline, long func_interface);
+
+    public static FTError ftOutlineDecompose(FTOutline outline, FTOutlineFuncs funcInterface) {
+        final int code = FT_Outline_Decompose(FTStruct.getPointer(outline), FTStruct.getPointer(funcInterface));
+        return FTError.byCode(code);
+    }
 
     // FT_Error FT_Outline_New(FT_Library library, FT_UInt numPoints, FT_Int numContours, FT_Outline *anoutline)
     private static native int FT_Outline_New(long library, long numPoints, long numContours, long[] dstOutlinePointer);

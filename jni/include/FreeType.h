@@ -497,6 +497,14 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Invert
 
 /*
  * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Decompose
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Decompose
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     generaloss_freetype_FreeType
  * Method:    FT_Outline_New
  * Signature: (JJJ[J)I
  */
