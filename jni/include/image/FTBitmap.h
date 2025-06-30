@@ -9,6 +9,22 @@ extern "C" {
 #endif
 /*
  * Class:     generaloss_freetype_image_FTBitmap
+ * Method:    createPointer
+ * Signature: ()J
+ */
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_image_FTBitmap_createPointer
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     generaloss_freetype_image_FTBitmap
+ * Method:    freePointer
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTBitmap_freePointer
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_image_FTBitmap
  * Method:    getRows
  * Signature: (J)J
  */

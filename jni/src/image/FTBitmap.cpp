@@ -4,6 +4,20 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+JNIEXPORT jlong JNICALL Java_generaloss_freetype_image_FTBitmap_createPointer
+  (JNIEnv *, jclass) {
+
+    FT_Bitmap* pointer = new FT_Bitmap();
+    return reinterpret_cast<jlong>(pointer);
+}
+
+JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTBitmap_freePointer
+  (JNIEnv *, jclass, jlong bitmapPtrRaw) {
+
+    delete reinterpret_cast<FT_Bitmap*>(bitmapPtrRaw);
+}
+
+
 // unsigned int rows;
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_image_FTBitmap_getRows
   (JNIEnv *, jclass, jlong bitmapPtrRaw) {

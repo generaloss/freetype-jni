@@ -8,10 +8,8 @@ import generaloss.freetype.gload.FTSubGlyph;
 import generaloss.freetype.glyph.FTBitmapGlyph;
 import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.glyph.FTGlyphBBoxMode;
-import generaloss.freetype.image.FTBitmap;
-import generaloss.freetype.image.FTGlyphFormat;
-import generaloss.freetype.image.FTOutline;
-import generaloss.freetype.image.FTOutlineFuncs;
+import generaloss.freetype.image.*;
+import generaloss.freetype.outln.FTOrientation;
 import generaloss.freetype.stroke.FTStroker;
 import generaloss.freetype.stroke.FTStrokerBorder;
 import generaloss.freetype.stroke.FTStrokerLineCap;
@@ -1013,8 +1011,8 @@ public class FuncTests {
         final long[] dstContours = new long[1];
         stroker.getBorderCounts(FTStrokerBorder.LEFT, dstPoints, dstContours);
 
-        Assertions.assertTrue(dstContours[0] > 0, "Expected at least 1 contour");
-        Assertions.assertTrue(dstPoints[0] >= 4, "Expected at least 4 points");
+        Assertions.assertTrue(dstContours[0] > 0L, "Expected at least 1 contour");
+        Assertions.assertTrue(dstPoints[0] >= 4L, "Expected at least 4 points");
 
         final FTOutline outline = lib.newOutline(dstPoints[0], dstContours[0]);
 
@@ -1056,7 +1054,7 @@ public class FuncTests {
     public void ftOutlineNew() {
         final FTLibrary lib = new FTLibrary();
 
-        final FTOutline outline = lib.newOutline(0, 0);
+        final FTOutline outline = lib.newOutline(0L, 0L);
         outline.done(lib);
 
         lib.done();
@@ -1066,7 +1064,7 @@ public class FuncTests {
     public void ftOutlineDone() {
         final FTLibrary lib = new FTLibrary();
 
-        final FTOutline outline = lib.newOutline(0, 0);
+        final FTOutline outline = lib.newOutline(0L, 0L);
         outline.done(lib);
 
         lib.done();
@@ -1074,57 +1072,273 @@ public class FuncTests {
 
     @Test
     public void ftOutlineCheck() {
+        final FTLibrary lib = new FTLibrary();
+        final FTOutline outline = lib.newOutline(4L, 1L);
 
+        outline.setNContours(1);
+        outline.setNPoints(4);
+        outline.setPoints(
+            new FTVector().set(0F, 0F),
+            new FTVector().set(100F, 0F),
+            new FTVector().set(100F, 100F),
+            new FTVector().set(0F, 100F)
+        );
+        outline.setContours(3);
+        outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
+
+        outline.check();
+
+        outline.done(lib);
+        lib.done();
     }
 
     @Test
     public void ftOutlineGetCBox() {
+        final FTLibrary lib = new FTLibrary();
+        final FTOutline outline = lib.newOutline(4L, 1L);
 
+        outline.setNContours(1);
+        outline.setNPoints(4);
+        outline.setPoints(
+            new FTVector().set(10F, 20F),
+            new FTVector().set(110F, 20F),
+            new FTVector().set(110F, 120F),
+            new FTVector().set(10F, 120F)
+        );
+        outline.setContours(3);
+        outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
+
+        final FTBBox cbox = outline.getCBox();
+
+        Assertions.assertEquals(10F, cbox.getXMin());
+        Assertions.assertEquals(20F, cbox.getYMin());
+        Assertions.assertEquals(110F, cbox.getXMax());
+        Assertions.assertEquals(120F, cbox.getYMax());
+
+        outline.done(lib);
+        lib.done();
     }
 
     @Test
     public void ftOutlineTranslate() {
+        final FTLibrary lib = new FTLibrary();
+        final FTOutline outline = lib.newOutline(1L, 1L);
 
+        outline.setNContours(1);
+        outline.setNPoints(1);
+        outline.setPoints(new FTVector().set(10F, 20F));
+        outline.setContours(0);
+        outline.setFlags(FTOutlineFlag.OWNER);
+
+        outline.translate(50F, 100F);
+
+        final FTVector[] points = outline.getPoints();
+        Assertions.assertEquals(60F, points[0].getX());
+        Assertions.assertEquals(120F, points[0].getY());
+
+        outline.done(lib);
+        lib.done();
     }
 
     @Test
     public void ftOutlineCopy() {
+        final FTLibrary lib = new FTLibrary();
+        final FTOutline source = lib.newOutline(1L, 1L);
+        final FTOutline target = lib.newOutline(1L, 1L);
 
+        source.setNContours(1);
+        source.setNPoints(1);
+        source.setPoints(new FTVector().set(10F, 20F));
+        source.setContours(0);
+        source.setFlags(FTOutlineFlag.OWNER);
+
+        source.copy(target);
+
+        final FTVector[] targetPoints = target.getPoints();
+        Assertions.assertEquals(10F, targetPoints[0].getX());
+        Assertions.assertEquals(20F, targetPoints[0].getY());
+
+        source.done(lib);
+        target.done(lib);
+        lib.done();
     }
 
     @Test
     public void ftOutlineTransform() {
+        final FTLibrary lib = new FTLibrary();
+        final FTOutline outline = lib.newOutline(1L, 1L);
+        final FTMatrix matrix = new FTMatrix();
 
+        outline.setNContours(1);
+        outline.setNPoints(1);
+        outline.setPoints(new FTVector().set(10F, 0F));
+        outline.setContours(0);
+        outline.setFlags(FTOutlineFlag.OWNER);
+
+        matrix.setXX(0F);
+        matrix.setXY(1F);
+        matrix.setYX(-1F);
+        matrix.setYY(0F);
+
+        outline.transform(matrix);
+
+        final FTVector[] points = outline.getPoints();
+        Assertions.assertEquals(0F, points[0].getX());
+        Assertions.assertEquals(-10F, points[0].getY());
+
+        outline.done(lib);
+        matrix.free();
+        lib.done();
     }
 
     @Test
     public void ftOutlineEmbolden() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        face.setCharSize(0F, 16F, 300L, 300L);
+        final long glyphIndex = face.getCharIndex('A');
+        face.loadGlyph(glyphIndex);
+
+        final FTGlyphSlot slot = face.getGlyph();
+        final FTOutline outline = slot.getOutline();
+
+        final FTOutline emboldened = lib.newOutline(outline.getNPoints(), outline.getNContours());
+        outline.copy(emboldened);
+
+        emboldened.embolden(1F);
+
+        Assertions.assertTrue(emboldened.getNPoints() > 0);
+        Assertions.assertTrue(emboldened.getNContours() > 0);
+
+        emboldened.done(lib);
+        lib.done();
     }
 
     @Test
-    public void ftOutlineEmbolden_XY() {
+    public void ftOutlineEmboldenXY() {
+        final FTLibrary lib = new FTLibrary();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
+        face.setCharSize(0F, 16F, 300L, 300L);
+        final long glyphIndex = face.getCharIndex('A');
+        face.loadGlyph(glyphIndex);
+
+        final FTGlyphSlot slot = face.getGlyph();
+        final FTOutline outline = slot.getOutline();
+
+        final FTOutline emboldened = lib.newOutline(outline.getNPoints(), outline.getNContours());
+        outline.copy(emboldened);
+
+        emboldened.embolden(1F, 2F);
+
+        Assertions.assertTrue(emboldened.getNPoints() > 0);
+        Assertions.assertTrue(emboldened.getNContours() > 0);
+
+        emboldened.done(lib);
+        lib.done();
     }
 
     @Test
     public void ftOutlineReverse() {
+        final FTLibrary lib = new FTLibrary();
+        final FTOutline outline = lib.newOutline(4L, 1L);
 
+        outline.setNContours(1);
+        outline.setNPoints(4);
+        outline.setPoints(
+            new FTVector().set(0F, 0F),
+            new FTVector().set(100F, 0F),
+            new FTVector().set(100F, 100F),
+            new FTVector().set(0F, 100F)
+        );
+        outline.setContours(3);
+        outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
+
+        outline.reverse();
+
+        final FTVector[] reversed = outline.getPoints();
+        Assertions.assertEquals(0F, reversed[1].getX());
+        Assertions.assertEquals(100F, reversed[1].getY());
+
+        outline.done(lib);
+        lib.done();
     }
 
     @Test
     public void ftOutlineGetBitmap() {
+        final FTLibrary lib = new FTLibrary();
+        final FTOutline outline = lib.newOutline(4L, 1L);
 
+        outline.setNContours(1);
+        outline.setNPoints(4);
+        outline.setPoints(
+            new FTVector().set(0F, 0F),
+            new FTVector().set(100F, 0F),
+            new FTVector().set(100F, 100F),
+            new FTVector().set(0F, 100F)
+        );
+        outline.setContours(3);
+        outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
+
+        final FTBitmap bitmap = outline.getBitmap(lib);
+        System.out.println(bitmap.getPixelMode());
+
+        Assertions.assertTrue(bitmap.getWidth() > 0L);
+        Assertions.assertTrue(bitmap.getRows() > 0L);
+
+        outline.done(lib);
+        bitmap.free();
+        lib.done();
     }
 
     @Test
     public void ftOutlineRender() {
+        // final FTLibrary lib = new FTLibrary();
+        // final FTOutline outline = lib.newOutline(4L, 1L);
 
+        // outline.setNContours(1);
+        // outline.setNPoints(4);
+        // outline.setPoints(
+        //     new FTVector().set(0F, 0F),
+        //     new FTVector().set(100F, 0F),
+        //     new FTVector().set(100F, 100F),
+        //     new FTVector().set(0F, 100F)
+        // );
+        // outline.setContours(3);
+        // outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
+
+        // final FTRasterParams params = new FTRasterParams();
+        // params.setFlags(FTRasterParams.FT_RASTER_FLAG_DEFAULT);
+
+        // outline.render(lib, params);
+
+        // outline.done(lib);
+        // params.free();
+        // lib.done();
     }
 
     @Test
     public void ftOutlineGetOrientation() {
+        final FTLibrary lib = new FTLibrary();
+        final FTOutline outline = lib.newOutline(4L, 1L);
 
+        outline.setNContours(1);
+        outline.setNPoints(4);
+        outline.setPoints(
+            new FTVector().set(0F, 0F),
+            new FTVector().set(100F, 0F),
+            new FTVector().set(100F, 100F),
+            new FTVector().set(0F, 100F)
+        );
+        outline.setContours(3);
+        outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
+
+        final FTOrientation orientation = outline.getOrientation();
+        Assertions.assertTrue(orientation == FTOrientation.TRUETYPE || orientation == FTOrientation.POSTSCRIPT);
+
+        outline.done(lib);
+        lib.done();
     }
 
     @Test

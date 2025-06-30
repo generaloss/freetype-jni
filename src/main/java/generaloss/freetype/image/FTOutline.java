@@ -5,10 +5,9 @@ import generaloss.freetype.FTStruct;
 import generaloss.freetype.FTStructCache;
 import generaloss.freetype.FreeType;
 import generaloss.freetype.freetype.FTLibrary;
+import generaloss.freetype.outln.FTOrientation;
 import generaloss.freetype.stroke.FTStrokerBorder;
-import generaloss.freetype.types.FTError;
-import generaloss.freetype.types.FTTag;
-import generaloss.freetype.types.FTVector;
+import generaloss.freetype.types.*;
 
 public class FTOutline extends FTStruct { // struct done.
 
@@ -154,27 +153,67 @@ public class FTOutline extends FTStruct { // struct done.
         error.checkError();
     }
 
-    // FTError ftOutlineCheck(FTOutline outline)
+    public void check() {
+        final FTError error = FreeType.ftOutlineCheck(this);
+        error.checkError();
+    }
 
-    // void ftOutlineGetCBox(FTOutline outline, FTBBox dstCbox)
+    public void getCBox(FTBBox dstCbox) {
+        FreeType.ftOutlineGetCBox(this, dstCbox);
+    }
 
-    // void ftOutlineTranslate(FTOutline outline, float xOffset, float yOffset)
+    public FTBBox getCBox() {
+        final FTBBox dstCbox = new FTBBox();
+        this.getCBox(dstCbox);
+        return dstCbox;
+    }
 
-    // FTError ftOutlineCopy(FTOutline source, FTOutline target)
+    public void translate(float xOffset, float yOffset) {
+        FreeType.ftOutlineTranslate(this, xOffset, yOffset);
+    }
 
-    // void ftOutlineTransform(FTOutline outline, FTMatrix matrix)
+    public void copy(FTOutline target) {
+        final FTError error = FreeType.ftOutlineCopy(this, target);
+        error.checkError();
+    }
 
-    // FTError ftOutlineEmbolden(FTOutline outline, float strength)
+    public void transform(FTMatrix matrix) {
+        FreeType.ftOutlineTransform(this, matrix);
+    }
 
-    // FTError ftOutlineEmbolden(FTOutline outline, float xStrength, float yStrength)
+    public void embolden(float strength) {
+        final FTError error = FreeType.ftOutlineEmbolden(this, strength);
+        error.checkError();
+    }
 
-    // void ftOutlineReverse(FTOutline outline)
+    public void embolden(float xStrength, float yStrength) {
+        final FTError error = FreeType.ftOutlineEmboldenXY(this, xStrength, yStrength);
+        error.checkError();
+    }
 
-    // FTError ftOutlineGetBitmap(FTLibrary library, FTOutline outline, FTBitmap dstBitmap)
+    public void reverse() {
+        FreeType.ftOutlineReverse(this);
+    }
 
-    // FTError ftOutlineRender(FTLibrary library, FTOutline outline, FTRasterParams params)
+    public void getBitmap(FTLibrary library, FTBitmap dstBitmap) {
+        final FTError error = FreeType.ftOutlineGetBitmap(library, this, dstBitmap);
+        error.checkError();
+    }
 
-    // FTOrientation ftOutlineGetOrientation(FTOutline outline)
+    public FTBitmap getBitmap(FTLibrary library) {
+        final FTBitmap dstBitmap = new FTBitmap();
+        this.getBitmap(library, dstBitmap);
+        return dstBitmap;
+    }
+
+    public void render(FTLibrary library, FTRasterParams params) {
+        final FTError error = FreeType.ftOutlineRender(library, this, params);
+        error.checkError();
+    }
+
+    public FTOrientation getOrientation() {
+        return FreeType.ftOutlineGetOrientation(this);
+    }
 
     public FTStrokerBorder getInsideBorder() {
         return FreeType.ftOutlineGetInsideBorder(this);

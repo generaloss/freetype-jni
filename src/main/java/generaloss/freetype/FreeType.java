@@ -4,9 +4,8 @@ import generaloss.freetype.freetype.*;
 import generaloss.freetype.gload.FTGlyphLoader;
 import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.glyph.FTGlyphBBoxMode;
-import generaloss.freetype.image.FTGlyphFormat;
-import generaloss.freetype.image.FTOutline;
-import generaloss.freetype.image.FTOutlineFuncs;
+import generaloss.freetype.image.*;
+import generaloss.freetype.outln.FTOrientation;
 import generaloss.freetype.stroke.FTStroker;
 import generaloss.freetype.stroke.FTStrokerBorder;
 import generaloss.freetype.stroke.FTStrokerLineCap;
@@ -727,37 +726,88 @@ public class FreeType {
     }
 
     // FT_Error FT_Outline_Check(FT_Outline* outline)
-    // FTError ftOutlineCheck(FTOutline outline)
+    private static native int FT_Outline_Check(long outline);
+
+    public static FTError ftOutlineCheck(FTOutline outline) {
+        final int code = FT_Outline_Check(FTStruct.getPointer(outline));
+        return FTError.byCode(code);
+    }
 
     // void FT_Outline_Get_CBox(const FT_Outline* outline, FT_BBox *acbox)
-    // void ftOutlineGetCBox(FTOutline outline, FTBBox dstCbox)
+    private static native void FT_Outline_Get_CBox(long outline, long acbox);
+
+    public static void ftOutlineGetCBox(FTOutline outline, FTBBox dstCbox) {
+        FT_Outline_Get_CBox(FTStruct.getPointer(outline), FTStruct.getPointer(dstCbox));
+    }
 
     // void FT_Outline_Translate(const FT_Outline* outline, FT_Pos xOffset, FT_Pos yOffset)
-    // void ftOutlineTranslate(FTOutline outline, float xOffset, float yOffset)
+    private static native void FT_Outline_Translate(long outline, int xOffset, int yOffset);
+
+    public static void ftOutlineTranslate(FTOutline outline, float xOffset, float yOffset) {
+        FT_Outline_Translate(FTStruct.getPointer(outline), FTPos.of(xOffset), FTPos.of(yOffset));
+    }
 
     // FT_Error FT_Outline_Copy(const FT_Outline* source, FT_Outline *target)
-    // FTError ftOutlineCopy(FTOutline source, FTOutline target)
+    private static native int FT_Outline_Copy(long source, long target);
+
+    public static FTError ftOutlineCopy(FTOutline source, FTOutline target) {
+        final int code = FT_Outline_Copy(FTStruct.getPointer(source), FTStruct.getPointer(target));
+        return FTError.byCode(code);
+    }
 
     // void FT_Outline_Transform(const FT_Outline* outline, const FT_Matrix* matrix)
-    // void ftOutlineTransform(FTOutline outline, FTMatrix matrix)
+    private static native void FT_Outline_Transform(long outline, long matrix);
+
+    public static void ftOutlineTransform(FTOutline outline, FTMatrix matrix) {
+        FT_Outline_Transform(FTStruct.getPointer(outline), FTStruct.getPointer(matrix));
+    }
 
     // FT_Error FT_Outline_Embolden(FT_Outline* outline, FT_Pos strength)
-    // FTError ftOutlineEmbolden(FTOutline outline, float strength)
+    private static native int FT_Outline_Embolden(long outline, int strength);
+
+    public static FTError ftOutlineEmbolden(FTOutline outline, float strength) {
+        final int code = FT_Outline_Embolden(FTStruct.getPointer(outline), FTPos.of(strength));
+        return FTError.byCode(code);
+    }
 
     // FT_Error FT_Outline_EmboldenXY(FT_Outline* outline, FT_Pos xstrength, FT_Pos ystrength)
-    // FTError ftOutlineEmbolden(FTOutline outline, float xStrength, float yStrength)
+    private static native int FT_Outline_EmboldenXY(long outline, int xstrength, int ystrength);
+
+    public static FTError ftOutlineEmboldenXY(FTOutline outline, float xStrength, float yStrength) {
+        final int code = FT_Outline_EmboldenXY(FTStruct.getPointer(outline), FTPos.of(xStrength), FTPos.of(yStrength));
+        return FTError.byCode(code);
+    }
 
     // void FT_Outline_Reverse(FT_Outline* outline)
-    // void ftOutlineReverse(FTOutline outline)
+    private static native void FT_Outline_Reverse(long outline);
+
+    public static void ftOutlineReverse(FTOutline outline) {
+        FT_Outline_Reverse(FTStruct.getPointer(outline));
+    }
 
     // FT_Error FT_Outline_Get_Bitmap(FT_Library library, FT_Outline* outline, const FT_Bitmap *abitmap)
-    // FTError ftOutlineGetBitmap(FTLibrary library, FTOutline outline, FTBitmap dstBitmap)
+    private static native int FT_Outline_Get_Bitmap(long library, long outline, long abitmap);
+
+    public static FTError ftOutlineGetBitmap(FTLibrary library, FTOutline outline, FTBitmap dstBitmap) {
+        final int code = FT_Outline_Get_Bitmap(FTStruct.getPointer(library), FTStruct.getPointer(outline), FTStruct.getPointer(dstBitmap));
+        return FTError.byCode(code);
+    }
 
     // FT_Error FT_Outline_Render(FT_Library library, FT_Outline* outline, FT_Raster_Params* params)
-    // FTError ftOutlineRender(FTLibrary library, FTOutline outline, FTRasterParams params)
+    private static native int FT_Outline_Render(long library, long outline, long params);
+
+    public static FTError ftOutlineRender(FTLibrary library, FTOutline outline, FTRasterParams params) {
+        final int code = FT_Outline_Render(FTStruct.getPointer(library), FTStruct.getPointer(outline), FTStruct.getPointer(params));
+        return FTError.byCode(code);
+    }
 
     // FT_Orientation FT_Outline_Get_Orientation(FT_Outline* outline)
-    // FTOrientation ftOutlineGetOrientation(FTOutline outline)
+    private static native int FT_Outline_Get_Orientation(long outline);
+
+    public static FTOrientation ftOutlineGetOrientation(FTOutline outline) {
+        final int raw = FT_Outline_Get_Orientation(FTStruct.getPointer(outline));
+        return FTOrientation.byValue(raw);
+    }
 
 
     // ------------------------------

@@ -1,6 +1,7 @@
 package generaloss.freetype.image;
 
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.FreeType;
 
 import java.nio.ByteBuffer;
 
@@ -8,6 +9,23 @@ public class FTBitmap extends FTStruct {
 
     public FTBitmap(long pointer) {
         super(pointer);
+    }
+
+    public FTBitmap() {
+        this(createPointer());
+    }
+
+    static {
+        FreeType.init();
+    }
+
+    private static native long createPointer();
+
+    private static native void freePointer(long pointer);
+
+    public void free() {
+        freePointer(this.pointer);
+        super.destroyPointer();
     }
 
 
@@ -18,12 +36,16 @@ public class FTBitmap extends FTStruct {
         return getRows(super.pointer);
     }
 
+    //
+
     // unsigned int width;
     private static native long getWidth(long pointer);
 
     public long getWidth() {
         return getWidth(super.pointer);
     }
+
+    //
 
     // int pitch;
     private static native int getPitch(long pointer);
@@ -32,12 +54,14 @@ public class FTBitmap extends FTStruct {
         return getPitch(super.pointer);
     }
 
+    //
+
     // unsigned char* buffer;
     private static native ByteBuffer getBuffer(long pointer);
 
     public ByteBuffer getBuffer() {
         if(this.getRows() == 0)
-            return ByteBuffer.allocateDirect(1);
+            return ByteBuffer.allocateDirect(0);
         return getBuffer(super.pointer);
     }
 
@@ -48,6 +72,8 @@ public class FTBitmap extends FTStruct {
         return getNumGrays(super.pointer);
     }
 
+    //
+
     // unsigned char pixel_mode;
     private static native short getPixelMode(long pointer);
 
@@ -55,6 +81,8 @@ public class FTBitmap extends FTStruct {
         final short raw = getPixelMode(super.pointer);
         return FTPixelMode.byValue(raw);
     }
+
+    //
 
     // unsigned char palette_mode;
     private static native short getPaletteMode(long pointer);

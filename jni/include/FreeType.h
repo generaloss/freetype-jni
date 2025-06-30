@@ -521,6 +521,94 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Done
 
 /*
  * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Check
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Check
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Get_CBox
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Get_1CBox
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Translate
+ * Signature: (JII)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Translate
+  (JNIEnv *, jclass, jlong, jint, jint);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Copy
+ * Signature: (JJ)I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Copy
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Transform
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Transform
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Embolden
+ * Signature: (JI)I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Embolden
+  (JNIEnv *, jclass, jlong, jint);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_EmboldenXY
+ * Signature: (JII)I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1EmboldenXY
+  (JNIEnv *, jclass, jlong, jint, jint);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Reverse
+ * Signature: (J)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Reverse
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Get_Bitmap
+ * Signature: (JJJ)I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Get_1Bitmap
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Render
+ * Signature: (JJJ)I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Render
+  (JNIEnv *, jclass, jlong, jlong, jlong);
+
+/*
+ * Class:     generaloss_freetype_FreeType
+ * Method:    FT_Outline_Get_Orientation
+ * Signature: (J)I
+ */
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Get_1Orientation
+  (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_FreeType
  * Method:    FT_Outline_GetInsideBorder
  * Signature: (J)I
  */

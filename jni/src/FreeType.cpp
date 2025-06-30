@@ -1448,6 +1448,217 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Done
     return static_cast<jint>(error);
 }
 
+// FT_Error FT_Outline_Check(FT_Outline* outline)
+// int FT_Outline_Check(long outline);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Check
+  (JNIEnv* env, jclass, jlong outlinePtrRaw) {
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Outline_Check(outline);
+    return static_cast<jint>(error);
+}
+
+// void FT_Outline_Get_CBox(const FT_Outline* outline, FT_BBox *acbox)
+// void FT_Outline_Get_CBox(long outline, long acbox);
+JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Get_1CBox
+  (JNIEnv* env, jclass, jlong outlinePtrRaw, jlong bboxPtrRaw) {
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return;
+    }
+
+    FT_BBox* bbox = reinterpret_cast<FT_BBox*>(bboxPtrRaw);
+    if(!bbox) {
+        throwException(env, "Invalid FT_BBox pointer");
+        return;
+    }
+
+    FT_Outline_Get_CBox(outline, bbox);
+}
+
+// void FT_Outline_Translate(const FT_Outline* outline, FT_Pos xOffset, FT_Pos yOffset)
+// void FT_Outline_Translate(long outline, int xOffset, int yOffset);
+JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Translate
+  (JNIEnv* env, jclass, jlong outlinePtrRaw, jint xOffsetRaw, jint yOffsetRaw) {
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return;
+    }
+
+    const int xOffset = static_cast<FT_Pos>(xOffsetRaw);
+    const int yOffset = static_cast<FT_Pos>(yOffsetRaw);
+
+    FT_Outline_Translate(outline, xOffset, yOffset);
+}
+
+// FT_Error FT_Outline_Copy(const FT_Outline* source, FT_Outline *target)
+// int FT_Outline_Copy(long source, long target);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Copy
+  (JNIEnv* env, jclass, jlong sourcePtrRaw, jlong targetPtrRaw) {
+
+    FT_Outline* source = reinterpret_cast<FT_Outline*>(sourcePtrRaw);
+    if(!source) {
+        throwException(env, "Invalid FT_Outline source pointer");
+        return 0;
+    }
+
+    FT_Outline* target = reinterpret_cast<FT_Outline*>(targetPtrRaw);
+    if(!target) {
+        throwException(env, "Invalid FT_Outline target pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Outline_Copy(source, target);
+    return static_cast<jint>(error);
+}
+
+// void FT_Outline_Transform(const FT_Outline* outline, const FT_Matrix* matrix)
+// void FT_Outline_Transform(long outline, long matrix);
+JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Transform
+  (JNIEnv* env, jclass, jlong outlinePtrRaw, jlong matrixPtrRaw) {
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return;
+    }
+
+    FT_Matrix* matrix = reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
+    if(!matrix) {
+        throwException(env, "Invalid FT_Matrix pointer");
+        return;
+    }
+
+    FT_Outline_Transform(outline, matrix);
+}
+
+// FT_Error FT_Outline_Embolden(FT_Outline* outline, FT_Pos strength)
+// int FT_Outline_Embolden(long outline, int strength);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Embolden
+  (JNIEnv* env, jclass, jlong outlinePtrRaw, jint strengthRaw) {
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    const FT_Pos strength = static_cast<FT_Pos>(strengthRaw);
+
+    const FT_Error error = FT_Outline_Embolden(outline, strength);
+    return static_cast<jint>(error);
+}
+
+// FT_Error FT_Outline_EmboldenXY(FT_Outline* outline, FT_Pos xstrength, FT_Pos ystrength)
+// int FT_Outline_EmboldenXY(long outline, int xstrength, int ystrength);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1EmboldenXY
+  (JNIEnv* env, jclass, jlong outlinePtrRaw, jint xstrengthRaw, jint ystrengthRaw) {
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    const FT_Pos xstrength = static_cast<FT_Pos>(xstrengthRaw);
+    const FT_Pos ystrength = static_cast<FT_Pos>(ystrengthRaw);
+
+    const FT_Error error = FT_Outline_EmboldenXY(outline, xstrength, ystrength);
+    return static_cast<jint>(error);
+}
+
+// void FT_Outline_Reverse(FT_Outline* outline)
+// void FT_Outline_Reverse(long outline);
+JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Reverse
+  (JNIEnv* env, jclass, jlong outlinePtrRaw) {
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return;
+    }
+
+    FT_Outline_Reverse(outline);
+}
+
+// FT_Error FT_Outline_Get_Bitmap(FT_Library library, FT_Outline* outline, const FT_Bitmap *abitmap)
+// int FT_Outline_Get_Bitmap(long library, long outline, long abitmap);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Get_1Bitmap
+  (JNIEnv* env, jclass, jlong libraryPtrRaw, jlong outlinePtrRaw, jlong bitmapPtrRaw) {
+
+    FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
+    if(!library) {
+        throwException(env, "Invalid FT_Library pointer");
+        return 0;
+    }
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    FT_Bitmap* bitmap = reinterpret_cast<FT_Bitmap*>(bitmapPtrRaw);
+    if(!bitmap) {
+        throwException(env, "Invalid FT_Bitmap pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Outline_Get_Bitmap(library, outline, bitmap);
+    return static_cast<jint>(error);
+}
+
+// FT_Error FT_Outline_Render(FT_Library library, FT_Outline* outline, FT_Raster_Params* params)
+// int FT_Outline_Render(long library, long outline, long params);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Render
+  (JNIEnv* env, jclass, jlong libraryPtrRaw, jlong outlinePtrRaw, jlong paramsPtrRaw) {
+
+    FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
+    if(!library) {
+        throwException(env, "Invalid FT_Library pointer");
+        return 0;
+    }
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    FT_Raster_Params* params = reinterpret_cast<FT_Raster_Params*>(paramsPtrRaw);
+    if(!params) {
+        throwException(env, "Invalid FT_Raster_Params pointer");
+        return 0;
+    }
+
+    const FT_Error error = FT_Outline_Render(library, outline, params);
+    return static_cast<jint>(error);
+}
+
+// FT_Orientation FT_Outline_Get_Orientation(FT_Outline* outline)
+// int FT_Outline_Get_Orientation(long outline);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Get_1Orientation
+  (JNIEnv* env, jclass, jlong outlinePtrRaw) {
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    const FT_Orientation orientation = FT_Outline_Get_Orientation(outline);
+    return static_cast<jint>(orientation);
+}
+
 
 // ------------------------------
 // ---      ftstroke.h        ---
