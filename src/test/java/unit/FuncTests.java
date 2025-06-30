@@ -11,6 +11,7 @@ import generaloss.freetype.glyph.FTGlyphBBoxMode;
 import generaloss.freetype.image.FTBitmap;
 import generaloss.freetype.image.FTGlyphFormat;
 import generaloss.freetype.image.FTOutline;
+import generaloss.freetype.image.FTOutlineFuncs;
 import generaloss.freetype.stroke.FTStroker;
 import generaloss.freetype.stroke.FTStrokerBorder;
 import generaloss.freetype.stroke.FTStrokerLineCap;
@@ -19,7 +20,6 @@ import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.*;
 import jpize.util.res.Resource;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
@@ -29,15 +29,10 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Execution(ExecutionMode.SAME_THREAD)
 public class FuncTests {
-
-    // @BeforeEach
-    // public void beforeEach() {
-    //     System.out.println("\nNext test:");
-    // }
-
 
     @Test
     public void ftNewMemoryFace() {
@@ -1005,111 +1000,138 @@ public class FuncTests {
         matrix.free();
     }
 
-    // @Test
-    // public void ftOutlineDecompose() {
-    //
-    // }
+    public static void main(String[] args) {
+        FuncTests tests = new FuncTests();
+        for(int i = 0; i < 1; i++)
+            tests.ftOutlineDecompose();
+    }
 
     @Test
-    public void ftOutlineNew() {
+    public void ftOutlineDecompose() {
         final FTLibrary lib = new FTLibrary();
         final FTStroker stroker = lib.newStroker();
         stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
         stroker.beginSubPath(new FTVector().set(0F, 0F), true);
         stroker.lineTo(new FTVector().set(100F, 0F));
+        stroker.lineTo(new FTVector().set(100F, 100F));
+        stroker.lineTo(new FTVector().set(0F, 100F));
         stroker.endSubPath();
 
-        final long[] dstNumPoints = new long[1];
-        final long[] dstNumContours = new long[1];
-        stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
+        final long[] dstPoints = new long[1];
+        final long[] dstContours = new long[1];
+        stroker.getBorderCounts(FTStrokerBorder.LEFT, dstPoints, dstContours);
 
-        final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
-        // stroker.exportBorder(FTStrokerBorder.LEFT, outline);
-        Assertions.assertTrue(outline.getNPoints() > 0);
-        outline.done(lib); // free(): invalid pointer
+        Assertions.assertTrue(dstContours[0] > 0, "Expected at least 1 contour");
+        Assertions.assertTrue(dstPoints[0] >= 4, "Expected at least 4 points");
 
+        final FTOutline outline = lib.newOutline(dstPoints[0], dstContours[0]);
+
+        outline.setNPoints(0);
+        outline.setNContours(0);
+
+        stroker.exportBorder(FTStrokerBorder.LEFT, outline);
+
+        final FTOutlineFuncs funcs = new FTOutlineFuncs();
+        funcs.setMoveTo((to) -> {
+            System.out.println("Decompose: move to = " + to);
+            return FTError.OK;
+        });
+        funcs.setLineTo((to) -> {
+            System.out.println("Decompose: line to = " + to);
+            return FTError.OK;
+        });
+        funcs.setConicTo((control, to) -> {
+            System.out.println("Decompose: conic to = " + to + " control: " + control);
+            return FTError.OK;
+        });
+        funcs.setCubicTo((control1, control2, to) -> {
+            System.out.println("Decompose: cubic to = " + to + " control1: " + control1 + " control2: " + control2);
+            return FTError.OK;
+        });
+
+        outline.decompose(funcs);
+        funcs.free();
+
+        outline.done(lib);
         stroker.done();
-        lib.done(); // segfault
+        lib.done();
+    }
+
+    @Test
+    public void ftOutlineNew() {
+        final FTLibrary lib = new FTLibrary();
+
+        final FTOutline outline = lib.newOutline(0, 0);
+        outline.done(lib);
+
+        lib.done();
     }
 
     @Test
     public void ftOutlineDone() {
         final FTLibrary lib = new FTLibrary();
-        final FTStroker stroker = lib.newStroker();
-        stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
-        stroker.beginSubPath(new FTVector().set(0F, 0F), true);
-        stroker.lineTo(new FTVector().set(100F, 0F));
-        stroker.endSubPath();
-
-        final long[] dstNumPoints = new long[1];
-        final long[] dstNumContours = new long[1];
-        stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
-
-        final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
-        // stroker.exportBorder(FTStrokerBorder.LEFT, outline);
-        Assertions.assertTrue(outline.getNPoints() > 0);
+        final FTOutline outline = lib.newOutline(0, 0);
         outline.done(lib);
 
-        stroker.done();
         lib.done();
     }
 
-    // @Test
-    // public void ftOutlineCheck() {
+    @Test
+    public void ftOutlineCheck() {
 
-    // }
+    }
 
-    // @Test
-    // public void ftOutlineGetCBox() {
+    @Test
+    public void ftOutlineGetCBox() {
 
-    // }
+    }
 
-    // @Test
-    // public void ftOutlineTranslate() {
+    @Test
+    public void ftOutlineTranslate() {
 
-    // }
+    }
 
-    // @Test
-    // public void ftOutlineCopy() {
+    @Test
+    public void ftOutlineCopy() {
 
-    // }
+    }
 
-    // @Test
-    // public void ftOutlineTransform() {
+    @Test
+    public void ftOutlineTransform() {
 
-    // }
+    }
 
-    // @Test
-    // public void ftOutlineEmbolden() {
+    @Test
+    public void ftOutlineEmbolden() {
 
-    // }
+    }
 
-    // @Test
-    // public void ftOutlineEmbolden_XY() {
+    @Test
+    public void ftOutlineEmbolden_XY() {
 
-    // }
+    }
 
-    // @Test
-    // public void ftOutlineReverse() {
+    @Test
+    public void ftOutlineReverse() {
 
-    // }
+    }
 
-    // @Test
-    // public void ftOutlineGetBitmap() {
+    @Test
+    public void ftOutlineGetBitmap() {
 
-    // }
+    }
 
-    // @Test
-    // public void ftOutlineRender() {
+    @Test
+    public void ftOutlineRender() {
 
-    // }
+    }
 
-    // @Test
-    // public void ftOutlineGetOrientation() {
+    @Test
+    public void ftOutlineGetOrientation() {
 
-    // }
+    }
 
     @Test
     public void ftOutlineGetInsideBorder() {

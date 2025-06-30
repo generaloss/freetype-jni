@@ -49,7 +49,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutline_setNPoints
 
 // FT_Vector* points;
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_image_FTOutline_getPoints
-  (JNIEnv *env, jclass, jlong outlinePtrRaw) {
+  (JNIEnv* env, jclass, jlong outlinePtrRaw) {
 
     const FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline)
@@ -72,7 +72,7 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_image_FTOutline_getPoints
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutline_setPoints
-  (JNIEnv *env, jclass, jlong outlinePtrRaw, jlongArray pointsPtrsRaw) {
+  (JNIEnv* env, jclass, jlong outlinePtrRaw, jlongArray pointsPtrsRaw) {
 
     FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline || !pointsPtrsRaw)
@@ -103,7 +103,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutline_setPoints
 
 // unsigned char* tags;
 JNIEXPORT jintArray JNICALL Java_generaloss_freetype_image_FTOutline_getTags
-  (JNIEnv *env, jclass, jlong outlinePtrRaw) {
+  (JNIEnv* env, jclass, jlong outlinePtrRaw) {
 
     const FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline)
@@ -126,7 +126,7 @@ JNIEXPORT jintArray JNICALL Java_generaloss_freetype_image_FTOutline_getTags
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutline_setTags
-  (JNIEnv *env, jclass, jlong outlinePtrRaw, jintArray tagsRaw) {
+  (JNIEnv* env, jclass, jlong outlinePtrRaw, jintArray tagsRaw) {
 
     FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline || !tagsRaw)
@@ -154,7 +154,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutline_setTags
 
 // unsigned short* contours;
 JNIEXPORT jintArray JNICALL Java_generaloss_freetype_image_FTOutline_getContours
-  (JNIEnv *env, jclass, jlong outlinePtrRaw) {
+  (JNIEnv* env, jclass, jlong outlinePtrRaw) {
 
     const FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline)
@@ -177,7 +177,7 @@ JNIEXPORT jintArray JNICALL Java_generaloss_freetype_image_FTOutline_getContours
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutline_setContours
-  (JNIEnv *env, jclass, jlong outlinePtrRaw, jintArray contoursRaw) {
+  (JNIEnv* env, jclass, jlong outlinePtrRaw, jintArray contoursRaw) {
 
     FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline || !contoursRaw)

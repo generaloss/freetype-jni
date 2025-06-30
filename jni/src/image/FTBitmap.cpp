@@ -39,7 +39,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTBitmap_getPitch
 
 // unsigned char* buffer;
 JNIEXPORT jobject JNICALL Java_generaloss_freetype_image_FTBitmap_getBuffer
-  (JNIEnv *env, jclass, jlong bitmapPtrRaw) {
+  (JNIEnv* env, jclass, jlong bitmapPtrRaw) {
 
     const FT_Bitmap* bitmap = reinterpret_cast<FT_Bitmap*>(bitmapPtrRaw);
     if(!bitmap || !bitmap->buffer)

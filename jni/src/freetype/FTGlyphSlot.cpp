@@ -163,7 +163,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getNumSubg
 
 // FT_SubGlyph subglyphs;
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTGlyphSlot_getSubglyphs
-  (JNIEnv *env, jclass, jlong slotPtrRaw) {
+  (JNIEnv* env, jclass, jlong slotPtrRaw) {
 
     const FT_GlyphSlot slot = reinterpret_cast<FT_GlyphSlot>(slotPtrRaw);
     if(!slot)

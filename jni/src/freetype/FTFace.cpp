@@ -61,7 +61,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTFace_getNumGlyphs
 
 // FT_String* family_name;
 JNIEXPORT jstring JNICALL Java_generaloss_freetype_freetype_FTFace_getFamilyName
-  (JNIEnv *env, jclass, jlong facePtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face || !face->family_name)
@@ -72,7 +72,7 @@ JNIEXPORT jstring JNICALL Java_generaloss_freetype_freetype_FTFace_getFamilyName
 
 // FT_String* style_name;
 JNIEXPORT jstring JNICALL Java_generaloss_freetype_freetype_FTFace_getStyleName
-  (JNIEnv *env, jclass, jlong facePtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face || !face->style_name)
@@ -94,7 +94,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTFace_getNumFixedSizes
 
 // FT_Bitmap_Size* available_sizes;
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTFace_getAvailableSizes
-  (JNIEnv *env, jclass, jlong facePtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face)
@@ -129,7 +129,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTFace_getNumCharmaps
 
 // FT_CharMap* charmaps;
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTFace_getCharmaps
-  (JNIEnv *env, jclass, jlong facePtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face)

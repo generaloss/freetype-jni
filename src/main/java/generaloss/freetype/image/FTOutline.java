@@ -144,7 +144,10 @@ public class FTOutline extends FTStruct { // struct done.
     }
 
 
-    // FTError ftOutlineDecompose(FTOutline outline, FTOutlineFuncs funcInterface, void* user)
+    public void decompose(FTOutlineFuncs funcInterfaces) {
+        final FTError error = FreeType.ftOutlineDecompose(this, funcInterfaces);
+        error.checkError();
+    }
 
     public void done(FTLibrary library) {
         final FTError error = FreeType.ftOutlineDone(library, this);

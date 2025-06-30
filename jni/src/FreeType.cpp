@@ -24,7 +24,7 @@ void throwException(JNIEnv* env, const char* message) {
 // FT_Error FT_Init_FreeType(FT_Library *alibrary)
 // int FT_Init_FreeType(long[] alibrary);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Init_1FreeType
-  (JNIEnv *env, jclass, jlongArray libraryPtrRaw) {
+  (JNIEnv* env, jclass, jlongArray libraryPtrRaw) {
 
     if(!libraryPtrRaw) {
         throwException(env, "Invalid FT_Library destination pointer array");
@@ -49,7 +49,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Init_1FreeType
 // FT_Error FT_Done_FreeType(FT_Library library)
 // int FT_Done_FreeType(long library);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1FreeType
-  (JNIEnv *env, jclass, jlong libraryPtrRaw) {
+  (JNIEnv* env, jclass, jlong libraryPtrRaw) {
 
     const FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
     if(!library) {
@@ -64,7 +64,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1FreeType
 // FT_Error FT_New_Face(FT_Library library, const char* filepathname, FT_Long face_index, FT_Face *aface)
 // int FT_New_Face(long library, String filepathname, long face_index, long[] aface);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Face
-  (JNIEnv *env, jclass, jlong libraryPtrRaw, jstring filepathRaw, jlong faceIndexRaw, jlongArray facePtrRaw) {
+  (JNIEnv* env, jclass, jlong libraryPtrRaw, jstring filepathRaw, jlong faceIndexRaw, jlongArray facePtrRaw) {
 
     if(!facePtrRaw) {
         throwException(env, "Invalid FT_Face destination pointer array");
@@ -105,7 +105,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Face
 // FT_Error FT_New_Memory_Face(FT_Library library, const FT_Byte* file_base, FT_Long file_size, FT_Long face_index, FT_Face *aface)
 // int FT_New_Memory_Face(long library, ByteBuffer file_base, long file_size, long face_index, long[] aface);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Memory_1Face
-  (JNIEnv *env, jclass, jlong libraryPtrRaw, jobject fileBaseBuffer, jlong fileSizeRaw, jlong faceIndexRaw, jlongArray facePtrRaw) {
+  (JNIEnv* env, jclass, jlong libraryPtrRaw, jobject fileBaseBuffer, jlong fileSizeRaw, jlong faceIndexRaw, jlongArray facePtrRaw) {
 
     if(!facePtrRaw) {
         throwException(env, "Invalid FT_Face destination pointer array");
@@ -145,7 +145,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Memory_1Face
 // FT_Error FT_Open_Face(FT_Library library, const FT_Open_Args* args, FT_Long face_index, FT_Face *aface)
 // int FT_Open_Face(long library, long args, long face_index, long[] aface);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Open_1Face
-  (JNIEnv *env, jclass, jlong libraryPtrRaw, jlong argsPtrRaw, jlong faceIndexRaw, jlongArray facePtrRaw) {
+  (JNIEnv* env, jclass, jlong libraryPtrRaw, jlong argsPtrRaw, jlong faceIndexRaw, jlongArray facePtrRaw) {
 
     if(!facePtrRaw) {
         throwException(env, "Invalid FT_Face destination pointer array");
@@ -184,7 +184,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Open_1Face
 // FT_Error FT_Attach_File(FT_Face face, const char* filepathname)
 // int FT_Attach_File(long face, String filepathname);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Attach_1File
-  (JNIEnv *env, jclass, jlong facePtrRaw, jstring filepathRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jstring filepathRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -213,7 +213,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Attach_1File
 // FT_Error FT_Attach_Stream(FT_Face face, const FT_Open_Args* parameters)
 // int FT_Attach_Stream(long face, long parameters);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Attach_1Stream
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong argsPtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong argsPtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -234,7 +234,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Attach_1Stream
 // FT_Error FT_Reference_Face(FT_Face face)
 // int FT_Reference_Face(long face);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Reference_1Face
-  (JNIEnv *env, jclass, jlong facePtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -249,7 +249,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Reference_1Face
 // FT_Error FT_Done_Face(FT_Face face)
 // int FT_Done_Face(long face);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Face
-  (JNIEnv *env, jclass, jlong facePtrRaw, jbooleanArray dstDestroyFlag) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jbooleanArray dstDestroyFlag) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -272,7 +272,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Face
 // FT_Error FT_Select_Size(FT_Face face, FT_Int strike_index)
 // int FT_Select_Size(long face, int strike_index);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Select_1Size
-  (JNIEnv *env, jclass, jlong facePtrRaw, jint strikeIndexRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jint strikeIndexRaw) {
 
    const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
    if(!face) {
@@ -289,7 +289,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Select_1Size
 // FT_Error FT_Request_Size(FT_Face face, FT_Size_Request req)
 // int FT_Request_Size(long face, long req);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Request_1Size
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong requestPtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong requestPtrRaw) {
 
    const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
    if(!face) {
@@ -310,7 +310,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Request_1Size
 // FT_Error FT_Set_Char_Size(FT_Face face, FT_F26Dot6 char_width, FT_F26Dot6 char_height, FT_UInt horz_resolution, FT_UInt vert_resolution)
 // int FT_Set_Char_Size(long face, int char_width, int char_height, long horz_resolution, long vert_resolution);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Set_1Char_1Size
-  (JNIEnv *env, jclass, jlong facePtrRaw, jint charWidthRaw, jint charHeightRaw, jlong horzResRaw, jlong vertResRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jint charWidthRaw, jint charHeightRaw, jlong horzResRaw, jlong vertResRaw) {
 
    const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
    if(!face) {
@@ -330,7 +330,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Set_1Char_1Size
 // FT_Error FT_Set_Pixel_Sizes(FT_Face face, FT_UInt pixel_width, FT_UInt pixel_height)
 // int FT_Set_Pixel_Sizes(long face, long pixel_width, long pixel_height);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Set_1Pixel_1Sizes
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong pixelWidthRaw, jlong pixelHeightRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong pixelWidthRaw, jlong pixelHeightRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -348,7 +348,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Set_1Pixel_1Sizes
 // FT_Error FT_Load_Glyph(FT_Face face, FT_UInt glyph_index, FT_Int32 load_flags)
 // int FT_Load_Glyph(long face, long glyph_index, int load_flags);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Load_1Glyph
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong glyphIndexRaw, jint loadFlagsRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong glyphIndexRaw, jint loadFlagsRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -366,7 +366,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Load_1Glyph
 // FT_Error FT_Load_Char(FT_Face face, FT_ULong char_code, FT_Int32 load_flags)
 // int FT_Load_Char(long face, long char_code, int load_flags);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Load_1Char
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong charCodeRaw, jint loadFlagsRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong charCodeRaw, jint loadFlagsRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -384,7 +384,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Load_1Char
 // void FT_Set_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta)
 // void FT_Set_Transform(long face, long matrix, long delta);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Set_1Transform
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong matrixPtrRaw, jlong deltaPtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong matrixPtrRaw, jlong deltaPtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -401,7 +401,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Set_1Transform
 // void FT_Get_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta)
 // void FT_Get_Transform(long face, long matrix, long delta);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Transform
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong matrixPtrRaw, jlong deltaPtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong matrixPtrRaw, jlong deltaPtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -418,7 +418,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Transform
 // FT_Error FT_Render_Glyph(FT_GlyphSlot slot, FT_Render_Mode render_mode)
 // int FT_Render_Glyph(long slot, int render_mode);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Render_1Glyph
-  (JNIEnv *env, jclass, jlong slotPtrRaw, jint renderModeRaw) {
+  (JNIEnv* env, jclass, jlong slotPtrRaw, jint renderModeRaw) {
 
     const FT_GlyphSlot slot = reinterpret_cast<FT_GlyphSlot>(slotPtrRaw);
     if(!slot) {
@@ -435,7 +435,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Render_1Glyph
 // FT_Error FT_Get_Kerning(FT_Face face, FT_UInt left_glyph, FT_UInt right_glyph, FT_UInt kern_mode, FT_Vector *akerning)
 // int FT_Get_Kerning(long face, long left_glyph, long right_glyph, int kern_mode, long akerning);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Kerning
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong leftGlyphRaw, jlong rightGlyphRaw, jint kernModeRaw, jlong kerningPtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong leftGlyphRaw, jlong rightGlyphRaw, jint kernModeRaw, jlong kerningPtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -460,7 +460,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Kerning
 // FT_Error FT_Get_Track_Kerning(FT_Face face, FT_Fixed point_size, FT_Int degree, FT_Fixed* akerning)
 // int FT_Get_Track_Kerning(long face, int point_size, int degree, long akerning);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Track_1Kerning
-  (JNIEnv *env, jclass, jlong facePtrRaw, jint pointSizeRaw, jint degreeRaw, jlong kerningPtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jint pointSizeRaw, jint degreeRaw, jlong kerningPtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -484,7 +484,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Track_1Kerning
 // FT_Error FT_Select_Charmap(FT_Face face, FT_Encoding encoding)
 // int FT_Select_Charmap(long face, int encoding);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Select_1Charmap
-  (JNIEnv *env, jclass, jlong facePtrRaw, jint encodingRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jint encodingRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -501,7 +501,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Select_1Charmap
 // FT_Error FT_Set_Charmap(FT_Face face, FT_CharMap charmap)
 // int FT_Set_Charmap(long face, long charmap);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Set_1Charmap
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong charmapPtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong charmapPtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -522,7 +522,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Set_1Charmap
 // FT_Int FT_Get_Charmap_Index(FT_CharMap charmap)
 // int FT_Get_Charmap_Index(long charmap);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Charmap_1Index
-  (JNIEnv *env, jclass, jlong charmapPtrRaw) {
+  (JNIEnv* env, jclass, jlong charmapPtrRaw) {
 
     const FT_CharMap charmap = reinterpret_cast<FT_CharMap>(charmapPtrRaw);
     if(!charmap) {
@@ -537,7 +537,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Charmap_1Index
 // FT_UInt FT_Get_Char_Index(FT_Face face, FT_ULong charcode)
 // long FT_Get_Char_Index(long face, long charcode);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Char_1Index
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong charCodeRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong charCodeRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -554,7 +554,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Char_1Index
 // FT_ULong FT_Get_First_Char(FT_Face face, FT_UInt *agindex)
 // long FT_Get_First_Char(long face, long[] agindex);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1First_1Char
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlongArray gindexArrayRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlongArray gindexArrayRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -581,7 +581,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1First_1Char
 // FT_ULong FT_Get_Next_Char(FT_Face face, FT_ULong char_code, FT_UInt *agindex)
 // long FT_Get_Next_Char(long face, long char_code, long[] agindex);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Next_1Char
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong charCodeRaw, jlongArray gindexArrayRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong charCodeRaw, jlongArray gindexArrayRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -608,7 +608,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Next_1Char
 // FT_Error FT_Face_Properties(FT_Face face, FT_UInt num_properties, FT_Parameter* properties)
 // int FT_Face_Properties(long face, long num_properties, long[] properties);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1Properties
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong numPropertiesRaw, jlongArray propertiesArrayRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong numPropertiesRaw, jlongArray propertiesArrayRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -650,7 +650,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1Properties
 // FT_UInt FT_Get_Name_Index(FT_Face face, const FT_String* glyph_name)
 // long FT_Get_Name_Index(long face, String glyph_name);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Name_1Index
-  (JNIEnv *env, jclass, jlong facePtrRaw, jstring glyphNameRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jstring glyphNameRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -674,7 +674,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Name_1Index
 // FT_Error FT_Get_Glyph_Name(FT_Face face, FT_UInt glyph_index, FT_Pointer buffer, FT_UInt buffer_max)
 // int FT_Get_Glyph_Name(long face, long glyph_index, ByteBuffer buffer, long buffer_max);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph_1Name
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong glyphIndexRaw, jobject bufferRaw, jlong bufferMaxRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong glyphIndexRaw, jobject bufferRaw, jlong bufferMaxRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -699,7 +699,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph_1Name
 // const char* FT_Get_Postscript_Name(FT_Face face)
 // String FT_Get_Postscript_Name(long face);
 JNIEXPORT jstring JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Postscript_1Name
-  (JNIEnv *env, jclass, jlong facePtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -717,7 +717,7 @@ JNIEXPORT jstring JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Postscript_
 // FT_Error FT_Get_SubGlyph_Info(FT_GlyphSlot glyph, FT_UInt sub_index, FT_Int *p_index, FT_UInt *p_flags, FT_Int *p_arg1, FT_Int *p_arg2, FT_Matrix *p_transform)
 // int FT_Get_SubGlyph_Info(long glyph, long sub_index, int[] p_index, long[] p_flags, int[] p_arg1, int[] p_arg2, long p_transform);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1SubGlyph_1Info
-  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong subIndexRaw, jintArray pIndexArray, jlongArray pFlagsArray, jintArray pArg1Array, jintArray pArg2Array, jlong pTransformPtrRaw) {
+  (JNIEnv* env, jclass, jlong glyphPtrRaw, jlong subIndexRaw, jintArray pIndexArray, jlongArray pFlagsArray, jintArray pArg1Array, jintArray pArg2Array, jlong pTransformPtrRaw) {
 
     const FT_GlyphSlot glyph = reinterpret_cast<FT_GlyphSlot>(glyphPtrRaw);
     if(!glyph) {
@@ -746,7 +746,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1SubGlyph_1Info
 // FT_UShort FT_Get_FSType_Flags(FT_Face face)
 // int FT_Get_FSType_Flags(long face);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
-  (JNIEnv *env, jclass, jlong facePtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -761,7 +761,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1FSType_1Flags
 // FT_UInt FT_Face_GetCharVariantIndex(FT_Face face, FT_ULong charcode, FT_ULong variantSelector)
 // long FT_Face_GetCharVariantIndex(long face, long charcode, long variantSelector);
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharVariantIndex
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong charCodeRaw, jlong variantSelectorRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong charCodeRaw, jlong variantSelectorRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -779,7 +779,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharVaria
 // FT_Int FT_Face_GetCharVariantIsDefault(FT_Face face, FT_ULong charcode, FT_ULong variantSelector)
 // int FT_Face_GetCharVariantIsDefault(long face, long charcode, long variantSelector);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharVariantIsDefault
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong charCodeRaw, jlong variantSelectorRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong charCodeRaw, jlong variantSelectorRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -797,7 +797,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharVarian
 // FT_UInt32* FT_Face_GetVariantSelectors(FT_Face face)
 // long FT_Face_GetVariantSelectors(long face);
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantSelectors
-  (JNIEnv *env, jclass, jlong facePtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -832,7 +832,7 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVari
 // FT_UInt32* FT_Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode)
 // long FT_Face_GetVariantsOfChar(long face, long charcode);
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVariantsOfChar
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong charCodeRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong charCodeRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -869,7 +869,7 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetVari
 // FT_UInt32* FT_Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector)
 // long FT_Face_GetCharsOfVariant(long face, long variantSelector);
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetCharsOfVariant
-  (JNIEnv *env, jclass, jlong facePtrRaw, jlong variantSelectorRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw, jlong variantSelectorRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -906,7 +906,7 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1GetChar
 // FT_Fixed FT_RoundFix(FT_Fixed a)
 // int FT_RoundFix(long a);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1RoundFix
-  (JNIEnv *env, jclass, jlong aRaw) {
+  (JNIEnv* env, jclass, jlong aRaw) {
 
     const FT_Fixed* aPtr = reinterpret_cast<FT_Fixed*>(aRaw);
     if(!aPtr) {
@@ -920,7 +920,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1RoundFix
 // FT_Fixed FT_CeilFix(FT_Fixed a)
 // int FT_CeilFix(long a);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1CeilFix
-  (JNIEnv *env, jclass, jlong aRaw) {
+  (JNIEnv* env, jclass, jlong aRaw) {
 
     const FT_Fixed* aPtr = reinterpret_cast<FT_Fixed*>(aRaw);
     if(!aPtr) {
@@ -934,7 +934,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1CeilFix
 // FT_Fixed FT_FloorFix(FT_Fixed a)
 // int FT_FloorFix(long a);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1FloorFix
-  (JNIEnv *env, jclass, jlong aRaw) {
+  (JNIEnv* env, jclass, jlong aRaw) {
 
     const FT_Fixed* aPtr = reinterpret_cast<FT_Fixed*>(aRaw);
     if(!aPtr) {
@@ -948,7 +948,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1FloorFix
 // void FT_Vector_Transform(FT_Vector* vector, const FT_Matrix* matrix)
 // void FT_Vector_Transform(long vector, long matrix);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Vector_1Transform
-  (JNIEnv *env, jclass, jlong vectorPtrRaw, jlong matrixPtrRaw) {
+  (JNIEnv* env, jclass, jlong vectorPtrRaw, jlong matrixPtrRaw) {
 
     FT_Vector* vector = reinterpret_cast<FT_Vector*>(vectorPtrRaw);
     if(!vector) {
@@ -968,7 +968,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Vector_1Transform
 // void FT_Library_Version(FT_Library library, FT_Int *amajor, FT_Int *aminor, FT_Int *apatch)
 // void FT_Library_Version(long library, int[] amajor, int[] aminor, int[] apatch);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Library_1Version
-  (JNIEnv *env, jclass, jlong libraryPtrRaw, jintArray majorArray, jintArray minorArray, jintArray patchArray) {
+  (JNIEnv* env, jclass, jlong libraryPtrRaw, jintArray majorArray, jintArray minorArray, jintArray patchArray) {
 
     const FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
     if(!library) {
@@ -995,7 +995,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Library_1Version
 // FT_Bool FT_Face_CheckTrueTypePatents(FT_Face face)
 // boolean FT_Face_CheckTrueTypePatents(long face);
 JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1CheckTrueTypePatents
-  (JNIEnv *env, jclass, jlong facePtrRaw) {
+  (JNIEnv* env, jclass, jlong facePtrRaw) {
 
     const FT_Face face = reinterpret_cast<FT_Face>(facePtrRaw);
     if(!face) {
@@ -1016,7 +1016,7 @@ JNIEXPORT jboolean JNICALL Java_generaloss_freetype_FreeType_FT_1Face_1CheckTrue
 // FT_Error FT_GlyphLoader_New(FT_Memory memory, FT_GlyphLoader *aloader)
 // int FT_GlyphLoader_New(long memory, long aloader);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1New
-  (JNIEnv *env, jclass, jlong memoryPtrRaw, jlongArray dstLoaderPtrRaw) {
+  (JNIEnv* env, jclass, jlong memoryPtrRaw, jlongArray dstLoaderPtrRaw) {
 
     const FT_Memory memory = reinterpret_cast<FT_Memory>(memoryPtrRaw);
     if(!memory) {
@@ -1036,7 +1036,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1New
 // FT_Error FT_GlyphLoader_CreateExtra(FT_GlyphLoader loader)
 // int FT_GlyphLoader_CreateExtra(long loader);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CreateExtra
-  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
+  (JNIEnv* env, jclass, jlong loaderPtrRaw) {
 
     const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
@@ -1051,7 +1051,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Create
 // void FT_GlyphLoader_Done(FT_GlyphLoader loader)
 // void FT_GlyphLoader_Done(long loader);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Done
-  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
+  (JNIEnv* env, jclass, jlong loaderPtrRaw) {
 
     const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
@@ -1065,7 +1065,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Done
 // void FT_GlyphLoader_Reset(FT_GlyphLoader loader)
 // void FT_GlyphLoader_Reset(long loader);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Reset
-  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
+  (JNIEnv* env, jclass, jlong loaderPtrRaw) {
 
     const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
@@ -1079,7 +1079,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Reset
 // void FT_GlyphLoader_Rewind(FT_GlyphLoader loader)
 // void FT_GlyphLoader_Rewind(long loader);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Rewind
-  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
+  (JNIEnv* env, jclass, jlong loaderPtrRaw) {
 
     const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
@@ -1093,7 +1093,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Rewind
 // FT_Error FT_GlyphLoader_CheckPoints(FT_GlyphLoader loader, FT_UInt n_points, FT_UInt n_contours)
 // int FT_GlyphLoader_CheckPoints(long loader, long n_points, long n_contours);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CheckPoints
-  (JNIEnv *env, jclass, jlong loaderPtrRaw, jlong nPointsRaw, jlong nContoursRaw) {
+  (JNIEnv* env, jclass, jlong loaderPtrRaw, jlong nPointsRaw, jlong nContoursRaw) {
 
     const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
@@ -1111,7 +1111,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CheckP
 // FT_Error FT_GlyphLoader_CheckSubGlyphs(FT_GlyphLoader loader, FT_UInt n_subs)
 // int FT_GlyphLoader_CheckSubGlyphs(long loader, long n_subs);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CheckSubGlyphs
-  (JNIEnv *env, jclass, jlong loaderPtrRaw, jlong nSubsRaw) {
+  (JNIEnv* env, jclass, jlong loaderPtrRaw, jlong nSubsRaw) {
 
     const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
@@ -1128,7 +1128,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1CheckS
 // void FT_GlyphLoader_Prepare(FT_GlyphLoader loader)
 // void FT_GlyphLoader_Prepare(long loader);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Prepare
-  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
+  (JNIEnv* env, jclass, jlong loaderPtrRaw) {
 
     const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
@@ -1142,7 +1142,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Prepar
 // void FT_GlyphLoader_Add(FT_GlyphLoader loader)
 // void FT_GlyphLoader_Add(long loader);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Add
-  (JNIEnv *env, jclass, jlong loaderPtrRaw) {
+  (JNIEnv* env, jclass, jlong loaderPtrRaw) {
 
     const FT_GlyphLoader loader = reinterpret_cast<FT_GlyphLoader>(loaderPtrRaw);
     if(!loader) {
@@ -1162,7 +1162,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1GlyphLoader_1Add
 // FT_Error FT_New_Glyph(FT_Library library, FT_Glyph_Format format, FT_Glyph *aglyph)
 // int FT_New_Glyph(long library, int format, long aglyph);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Glyph
-  (JNIEnv *env, jclass, jlong libraryPtrRaw, jint formatRaw, jlongArray glyphPtrRaw) {
+  (JNIEnv* env, jclass, jlong libraryPtrRaw, jint formatRaw, jlongArray glyphPtrRaw) {
 
     if(!glyphPtrRaw) {
         throwException(env, "Invalid FT_Glyph destination pointer array");
@@ -1195,7 +1195,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1New_1Glyph
 // FT_Error FT_Get_Glyph(FT_GlyphSlot slot, FT_Glyph *aglyph)
 // int FT_Get_Glyph(long slot, long aglyph);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
-  (JNIEnv *env, jclass, jlong slotPtrRaw, jlongArray glyphPtrRaw) {
+  (JNIEnv* env, jclass, jlong slotPtrRaw, jlongArray glyphPtrRaw) {
 
     if(!glyphPtrRaw) {
         throwException(env, "Invalid FT_Glyph destination pointer array");
@@ -1228,7 +1228,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Get_1Glyph
 // FT_Error FT_Glyph_Copy(FT_Glyph source, FT_Glyph *target)
 // int FT_Glyph_Copy(long source, long target);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Copy
-  (JNIEnv *env, jclass, jlong sourcePtrRaw, jlongArray dstTargetPtrRaw) {
+  (JNIEnv* env, jclass, jlong sourcePtrRaw, jlongArray dstTargetPtrRaw) {
 
     const FT_Glyph source = reinterpret_cast<FT_Glyph>(sourcePtrRaw);
     if(!source) {
@@ -1255,7 +1255,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Copy
 // FT_Error FT_Glyph_Transform(FT_Glyph glyph, const FT_Matrix* matrix, const FT_Vector* delta)
 // int FT_Glyph_Transform(long glyph, long matrix, long delta);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Transform
-  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong matrixPtrRaw, jlong deltaPtrRaw) {
+  (JNIEnv* env, jclass, jlong glyphPtrRaw, jlong matrixPtrRaw, jlong deltaPtrRaw) {
 
     const FT_Glyph glyph = reinterpret_cast<FT_Glyph>(glyphPtrRaw);
     if(!glyph) {
@@ -1273,7 +1273,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Transform
 // void FT_Glyph_Get_CBox(FT_Glyph glyph, FT_UInt bbox_mode, FT_BBox *acbox)
 // void FT_Glyph_Get_CBox(long glyph, long bboxMode, long acbox);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Get_1CBox
-  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong bboxModeRaw, jlong cboxPtrRaw) {
+  (JNIEnv* env, jclass, jlong glyphPtrRaw, jlong bboxModeRaw, jlong cboxPtrRaw) {
 
     const FT_Glyph glyph = reinterpret_cast<FT_Glyph>(glyphPtrRaw);
     if(!glyph) {
@@ -1295,7 +1295,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Get_1CBox
 // FT_Error FT_Glyph_To_Bitmap(FT_Glyph* the_glyph, FT_Render_Mode render_mode, const FT_Vector* origin, FT_Bool destroy)
 // int FT_Glyph_To_Bitmap(long the_glyph, int render_mode, long origin, boolean destroy, long[] dstBitmapGlyphPointer);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1To_1Bitmap
-  (JNIEnv *env, jclass, jlong glyphPtrRaw, jint renderModeRaw, jlong originPtrRaw, jboolean destroyRaw, jlongArray dstGlyphPtrRaw) {
+  (JNIEnv* env, jclass, jlong glyphPtrRaw, jint renderModeRaw, jlong originPtrRaw, jboolean destroyRaw, jlongArray dstGlyphPtrRaw) {
 
     FT_Glyph glyph = reinterpret_cast<FT_Glyph>(glyphPtrRaw);
     if(!glyph) {
@@ -1324,7 +1324,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1To_1Bitmap
 // void FT_Done_Glyph(FT_Glyph glyph)
 // void FT_Done_Glyph(long glyph);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Glyph
-  (JNIEnv *env, jclass, jlong glyphPtrRaw) {
+  (JNIEnv* env, jclass, jlong glyphPtrRaw) {
 
     const FT_Glyph glyph = reinterpret_cast<FT_Glyph>(glyphPtrRaw);
     if(!glyph) {
@@ -1338,7 +1338,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Done_1Glyph
 // void FT_Matrix_Multiply(const FT_Matrix* a, FT_Matrix* b)
 // void FT_Matrix_Multiply(long a, long b);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Multiply
-  (JNIEnv *env, jclass, jlong aPtrRaw, jlong bPtrRaw) {
+  (JNIEnv* env, jclass, jlong aPtrRaw, jlong bPtrRaw) {
 
     const FT_Matrix* a = reinterpret_cast<FT_Matrix*>(aPtrRaw);
     FT_Matrix* b = reinterpret_cast<FT_Matrix*>(bPtrRaw);
@@ -1353,7 +1353,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Multiply
 // FT_Error FT_Matrix_Invert(FT_Matrix* matrix)
 // int FT_Matrix_Invert(long matrix);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Invert
-  (JNIEnv *env, jclass, jlong matrixPtrRaw) {
+  (JNIEnv* env, jclass, jlong matrixPtrRaw) {
 
     FT_Matrix* matrix = reinterpret_cast<FT_Matrix*>(matrixPtrRaw);
     if(!matrix) {
@@ -1370,11 +1370,31 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Matrix_1Invert
 // ---      ftoutln.h        ---
 // ------------------------------
 
+// FT_Error FT_Outline_Decompose(FT_Outline* outline, const FT_Outline_Funcs* func_interface, void* user)
+// int FT_Outline_Decompose(long outline, long func_interface);
+JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Decompose
+  (JNIEnv* env, jclass, jlong outlinePtrRaw, jlong funcInterfacePtrRaw) {
+
+    FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
+    if(!outline) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    const FT_Outline_Funcs* funcs = reinterpret_cast<FT_Outline_Funcs*>(funcInterfacePtrRaw);
+    if(!funcs) {
+        throwException(env, "Invalid FT_Outline pointer");
+        return 0;
+    }
+
+    const int error = FT_Outline_Decompose(outline, funcs, (void*) funcs);
+    return static_cast<jint>(error);
+}
 
 // FT_Error FT_Outline_New(FT_Library library, FT_UInt numPoints, FT_Int numContours, FT_Outline *anoutline)
 // int FT_Outline_New(long library, long numPoints, int numContours, long[] dstOutlinePointer);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1New
-  (JNIEnv *env, jclass, jlong libraryPtrRaw, jlong numPointsRaw, jlong numContoursRaw, jlongArray dstOutlinePointer) {
+  (JNIEnv* env, jclass, jlong libraryPtrRaw, jlong numPointsRaw, jlong numContoursRaw, jlongArray dstOutlinePointer) {
 
     if(libraryPtrRaw == 0) {
         throwException(env, "Invalid FT_Library pointer");
@@ -1410,7 +1430,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1New
 // FT_Error FT_Outline_Done(FT_Library library, FT_Outline* outline)
 // int FT_Outline_Done(long library, long outline);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Done
-  (JNIEnv *env, jclass, jlong libraryPtrRaw, jlong outlinePtrRaw) {
+  (JNIEnv* env, jclass, jlong libraryPtrRaw, jlong outlinePtrRaw) {
 
     const FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
     if(!library) {
@@ -1437,7 +1457,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1Done
 // FT_StrokerBorder FT_Outline_GetInsideBorder(FT_Outline* outline)
 // int FT_Outline_GetInsideBorder(long outline);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1GetInsideBorder
-  (JNIEnv *env, jclass, jlong outlinePtrRaw) {
+  (JNIEnv* env, jclass, jlong outlinePtrRaw) {
 
     FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline) {
@@ -1452,7 +1472,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1GetInsideB
 // FT_StrokerBorder FT_Outline_GetOutsideBorder(FT_Outline* outline)
 // int FT_Outline_GetOutsideBorder(long outline);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1GetOutsideBorder
-  (JNIEnv *env, jclass, jlong outlinePtrRaw) {
+  (JNIEnv* env, jclass, jlong outlinePtrRaw) {
 
     FT_Outline* outline = reinterpret_cast<FT_Outline*>(outlinePtrRaw);
     if(!outline) {
@@ -1467,7 +1487,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Outline_1GetOutside
 // FT_Error FT_Stroker_New(FT_Library library, FT_Stroker *astroker)
 // int FT_Stroker_New(long library, long[] dstStrokerPointer);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1New
-  (JNIEnv *env, jclass, jlong libraryPtrRaw, jlongArray strokerPtrRaw) {
+  (JNIEnv* env, jclass, jlong libraryPtrRaw, jlongArray strokerPtrRaw) {
 
     const FT_Library library = reinterpret_cast<FT_Library>(libraryPtrRaw);
     if(!library) {
@@ -1498,7 +1518,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1New
 // void FT_Stroker_Set(FT_Stroker stroker, FT_Fixed radius, FT_Stroker_LineCap line_cap, FT_Stroker_LineJoin line_join, FT_Fixed miter_limit)
 // void FT_Stroker_Set(long stroker, int radius, int line_cap, int line_join, int miter_limit);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Set
-  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong radiusRaw, jint lineCapRaw, jint lineJoinRaw, jlong miterLimitRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw, jlong radiusRaw, jint lineCapRaw, jint lineJoinRaw, jlong miterLimitRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1517,7 +1537,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Set
 // void FT_Stroker_Rewind(FT_Stroker stroker)
 // void FT_Stroker_Rewind(long stroker);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Rewind
-  (JNIEnv *env, jclass, jlong strokerPtrRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1531,7 +1551,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Rewind
 // FT_Error FT_Stroker_ParseOutline(FT_Stroker stroker, FT_Outline* outline, FT_Bool opened)
 // int FT_Stroker_ParseOutline(long stroker, long outline, boolean opened);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ParseOutline
-  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong outlinePtrRaw, jboolean openedRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw, jlong outlinePtrRaw, jboolean openedRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1554,7 +1574,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ParseOutli
 // FT_Error FT_Stroker_BeginSubPath(FT_Stroker stroker, FT_Vector* to, FT_Bool open)
 // int FT_Stroker_BeginSubPath(long stroker, long to, boolean open);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1BeginSubPath
-  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong toPtrRaw, jboolean openRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw, jlong toPtrRaw, jboolean openRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1577,7 +1597,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1BeginSubPa
 // FT_Error FT_Stroker_EndSubPath(FT_Stroker stroker)
 // int FT_Stroker_EndSubPath(long stroker);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1EndSubPath
-  (JNIEnv *env, jclass, jlong strokerPtrRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1592,7 +1612,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1EndSubPath
 // FT_Error FT_Stroker_LineTo(FT_Stroker stroker, FT_Vector* to)
 // int FT_Stroker_LineTo(long stroker, long to);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1LineTo
-  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong toPtrRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw, jlong toPtrRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1613,7 +1633,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1LineTo
 // FT_Error FT_Stroker_ConicTo(FT_Stroker stroker, FT_Vector* control, FT_Vector* to)
 // int FT_Stroker_ConicTo(long stroker, long control, long to);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ConicTo
-  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong controlPtrRaw, jlong toPtrRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw, jlong controlPtrRaw, jlong toPtrRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1635,7 +1655,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ConicTo
 // FT_Error FT_Stroker_CubicTo(FT_Stroker stroker, FT_Vector* control1, FT_Vector* control2, FT_Vector* to)
 // int FT_Stroker_CubicTo(long stroker, long control1, long control2, long to);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1CubicTo
-  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong control1PtrRaw, jlong control2PtrRaw, jlong toPtrRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw, jlong control1PtrRaw, jlong control2PtrRaw, jlong toPtrRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1658,7 +1678,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1CubicTo
 // FT_Error FT_Stroker_GetBorderCounts(FT_Stroker stroker, FT_StrokerBorder border, FT_UInt *anum_points, FT_UInt *anum_contours)
 // int FT_Stroker_GetBorderCounts(long stroker, int border, long[] anum_points, long[] anum_contours);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1GetBorderCounts
-  (JNIEnv *env, jclass, jlong strokerPtrRaw, jint borderRaw, jlongArray numPointsArray, jlongArray numContoursArray) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw, jint borderRaw, jlongArray numPointsArray, jlongArray numContoursArray) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1685,7 +1705,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1GetBorderC
 // void FT_Stroker_ExportBorder(FT_Stroker stroker, FT_StrokerBorder border, FT_Outline* outline)
 // void FT_Stroker_ExportBorder(long stroker, long border, long outline);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ExportBorder
-  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong borderRaw, jlong outlinePtrRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw, jlong borderRaw, jlong outlinePtrRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1712,7 +1732,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1ExportBord
 // FT_Error FT_Stroker_GetCounts(FT_Stroker stroker, FT_UInt *anum_points, FT_UInt *anum_contours)
 // int FT_Stroker_GetCounts(long stroker, long[] anum_points, long[] anum_contours);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1GetCounts
-  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlongArray numPointsArray, jlongArray numContoursArray) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw, jlongArray numPointsArray, jlongArray numContoursArray) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1738,7 +1758,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1GetCounts
 // void FT_Stroker_Export(FT_Stroker stroker, FT_Outline* outline)
 // void FT_Stroker_Export(long stroker, long outline);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Export
-  (JNIEnv *env, jclass, jlong strokerPtrRaw, jlong outlinePtrRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw, jlong outlinePtrRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1758,7 +1778,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Export
 // void FT_Stroker_Done(FT_Stroker stroker)
 // void FT_Stroker_Done(long stroker);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Done
-  (JNIEnv *env, jclass, jlong strokerPtrRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
@@ -1772,7 +1792,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Done
 // FT_Error FT_Glyph_Stroke(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool destroy)
 // int FT_Glyph_Stroke(long pglyph, long stroker, boolean destroy);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Stroke
-  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong strokerPtrRaw, jboolean destroyRaw, jlongArray dstGlyphPtrRaw) {
+  (JNIEnv* env, jclass, jlong glyphPtrRaw, jlong strokerPtrRaw, jboolean destroyRaw, jlongArray dstGlyphPtrRaw) {
 
     FT_Glyph glyph = reinterpret_cast<FT_Glyph>(glyphPtrRaw);
     if(!glyph) {
@@ -1799,7 +1819,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1Stroke
 // FT_Error FT_Glyph_StrokeBorder(FT_Glyph *pglyph, FT_Stroker stroker, FT_Bool inside, FT_Bool destroy)
 // int FT_Glyph_StrokeBorder(long pglyph, long stroker, boolean inside, boolean destroy);
 JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Glyph_1StrokeBorder
-  (JNIEnv *env, jclass, jlong glyphPtrRaw, jlong strokerPtrRaw, jboolean insideRaw, jboolean destroyRaw, jlongArray dstGlyphPtrRaw) {
+  (JNIEnv* env, jclass, jlong glyphPtrRaw, jlong strokerPtrRaw, jboolean insideRaw, jboolean destroyRaw, jlongArray dstGlyphPtrRaw) {
 
     FT_Glyph glyph = reinterpret_cast<FT_Glyph>(glyphPtrRaw);
     if(!glyph) {

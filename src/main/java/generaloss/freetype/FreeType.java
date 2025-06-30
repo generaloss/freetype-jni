@@ -560,9 +560,6 @@ public class FreeType {
     private static native void FT_GlyphLoader_Done(long loader);
 
     public static void ftGlyphLoaderDone(FTGlyphLoader loader) {
-        if(loader == null)
-            return;
-
         FT_GlyphLoader_Done(FTStruct.getPointer(loader));
         if(loader != null)
             loader.destroyPointer();

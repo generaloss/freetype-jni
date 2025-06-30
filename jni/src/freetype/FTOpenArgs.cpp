@@ -52,7 +52,7 @@ JNIEXPORT jbyte JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getMemoryBa
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_setMemoryBase
-  (JNIEnv *env, jclass, jlong argsPtrRaw, jobject buffer, jlong size) {
+  (JNIEnv* env, jclass, jlong argsPtrRaw, jobject buffer, jlong size) {
 
     FT_Open_Args* args = reinterpret_cast<FT_Open_Args*>(argsPtrRaw);
     if(!args || !buffer)
@@ -79,7 +79,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getMemorySi
 
 // FT_String* pathname;
 JNIEXPORT jstring JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getPathname
-  (JNIEnv *env, jclass, jlong argsPtrRaw) {
+  (JNIEnv* env, jclass, jlong argsPtrRaw) {
 
     const FT_Open_Args* args = reinterpret_cast<FT_Open_Args*>(argsPtrRaw);
     if(!args || !args->pathname)
@@ -89,7 +89,7 @@ JNIEXPORT jstring JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getPathna
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_setPathname
-  (JNIEnv *env, jclass, jlong argsPtrRaw, jstring pathname) {
+  (JNIEnv* env, jclass, jlong argsPtrRaw, jstring pathname) {
 
     FT_Open_Args* args = reinterpret_cast<FT_Open_Args*>(argsPtrRaw);
     if(!args || !pathname)
@@ -140,7 +140,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getNumParams
 
 // FT_Parameter* params;
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getParams
-  (JNIEnv *env, jclass, jlong argsPtrRaw) {
+  (JNIEnv* env, jclass, jlong argsPtrRaw) {
 
     const FT_Open_Args* args = reinterpret_cast<FT_Open_Args*>(argsPtrRaw);
     if(!args || !args->params)
@@ -165,7 +165,7 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_getPar
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTOpenArgs_setParams
-  (JNIEnv *env, jclass, jlong argsPtrRaw, jlongArray paramPtrs) {
+  (JNIEnv* env, jclass, jlong argsPtrRaw, jlongArray paramPtrs) {
 
     FT_Open_Args* args = reinterpret_cast<FT_Open_Args*>(argsPtrRaw);
     if(!args || !paramPtrs)

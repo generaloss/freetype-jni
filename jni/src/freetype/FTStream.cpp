@@ -8,12 +8,12 @@
 struct StreamUserData {
     jobject readCallback = nullptr;
     jobject closeCallback = nullptr;
-    JavaVM* jvm = nullptr; // чтобы получить JNIEnv в потоках
+    JavaVM* jvm = nullptr;
 };
 
 
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_freetype_FTStream_createPointer
-  (JNIEnv *env, jclass) {
+  (JNIEnv* env, jclass) {
 
     FT_Stream stream = new FT_StreamRec();
     memset(stream, 0, sizeof(FT_StreamRec));
@@ -86,7 +86,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTStream_setPos
 }
 
 // FT_Stream_IoFunc read;
-unsigned long stream_read(FT_Stream stream, unsigned long offset, unsigned char* buffer, unsigned long count) {
+unsigned long ft_stream_read_func(FT_Stream stream, unsigned long offset, unsigned char* buffer, unsigned long count) {
     auto* userData = static_cast<StreamUserData*>(stream->descriptor.pointer);
     if(!userData || !userData->readCallback)
         return 0;
@@ -119,7 +119,7 @@ unsigned long stream_read(FT_Stream stream, unsigned long offset, unsigned char*
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTStream_setRead
-  (JNIEnv *env, jclass, jlong streamPtrRaw, jobject javaReadFunc) {
+  (JNIEnv* env, jclass, jlong streamPtrRaw, jobject javaReadFunc) {
 
     FT_Stream stream = reinterpret_cast<FT_Stream>(streamPtrRaw);
     if(!stream)
@@ -133,11 +133,11 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTStream_setRead
     }
 
     userData->readCallback = env->NewGlobalRef(javaReadFunc);
-    stream->read = stream_read;
+    stream->read = ft_stream_read_func;
 }
 
 // FT_Stream_CloseFunc close;
-void stream_close(FT_Stream stream) {
+void ft_stream_close_func(FT_Stream stream) {
     auto* userData = static_cast<StreamUserData*>(stream->descriptor.pointer);
     if(!userData || !userData->closeCallback)
         return;
@@ -152,7 +152,7 @@ void stream_close(FT_Stream stream) {
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTStream_setClose
-  (JNIEnv *env, jclass, jlong streamPtrRaw, jobject javaCloseFunc) {
+  (JNIEnv* env, jclass, jlong streamPtrRaw, jobject javaCloseFunc) {
 
     FT_Stream stream = reinterpret_cast<FT_Stream>(streamPtrRaw);
     if(!stream)
@@ -166,7 +166,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTStream_setClose
     }
 
     userData->closeCallback = env->NewGlobalRef(javaCloseFunc);
-    stream->close = stream_close;
+    stream->close = ft_stream_close_func;
 }
 
 // FT_Memory memory;

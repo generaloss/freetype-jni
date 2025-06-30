@@ -19,7 +19,7 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getOutline
 
 // FT_Vector* extra_points;
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtraPoints
-  (JNIEnv *env, jclass, jlong gloadPtrRaw) {
+  (JNIEnv* env, jclass, jlong gloadPtrRaw) {
 
     const FT_GlyphLoad gload = reinterpret_cast<FT_GlyphLoad>(gloadPtrRaw);
     if(!gload)
@@ -39,7 +39,7 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtra
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_setExtraPoints
-  (JNIEnv *env, jclass, jlong gloadPtrRaw, jlongArray extraPointsRaw) {
+  (JNIEnv* env, jclass, jlong gloadPtrRaw, jlongArray extraPointsRaw) {
 
     FT_GlyphLoad gload = reinterpret_cast<FT_GlyphLoad>(gloadPtrRaw);
     if(!gload || !extraPointsRaw)
@@ -65,7 +65,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_setExtraPoints
 
 // FT_Vector* extra_points2;
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtraPoints2
-  (JNIEnv *env, jclass, jlong gloadPtrRaw) {
+  (JNIEnv* env, jclass, jlong gloadPtrRaw) {
 
     const FT_GlyphLoad gload = reinterpret_cast<FT_GlyphLoad>(gloadPtrRaw);
     if(!gload)
@@ -85,7 +85,7 @@ JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getExtra
 }
 
 JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_setExtraPoints2
-  (JNIEnv *env, jclass, jlong gloadPtrRaw, jlongArray extraPoints2Raw) {
+  (JNIEnv* env, jclass, jlong gloadPtrRaw, jlongArray extraPoints2Raw) {
 
     FT_GlyphLoad gload = reinterpret_cast<FT_GlyphLoad>(gloadPtrRaw);
     if(!gload || !extraPoints2Raw)
@@ -130,7 +130,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_setNumSubglyph
 
 // FT_SubGlyph subglyphs;
 JNIEXPORT jlongArray JNICALL Java_generaloss_freetype_gload_FTGlyphLoad_getSubglyphs
-  (JNIEnv *env, jclass, jlong gloadPtrRaw) {
+  (JNIEnv* env, jclass, jlong gloadPtrRaw) {
 
     const FT_GlyphLoad gload = reinterpret_cast<FT_GlyphLoad>(gloadPtrRaw);
     if(!gload)

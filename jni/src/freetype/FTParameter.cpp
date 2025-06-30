@@ -42,7 +42,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTParameter_setTag
 
 // FT_Pointer data;
 JNIEXPORT void JNICALL Java_generaloss_freetype_freetype_FTParameter_setData
-  (JNIEnv *env, jclass, jlong parameterPtrRaw, jobject byteBuffer) {
+  (JNIEnv* env, jclass, jlong parameterPtrRaw, jobject byteBuffer) {
 
     FT_Parameter* parameter = reinterpret_cast<FT_Parameter*>(parameterPtrRaw);
     if(!parameter)
