@@ -21,17 +21,14 @@ import generaloss.freetype.types.*;
 import jpize.util.res.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-@Execution(ExecutionMode.SAME_THREAD)
 public class FuncTests {
 
     @Test
@@ -1000,12 +997,6 @@ public class FuncTests {
         matrix.free();
     }
 
-    public static void main(String[] args) {
-        FuncTests tests = new FuncTests();
-        for(int i = 0; i < 1; i++)
-            tests.ftOutlineDecompose();
-    }
-
     @Test
     public void ftOutlineDecompose() {
         final FTLibrary lib = new FTLibrary();
@@ -1033,20 +1024,21 @@ public class FuncTests {
         stroker.exportBorder(FTStrokerBorder.LEFT, outline);
 
         final FTOutlineFuncs funcs = new FTOutlineFuncs();
+        AtomicBoolean invoked = new AtomicBoolean();
         funcs.setMoveTo((to) -> {
-            System.out.println("Decompose: move to = " + to);
+            invoked.set(true);
             return FTError.OK;
         });
         funcs.setLineTo((to) -> {
-            System.out.println("Decompose: line to = " + to);
+            invoked.set(true);
             return FTError.OK;
         });
         funcs.setConicTo((control, to) -> {
-            System.out.println("Decompose: conic to = " + to + " control: " + control);
+            invoked.set(true);
             return FTError.OK;
         });
         funcs.setCubicTo((control1, control2, to) -> {
-            System.out.println("Decompose: cubic to = " + to + " control1: " + control1 + " control2: " + control2);
+            invoked.set(true);
             return FTError.OK;
         });
 
@@ -1056,6 +1048,8 @@ public class FuncTests {
         outline.done(lib);
         stroker.done();
         lib.done();
+
+        Assertions.assertTrue(invoked.get());
     }
 
     @Test
@@ -1407,6 +1401,10 @@ public class FuncTests {
         stroker.getBorderCounts(FTStrokerBorder.LEFT, dstNumPoints, dstNumContours);
 
         final FTOutline outline = lib.newOutline(dstNumPoints[0], dstNumContours[0]);
+
+        outline.setNPoints(0);
+        outline.setNContours(0);
+
         stroker.export(outline);
         Assertions.assertTrue(outline.getNPoints() > 0);
         outline.done(lib);
