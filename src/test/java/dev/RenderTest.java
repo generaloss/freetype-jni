@@ -12,7 +12,7 @@ import java.nio.ByteBuffer;
 public class RenderTest {
 
     public static void main(String[] args) {
-        for(int i = 0; i < 1; i++) {
+        for(int i = 0; i < 100000; i++) {
             System.out.println("--------- ITERATE " + i + " ---------");
             test();
         }
@@ -26,9 +26,6 @@ public class RenderTest {
         final FTFace face = library.newMemoryFace(data, 0);
 
         face.setPixelSizes(0, 15);
-        // final FTSize size = face.getSize();
-        // final FTSizeMetrics metrics = size.getMetrics();
-        // System.out.println(metrics.getAscender() + ", " + metrics.getDescender() + ", " + metrics.getHeight());
 
         for(int i = 0; i < CHARS.length(); i++)
             loadChar(face, CHARS.charAt(i));
@@ -41,28 +38,17 @@ public class RenderTest {
         final long charIndex = face.getCharIndex(c);
         face.loadGlyph(charIndex);
 
-        // System.out.println("char '" + c + "': " + charIndex);
-
         final FTGlyphSlot slot = face.getGlyph();
 
         slot.renderGlyph(FTRenderMode.NORMAL);
 
         final FTGlyph glyph = slot.getGlyph();
 
-        // System.out.println("advance: " + glyph.getAdvance());
-
         final FTVector origin = new FTVector();
         final FTBitmapGlyph bitmapGlyph = glyph.toBitmap(FTRenderMode.NORMAL, origin, true);
-        // System.out.println("origin: " + origin);
         final FTBitmap bitmap = bitmapGlyph.getBitmap();
-        // System.out.println("Got bitmap: " + bitmap.getPointer());
 
-        // final FTBitmap bitmap = slot.getBitmap();
         final FTGlyphMetrics glyphMetrics = slot.getMetrics();
-
-        // System.out.println(glyphMetrics.getHoriBearingX() + ", " + glyphMetrics.getHoriBearingY());
-        // System.out.println(glyphMetrics.getWidth() + ", " + glyphMetrics.getHeight() + ", " + glyphMetrics.getHoriAdvance());
-        // System.out.println(bitmap.getWidth() + ", " + bitmap.getRows() + ", " + bitmap.getPitch() + ", " + bitmap.getNumGray());
 
         final ByteBuffer buffer = bitmap.getBuffer();
         final long rows = bitmap.getRows();
@@ -73,11 +59,8 @@ public class RenderTest {
         for(int y = 0; y < rows; y++) {
             for(int x = 0; x < width; x++) {
                 final int index = (x + pitch * y);
-                if(index >= buffer.remaining())
-                    throw new RuntimeException("Index out of bounds " + index + " >= " + buffer.remaining());
-                System.out.print(" i = " + index);
                 final String string = (buffer.get(index) != 0 ? "X" : " ");
-                // System.out.print(string);
+                System.out.print(string);
             }
             System.out.println();
         }
