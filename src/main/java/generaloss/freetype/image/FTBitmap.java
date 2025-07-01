@@ -36,7 +36,11 @@ public class FTBitmap extends FTStruct {
         return getRows(super.pointer);
     }
 
-    //
+    private static native void setRows(long pointer, long rows);
+
+    public void setRows(long rows) {
+        setRows(super.pointer, rows);
+    }
 
     // unsigned int width;
     private static native long getWidth(long pointer);
@@ -45,7 +49,11 @@ public class FTBitmap extends FTStruct {
         return getWidth(super.pointer);
     }
 
-    //
+    private static native void setWidth(long pointer, long width);
+
+    public void setWidth(long width) {
+        setWidth(super.pointer, width);
+    }
 
     // int pitch;
     private static native int getPitch(long pointer);
@@ -54,7 +62,11 @@ public class FTBitmap extends FTStruct {
         return getPitch(super.pointer);
     }
 
-    //
+    private static native void setPitch(long pointer, int pitch);
+
+    public void setPitch(int pitch) {
+        setPitch(super.pointer, pitch);
+    }
 
     // unsigned char* buffer;
     private static native ByteBuffer getBuffer(long pointer);
@@ -65,6 +77,27 @@ public class FTBitmap extends FTStruct {
         return getBuffer(super.pointer);
     }
 
+    private static native void setBuffer(long pointer, ByteBuffer buffer);
+
+    public void setBuffer(ByteBuffer buffer) {
+        setBuffer(super.pointer, buffer);
+    }
+
+    private static native void setBuffer(long pointer, long size);
+
+    public void setBuffer(long size) {
+        setBuffer(super.pointer, size);
+    }
+
+    public void setBuffer(long rows, int pitch) {
+        final long size = (rows * pitch);
+        this.setBuffer(size);
+    }
+
+    public void setBuffer() {
+        this.setBuffer(this.getRows(), this.getPitch());
+    }
+
     // unsigned short num_grays;
     private static native int getNumGrays(long pointer);
 
@@ -72,7 +105,11 @@ public class FTBitmap extends FTStruct {
         return getNumGrays(super.pointer);
     }
 
-    //
+    private static native void setNumGrays(long pointer, int num_grays);
+
+    public void setNumGrays(int numGrays) {
+        setNumGrays(super.pointer, numGrays);
+    }
 
     // unsigned char pixel_mode;
     private static native short getPixelMode(long pointer);
@@ -82,7 +119,11 @@ public class FTBitmap extends FTStruct {
         return FTPixelMode.byValue(raw);
     }
 
-    //
+    private static native void setPixelMode(long pointer, int pixel_mode);
+
+    public void setPixelMode(FTPixelMode pixelMode) {
+        setPixelMode(super.pointer, pixelMode.value);
+    }
 
     // unsigned char palette_mode;
     private static native short getPaletteMode(long pointer);

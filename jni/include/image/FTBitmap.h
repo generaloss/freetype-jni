@@ -33,11 +33,27 @@ JNIEXPORT jlong JNICALL Java_generaloss_freetype_image_FTBitmap_getRows
 
 /*
  * Class:     generaloss_freetype_image_FTBitmap
+ * Method:    setRows
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTBitmap_setRows
+  (JNIEnv *, jclass, jlong, jlong);
+
+/*
+ * Class:     generaloss_freetype_image_FTBitmap
  * Method:    getWidth
  * Signature: (J)J
  */
 JNIEXPORT jlong JNICALL Java_generaloss_freetype_image_FTBitmap_getWidth
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_image_FTBitmap
+ * Method:    setWidth
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTBitmap_setWidth
+  (JNIEnv *, jclass, jlong, jlong);
 
 /*
  * Class:     generaloss_freetype_image_FTBitmap
@@ -49,11 +65,35 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTBitmap_getPitch
 
 /*
  * Class:     generaloss_freetype_image_FTBitmap
+ * Method:    setPitch
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTBitmap_setPitch
+  (JNIEnv *, jclass, jlong, jint);
+
+/*
+ * Class:     generaloss_freetype_image_FTBitmap
  * Method:    getBuffer
  * Signature: (J)Ljava/nio/ByteBuffer;
  */
 JNIEXPORT jobject JNICALL Java_generaloss_freetype_image_FTBitmap_getBuffer
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_image_FTBitmap
+ * Method:    setBuffer
+ * Signature: (JLjava/nio/ByteBuffer;)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTBitmap_setBuffer__JLjava_nio_ByteBuffer_2
+  (JNIEnv *, jclass, jlong, jobject);
+
+/*
+ * Class:     generaloss_freetype_image_FTBitmap
+ * Method:    setBuffer
+ * Signature: (JJ)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTBitmap_setBuffer__JJ
+  (JNIEnv *, jclass, jlong, jlong);
 
 /*
  * Class:     generaloss_freetype_image_FTBitmap
@@ -65,11 +105,27 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_image_FTBitmap_getNumGrays
 
 /*
  * Class:     generaloss_freetype_image_FTBitmap
+ * Method:    setNumGrays
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTBitmap_setNumGrays
+  (JNIEnv *, jclass, jlong, jint);
+
+/*
+ * Class:     generaloss_freetype_image_FTBitmap
  * Method:    getPixelMode
  * Signature: (J)S
  */
 JNIEXPORT jshort JNICALL Java_generaloss_freetype_image_FTBitmap_getPixelMode
   (JNIEnv *, jclass, jlong);
+
+/*
+ * Class:     generaloss_freetype_image_FTBitmap
+ * Method:    setPixelMode
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTBitmap_setPixelMode
+  (JNIEnv *, jclass, jlong, jint);
 
 /*
  * Class:     generaloss_freetype_image_FTBitmap

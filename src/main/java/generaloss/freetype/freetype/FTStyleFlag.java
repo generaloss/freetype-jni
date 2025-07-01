@@ -21,13 +21,19 @@ public enum FTStyleFlag implements BitMaskable {
         return bit;
     }
 
-
     public boolean isItalic() {
         return this == ITALIC;
     }
 
     public boolean isBold() {
         return this == BOLD;
+    }
+
+
+    public static FTStyleFlag byBit(int bit) {
+        if(bit == ITALIC.bit)
+            return ITALIC;
+        return BOLD;
     }
 
 }

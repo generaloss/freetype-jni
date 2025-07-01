@@ -32,7 +32,7 @@ public class SubglyphFlags extends BitMask<FTSubglyphFlag> {
     }
 
     public boolean has2x2() {
-        return super.has(FTSubglyphFlag.FLAG_2X2);
+        return super.has(FTSubglyphFlag._2X2);
     }
 
     public boolean hasUseMyMetrics() {

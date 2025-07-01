@@ -26,7 +26,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutlineFuncs_freePointer
 /*
  * Class:     generaloss_freetype_image_FTOutlineFuncs
  * Method:    setMoveTo
- * Signature: (JLgeneraloss/freetype/image/FTOutlineMoveToFuncNative;)V
+ * Signature: (JLgeneraloss/freetype/image/FTOutlineMoveToFunc;)V
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutlineFuncs_setMoveTo
   (JNIEnv *, jclass, jlong, jobject);
@@ -34,7 +34,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutlineFuncs_setMoveTo
 /*
  * Class:     generaloss_freetype_image_FTOutlineFuncs
  * Method:    setLineTo
- * Signature: (JLgeneraloss/freetype/image/FTOutlineLineToFuncNative;)V
+ * Signature: (JLgeneraloss/freetype/image/FTOutlineLineToFunc;)V
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutlineFuncs_setLineTo
   (JNIEnv *, jclass, jlong, jobject);
@@ -42,7 +42,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutlineFuncs_setLineTo
 /*
  * Class:     generaloss_freetype_image_FTOutlineFuncs
  * Method:    setConicTo
- * Signature: (JLgeneraloss/freetype/image/FTOutlineConicToFuncNative;)V
+ * Signature: (JLgeneraloss/freetype/image/FTOutlineConicToFunc;)V
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutlineFuncs_setConicTo
   (JNIEnv *, jclass, jlong, jobject);
@@ -50,7 +50,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutlineFuncs_setConicTo
 /*
  * Class:     generaloss_freetype_image_FTOutlineFuncs
  * Method:    setCubicTo
- * Signature: (JLgeneraloss/freetype/image/FTOutlineCubicToFuncNative;)V
+ * Signature: (JLgeneraloss/freetype/image/FTOutlineCubicToFunc;)V
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_image_FTOutlineFuncs_setCubicTo
   (JNIEnv *, jclass, jlong, jobject);

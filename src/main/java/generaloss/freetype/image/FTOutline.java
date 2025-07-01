@@ -200,12 +200,6 @@ public class FTOutline extends FTStruct { // struct done.
         error.checkError();
     }
 
-    public FTBitmap getBitmap(FTLibrary library) {
-        final FTBitmap dstBitmap = new FTBitmap();
-        this.getBitmap(library, dstBitmap);
-        return dstBitmap;
-    }
-
     public void render(FTLibrary library, FTRasterParams params) {
         final FTError error = FreeType.ftOutlineRender(library, this, params);
         error.checkError();

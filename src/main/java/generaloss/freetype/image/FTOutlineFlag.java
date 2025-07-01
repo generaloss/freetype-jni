@@ -15,7 +15,6 @@ public enum FTOutlineFlag implements BitMaskable {
     HIGH_PRECISION  (256),
     SINGLE_PASS     (512);
 
-
     private final int bit;
 
     FTOutlineFlag(int bit) {

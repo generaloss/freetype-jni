@@ -1273,6 +1273,54 @@ public class FuncTests {
         outline.setNContours(1);
         outline.setNPoints(4);
         outline.setPoints(
+            new FTVector().set(10F, 10F),
+            new FTVector().set(90F, 10F),
+            new FTVector().set(90F, 90F),
+            new FTVector().set(10F, 90F)
+        );
+        outline.setContours(3);
+        outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
+
+        final FTBitmap dstBitmap = new FTBitmap();
+        dstBitmap.setPixelMode(FTPixelMode.GRAY);
+        dstBitmap.setPitch(100);
+        dstBitmap.setWidth(100);
+        dstBitmap.setRows(50);
+        dstBitmap.setBuffer();
+
+        outline.getBitmap(lib, dstBitmap);
+
+        final ByteBuffer buffer = dstBitmap.getBuffer();
+        final long rows = dstBitmap.getRows();
+        final long width = dstBitmap.getWidth();
+        final int pitch = dstBitmap.getPitch();
+
+        boolean filled = false;
+        for(int y = 0; y < rows; y++) {
+            for(int x = 0; x < width; x++) {
+                final int index = (x + pitch * y);
+                if(buffer.get(index) != 0) {
+                    filled = true;
+                    y = (int) rows;
+                    break;
+                }
+            }
+        }
+        Assertions.assertTrue(filled);
+
+        outline.done(lib);
+        dstBitmap.free();
+        lib.done();
+    }
+
+    @Test
+    public void ftOutlineRender_DEFAULT() {
+        final FTLibrary lib = new FTLibrary();
+        final FTOutline outline = lib.newOutline(4L, 1L);
+
+        outline.setNContours(1);
+        outline.setNPoints(4);
+        outline.setPoints(
             new FTVector().set(0F, 0F),
             new FTVector().set(100F, 0F),
             new FTVector().set(100F, 100F),
@@ -1281,41 +1329,91 @@ public class FuncTests {
         outline.setContours(3);
         outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
 
-        final FTBitmap bitmap = outline.getBitmap(lib);
-        System.out.println(bitmap.getPixelMode());
+        final FTRasterParams params = new FTRasterParams();
 
-        Assertions.assertTrue(bitmap.getWidth() > 0L);
-        Assertions.assertTrue(bitmap.getRows() > 0L);
+        final FTBitmap bitmap = new FTBitmap();
+        bitmap.setRows(50);
+        bitmap.setWidth(100);
+        bitmap.setPitch(100);
+        bitmap.setPixelMode(FTPixelMode.GRAY);
+        bitmap.setBuffer();
+
+        params.setTarget(bitmap);
+
+        outline.render(lib, params);
+
+        final ByteBuffer buffer = bitmap.getBuffer();
+        final long rows = bitmap.getRows();
+        final long width = bitmap.getWidth();
+        final int pitch = bitmap.getPitch();
+
+        boolean filled = false;
+        for(int y = 0; y < rows; y++) {
+            for(int x = 0; x < width; x++) {
+                final int index = (x + pitch * y);
+                if(buffer.get(index) != 0) {
+                    filled = true;
+                    y = (int) rows;
+                    break;
+                }
+            }
+        }
+        Assertions.assertTrue(filled);
 
         outline.done(lib);
-        bitmap.free();
+        params.free();
         lib.done();
     }
 
     @Test
-    public void ftOutlineRender() {
-        // final FTLibrary lib = new FTLibrary();
-        // final FTOutline outline = lib.newOutline(4L, 1L);
+    public void ftOutlineRender_DIRECT() {
+        final FTLibrary lib = new FTLibrary();
+        final FTOutline outline = lib.newOutline(4L, 1L);
 
-        // outline.setNContours(1);
-        // outline.setNPoints(4);
-        // outline.setPoints(
-        //     new FTVector().set(0F, 0F),
-        //     new FTVector().set(100F, 0F),
-        //     new FTVector().set(100F, 100F),
-        //     new FTVector().set(0F, 100F)
-        // );
-        // outline.setContours(3);
-        // outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
+        outline.setNContours(1);
+        outline.setNPoints(4);
+        outline.setPoints(
+            new FTVector().set(0F, 0F),
+            new FTVector().set(100F, 0F),
+            new FTVector().set(100F, 100F),
+            new FTVector().set(0F, 100F)
+        );
+        outline.setContours(3);
+        outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
 
-        // final FTRasterParams params = new FTRasterParams();
-        // params.setFlags(FTRasterParams.FT_RASTER_FLAG_DEFAULT);
+        final FTRasterParams params = new FTRasterParams();
 
-        // outline.render(lib, params);
+        params.setFlags(FTRasterFlag.DIRECT, FTRasterFlag.AA);
 
-        // outline.done(lib);
-        // params.free();
-        // lib.done();
+        final AtomicBoolean graySpansInvoked = new AtomicBoolean(false);
+        final AtomicBoolean blackSpansInvoked = new AtomicBoolean(false);
+        final AtomicBoolean bitTestInvoked = new AtomicBoolean(false);
+        final AtomicBoolean bitSetInvoked = new AtomicBoolean(false);
+
+        params.setGraySpans((y, count, spans) -> {
+            graySpansInvoked.set(true);
+        });
+        params.setBlackSpans((y, count, spans) -> {
+            blackSpansInvoked.set(true);
+        });
+        params.setBitTest((y, x) -> {
+            bitTestInvoked.set(true);
+            return 1;
+        });
+        params.setBitSet((y, x) -> {
+            bitSetInvoked.set(true);
+        });
+
+        outline.render(lib, params);
+
+        Assertions.assertTrue(graySpansInvoked.get());
+        Assertions.assertFalse(blackSpansInvoked.get()); // unused
+        Assertions.assertFalse(bitTestInvoked.get()); // unused
+        Assertions.assertFalse(bitSetInvoked.get()); // unused
+
+        outline.done(lib);
+        params.free();
+        lib.done();
     }
 
     @Test

@@ -5,25 +5,31 @@ import generaloss.freetype.BitMaskable;
 public enum FTOpen implements BitMaskable {
 
     /** This is a memory-based stream. */
-    MEMORY,
+    MEMORY   (1),
     /** Copy the stream from the stream field. */
-    STREAM,
+    STREAM   (2),
     /** Create a new input stream from a C path name. */
-    PATHNAME,
+    PATHNAME (4),
     /** Use the driver field. */
-    DRIVER,
+    DRIVER   (8),
     /** Use the num_params and params fields. */
-    PARAMS;
+    PARAMS   (16);
 
     private final int bit;
 
-    FTOpen() {
-        this.bit = (1 << super.ordinal());
+    FTOpen(int bit) {
+        this.bit = bit;
     }
 
     @Override
     public int getBit() {
         return bit;
+    }
+
+
+    public static FTOpen byBit(int bit) {
+        final int index = BitMaskable.getBitIndex(bit);
+        return FTOpen.values()[index];
     }
 
 }

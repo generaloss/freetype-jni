@@ -13,4 +13,14 @@ public interface BitMaskable {
         return bits;
     }
 
+    static int getBitIndex(int value) {
+        return Integer.numberOfTrailingZeros(value);
+    }
+
+    static int getFromZeroBitIndex(int value) {
+        final int zeros = Integer.numberOfTrailingZeros(value);
+        final int isNotZero = (1 - zeros / Integer.SIZE);
+        return (zeros % Integer.SIZE + isNotZero);
+    }
+
 }

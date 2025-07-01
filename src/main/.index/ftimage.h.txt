@@ -82,30 +82,36 @@ enum FTGlyphFormat { [x]
     SVG
 }
 
-struct FT_Span { [ ]
-    short          x;        [ ] short getX()
-    unsigned short len;      [ ] int getLength()
-    unsigned char  coverage; [ ] int getCoverage()
+struct FT_Span { [x]
+    short          x;        [x] short getX()
+    unsigned short len;      [x] int getLength()
+    unsigned char  coverage; [x] int getCoverage()
 }
 
-enum FTRasterFlag { [ ]
-    DEFAULT
-    AA
-    DIRECT
-    CLIP
-    SDF
+func void FT_SpanFunc(int y, int count, const FT_Span* spans, void* user); [x]
+
+func int FT_Raster_BitTest_Func(int y, int x, void* user); [x]
+
+func void FT_Raster_BitSet_Func(int y, int x, void* user); [x]
+
+enum FTRasterFlag { [x]
+    DEFAULT = 0
+    AA      = 1
+    DIRECT  = 2
+    CLIP    = 4
+    SDF     = 8
 }
 
-struct FTRasterParams { [ ]
-    const FT_Bitmap*       target;      [ ] FTBitmap getTarget()
-    const void*            source;      [ ] const void* getSource()
-    int                    flags;       [ ] int getFlags()
-    FT_SpanFunc            gray_spans;  [ ] FT_SpanFunc getGraySpans()
-    FT_SpanFunc            black_spans; [ ] FTSpanFunc getBlackSpans()
-    FT_Raster_BitTest_Func bit_test;    [ ] FTRasterBitTestFunc getBitTest()
-    FT_Raster_BitSet_Func  bit_set;     [ ] FTRasterBitSetFunc getBitSet()
+struct FTRasterParams { [x]
+    const FT_Bitmap*       target;      [x] FTBitmap getTarget()
+    const void*            source;      [x] const void* getSource()
+    int                    flags;       [x] int getFlags()
+    FT_SpanFunc            gray_spans;  [x] FT_SpanFunc getGraySpans()
+    FT_SpanFunc            black_spans; [x] FTSpanFunc getBlackSpans()
+    FT_Raster_BitTest_Func bit_test;    [x] FTRasterBitTestFunc getBitTest()
+    FT_Raster_BitSet_Func  bit_set;     [x] FTRasterBitSetFunc getBitSet()
     void*                  user;        [ ] void* getUser()
-    FT_BBox                clip_box;    [ ] FTBBox getClipBox()
+    FT_BBox                clip_box;    [x] FTBBox getClipBox()
 }
 
 struct FTRasterFuncs { [ ]

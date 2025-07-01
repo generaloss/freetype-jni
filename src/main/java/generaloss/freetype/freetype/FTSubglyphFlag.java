@@ -9,7 +9,7 @@ public enum FTSubglyphFlag implements BitMaskable {
     ROUND_XY_TO_GRID   (4),
     SCALE              (8),
     XY_SCALE           (64),
-    FLAG_2X2           (128), // 2X2
+    _2X2               (128), // 2X2
     USE_MY_METRICS     (512);
 
     private final int bit;

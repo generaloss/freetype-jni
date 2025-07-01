@@ -79,8 +79,8 @@ public enum FTFaceFlag implements BitMaskable {
     }
 
 
-    public static FTFaceFlag byValue(int value) {
-        final int index = Integer.numberOfTrailingZeros(value);
+    public static FTFaceFlag byBit(int bit) {
+        final int index = BitMaskable.getBitIndex(bit);
         return FTFaceFlag.values()[index];
     }
 

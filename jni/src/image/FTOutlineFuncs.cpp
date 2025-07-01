@@ -103,7 +103,7 @@ int ft_move_to_func(const FT_Vector* to, void* user) {
         return -1;
 
     const jclass callbackClass = env->GetObjectClass(javaMoveToFunc);
-    const jmethodID invokeMethod = env->GetMethodID(callbackClass, "invoke", "(J)I");
+    const jmethodID invokeMethod = env->GetMethodID(callbackClass, "invokeNative", "(J)I");
 
     const jint result = env->CallIntMethod(
         javaMoveToFunc,
@@ -160,7 +160,7 @@ int ft_line_to_func(const FT_Vector* to, void* user) {
        return -1;
 
     const jclass callbackClass = env->GetObjectClass(javaLineToFunc);
-    const jmethodID invokeMethod = env->GetMethodID(callbackClass, "invoke", "(J)I");
+    const jmethodID invokeMethod = env->GetMethodID(callbackClass, "invokeNative", "(J)I");
 
     const jint result = env->CallIntMethod(
         javaLineToFunc,
@@ -217,7 +217,7 @@ int ft_conic_to_func(const FT_Vector* control, const FT_Vector* to, void* user) 
        return -1;
 
     const jclass callbackClass = env->GetObjectClass(javaConicToFunc);
-    const jmethodID invokeMethod = env->GetMethodID(callbackClass, "invoke", "(JJ)I");
+    const jmethodID invokeMethod = env->GetMethodID(callbackClass, "invokeNative", "(JJ)I");
 
     const jint result = env->CallIntMethod(
         javaConicToFunc,
@@ -275,7 +275,7 @@ int ft_cubic_to_func(const FT_Vector* control1, const FT_Vector* control2, const
         return -1;
 
     const jclass callbackClass = env->GetObjectClass(javaCubicToFunc);
-    const jmethodID invokeMethod = env->GetMethodID(callbackClass, "invoke", "(JJJ)I");
+    const jmethodID invokeMethod = env->GetMethodID(callbackClass, "invokeNative", "(JJJ)I");
 
     const jint result = env->CallIntMethod(
         javaCubicToFunc,
