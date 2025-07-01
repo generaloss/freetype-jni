@@ -130,12 +130,13 @@ public class FreeType {
     }
 
     public static FTError ftNewMemoryFace(FTLibrary library, ByteBuffer dataBuffer, long faceIndex, long[] dstFacePointer) {
-        return ftNewMemoryFace(library, dataBuffer, dataBuffer.remaining(), faceIndex, dstFacePointer);
+        final long dataSize = (dataBuffer == null ? 0L : dataBuffer.remaining());
+        return ftNewMemoryFace(library, dataBuffer, dataSize, faceIndex, dstFacePointer);
     }
 
     public static FTError ftNewMemoryFace(FTLibrary library, byte[] data, long dataSize, long faceIndex, long[] dstFacePointer) {
         if(data == null)
-            throw new NullPointerException("Data is null");
+            throw new NullPointerException("byte[] data is null");
         final ByteBuffer buffer = ByteBuffer.allocateDirect(data.length);
         buffer.put(data);
         buffer.flip();
@@ -143,7 +144,8 @@ public class FreeType {
     }
 
     public static FTError ftNewMemoryFace(FTLibrary library, byte[] data, long faceIndex, long[] dstFacePointer) {
-        return ftNewMemoryFace(library, data, data.length, faceIndex, dstFacePointer);
+        final long dataSize = (data == null ? 0L : data.length);
+        return ftNewMemoryFace(library, data, dataSize, faceIndex, dstFacePointer);
     }
 
     // FT_Error FT_Open_Face(FT_Library library, const FT_Open_Args* args, FT_Long face_index, FT_Face *aface)
@@ -235,10 +237,14 @@ public class FreeType {
     }
 
     public static FTError ftLoadGlyph(FTFace face, long glyphIndex, FTLoad loadFlag) {
+        if(loadFlag == null)
+            loadFlag = FTLoad.DEFAULT;
         return ftLoadGlyph(face, glyphIndex, loadFlag.getBit());
     }
 
     public static FTError ftLoadGlyph(FTFace face, long glyphIndex, FTLoadTarget loadFlag) {
+        if(loadFlag == null)
+            loadFlag = FTLoadTarget.NORMAL;
         return ftLoadGlyph(face, glyphIndex, loadFlag.value);
     }
 
@@ -259,10 +265,14 @@ public class FreeType {
     }
 
     public static FTError ftLoadChar(FTFace face, long charcode, FTLoad loadFlag) {
+        if(loadFlag == null)
+            loadFlag = FTLoad.DEFAULT;
         return ftLoadChar(face, charcode, loadFlag.getBit());
     }
 
     public static FTError ftLoadChar(FTFace face, long charcode, FTLoadTarget loadFlag) {
+        if(loadFlag == null)
+            loadFlag = FTLoadTarget.NORMAL;
         return ftLoadChar(face, charcode, loadFlag.value);
     }
 
@@ -430,6 +440,8 @@ public class FreeType {
     }
 
     public static long ftFaceGetCharVariantIndex(FTFace face, long charcode, UnicodeVariationSelector variantSelector) {
+        if(variantSelector == null)
+            throw new IllegalArgumentException("UnicodeVariationSelector is null");
         return ftFaceGetCharVariantIndex(face, charcode, variantSelector.code);
     }
 
@@ -440,6 +452,8 @@ public class FreeType {
         return FT_Face_GetCharVariantIsDefault(FTStruct.getPointer(face), charcode, variantSelector);
     }
     public static int ftFaceGetCharVariantIsDefault(FTFace face, long charcode, UnicodeVariationSelector variantSelector) {
+        if(variantSelector == null)
+            throw new IllegalArgumentException("UnicodeVariationSelector is null");
         return ftFaceGetCharVariantIsDefault(face, charcode, variantSelector.code);
     }
 
@@ -475,17 +489,26 @@ public class FreeType {
 
     // FT_Long FT_MulDiv(FT_Long a, FT_Long b, FT_Long c)
     public static long ftMulDiv(long a, long b, long c) {
-        return (a * b) / c;
+        if(c < 1)
+            return 0x7FFFFFFFL;
+
+        final long d = (a * b + (c >> 1)) / c;
+        return (d < 0) ? -d : d;
     }
 
     // FT_Long FT_MulFix(FT_Long a, FT_Long b)
     public static long ftMulFix(long a, long b) {
-        return (a * b) / 0x10000;
+        final long ab = (a * b);
+        return ((ab + 0x8000L - (ab < 0 ? 1 : 0)) >> 16);
     }
 
     // FT_Long FT_DivFix(FT_Long a, FT_Long b)
     public static long ftDivFix(long a, long b) {
-        return (a * 0x10000) / b;
+        if(b < 1)
+            return 0x7FFFFFFFL;
+
+        final long q = ((a << 16) + (b >> 1)) / b;
+        return (q < 0) ? -q : q;
     }
 
     // FT_Fixed FT_RoundFix(FT_Fixed a)
@@ -652,6 +675,8 @@ public class FreeType {
     private static native void FT_Glyph_Get_CBox(long glyph, long bboxMode, long acbox);
 
     public static void ftGlyphGetCBox(FTGlyph glyph, FTGlyphBBoxMode bboxMode, FTBBox dstCbox) {
+        if(bboxMode == null)
+            throw new IllegalArgumentException("BboxMode is null");
         FT_Glyph_Get_CBox(FTStruct.getPointer(glyph), bboxMode.value, FTStruct.getPointer(dstCbox));
     }
 

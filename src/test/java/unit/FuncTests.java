@@ -1667,9 +1667,9 @@ public class FuncTests {
         Assertions.assertNotNull(points);
         Assertions.assertTrue(points.length > 0);
 
-        for(FTVector pt: points) {
-            Assertions.assertFalse(Float.isNaN(pt.getX()), "X should not be NaN");
-            Assertions.assertFalse(Float.isNaN(pt.getY()), "Y should not be NaN");
+        for(FTVector point: points) {
+            Assertions.assertFalse(Float.isNaN(point.getX()), "X should not be NaN");
+            Assertions.assertFalse(Float.isNaN(point.getY()), "Y should not be NaN");
         }
 
         outline.done(lib);
