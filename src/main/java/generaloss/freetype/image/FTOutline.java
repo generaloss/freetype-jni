@@ -200,6 +200,23 @@ public class FTOutline extends FTStruct { // struct done.
         error.checkError();
     }
 
+    public FTBitmap getBitmap(FTLibrary library, int pitch, long width, long rows, FTPixelMode pixelMode) {
+        final FTBitmap dstBitmap = new FTBitmap();
+        dstBitmap.setPitch(pitch);
+        dstBitmap.setWidth(width);
+        dstBitmap.setRows(rows);
+        dstBitmap.setPixelMode(pixelMode);
+        dstBitmap.setBuffer();
+
+        this.getBitmap(library, dstBitmap);
+
+        return dstBitmap;
+    }
+
+    public FTBitmap getBitmap(FTLibrary library, int width, long rows, FTPixelMode pixelMode) {
+        return this.getBitmap(library, width, width, rows, pixelMode);
+    }
+
     public void render(FTLibrary library, FTRasterParams params) {
         final FTError error = FreeType.ftOutlineRender(library, this, params);
         error.checkError();

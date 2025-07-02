@@ -1281,19 +1281,12 @@ public class FuncTests {
         outline.setContours(3);
         outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
 
-        final FTBitmap dstBitmap = new FTBitmap();
-        dstBitmap.setPixelMode(FTPixelMode.GRAY);
-        dstBitmap.setPitch(100);
-        dstBitmap.setWidth(100);
-        dstBitmap.setRows(50);
-        dstBitmap.setBuffer();
+        final FTBitmap bitmap = outline.getBitmap(lib, 100, 50, FTPixelMode.GRAY);
 
-        outline.getBitmap(lib, dstBitmap);
-
-        final ByteBuffer buffer = dstBitmap.getBuffer();
-        final long rows = dstBitmap.getRows();
-        final long width = dstBitmap.getWidth();
-        final int pitch = dstBitmap.getPitch();
+        final ByteBuffer buffer = bitmap.getBuffer();
+        final long rows = bitmap.getRows();
+        final long width = bitmap.getWidth();
+        final int pitch = bitmap.getPitch();
 
         boolean filled = false;
         for(int y = 0; y < rows; y++) {
@@ -1309,7 +1302,7 @@ public class FuncTests {
         Assertions.assertTrue(filled);
 
         outline.done(lib);
-        dstBitmap.free();
+        bitmap.free();
         lib.done();
     }
 

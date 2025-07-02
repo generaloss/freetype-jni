@@ -25,7 +25,10 @@ public class RenderTest {
         final ByteBuffer data = Resource.internal("/main.ttf").readByteBuffer();
         final FTFace face = library.newMemoryFace(data, 0);
 
-        face.setPixelSizes(0, 15);
+        face.setPixelSizes(0L, 15L);
+
+        if(face.getNumCharmaps() == 0)
+            System.out.println("No charmaps!");
 
         for(int i = 0; i < CHARS.length(); i++)
             loadChar(face, CHARS.charAt(i));
@@ -36,6 +39,12 @@ public class RenderTest {
 
     private static void loadChar(FTFace face, char c) {
         final long charIndex = face.getCharIndex(c);
+        if(charIndex == 0L)
+            System.out.println("Char index is 0");
+
+        if(charIndex >= face.getNumGlyphs())
+            System.out.println("Invalid glyph index for char: " + c + " >= " + face.getNumGlyphs());
+
         face.loadGlyph(charIndex);
 
         final FTGlyphSlot slot = face.getGlyph();
