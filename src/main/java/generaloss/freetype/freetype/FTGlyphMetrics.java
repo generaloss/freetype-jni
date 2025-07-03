@@ -1,7 +1,7 @@
 package generaloss.freetype.freetype;
 
 import generaloss.freetype.FTStruct;
-import generaloss.freetype.types.FTPos;
+import generaloss.freetype.types.PosType;
 
 public class FTGlyphMetrics extends FTStruct { // struct done.
 
@@ -15,7 +15,7 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
 
     public float getWidth() {
         final int raw = getWidth(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos height;
@@ -23,7 +23,7 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
 
     public float getHeight() {
         final int raw = getHeight(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos horiBearingX;
@@ -31,7 +31,7 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
 
     public float getHoriBearingX() {
         final int raw = getHoriBearingX(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos horiBearingY;
@@ -39,7 +39,7 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
 
     public float getHoriBearingY() {
         final int raw = getHoriBearingY(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos horiAdvance;
@@ -47,7 +47,7 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
 
     public float getHoriAdvance() {
         final int raw = getHoriAdvance(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos vertBearingX;
@@ -55,7 +55,7 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
 
     public float getVertBearingX() {
         final int raw = getVertBearingX(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos vertBearingY;
@@ -63,7 +63,7 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
 
     public float getVertBearingY() {
         final int raw = getVertBearingY(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos vertAdvance;
@@ -71,7 +71,7 @@ public class FTGlyphMetrics extends FTStruct { // struct done.
 
     public float getVertAdvance() {
         final int raw = getVertAdvance(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
 }

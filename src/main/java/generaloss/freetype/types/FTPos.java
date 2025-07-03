@@ -3,16 +3,17 @@ package generaloss.freetype.types;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.FreeType;
 
-import java.util.Objects;
-
 public class FTPos extends FTStruct { // struct done.
 
-    public FTPos(long pointer) {
+    private final PosType type;
+
+    public FTPos(long pointer, PosType type) {
         super(pointer);
+        this.type = type;
     }
 
-    public FTPos() {
-        this(createPointer());
+    public FTPos(PosType floatingPointType) {
+        this(createPointer(), floatingPointType);
     }
 
     static {
@@ -29,6 +30,10 @@ public class FTPos extends FTStruct { // struct done.
     }
 
 
+    public PosType getType() {
+        return type;
+    }
+
     private static native int getRawValue(long pointer);
 
     public int getRawValue() {
@@ -37,22 +42,22 @@ public class FTPos extends FTStruct { // struct done.
 
     public float getFloat() {
         final int raw = this.getRawValue();
-        return toFloat(raw);
+        return type.toFloat(raw);
     }
 
     public int getIntFloor() {
         final int raw = this.getRawValue();
-        return toIntFloor(raw);
+        return type.toIntFloor(raw);
     }
 
     public int getIntRound() {
         final int raw = this.getRawValue();
-        return toIntRound(raw);
+        return type.toIntRound(raw);
     }
 
     public int getIntCeil() {
         final int raw = this.getRawValue();
-        return toIntCeil(raw);
+        return type.toIntCeil(raw);
     }
 
 
@@ -64,7 +69,7 @@ public class FTPos extends FTStruct { // struct done.
     }
 
     public FTPos set(float value) {
-        final int raw = of(value);
+        final int raw = type.toRaw(value);
         return this.setRawValue(raw);
     }
 
@@ -78,7 +83,7 @@ public class FTPos extends FTStruct { // struct done.
     @Override
     public String toString() {
         final int raw = this.getRawValue();
-        return (super.toString() + "{float=" + toFloat(raw) + ", raw=" + raw + "}");
+        return (super.toString() + "{float=" + type.toFloat(raw) + ", raw=" + raw + "}");
     }
 
     @Override
@@ -92,34 +97,6 @@ public class FTPos extends FTStruct { // struct done.
     @Override
     public int hashCode() {
         return this.getRawValue();
-    }
-
-
-    public static final int BITS = 6;
-    public static final int UNIT = (1 << BITS); // 64
-    public static final int HALF_UNIT = (1 << (BITS - 1)); // 32
-    public static final int MASK = (UNIT - 1); // 0x3F
-    public static final float UNIT_FRAC = (1F / UNIT);
-
-    public static float toFloat(int rawValue) {
-        return (rawValue * UNIT_FRAC);
-    }
-
-    public static int toIntFloor(int rawValue) {
-        return (rawValue >> BITS);
-    }
-
-    public static int toIntRound(int rawValue) {
-        return ((rawValue + HALF_UNIT) >> BITS);
-    }
-
-    public static int toIntCeil(int rawValue) {
-        return (((rawValue + MASK) & ~MASK) >> BITS);
-    }
-
-
-    public static int of(float value) {
-        return (int) (value * UNIT);
     }
 
 }

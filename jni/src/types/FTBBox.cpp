@@ -19,7 +19,7 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTBBox_freePointer
 
 
 // FT_Pos xMin;
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMin
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMinRaw
   (JNIEnv *, jclass, jlong bboxPtrRaw) {
 
     const FT_BBox* box = reinterpret_cast<FT_BBox*>(bboxPtrRaw);
@@ -30,7 +30,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMin
 }
 
 // FT_Pos yMin;
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMin
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMinRaw
   (JNIEnv *, jclass, jlong bboxPtrRaw) {
 
     const FT_BBox* box = reinterpret_cast<FT_BBox*>(bboxPtrRaw);
@@ -41,7 +41,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMin
 }
 
 // FT_Pos xMax;
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMax
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMaxRaw
   (JNIEnv *, jclass, jlong bboxPtrRaw) {
 
     const FT_BBox* box = reinterpret_cast<FT_BBox*>(bboxPtrRaw);
@@ -52,7 +52,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMax
 }
 
 // FT_Pos yMax;
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMax
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMaxRaw
   (JNIEnv *, jclass, jlong bboxPtrRaw) {
 
     const FT_BBox* box = reinterpret_cast<FT_BBox*>(bboxPtrRaw);

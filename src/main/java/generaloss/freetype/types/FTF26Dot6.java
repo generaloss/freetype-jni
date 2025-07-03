@@ -62,7 +62,7 @@ public class FTF26Dot6 extends FTStruct { // struct done.
     }
 
     public FTF26Dot6 set(float value) {
-        final int raw = of(value);
+        final int raw = toRaw(value);
         return this.setRawValue(raw);
     }
 
@@ -93,31 +93,26 @@ public class FTF26Dot6 extends FTStruct { // struct done.
     }
 
 
-    public static final int BITS = 6;
-    public static final int UNIT = (1 << BITS); // 64
-    public static final int HALF_UNIT = (1 << (BITS - 1)); // 32
-    public static final int MASK = (UNIT - 1); // 0x3F
-    public static final float UNIT_FRAC = (1F / UNIT);
+    private static final FloatConvertor CONVERTOR = FloatConvertor.get(6);
 
     public static float toFloat(int rawValue) {
-        return (rawValue * UNIT_FRAC);
+        return CONVERTOR.toFloat(rawValue);
     }
 
     public static int toIntFloor(int rawValue) {
-        return (rawValue >> BITS);
+        return CONVERTOR.toIntFloor(rawValue);
     }
 
     public static int toIntRound(int rawValue) {
-        return ((rawValue + HALF_UNIT) >> BITS);
+        return CONVERTOR.toIntRound(rawValue);
     }
 
     public static int toIntCeil(int rawValue) {
-        return (((rawValue + MASK) & ~MASK) >> BITS);
+        return CONVERTOR.toIntCeil(rawValue);
     }
 
-
-    public static int of(float value) {
-        return (int) (value * UNIT);
+    public static int toRaw(float value) {
+        return CONVERTOR.toRaw(value);
     }
 
 }

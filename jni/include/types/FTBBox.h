@@ -25,34 +25,34 @@ JNIEXPORT void JNICALL Java_generaloss_freetype_types_FTBBox_freePointer
 
 /*
  * Class:     generaloss_freetype_types_FTBBox
- * Method:    getXMin
+ * Method:    getXMinRaw
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMin
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMinRaw
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTBBox
- * Method:    getYMin
+ * Method:    getYMinRaw
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMin
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMinRaw
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTBBox
- * Method:    getXMax
+ * Method:    getXMaxRaw
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMax
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getXMaxRaw
   (JNIEnv *, jclass, jlong);
 
 /*
  * Class:     generaloss_freetype_types_FTBBox
- * Method:    getYMax
+ * Method:    getYMaxRaw
  * Signature: (J)I
  */
-JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMax
+JNIEXPORT jint JNICALL Java_generaloss_freetype_types_FTBBox_getYMaxRaw
   (JNIEnv *, jclass, jlong);
 
 #ifdef __cplusplus

@@ -212,7 +212,7 @@ public class FreeType {
     private static native int FT_Set_Char_Size(long face, int char_width, int char_height, long horz_resolution, long vert_resolution);
 
     public static FTError ftSetCharSize(FTFace face, float charWidth, float charHeight, long horzResolution, long vertResolution) {
-        final int code = FT_Set_Char_Size(FTStruct.getPointer(face), FTF26Dot6.of(charWidth), FTF26Dot6.of(charHeight), horzResolution, vertResolution);
+        final int code = FT_Set_Char_Size(FTStruct.getPointer(face), FTF26Dot6.toRaw(charWidth), FTF26Dot6.toRaw(charHeight), horzResolution, vertResolution);
         return FTError.byCode(code);
     }
 
@@ -322,7 +322,7 @@ public class FreeType {
     private static native int FT_Get_Track_Kerning(long face, int point_size, int degree, long akerning);
 
     public static FTError ftGetTrackKerning(FTFace face, float pointSize, int degree, FTFixed dstKerning) {
-        final int code = FT_Get_Track_Kerning(FTStruct.getPointer(face), FTFixed.of(pointSize), degree, FTStruct.getPointer(dstKerning));
+        final int code = FT_Get_Track_Kerning(FTStruct.getPointer(face), FTFixed.toRaw(pointSize), degree, FTStruct.getPointer(dstKerning));
         return FTError.byCode(code);
     }
 
@@ -768,8 +768,8 @@ public class FreeType {
     // void FT_Outline_Translate(const FT_Outline* outline, FT_Pos xOffset, FT_Pos yOffset)
     private static native void FT_Outline_Translate(long outline, int xOffset, int yOffset);
 
-    public static void ftOutlineTranslate(FTOutline outline, float xOffset, float yOffset) {
-        FT_Outline_Translate(FTStruct.getPointer(outline), FTPos.of(xOffset), FTPos.of(yOffset));
+    public static void ftOutlineTranslate(FTOutline outline, float xOffset, float yOffset, PosType posType) {
+        FT_Outline_Translate(FTStruct.getPointer(outline), posType.toRaw(xOffset), posType.toRaw(yOffset));
     }
 
     // FT_Error FT_Outline_Copy(const FT_Outline* source, FT_Outline *target)
@@ -790,16 +790,16 @@ public class FreeType {
     // FT_Error FT_Outline_Embolden(FT_Outline* outline, FT_Pos strength)
     private static native int FT_Outline_Embolden(long outline, int strength);
 
-    public static FTError ftOutlineEmbolden(FTOutline outline, float strength) {
-        final int code = FT_Outline_Embolden(FTStruct.getPointer(outline), FTPos.of(strength));
+    public static FTError ftOutlineEmbolden(FTOutline outline, int strength) {
+        final int code = FT_Outline_Embolden(FTStruct.getPointer(outline), PosType.INT.toRaw(strength));
         return FTError.byCode(code);
     }
 
     // FT_Error FT_Outline_EmboldenXY(FT_Outline* outline, FT_Pos xstrength, FT_Pos ystrength)
     private static native int FT_Outline_EmboldenXY(long outline, int xstrength, int ystrength);
 
-    public static FTError ftOutlineEmboldenXY(FTOutline outline, float xStrength, float yStrength) {
-        final int code = FT_Outline_EmboldenXY(FTStruct.getPointer(outline), FTPos.of(xStrength), FTPos.of(yStrength));
+    public static FTError ftOutlineEmboldenXY(FTOutline outline, int xStrength, int yStrength) {
+        final int code = FT_Outline_EmboldenXY(FTStruct.getPointer(outline), PosType.INT.toRaw(xStrength), PosType.INT.toRaw(yStrength));
         return FTError.byCode(code);
     }
 
@@ -872,7 +872,7 @@ public class FreeType {
             throw new NullPointerException("LineCap is null");
         if(lineJoin == null)
             throw new NullPointerException("LineJoin is null");
-        FT_Stroker_Set(FTStruct.getPointer(stroker), FTFixed.of(radius), lineCap.value, lineJoin.value, FTFixed.of(miterLimit));
+        FT_Stroker_Set(FTStruct.getPointer(stroker), FTFixed.toRaw(radius), lineCap.value, lineJoin.value, FTFixed.toRaw(miterLimit));
     }
 
     // void FT_Stroker_Rewind(FT_Stroker stroker)

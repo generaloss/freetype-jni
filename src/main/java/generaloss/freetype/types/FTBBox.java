@@ -30,41 +30,57 @@ public class FTBBox extends FTStruct { // struct done.
 
 
     // FT_Pos xMin;
-    private static native int getXMin(long pointer);
+    private static native int getXMinRaw(long pointer);
 
-    public float getXMin() {
-        final int raw = getXMin(super.pointer);
-        return FTPos.toFloat(raw);
+    public int getXMinRaw() {
+        return getXMinRaw(super.pointer);
+    }
+
+    public float getXMin(PosType posType) {
+        final int raw = this.getXMinRaw();
+        return posType.toFloat(raw);
     }
 
     // FT_Pos yMin;
-    private static native int getYMin(long pointer);
+    private static native int getYMinRaw(long pointer);
 
-    public float getYMin() {
-        final int raw = getYMin(super.pointer);
-        return FTPos.toFloat(raw);
+    public int getYMinRaw() {
+        return getYMinRaw(super.pointer);
+    }
+
+    public float getYMin(PosType posType) {
+        final int raw = this.getYMinRaw();
+        return posType.toFloat(raw);
     }
 
     // FT_Pos xMax;
-    private static native int getXMax(long pointer);
+    private static native int getXMaxRaw(long pointer);
 
-    public float getXMax() {
-        final int raw = getXMax(super.pointer);
-        return FTPos.toFloat(raw);
+    public int getXMaxRaw() {
+        return getXMaxRaw(super.pointer);
+    }
+
+    public float getXMax(PosType posType) {
+        final int raw = this.getXMaxRaw();
+        return posType.toFloat(raw);
     }
 
     // FT_Pos yMax;
-    private static native int getYMax(long pointer);
+    private static native int getYMaxRaw(long pointer);
 
-    public float getYMax() {
-        final int raw = getYMax(super.pointer);
-        return FTPos.toFloat(raw);
+    public int getYMaxRaw() {
+        return getYMaxRaw(super.pointer);
+    }
+
+    public float getYMax(PosType posType) {
+        final int raw = this.getYMaxRaw();
+        return posType.toFloat(raw);
     }
 
 
     @Override
     public String toString() {
-        return (super.toString() + "{xMin=" + this.getXMin() + ", yMin=" + this.getYMin() + ", xMax=" + this.getXMax() + ", yMax=" + this.getYMax() + "}");
+        return (super.toString() + "{xMin=" + this.getXMinRaw() + ", yMin=" + this.getYMinRaw() + ", xMax=" + this.getXMaxRaw() + ", yMax=" + this.getYMaxRaw() + "}");
     }
 
     @Override
@@ -73,14 +89,14 @@ public class FTBBox extends FTStruct { // struct done.
             return false;
         final FTBBox bbox = (FTBBox) object;
         return (
-            this.getXMin() == bbox.getXMin() && this.getYMin() == bbox.getYMin() &&
-            this.getXMax() == bbox.getXMax() && this.getYMax() == bbox.getYMax()
+            this.getXMinRaw() == bbox.getXMinRaw() && this.getYMinRaw() == bbox.getYMinRaw() &&
+            this.getXMaxRaw() == bbox.getXMaxRaw() && this.getYMaxRaw() == bbox.getYMaxRaw()
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getXMin(), this.getYMin(), this.getXMax(), this.getYMax());
+        return Objects.hash(this.getXMinRaw(), this.getYMinRaw(), this.getXMaxRaw(), this.getYMaxRaw());
     }
 
 }

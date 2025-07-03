@@ -10,6 +10,7 @@ import generaloss.freetype.stroke.FTStrokerLineCap;
 import generaloss.freetype.stroke.FTStrokerLineJoin;
 import generaloss.freetype.system.FTMemory;
 import generaloss.freetype.types.FTVector;
+import generaloss.freetype.types.PosType;
 import jpize.util.res.Resource;
 
 import java.io.ByteArrayInputStream;
@@ -68,16 +69,16 @@ public class TreeTest {
         System.out.println("        FT_Vector* extra_points = {");
         for(FTVector point: loader.getBase().getExtraPoints()) {
             System.out.println("          FT_Vector {");
-            System.out.println("            FT_Pos x = " + point.getX());
-            System.out.println("            FT_Pos y = " + point.getY());
+            System.out.println("            FT_Pos x = " + point.getX(PosType.INT));
+            System.out.println("            FT_Pos y = " + point.getY(PosType.INT));
             System.out.println("          }");
         }
         System.out.println("        }");
         System.out.println("        FT_Vector* extra_points2 = {");
         for(FTVector point: loader.getBase().getExtraPoints2()) {
             System.out.println("          FT_Vector {");
-            System.out.println("            FT_Pos x = " + point.getX());
-            System.out.println("            FT_Pos y = " + point.getY());
+            System.out.println("            FT_Pos x = " + point.getX(PosType.INT));
+            System.out.println("            FT_Pos y = " + point.getY(PosType.INT));
             System.out.println("          }");
         }
         System.out.println("        }");
@@ -148,10 +149,10 @@ public class TreeTest {
         }
         System.out.println("  ]");
         System.out.println("  FT_BBox         bbox = {");
-        System.out.println("    FT_Pos xMin = " + face.getBBox().getXMin());
-        System.out.println("    FT_Pos yMin = " + face.getBBox().getYMin());
-        System.out.println("    FT_Pos xMax = " + face.getBBox().getXMax());
-        System.out.println("    FT_Pos yMax = " + face.getBBox().getYMax());
+        System.out.println("    FT_Pos xMin = " + face.getBBox().getXMin(PosType.INT));
+        System.out.println("    FT_Pos yMin = " + face.getBBox().getYMin(PosType.INT));
+        System.out.println("    FT_Pos xMax = " + face.getBBox().getXMax(PosType.INT));
+        System.out.println("    FT_Pos yMax = " + face.getBBox().getYMax(PosType.INT));
         System.out.println("  }");
         System.out.println("  FT_UShort       units_per_EM = " + face.getUnitsPerEM());
         System.out.println("  FT_Short        ascender = " + face.getAscender());
@@ -189,8 +190,8 @@ public class TreeTest {
         System.out.println("      FT_Vector* points = [");
         for(FTVector point: face.getGlyph().getOutline().getPoints()) {
             System.out.println("        FT_Vector {");
-            System.out.println("          FT_Pos x = " + point.getX());
-            System.out.println("          FT_Pos y = " + point.getY());
+            System.out.println("          FT_Pos x = " + point.getX(PosType.INT));
+            System.out.println("          FT_Pos y = " + point.getY(PosType.INT));
             System.out.println("        }");
         }
         System.out.println("      ]");
@@ -215,14 +216,14 @@ public class TreeTest {
             System.out.println("      }");
         }
         System.out.println("    ]");
-        System.out.println("    FT_Pos           lsb_delta = " + face.getGlyph().getLsbDelta());
-        System.out.println("    FT_Pos           rsb_delta = " + face.getGlyph().getRsbDelta());
+        System.out.println("    FT_Pos           lsb_delta = " + face.getGlyph().getLsbDelta(PosType.INT));
+        System.out.println("    FT_Pos           rsb_delta = " + face.getGlyph().getRsbDelta(PosType.INT));
         System.out.println("    FT_GetGlyph() => FTGlyph {");
         System.out.println("      FT_Library      library = " + glyph.getLibrary());
         System.out.println("      FT_Glyph_Format format = " + glyph.getFormat());
         System.out.println("      FT_Vector       advance = {");
-        System.out.println("        FT_Pos x = " + glyph.getAdvance().getX());
-        System.out.println("        FT_Pos y = " + glyph.getAdvance().getY());
+        System.out.println("        FT_Pos x = " + glyph.getAdvance().getX(PosType.INT));
+        System.out.println("        FT_Pos y = " + glyph.getAdvance().getY(PosType.INT));
         System.out.println("      }");
         final FTBitmapGlyph bitmapGlyph = glyph.toBitmap(FTRenderMode.NORMAL, null, false);
         System.out.println("      FT_Glyph_To_Bitmap => FT_BitmapGlyph {");

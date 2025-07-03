@@ -40,7 +40,7 @@ public class FTMatrix extends FTStruct { // struct done.
     private static native void setXX(long pointer, int valueRaw);
 
     public FTMatrix setXX(float value) {
-        final int raw = FTFixed.of(value);
+        final int raw = FTFixed.toRaw(value);
         setXX(super.pointer, raw);
         return this;
     }
@@ -62,7 +62,7 @@ public class FTMatrix extends FTStruct { // struct done.
     private static native void setXY(long pointer, int valueRaw);
 
     public FTMatrix setXY(float value) {
-        final int raw = FTFixed.of(value);
+        final int raw = FTFixed.toRaw(value);
         setXY(super.pointer, raw);
         return this;
     }
@@ -84,7 +84,7 @@ public class FTMatrix extends FTStruct { // struct done.
     private static native void setYX(long pointer, int valueRaw);
 
     public FTMatrix setYX(float value) {
-        final int raw = FTFixed.of(value);
+        final int raw = FTFixed.toRaw(value);
         setYX(super.pointer, raw);
         return this;
     }
@@ -106,7 +106,7 @@ public class FTMatrix extends FTStruct { // struct done.
     private static native void setYY(long pointer, int valueRaw);
 
     public FTMatrix setYY(float value) {
-        final int raw = FTFixed.of(value);
+        final int raw = FTFixed.toRaw(value);
         setYY(super.pointer, raw);
         return this;
     }

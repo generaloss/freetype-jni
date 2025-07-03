@@ -303,17 +303,17 @@ public class FuncTests {
         final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
         final FTMatrix matrix = new FTMatrix().setIdentity();
-        final FTVector delta = new FTVector().set(10F * 64F, 20F * 64F);
+        final FTVector delta = new FTVector().set(10F, 20F, PosType.F26DOT6);
         face.setTransform(matrix, delta);
 
         matrix.setXX(0F).setYY(0F);
-        delta.set(0F);
+        delta.set(0F, PosType.F26DOT6);
 
         face.getTransform(matrix, delta);
         Assertions.assertEquals(1F, matrix.getXX(), 0F);
         Assertions.assertEquals(1F, matrix.getYY(), 0F);
-        Assertions.assertEquals(10F * 64F, delta.getX(), 0F);
-        Assertions.assertEquals(20F * 64F, delta.getY(), 0F);
+        Assertions.assertEquals(10F, delta.getX(PosType.F26DOT6), 0F);
+        Assertions.assertEquals(20F, delta.getY(PosType.F26DOT6), 0F);
 
         matrix.free();
         delta.free();
@@ -328,17 +328,17 @@ public class FuncTests {
         final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
 
         final FTMatrix matrix = new FTMatrix().setIdentity();
-        final FTVector delta = new FTVector().set(10F * 64F, 20F * 64F);
+        final FTVector delta = new FTVector().set(10F, 20F, PosType.F26DOT6);
         face.setTransform(matrix, delta);
 
         matrix.setXX(0F).setYY(0F);
-        delta.set(0F);
+        delta.set(0F, PosType.F26DOT6);
 
         face.getTransform(matrix, delta);
         Assertions.assertEquals(1F, matrix.getXX(), 0F);
         Assertions.assertEquals(1F, matrix.getYY(), 0F);
-        Assertions.assertEquals(10F * 64F, delta.getX(), 0F);
-        Assertions.assertEquals(20F * 64F, delta.getY(), 0F);
+        Assertions.assertEquals(10F, delta.getX(PosType.F26DOT6), 0F);
+        Assertions.assertEquals(20F, delta.getY(PosType.F26DOT6), 0F);
 
         matrix.free();
         delta.free();
@@ -375,7 +375,7 @@ public class FuncTests {
         final FTVector dstKerning = new FTVector();
         face.getKerning(left, right, FTKerningMode.DEFAULT, dstKerning);
 
-        Assertions.assertEquals(-2F, dstKerning.getX(), 0F);
+        Assertions.assertEquals(-2F, dstKerning.getX(PosType.F26DOT6), 0F);
 
         face.done();
         lib.done();
@@ -667,13 +667,13 @@ public class FuncTests {
 
     @Test
     public void ftVectorTransform() {
-        final FTVector vector = new FTVector().set(10F, 20F);
+        final FTVector vector = new FTVector().set(10F, 20F, PosType.F16DOT16);
         final FTMatrix matrix = new FTMatrix().setScale(2F);
 
         vector.transform(matrix);
 
-        Assertions.assertEquals(20F, vector.getX(), 0F);
-        Assertions.assertEquals(40F, vector.getY(), 0F);
+        Assertions.assertEquals(20F, vector.getX(PosType.F16DOT16), 0F);
+        Assertions.assertEquals(40F, vector.getY(PosType.F16DOT16), 0F);
 
         vector.free();
         matrix.free();
@@ -825,14 +825,14 @@ public class FuncTests {
         final FTOutline currentOutline = loader.getCurrent().getOutline();
         currentOutline.setNPoints(1);
         currentOutline.setNContours(1);
-        currentOutline.getPoints()[0].set(100F, 200F);
+        currentOutline.getPoints()[0].set(100F, 200F, PosType.INT);
 
         loader.add(); // copy current -> base
 
         final FTOutline baseOutline = loader.getBase().getOutline();
         Assertions.assertEquals(1, baseOutline.getNPoints());
-        Assertions.assertEquals(100F, baseOutline.getPoints()[0].getX(), 0F);
-        Assertions.assertEquals(200F, baseOutline.getPoints()[0].getY(), 0F);
+        Assertions.assertEquals(100F, baseOutline.getPoints()[0].getX(PosType.INT), 0F);
+        Assertions.assertEquals(200F, baseOutline.getPoints()[0].getY(PosType.INT), 0F);
 
         loader.done();
         lib.done();
@@ -902,7 +902,7 @@ public class FuncTests {
         final FTGlyph glyph = face.getGlyph().getGlyph();
 
         final FTMatrix matrix = new FTMatrix().setRotation(45F);
-        final FTVector delta = new FTVector().set(10F, 20F);
+        final FTVector delta = new FTVector().set(10F, 20F, PosType.F26DOT6);
 
         glyph.transform(matrix, delta);
 
@@ -924,10 +924,11 @@ public class FuncTests {
         final FTGlyph glyph = face.getGlyph().getGlyph();
 
         final FTBBox bbox = new FTBBox();
-        glyph.getCBox(FTGlyphBBoxMode.TRUNCATE, bbox);
+        final FTGlyphBBoxMode bboxMode = FTGlyphBBoxMode.TRUNCATE;
+        glyph.getCBox(bboxMode, bbox);
 
-        Assertions.assertTrue(bbox.getXMin() < bbox.getXMax());
-        Assertions.assertTrue(bbox.getYMin() < bbox.getYMax());
+        Assertions.assertTrue(bbox.getXMin(PosType.F26DOT6) < bbox.getXMax(bboxMode.posType));
+        Assertions.assertTrue(bbox.getYMin(PosType.F26DOT6) < bbox.getYMax(bboxMode.posType));
 
         bbox.free();
 
@@ -1001,10 +1002,10 @@ public class FuncTests {
         final FTStroker stroker = lib.newStroker();
         stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
-        stroker.beginSubPath(new FTVector().set(0F, 0F), true);
-        stroker.lineTo(new FTVector().set(100F, 0F));
-        stroker.lineTo(new FTVector().set(100F, 100F));
-        stroker.lineTo(new FTVector().set(0F, 100F));
+        stroker.beginSubPath(new FTVector().set(0F, 0F, PosType.INT), true);
+        stroker.lineTo(new FTVector().set(100F, 0F, PosType.INT));
+        stroker.lineTo(new FTVector().set(100F, 100F, PosType.INT));
+        stroker.lineTo(new FTVector().set(0F, 100F, PosType.INT));
         stroker.endSubPath();
 
         final long[] dstPoints = new long[1];
@@ -1078,10 +1079,10 @@ public class FuncTests {
         outline.setNContours(1);
         outline.setNPoints(4);
         outline.setPoints(
-            new FTVector().set(0F, 0F),
-            new FTVector().set(100F, 0F),
-            new FTVector().set(100F, 100F),
-            new FTVector().set(0F, 100F)
+            new FTVector().set(0F, 0F, PosType.INT),
+            new FTVector().set(100F, 0F, PosType.INT),
+            new FTVector().set(100F, 100F, PosType.INT),
+            new FTVector().set(0F, 100F, PosType.INT)
         );
         outline.setContours(3);
         outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
@@ -1100,20 +1101,20 @@ public class FuncTests {
         outline.setNContours(1);
         outline.setNPoints(4);
         outline.setPoints(
-            new FTVector().set(10F, 20F),
-            new FTVector().set(110F, 20F),
-            new FTVector().set(110F, 120F),
-            new FTVector().set(10F, 120F)
+            new FTVector().set(10F, 20F, PosType.INT),
+            new FTVector().set(110F, 20F, PosType.INT),
+            new FTVector().set(110F, 120F, PosType.INT),
+            new FTVector().set(10F, 120F, PosType.INT)
         );
         outline.setContours(3);
         outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
 
         final FTBBox cbox = outline.getCBox();
 
-        Assertions.assertEquals(10F, cbox.getXMin());
-        Assertions.assertEquals(20F, cbox.getYMin());
-        Assertions.assertEquals(110F, cbox.getXMax());
-        Assertions.assertEquals(120F, cbox.getYMax());
+        Assertions.assertEquals(10F, cbox.getXMin(PosType.INT));
+        Assertions.assertEquals(20F, cbox.getYMin(PosType.INT));
+        Assertions.assertEquals(110F, cbox.getXMax(PosType.INT));
+        Assertions.assertEquals(120F, cbox.getYMax(PosType.INT));
 
         outline.done(lib);
         lib.done();
@@ -1126,15 +1127,15 @@ public class FuncTests {
 
         outline.setNContours(1);
         outline.setNPoints(1);
-        outline.setPoints(new FTVector().set(10F, 20F));
+        outline.setPoints(new FTVector().set(10F, 20F, PosType.INT));
         outline.setContours(0);
         outline.setFlags(FTOutlineFlag.OWNER);
 
-        outline.translate(50F, 100F);
+        outline.translate(50F, 100F, PosType.INT);
 
         final FTVector[] points = outline.getPoints();
-        Assertions.assertEquals(60F, points[0].getX());
-        Assertions.assertEquals(120F, points[0].getY());
+        Assertions.assertEquals(60F, points[0].getX(PosType.INT));
+        Assertions.assertEquals(120F, points[0].getY(PosType.INT));
 
         outline.done(lib);
         lib.done();
@@ -1148,15 +1149,15 @@ public class FuncTests {
 
         source.setNContours(1);
         source.setNPoints(1);
-        source.setPoints(new FTVector().set(10F, 20F));
+        source.setPoints(new FTVector().set(10F, 20F, PosType.INT));
         source.setContours(0);
         source.setFlags(FTOutlineFlag.OWNER);
 
         source.copy(target);
 
         final FTVector[] targetPoints = target.getPoints();
-        Assertions.assertEquals(10F, targetPoints[0].getX());
-        Assertions.assertEquals(20F, targetPoints[0].getY());
+        Assertions.assertEquals(10F, targetPoints[0].getX(PosType.INT));
+        Assertions.assertEquals(20F, targetPoints[0].getY(PosType.INT));
 
         source.done(lib);
         target.done(lib);
@@ -1171,7 +1172,7 @@ public class FuncTests {
 
         outline.setNContours(1);
         outline.setNPoints(1);
-        outline.setPoints(new FTVector().set(10F, 0F));
+        outline.setPoints(new FTVector().set(10F, 0F, PosType.INT));
         outline.setContours(0);
         outline.setFlags(FTOutlineFlag.OWNER);
 
@@ -1183,8 +1184,8 @@ public class FuncTests {
         outline.transform(matrix);
 
         final FTVector[] points = outline.getPoints();
-        Assertions.assertEquals(0F, points[0].getX());
-        Assertions.assertEquals(-10F, points[0].getY());
+        Assertions.assertEquals(0F, points[0].getX(PosType.INT));
+        Assertions.assertEquals(-10F, points[0].getY(PosType.INT));
 
         outline.done(lib);
         matrix.free();
@@ -1206,7 +1207,7 @@ public class FuncTests {
         final FTOutline emboldened = lib.newOutline(outline.getNPoints(), outline.getNContours());
         outline.copy(emboldened);
 
-        emboldened.embolden(1F);
+        emboldened.embolden(1);
 
         Assertions.assertTrue(emboldened.getNPoints() > 0);
         Assertions.assertTrue(emboldened.getNContours() > 0);
@@ -1230,7 +1231,7 @@ public class FuncTests {
         final FTOutline emboldened = lib.newOutline(outline.getNPoints(), outline.getNContours());
         outline.copy(emboldened);
 
-        emboldened.embolden(1F, 2F);
+        emboldened.embolden(1, 2);
 
         Assertions.assertTrue(emboldened.getNPoints() > 0);
         Assertions.assertTrue(emboldened.getNContours() > 0);
@@ -1247,10 +1248,10 @@ public class FuncTests {
         outline.setNContours(1);
         outline.setNPoints(4);
         outline.setPoints(
-            new FTVector().set(0F, 0F),
-            new FTVector().set(100F, 0F),
-            new FTVector().set(100F, 100F),
-            new FTVector().set(0F, 100F)
+            new FTVector().set(0F, 0F, PosType.INT),
+            new FTVector().set(100F, 0F, PosType.INT),
+            new FTVector().set(100F, 100F, PosType.INT),
+            new FTVector().set(0F, 100F, PosType.INT)
         );
         outline.setContours(3);
         outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
@@ -1258,8 +1259,8 @@ public class FuncTests {
         outline.reverse();
 
         final FTVector[] reversed = outline.getPoints();
-        Assertions.assertEquals(0F, reversed[1].getX());
-        Assertions.assertEquals(100F, reversed[1].getY());
+        Assertions.assertEquals(0F, reversed[1].getX(PosType.INT));
+        Assertions.assertEquals(100F, reversed[1].getY(PosType.INT));
 
         outline.done(lib);
         lib.done();
@@ -1273,10 +1274,10 @@ public class FuncTests {
         outline.setNContours(1);
         outline.setNPoints(4);
         outline.setPoints(
-            new FTVector().set(10F, 10F),
-            new FTVector().set(90F, 10F),
-            new FTVector().set(90F, 90F),
-            new FTVector().set(10F, 90F)
+            new FTVector().set(10F, 10F, PosType.INT),
+            new FTVector().set(90F, 10F, PosType.INT),
+            new FTVector().set(90F, 90F, PosType.INT),
+            new FTVector().set(10F, 90F, PosType.INT)
         );
         outline.setContours(3);
         outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
@@ -1314,10 +1315,10 @@ public class FuncTests {
         outline.setNContours(1);
         outline.setNPoints(4);
         outline.setPoints(
-            new FTVector().set(0F, 0F),
-            new FTVector().set(100F, 0F),
-            new FTVector().set(100F, 100F),
-            new FTVector().set(0F, 100F)
+            new FTVector().set(0F, 0F, PosType.INT),
+            new FTVector().set(100F, 0F, PosType.INT),
+            new FTVector().set(100F, 100F, PosType.INT),
+            new FTVector().set(0F, 100F, PosType.INT)
         );
         outline.setContours(3);
         outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
@@ -1366,10 +1367,10 @@ public class FuncTests {
         outline.setNContours(1);
         outline.setNPoints(4);
         outline.setPoints(
-            new FTVector().set(0F, 0F),
-            new FTVector().set(100F, 0F),
-            new FTVector().set(100F, 100F),
-            new FTVector().set(0F, 100F)
+            new FTVector().set(0F, 0F, PosType.INT),
+            new FTVector().set(100F, 0F, PosType.INT),
+            new FTVector().set(100F, 100F, PosType.INT),
+            new FTVector().set(0F, 100F, PosType.INT)
         );
         outline.setContours(3);
         outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
@@ -1417,10 +1418,10 @@ public class FuncTests {
         outline.setNContours(1);
         outline.setNPoints(4);
         outline.setPoints(
-            new FTVector().set(0F, 0F),
-            new FTVector().set(100F, 0F),
-            new FTVector().set(100F, 100F),
-            new FTVector().set(0F, 100F)
+            new FTVector().set(0F, 0F, PosType.INT),
+            new FTVector().set(100F, 0F, PosType.INT),
+            new FTVector().set(100F, 100F, PosType.INT),
+            new FTVector().set(0F, 100F, PosType.INT)
         );
         outline.setContours(3);
         outline.setFlags(FTOutlineFlag.OWNER, FTOutlineFlag.EVEN_ODD_FILL, FTOutlineFlag.REVERSE_FILL, FTOutlineFlag.IGNORE_DROPOUTS);
@@ -1534,10 +1535,10 @@ public class FuncTests {
         final FTStroker stroker = lib.newStroker();
         stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
-        final FTVector start = new FTVector().set(0F, 0F);
+        final FTVector start = new FTVector().set(0F, 0F, PosType.INT);
 
         stroker.beginSubPath(start, false);
-        stroker.lineTo(new FTVector().set(100F, 0F));
+        stroker.lineTo(new FTVector().set(100F, 0F, PosType.INT));
         stroker.endSubPath();
 
         start.free();
@@ -1552,8 +1553,8 @@ public class FuncTests {
         final FTStroker stroker = lib.newStroker();
         stroker.set(10F, FTStrokerLineCap.ROUND, FTStrokerLineJoin.ROUND, 0F);
 
-        stroker.beginSubPath(new FTVector().set(0F, 0F), true);
-        stroker.lineTo(new FTVector().set(100F, 100F));
+        stroker.beginSubPath(new FTVector().set(0F, 0F, PosType.INT), true);
+        stroker.lineTo(new FTVector().set(100F, 100F, PosType.INT));
         stroker.endSubPath();
 
         stroker.done();
@@ -1566,8 +1567,8 @@ public class FuncTests {
         final FTStroker stroker = lib.newStroker();
 
         stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
-        stroker.beginSubPath(new FTVector().set(0F, 0F), false);
-        stroker.lineTo(new FTVector().set(100F, 0F));
+        stroker.beginSubPath(new FTVector().set(0F, 0F, PosType.INT), false);
+        stroker.lineTo(new FTVector().set(100F, 0F, PosType.INT));
         stroker.endSubPath();
 
         stroker.done();
@@ -1580,10 +1581,10 @@ public class FuncTests {
         final FTStroker stroker = lib.newStroker();
         stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
-        stroker.beginSubPath(new FTVector().set(0F, 0F), true);
+        stroker.beginSubPath(new FTVector().set(0F, 0F, PosType.INT), true);
 
-        final FTVector control = new FTVector().set(50F, 100F);
-        final FTVector end = new FTVector().set(100F, 0F);
+        final FTVector control = new FTVector().set(50F, 100F, PosType.INT);
+        final FTVector end = new FTVector().set(100F, 0F, PosType.INT);
 
         stroker.conicTo(control, end);
         stroker.endSubPath();
@@ -1601,11 +1602,11 @@ public class FuncTests {
         final FTStroker stroker = lib.newStroker();
         stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
-        stroker.beginSubPath(new FTVector().set(0F, 0F), true);
+        stroker.beginSubPath(new FTVector().set(0F, 0F, PosType.INT), true);
 
-        final FTVector control1 = new FTVector().set(30F, 100F);
-        final FTVector control2 = new FTVector().set(70F, 100F);
-        final FTVector end = new FTVector().set(100F, 0F);
+        final FTVector control1 = new FTVector().set(30F, 100F, PosType.INT);
+        final FTVector control2 = new FTVector().set(70F, 100F, PosType.INT);
+        final FTVector end = new FTVector().set(100F, 0F, PosType.INT);
 
         stroker.cubicTo(control1, control2, end);
         stroker.endSubPath();
@@ -1624,8 +1625,8 @@ public class FuncTests {
         final FTStroker stroker = lib.newStroker();
         stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
-        stroker.beginSubPath(new FTVector().set(0F, 0F), true);
-        stroker.lineTo(new FTVector().set(100F, 0F));
+        stroker.beginSubPath(new FTVector().set(0F, 0F, PosType.INT), true);
+        stroker.lineTo(new FTVector().set(100F, 0F, PosType.INT));
         stroker.endSubPath();
 
         final long[] dstNumPoints = new long[1];
@@ -1645,10 +1646,10 @@ public class FuncTests {
         final FTStroker stroker = lib.newStroker();
         stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
-        stroker.beginSubPath(new FTVector().set(0F, 0F), true);
-        stroker.lineTo(new FTVector().set(100F, 0F));
-        stroker.lineTo(new FTVector().set(100F, 100F));
-        stroker.lineTo(new FTVector().set(0F, 100F));
+        stroker.beginSubPath(new FTVector().set(0F, 0F, PosType.INT), true);
+        stroker.lineTo(new FTVector().set(100F, 0F, PosType.INT));
+        stroker.lineTo(new FTVector().set(100F, 100F, PosType.INT));
+        stroker.lineTo(new FTVector().set(0F, 100F, PosType.INT));
         stroker.endSubPath();
 
         final long[] dstPoints = new long[1];
@@ -1672,11 +1673,6 @@ public class FuncTests {
         Assertions.assertNotNull(points);
         Assertions.assertTrue(points.length > 0);
 
-        for(FTVector point: points) {
-            Assertions.assertFalse(Float.isNaN(point.getX()), "X should not be NaN");
-            Assertions.assertFalse(Float.isNaN(point.getY()), "Y should not be NaN");
-        }
-
         outline.done(lib);
         stroker.done();
         lib.done();
@@ -1688,8 +1684,8 @@ public class FuncTests {
         final FTStroker stroker = lib.newStroker();
         stroker.set(10, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0);
 
-        stroker.beginSubPath(new FTVector().set(0, 0), true);
-        stroker.lineTo(new FTVector().set(100, 0));
+        stroker.beginSubPath(new FTVector().set(0, 0, PosType.INT), true);
+        stroker.lineTo(new FTVector().set(100, 0, PosType.INT));
         stroker.endSubPath();
 
         final long[] dstNumPoints = new long[1];
@@ -1709,8 +1705,8 @@ public class FuncTests {
         final FTStroker stroker = lib.newStroker();
         stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
-        stroker.beginSubPath(new FTVector().set(0F, 0F), true);
-        stroker.lineTo(new FTVector().set(100F, 0F));
+        stroker.beginSubPath(new FTVector().set(0F, 0F, PosType.INT), true);
+        stroker.lineTo(new FTVector().set(100F, 0F, PosType.INT));
         stroker.endSubPath();
 
         final long[] dstNumPoints = new long[1];
@@ -1755,7 +1751,7 @@ public class FuncTests {
 
         final FTBBox bbox = new FTBBox();
         strokedGlyph.getCBox(FTGlyphBBoxMode.TRUNCATE, bbox);
-        Assertions.assertTrue(bbox.getXMax() > bbox.getXMin());
+        Assertions.assertTrue(bbox.getXMax(PosType.INT) > bbox.getXMin(PosType.INT));
 
         bbox.free();
         strokedGlyph.done();
@@ -1782,7 +1778,7 @@ public class FuncTests {
         final FTBBox originalBox = glyph.getCBox(FTGlyphBBoxMode.TRUNCATE);
         final FTBBox strokedBox = strokedGlyph.getCBox(FTGlyphBBoxMode.TRUNCATE);
 
-        Assertions.assertNotEquals(originalBox.getXMax(), strokedBox.getXMax());
+        Assertions.assertNotEquals(originalBox.getXMax(PosType.INT), strokedBox.getXMax(PosType.INT));
 
         originalBox.free();
         strokedBox.free();

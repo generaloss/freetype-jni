@@ -7,16 +7,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#undef generaloss_freetype_types_FTPos_BITS
-#define generaloss_freetype_types_FTPos_BITS 6L
-#undef generaloss_freetype_types_FTPos_UNIT
-#define generaloss_freetype_types_FTPos_UNIT 64L
-#undef generaloss_freetype_types_FTPos_HALF_UNIT
-#define generaloss_freetype_types_FTPos_HALF_UNIT 32L
-#undef generaloss_freetype_types_FTPos_MASK
-#define generaloss_freetype_types_FTPos_MASK 63L
-#undef generaloss_freetype_types_FTPos_UNIT_FRAC
-#define generaloss_freetype_types_FTPos_UNIT_FRAC 0.015625f
 /*
  * Class:     generaloss_freetype_types_FTPos
  * Method:    createPointer

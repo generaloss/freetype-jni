@@ -3,6 +3,7 @@ package generaloss.freetype.freetype;
 import generaloss.freetype.FTStruct;
 import generaloss.freetype.types.FTFixed;
 import generaloss.freetype.types.FTPos;
+import generaloss.freetype.types.PosType;
 
 public class FTSizeMetrics extends FTStruct { // struct done.
 
@@ -46,7 +47,7 @@ public class FTSizeMetrics extends FTStruct { // struct done.
 
     public float getAscender() {
         final int raw = getAscender(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos descender;
@@ -54,7 +55,7 @@ public class FTSizeMetrics extends FTStruct { // struct done.
 
     public float getDescender() {
         final int raw = getDescender(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos height;
@@ -62,7 +63,7 @@ public class FTSizeMetrics extends FTStruct { // struct done.
 
     public float getHeight() {
         final int raw = getHeight(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos max_advance;
@@ -70,7 +71,7 @@ public class FTSizeMetrics extends FTStruct { // struct done.
 
     public float getMaxAdvance() {
         final int raw = getMaxAdvance(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
 }

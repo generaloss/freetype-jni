@@ -26,10 +26,10 @@ public class TypesTests {
 
     @Test
     public void ftVector() {
-        final FTVector vec = new FTVector().set(65535.25F, 1323.125F);
+        final FTVector vec = new FTVector().set(65535.25F, 1323.125F, PosType.F26DOT6);
 
-        Assertions.assertEquals(65535.25F, vec.getX(), 0F);
-        Assertions.assertEquals(1323.125F, vec.getY(), 0F);
+        Assertions.assertEquals(65535.25F, vec.getX(PosType.F26DOT6), 0F);
+        Assertions.assertEquals(1323.125F, vec.getY(PosType.F26DOT6), 0F);
 
         vec.free();
     }
@@ -62,7 +62,7 @@ public class TypesTests {
 
     @Test
     public void ftPos() {
-        final FTPos pos = new FTPos().set(65535.25F);
+        final FTPos pos = new FTPos(PosType.F26DOT6).set(65535.25F);
 
         Assertions.assertEquals(65535.25F, pos.getFloat(), 0F);
 

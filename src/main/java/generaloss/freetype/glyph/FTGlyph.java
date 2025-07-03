@@ -51,6 +51,7 @@ public class FTGlyph extends FTStruct { // struct done.
         return FTStructCache.getOrCreate(FTGlyph.class, dstTargetPointer[0], FTGlyph::new);
     }
 
+    /** @param delta format is 26.6 (PosType.F26DOT6) */
     public void transform(FTMatrix matrix, FTVector delta) {
         final FTError error = FreeType.ftGlyphTransform(this, matrix, delta);
         error.checkError();

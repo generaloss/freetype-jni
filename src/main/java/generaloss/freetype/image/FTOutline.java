@@ -168,8 +168,8 @@ public class FTOutline extends FTStruct { // struct done.
         return dstCbox;
     }
 
-    public void translate(float xOffset, float yOffset) {
-        FreeType.ftOutlineTranslate(this, xOffset, yOffset);
+    public void translate(float xOffset, float yOffset, PosType posType) {
+        FreeType.ftOutlineTranslate(this, xOffset, yOffset, posType);
     }
 
     public void copy(FTOutline target) {
@@ -181,12 +181,12 @@ public class FTOutline extends FTStruct { // struct done.
         FreeType.ftOutlineTransform(this, matrix);
     }
 
-    public void embolden(float strength) {
+    public void embolden(int strength) {
         final FTError error = FreeType.ftOutlineEmbolden(this, strength);
         error.checkError();
     }
 
-    public void embolden(float xStrength, float yStrength) {
+    public void embolden(int xStrength, int yStrength) {
         final FTError error = FreeType.ftOutlineEmboldenXY(this, xStrength, yStrength);
         error.checkError();
     }

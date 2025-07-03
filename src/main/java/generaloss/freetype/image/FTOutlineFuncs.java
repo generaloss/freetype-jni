@@ -1,11 +1,8 @@
 package generaloss.freetype.image;
 
 import generaloss.freetype.FTStruct;
-import generaloss.freetype.FTStructCache;
 import generaloss.freetype.FreeType;
-import generaloss.freetype.types.FTError;
-import generaloss.freetype.types.FTPos;
-import generaloss.freetype.types.FTVector;
+import generaloss.freetype.types.PosType;
 
 public class FTOutlineFuncs extends FTStruct {
 
@@ -75,15 +72,15 @@ public class FTOutlineFuncs extends FTStruct {
     // FT_Pos delta;
     private static native int getDelta(long pointer);
 
-    public float getDelta() {
+    public float getDelta(PosType posType) {
         final int raw = getDelta(super.pointer);
-        return FTPos.toFloat(raw);
+        return posType.toFloat(raw);
     }
 
     private static native void setDelta(long pointer, int delta);
 
-    public void setDelta(float delta) {
-        final int raw = FTPos.of(delta);
+    public void setDelta(float delta, PosType posType) {
+        final int raw = posType.toRaw(delta);
         setDelta(this.pointer, raw);
     }
 

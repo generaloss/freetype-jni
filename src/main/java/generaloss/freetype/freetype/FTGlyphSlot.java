@@ -141,17 +141,17 @@ public class FTGlyphSlot extends FTStruct { // struct done.
     // FT_Pos lsb_delta;
     private static native int getLsbDelta(long pointer);
 
-    public float getLsbDelta() {
+    public float getLsbDelta(PosType posType) {
         final int raw = getLsbDelta(super.pointer);
-        return FTPos.toFloat(raw);
+        return posType.toFloat(raw);
     }
 
     // FT_Pos rsb_delta;
     private static native int getRsbDelta(long pointer);
 
-    public float getRsbDelta() {
+    public float getRsbDelta(PosType posType) {
         final int raw = getRsbDelta(super.pointer);
-        return FTPos.toFloat(raw);
+        return posType.toFloat(raw);
     }
 
 

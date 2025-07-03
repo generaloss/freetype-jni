@@ -1,7 +1,7 @@
 package generaloss.freetype.freetype;
 
-import generaloss.freetype.types.FTPos;
 import generaloss.freetype.FTStruct;
+import generaloss.freetype.types.PosType;
 
 public class FTBitmapSize extends FTStruct { // struct done.
 
@@ -29,7 +29,7 @@ public class FTBitmapSize extends FTStruct { // struct done.
 
     public float getSize() {
         final int raw = getSize(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos x_ppem;
@@ -37,7 +37,7 @@ public class FTBitmapSize extends FTStruct { // struct done.
 
     public float getXPpem() {
         final int raw = getXPpem(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
     // FT_Pos y_ppem;
@@ -45,7 +45,7 @@ public class FTBitmapSize extends FTStruct { // struct done.
 
     public float getYPpem() {
         final int raw = getYPpem(super.pointer);
-        return FTPos.toFloat(raw);
+        return PosType.F26DOT6.toFloat(raw);
     }
 
 }

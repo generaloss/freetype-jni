@@ -7,16 +7,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#undef generaloss_freetype_types_FTFixed_BITS
-#define generaloss_freetype_types_FTFixed_BITS 16L
-#undef generaloss_freetype_types_FTFixed_UNIT
-#define generaloss_freetype_types_FTFixed_UNIT 65536L
-#undef generaloss_freetype_types_FTFixed_HALF_UNIT
-#define generaloss_freetype_types_FTFixed_HALF_UNIT 32768L
-#undef generaloss_freetype_types_FTFixed_MASK
-#define generaloss_freetype_types_FTFixed_MASK 65535L
-#undef generaloss_freetype_types_FTFixed_UNIT_FRAC
-#define generaloss_freetype_types_FTFixed_UNIT_FRAC 1.5258789E-5f
 /*
  * Class:     generaloss_freetype_types_FTFixed
  * Method:    createPointer
