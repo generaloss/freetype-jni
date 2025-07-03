@@ -6,7 +6,7 @@ plugins {
 
 var varGroupID = "io.github.generaloss"
 var varArtifactID = "freetype-jni-natives-android"
-var varVersion = "25.7.1-SNAPSHOT-1"
+var varVersion = "25.7.1-SNAPSHOT-2"
 
 var varDescription = "FreeType Library JNI Android native libraries"
 var stagingDir = layout.buildDirectory.dir("staging-deploy").get()

@@ -865,7 +865,7 @@ public class FreeType {
     }
 
     // void FT_Stroker_Set(FT_Stroker stroker, FT_Fixed radius, FT_Stroker_LineCap line_cap, FT_Stroker_LineJoin line_join, FT_Fixed miter_limit)
-    private static native void FT_Stroker_Set(long stroker, long radius, int line_cap, int line_join, long miter_limit);
+    private static native void FT_Stroker_Set(long stroker, int radius, int line_cap, int line_join, int miter_limit);
 
     public static void ftStrokerSet(FTStroker stroker, float radius, FTStrokerLineCap lineCap, FTStrokerLineJoin lineJoin, float miterLimit) {
         if(lineCap == null)

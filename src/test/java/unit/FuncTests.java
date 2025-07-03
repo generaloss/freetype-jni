@@ -1482,7 +1482,7 @@ public class FuncTests {
         face.setPixelSizes(0L, 16L);
 
         final FTStroker stroker = lib.newStroker();
-        stroker.set(1F / 64F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
+        stroker.set(1F / 2048, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
         face.loadChar('C');
         final FTGlyph glyph = face.getGlyph().getGlyph();
@@ -1491,6 +1491,8 @@ public class FuncTests {
 
         final FTBitmapGlyph bitmapGlyph = strokedGlyph.toBitmap(FTRenderMode.NORMAL, null, true);
         final FTBitmap bitmap = bitmapGlyph.getBitmap();
+
+        System.out.println(bitmap.getWidth() + " x " + bitmap.getRows());
 
         stroker.done();
 

@@ -634,10 +634,10 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1New
 /*
  * Class:     generaloss_freetype_FreeType
  * Method:    FT_Stroker_Set
- * Signature: (JJIIJ)V
+ * Signature: (JIIII)V
  */
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Set
-  (JNIEnv *, jclass, jlong, jlong, jint, jint, jlong);
+  (JNIEnv *, jclass, jlong, jint, jint, jint, jint);
 
 /*
  * Class:     generaloss_freetype_FreeType

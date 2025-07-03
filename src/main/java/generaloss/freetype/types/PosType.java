@@ -2,9 +2,9 @@ package generaloss.freetype.types;
 
 public enum PosType {
 
-    INT      (FloatConvertor.get(0)),
-    F26DOT6  (FloatConvertor.get(6)),
-    F16DOT16 (FloatConvertor.get(16));
+    INT      (FloatConvertor.get(0)),  // 32.0
+    F26DOT6  (FloatConvertor.get(6)),  // 26.6
+    F16DOT16 (FloatConvertor.get(16)); // 16.16
 
     private final FloatConvertor convertor;
 
