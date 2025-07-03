@@ -25,12 +25,6 @@ public class FTStructCache {
                 throw new RuntimeException("Double FTStruct registration");
 
             typeStructMap.put(type, struct);
-
-            System.out.println("Pointer " + pointer + " pool " + (typeStructMap.size() == 1 ? "created" : "increased") + " {");
-            for(FTStruct value: typeStructMap.values())
-                System.out.println("  " + value + (value == struct ? " (new)" : ""));
-            System.out.println("}");
-
             return typeStructMap;
         });
     }
@@ -44,15 +38,6 @@ public class FTStructCache {
 
         if(typeStructMap.isEmpty())
             STRUCT_MAP.remove(pointer, typeStructMap);
-
-        if(typeStructMap.isEmpty()) {
-            System.out.println("Pointer " + pointer + " pool removed { }");
-        }else{
-            System.out.println("Pointer " + pointer + " pool decreased {");
-            for(FTStruct value: typeStructMap.values())
-                System.out.println("  " + value);
-            System.out.println("}");
-        }
     }
 
     protected static void unregister(FTStruct struct) {
@@ -63,7 +48,7 @@ public class FTStructCache {
         unregister(struct.getPointer(), struct.getClass());
     }
 
-    protected static void clear() {
+    public static void clear() {
         STRUCT_MAP.clear();
     }
 

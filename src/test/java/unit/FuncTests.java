@@ -1477,11 +1477,23 @@ public class FuncTests {
     @Test
     public void ftStrokerSet() {
         final FTLibrary lib = new FTLibrary();
-        final FTStroker stroker = lib.newStroker();
+        final FTFace face = lib.newMemoryFace(Resource.internal("/droidsans.ttf").readByteBuffer(), 0);
+        face.setPixelSizes(0L, 16L);
 
-        stroker.set(64F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
+        final FTStroker stroker = lib.newStroker();
+        stroker.set(1F / 64F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
+
+        face.loadChar('C');
+        final FTGlyph glyph = face.getGlyph().getGlyph();
+
+        final FTGlyph strokedGlyph = glyph.strokeBorder(stroker, false, true);
+
+        final FTBitmapGlyph bitmapGlyph = strokedGlyph.toBitmap(FTRenderMode.NORMAL, null, true);
+        final FTBitmap bitmap = bitmapGlyph.getBitmap();
 
         stroker.done();
+
+        face.done();
         lib.done();
     }
 
