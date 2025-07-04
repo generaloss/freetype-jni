@@ -1,5 +1,5 @@
 
-struct FTGlyphMetrics { [x]
+struct FT_Glyph_Metrics { [x]
     FT_Pos width;        [x] FTPos getWidth()
     FT_Pos height;       [x] FTPos getHeight()
     FT_Pos horiBearingX; [x] FTPos getHoriBearingX()
@@ -10,7 +10,7 @@ struct FTGlyphMetrics { [x]
     FT_Pos vertAdvance;  [x] FTPos getVertAdvance()
 }
 
-struct FTBitmapSize { [x]
+struct FT_Bitmap_Size { [x]
     FT_Short height; [x] int getWidth()
     FT_Short width;  [x] int getHeight()
     FT_Pos   size;   [x] FTPos getSize()
@@ -18,11 +18,11 @@ struct FTBitmapSize { [x]
     FT_Pos   y_ppem; [x] FTPos getYppem()
 }
 
-struct FTLibrary { [x]
+struct FT_Library { [x]
     FT_Memory memory; [x]
 }
 
-enum FTEncoding { [x]
+enum FT_Encoding { [x]
     NONE
     MS_SYMBOL
     UNICODE
@@ -45,14 +45,14 @@ enum FTEncoding { [x]
     APPLE_ROMAN
 }
 
-struct FTCharMap { [x]
+struct FT_CharMap { [x]
     FT_Face     face;        [x] FTFace getFace()
     FT_Encoding encoding;    [x] FTEncoding getEncoding()
     FT_UShort   platform_id; [x] int getPlatformID()
     FT_UShort   encoding_id; [x] int getEncodingID()
 }
 
-struct FTFace { [x]
+struct FT_Face { [x]
     FT_Long         num_faces;           [x] long getNumFaces()
     FT_Long         face_index;          [x] long getFaceIndex()
     FT_Long         face_flags;          [x] int getFaceFlags()
@@ -78,7 +78,7 @@ struct FTFace { [x]
     FT_CharMap      charmap;             [x] FTCharMap getCharmap()
 }
 
-flags FTFaceFlag { [x]
+flags FT_Face_Flag { [x]
     SCALABLE
     FIXED_SIZES
     FIXED_WIDTH
@@ -100,12 +100,12 @@ flags FTFaceFlag { [x]
     SBIX_OVERLAY
 }
 
-flags FTStyleFlag { [x]
+flags FT_Style_Flag { [x]
     ITALIC
     BOLD
 }
 
-struct FTSizeMetrics { [x]
+struct FT_Size_Metrics { [x]
     FT_UShort x_ppem;      [x] int getXppem()
     FT_UShort y_ppem;      [x] int getYppem()
     FT_Fixed  x_scale;     [x] FTFixed getXScale()
@@ -116,12 +116,12 @@ struct FTSizeMetrics { [x]
     FT_Pos    max_advance; [x] FTPos getMaxAdvance()
 }
 
-struct FTSize { [x]
+struct FT_Size { [x]
     FT_Face          face;     [x] FTFace getFace()
     FT_Size_Metrics  metrics;  [x] FTSizeMetrics getMetrics()
 }
 
-struct FTGlyphSlot { [x]
+struct FT_GlyphSlot { [x]
     FT_Library       library;           [x] FTLibrary getLibrary()
     FT_Face          face;              [x] FTFace getFace()
     FT_GlyphSlot     next;              [x] FTGlyphSlot getNext()
@@ -141,7 +141,7 @@ struct FTGlyphSlot { [x]
     FT_Pos           rsb_delta;         [x] FTPos getRsbDelta()
 }
 
-flags FTOpen { [x]
+flags FT_Open { [x]
     MEMORY   0x1
     STREAM   0x2
     PATHNAME 0x4
@@ -149,12 +149,12 @@ flags FTOpen { [x]
     PARAMS   0x10
 }
 
-struct FTParameter { [x]
+struct FT_Parameter { [x]
     FT_ULong   tag;  [x] long getTag()
     FT_Pointer data; [x] FTPointer getData()
 }
 
-sturct FTOpenArgs { [ ]
+sturct FT_Open_Args { [ ]
     FT_UInt        flags;       [x] long getFlags()
     const FT_Byte* memory_base; [x] byte getMemoryBase()
     FT_Long        memory_size; [x] long getMemorySize()
@@ -165,7 +165,7 @@ sturct FTOpenArgs { [ ]
     FT_Parameter*  params;      [x] FTParameter[] getParams()
 }
 
-enum FTSizeRequestType { [x]
+enum FT_Size_Request_Type { [x]
     NOMINAL
     REAL_DIM
     BBOX
@@ -174,7 +174,7 @@ enum FTSizeRequestType { [x]
     MAX
 }
 
-struct FTSizeRequest { [x]
+struct FT_Size_Request { [x]
     FT_Size_Request_Type type;           [x] FTSizeRequestType getType()
     FT_Long              width;          [x] long getWidth()
     FT_Long              height;         [x] long getHeight()
@@ -182,7 +182,7 @@ struct FTSizeRequest { [x]
     FT_UInt              vertResolution; [x] long getVertResolution()
 }
 
-enum FTLoad { [x]
+enum FT_Load { [x]
     DEFAULT
     NO_SCALE
     NO_HINTING
@@ -207,7 +207,7 @@ enum FTLoad { [x]
     SVG_ONLY
 }
 
-enum FTLoadTarget { [x]
+enum FT_Load_Target { [x]
     NORMAL
     LIGHT
     MONO
@@ -215,7 +215,7 @@ enum FTLoadTarget { [x]
     LCD_V
 }
 
-enum FTRenderMode { [x]
+enum FT_Render_Mode { [x]
     NORMAL
     LIGHT
     MONO
@@ -225,13 +225,13 @@ enum FTRenderMode { [x]
     MAX
 }
 
-enum FTKerningMode { [x]
-    DEFAULT
-    UNFITTED
-    UNSCALED
+enum FT_Kerning_Mode { [x]
+    DEFAULT  0
+    UNFITTED 1
+    UNSCALED 2
 }
 
-flags FTSubglyphFlag { [x]
+flags FT_Subglyph_Flag { [x]
     ARGS_ARE_WORDS     1
     ARGS_ARE_XY_VALUES 2
     ROUND_XY_TO_GRID   4
@@ -241,7 +241,7 @@ flags FTSubglyphFlag { [x]
     USE_MY_METRICS     512
 }
 
-enum FTFSType { [x]
+enum FT_FSType { [x]
     INSTALLABLE_EMBEDDING        0
     RESTRICTED_LICENSE_EMBEDDING 2
     PREVIEW_AND_PRINT_EMBEDDING  4

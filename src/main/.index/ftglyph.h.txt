@@ -1,23 +1,23 @@
 
-struct FTGlyph { [x]
+struct FT_Glyph { [x]
     FT_Library            library; [x] FTLibrary getLibrary()
     FT_Glyph_Format       format;  [x] FTGlyphFormat getFormat()
     FT_Vector             advance; [x] FTVector getAdvance()
 }
 
-struct FTBitmapGlyph { [x]
+struct FT_BitmapGlyph { [x]
     FT_GlyphRec root;   [x] FTGlyph getRoot()
     FT_Int      left;   [x] int getLeft()
     FT_Int      top;    [x] int getTop()
     FT_Bitmap   bitmap; [x] FTBitmap getBitmap()
 }
 
-struct FTOutlineGlyph { [ ]
+struct FT_OutlineGlyph { [ ]
     FT_GlyphRec root;    [ ] FTGlyph getRoot()
     FT_Outline  outline; [ ] FTOutline getOutline()
 }
 
-struct FTSvgGlyph { [ ]
+struct FT_SvgGlyph { [ ]
     FT_GlyphRec     root;                [ ] FTGlyph getRoot()
     FT_Byte*        svg_document;        [ ] byte[] getSvgDocument()
     FT_ULong        svg_document_length; [ ] long getSvgDocumentLength()
@@ -30,7 +30,7 @@ struct FTSvgGlyph { [ ]
     FT_Vector       delta;               [ ] FTVector getDelta()
 }
 
-enum FTGlyphBBoxMode { [x]
+enum FT_Glyph_BBox_Mode { [x]
     UNSCALED  = 0
     SUBPIXELS = 0
     GRIDFIT   = 1
