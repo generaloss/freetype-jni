@@ -41,14 +41,14 @@ public class FloatConvertor {
     }
 
 
-    private static final Map<Integer, FloatConvertor> CONVERTOTS_BY_BITS = new ConcurrentHashMap<>();
+    private static final Map<Integer, FloatConvertor> CONVERTORS_BY_BITS = new ConcurrentHashMap<>();
 
     public static FloatConvertor get(int bits) {
-        if(CONVERTOTS_BY_BITS.containsKey(bits))
-            return CONVERTOTS_BY_BITS.get(bits);
+        if(CONVERTORS_BY_BITS.containsKey(bits))
+            return CONVERTORS_BY_BITS.get(bits);
 
         final FloatConvertor convertor = new FloatConvertor(bits);
-        CONVERTOTS_BY_BITS.put(bits, convertor);
+        CONVERTORS_BY_BITS.put(bits, convertor);
         return convertor;
     }
 

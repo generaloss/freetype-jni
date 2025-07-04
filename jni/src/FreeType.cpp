@@ -1729,7 +1729,7 @@ JNIEXPORT jint JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1New
 // void FT_Stroker_Set(FT_Stroker stroker, FT_Fixed radius, FT_Stroker_LineCap line_cap, FT_Stroker_LineJoin line_join, FT_Fixed miter_limit)
 // void FT_Stroker_Set(long stroker, int radius, int line_cap, int line_join, int miter_limit);
 JNIEXPORT void JNICALL Java_generaloss_freetype_FreeType_FT_1Stroker_1Set
-  (JNIEnv* env, jclass, jlong strokerPtrRaw, jlong radiusRaw, jint lineCapRaw, jint lineJoinRaw, jlong miterLimitRaw) {
+  (JNIEnv* env, jclass, jlong strokerPtrRaw, jint radiusRaw, jint lineCapRaw, jint lineJoinRaw, jint miterLimitRaw) {
 
     const FT_Stroker stroker = reinterpret_cast<FT_Stroker>(strokerPtrRaw);
     if(!stroker) {
