@@ -872,7 +872,8 @@ public class FreeType {
             throw new NullPointerException("LineCap is null");
         if(lineJoin == null)
             throw new NullPointerException("LineJoin is null");
-        FT_Stroker_Set(FTStruct.getPointer(stroker), FTFixed.toRaw(radius), lineCap.value, lineJoin.value, FTFixed.toRaw(miterLimit));
+        // radius parameter (& miterLimit) expected as 26.6
+        FT_Stroker_Set(FTStruct.getPointer(stroker), FTF26Dot6.toRaw(radius), lineCap.value, lineJoin.value, FTF26Dot6.toRaw(miterLimit));
     }
 
     // void FT_Stroker_Rewind(FT_Stroker stroker)

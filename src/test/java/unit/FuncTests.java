@@ -1482,7 +1482,7 @@ public class FuncTests {
         face.setPixelSizes(0L, 16L);
 
         final FTStroker stroker = lib.newStroker();
-        stroker.set(1F / 2048, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
+        stroker.set(1F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
         face.loadChar('C');
         final FTGlyph glyph = face.getGlyph().getGlyph();
@@ -1491,8 +1491,6 @@ public class FuncTests {
 
         final FTBitmapGlyph bitmapGlyph = strokedGlyph.toBitmap(FTRenderMode.NORMAL, null, true);
         final FTBitmap bitmap = bitmapGlyph.getBitmap();
-
-        System.out.println(bitmap.getWidth() + " x " + bitmap.getRows());
 
         stroker.done();
 
@@ -1648,10 +1646,10 @@ public class FuncTests {
         final FTStroker stroker = lib.newStroker();
         stroker.set(10F, FTStrokerLineCap.BUTT, FTStrokerLineJoin.ROUND, 0F);
 
-        stroker.beginSubPath(new FTVector().set(0F, 0F, PosType.INT), true);
-        stroker.lineTo(new FTVector().set(100F, 0F, PosType.INT));
-        stroker.lineTo(new FTVector().set(100F, 100F, PosType.INT));
-        stroker.lineTo(new FTVector().set(0F, 100F, PosType.INT));
+        stroker.beginSubPath(new FTVector().set(10F, 10F, PosType.F26DOT6), true);
+        stroker.lineTo(new FTVector().set(90F, 10F, PosType.F26DOT6));
+        stroker.lineTo(new FTVector().set(90F, 90F, PosType.F26DOT6));
+        stroker.lineTo(new FTVector().set(10F, 90F, PosType.F26DOT6));
         stroker.endSubPath();
 
         final long[] dstPoints = new long[1];
@@ -1672,7 +1670,6 @@ public class FuncTests {
         Assertions.assertTrue(outline.getNContours() > 0, "Outline should have contours");
 
         final FTVector[] points = outline.getPoints();
-        Assertions.assertNotNull(points);
         Assertions.assertTrue(points.length > 0);
 
         outline.done(lib);
@@ -1749,7 +1746,6 @@ public class FuncTests {
         final FTGlyph glyph = face.getGlyph().getGlyph();
 
         final FTGlyph strokedGlyph = glyph.stroke(stroker, true);
-        Assertions.assertNotNull(strokedGlyph);
 
         final FTBBox bbox = new FTBBox();
         strokedGlyph.getCBox(FTGlyphBBoxMode.TRUNCATE, bbox);
@@ -1775,7 +1771,6 @@ public class FuncTests {
         final FTGlyph glyph = face.getGlyph().getGlyph();
 
         final FTGlyph strokedGlyph = glyph.strokeBorder(stroker, true, false);
-        Assertions.assertNotNull(strokedGlyph);
 
         final FTBBox originalBox = glyph.getCBox(FTGlyphBBoxMode.TRUNCATE);
         final FTBBox strokedBox = strokedGlyph.getCBox(FTGlyphBBoxMode.TRUNCATE);
