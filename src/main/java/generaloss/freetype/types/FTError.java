@@ -136,6 +136,7 @@ public enum FTError {
 
     FTError(int code, String description) {
         this.code = code;
+        System.out.println(code);
         this.description = description;
     }
 
@@ -149,7 +150,7 @@ public enum FTError {
 
     public void checkError() {
         if(this.hasError())
-            throw new FTException("FTError: " + this.toString());
+            throw new FTException(this.toString());
     }
 
     public String getDescription() {
@@ -158,7 +159,7 @@ public enum FTError {
 
     @Override
     public String toString() {
-        return description + " (" + code + ")";
+        return "FTErro: " + description + " (code: " + code + ")";
     }
 
 

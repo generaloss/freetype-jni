@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ANDROID_NDK=/home/user/Dev/sdk/android/ndk/29.0.13113456
+ANDROID_NDK=/opt/android-ndk # /home/user/Dev/sdk/android/ndk/29.0.13599879 #
 ANDROID_API_LEVEL=21
 ANDROID_ABIS=("armeabi-v7a" "arm64-v8a" "x86" "x86_64")
 
@@ -38,6 +38,7 @@ cd build
 mkdir -p android
 cd android/
 
-for abi in "${ANDROID_ABIS[@]}"; do
+for i in "${!ANDROID_ABIS[@]}"; do
+    abi="${ANDROID_ABIS[$i]}"
     build_android "$abi"
 done
