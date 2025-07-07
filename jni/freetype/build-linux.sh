@@ -22,6 +22,7 @@ build_linux() {
         -DFT_DISABLE_PNG=FALSE \
         -DFT_DISABLE_HARFBUZZ=FALSE \
         -DFT_DISABLE_BROTLI=TRUE
+
     make -j$(nproc)
 
     cd ../

@@ -18,10 +18,6 @@ build_android() {
         -DANDROID_NDK="${ANDROID_NDK}" \
         -DCMAKE_TOOLCHAIN_FILE="${ANDROID_NDK}/build/cmake/android.toolchain.cmake" \
         -DANDROID_ABI="${abi}" \
-        -DPNG_PNG_INCLUDE_DIR="${DIR}/../libs/libpng/include" \
-        -DPNG_LIBRARY="${DIR}/../libs/libpng/lib/android/${abi}/libpng.a" \
-        -DCMAKE_C_FLAGS="-I${DIR}/../libs/harfbuzz/include/harfbuzz" \
-        -DCMAKE_EXE_LINKER_FLAGS="${DIR}/../libs/harfbuzz/lib/android/${abi}/libharfbuzz.a" \
         -DANDROID_NATIVE_API_LEVEL="${ANDROID_API_LEVEL}" \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_BUILD_TYPE=Release \
@@ -29,7 +25,13 @@ build_android() {
         -DFT_DISABLE_BZIP2=TRUE \
         -DFT_DISABLE_PNG=FALSE \
         -DFT_DISABLE_HARFBUZZ=FALSE \
-        -DFT_DISABLE_BROTLI=TRUE
+        -DFT_DISABLE_BROTLI=TRUE \
+        -DZLIB_INCLUDE_DIR="${DIR}/../libs/zlib/include" \
+        -DZLIB_LIBRARY="${DIR}/../libs/zlib/lib/android/${abi}/libz.a" \
+        -DHarfBuzz_INCLUDE_DIR="${DIR}/../libs/harfbuzz/include/harfbuzz" \
+        -DHarfBuzz_LIBRARY="${DIR}/../libs/harfbuzz/lib/android/${abi}/libharfbuzz.a" \
+        -DPNG_PNG_INCLUDE_DIR="${DIR}/../libs/libpng/include" \
+        -DPNG_LIBRARY="${DIR}/../libs/libpng/lib/android/${abi}/libpng.a"
 
     make -j$(nproc)
 

@@ -20,10 +20,17 @@ set_target_properties(freetype PROPERTIES
 if(TARGET_PLATFORM STREQUAL "android")
     message(STATUS "Configuring for Android")
 
+    # z
+    add_library(z STATIC IMPORTED GLOBAL)
+    set_target_properties(z PROPERTIES
+        IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/libs/zlib/lib/android/${ANDROID_ABI}/libz.so"
+        INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/libs/zlib/include"
+    )
+
     # png
     add_library(libpng STATIC IMPORTED GLOBAL)
     set_target_properties(libpng PROPERTIES
-        IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/libs/libpng/lib/android/${ANDROID_ABI}/libpng.a"
+        IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/libs/libpng/lib/android/${ANDROID_ABI}/libpng.so"
         INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/libs/libpng/include"
     )
 
@@ -37,11 +44,9 @@ if(TARGET_PLATFORM STREQUAL "android")
     # link
     target_link_libraries(freetype_jni PRIVATE
         freetype
-        z
-        libpng
         harfbuzz
-        android
-        log
+        libpng
+        z
     )
     set_target_properties(freetype_jni PROPERTIES
         SUFFIX ".so"
@@ -78,7 +83,6 @@ elseif(TARGET_PLATFORM STREQUAL "windows")
         libpng
         z
     )
-
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
     set_target_properties(freetype_jni PROPERTIES
         SUFFIX ".dll"
@@ -93,6 +97,9 @@ else()
     # link
     target_link_libraries(freetype_jni PRIVATE
         freetype
+        # harfbuzz
+        # libpng
+        # z
     )
     target_compile_options(freetype_jni PRIVATE -fPIC)
     set_target_properties(freetype_jni PROPERTIES
