@@ -79,11 +79,14 @@ public class FreeType {
 
     private static String detectArch() {
         final String arch = System.getProperty("os.arch").toLowerCase();
-        if(arch.contains("amd64") || arch.contains("x86_64")) return "x86_64";
-        if(arch.contains("86")) return "i686";
-        if(arch.contains("aarch64") || arch.contains("arm64")) return "aarch64";
-        if(arch.contains("riscv")) return "riscv64";
-        if(arch.contains("x86")) return "x86";
+        if(arch.contains("amd64") || arch.contains("x86_64"))
+            return "x86_64";
+        if(arch.contains("86"))
+            return "x86";
+        if(arch.contains("aarch64") || arch.contains("arm64"))
+            return "aarch64";
+        if(arch.contains("riscv"))
+            return "riscv64";
         throw new UnsupportedOperationException("Unsupported architecture: " + arch);
     }
 

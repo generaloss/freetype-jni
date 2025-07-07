@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ARCHES=("x86_64" "i686") # "aarch64"
+ARCHES=("x86_64" "x86") # "aarch64"
 
 build_windows() {
     local arch=$1

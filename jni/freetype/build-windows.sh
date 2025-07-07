@@ -1,6 +1,8 @@
 #!/bin/bash
 
-ARCHES=("x86_64" "i686") # "aarch64"
+ARCHES=("x86_64" "x86") # "aarch64"
+
+DIR="$(pwd)"
 
 build_windows() {
     local arch=$1
@@ -12,9 +14,18 @@ build_windows() {
 
     cmake ../../../ \
         -DTARGET_PLATFORM=windows \
-        -DCMAKE_TOOLCHAIN_FILE="../../../../toolchains/windows-${arch}.cmake" \
+        -DCMAKE_TOOLCHAIN_FILE="${DIR}/../toolchains/windows-${arch}.cmake" \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-        -DCMAKE_BUILD_TYPE=Release
+        -DCMAKE_BUILD_TYPE=Release \
+        -DPNG_PNG_INCLUDE_DIR="${DIR}/../libs/libpng/include" \
+        -DPNG_LIBRARY="${DIR}/../libs/libpng/lib/windows/${arch}/libpng.a" \
+        -DCMAKE_C_FLAGS="-I${DIR}/../libs/harfbuzz/include/harfbuzz" \
+        -DCMAKE_EXE_LINKER_FLAGS="${DIR}/../libs/harfbuzz/lib/windows/${arch}/libharfbuzz.a" \
+        -DFT_DISABLE_ZLIB=FALSE \
+        -DFT_DISABLE_BZIP2=TRUE \
+        -DFT_DISABLE_PNG=FALSE \
+        -DFT_DISABLE_HARFBUZZ=FALSE \
+        -DFT_DISABLE_BROTLI=TRUE
     make -j$(nproc)
 
     cd ../
