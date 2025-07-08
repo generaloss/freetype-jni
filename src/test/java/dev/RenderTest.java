@@ -12,23 +12,26 @@ import java.nio.ByteBuffer;
 public class RenderTest {
 
     public static void main(String[] args) {
-        for(int i = 0; i < 100000; i++) {
+        for(int i = 0; i <= 100000; i++) {
             System.out.println("--------- ITERATE " + i + " ---------");
             test();
         }
     }
 
-    private static final String CHARS = "\0ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890\"!`?'.,;:()[]{}<>|/@\\^$-%+=#_&~*�?�?�?�?�? ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿À�?ÂÃÄÅÆÇÈÉÊËÌ�?Î�?�?ÑÒÓÔÕÖ×ØÙÚÛÜ�?Þßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ";
+    private static final String CHARS = "abcdefghijklmnopqrstuvwxyz1234567890";
 
     private static void test() {
         final FTLibrary library = new FTLibrary();
         final ByteBuffer data = Resource.internal("/main.ttf").readByteBuffer();
         final FTFace face = library.newMemoryFace(data, 0);
 
-        face.setPixelSizes(0L, 15L);
+        face.setPixelSizes(0L, 4L);
 
         if(face.getNumCharmaps() == 0)
             System.out.println("No charmaps!");
+
+        final FTCharMap charmap = face.getCharmap();
+        System.out.println(charmap + "{index=" + charmap.getIndex() + ", encoding=" + charmap.getEncoding() + "(id=" + charmap.getEncodingID() + "), platformID=" + charmap.getPlatformID() + "}");
 
         for(int i = 0; i < CHARS.length(); i++)
             loadChar(face, CHARS.charAt(i));
@@ -39,40 +42,20 @@ public class RenderTest {
 
     private static void loadChar(FTFace face, char c) {
         final long charIndex = face.getCharIndex(c);
-        if(charIndex == 0L)
-            System.out.println("Char index is 0");
-
-        if(charIndex >= face.getNumGlyphs())
-            System.out.println("Invalid glyph index for char: " + c + " >= " + face.getNumGlyphs());
+        System.out.println("Char '" + c + "' index=" + charIndex);
 
         face.loadGlyph(charIndex);
 
         final FTGlyphSlot slot = face.getGlyph();
-
-        slot.renderGlyph(FTRenderMode.NORMAL);
-
         final FTGlyph glyph = slot.getGlyph();
-
-        final FTVector origin = new FTVector();
-        final FTBitmapGlyph bitmapGlyph = glyph.toBitmap(FTRenderMode.NORMAL, origin, true);
+        final FTBitmapGlyph bitmapGlyph = glyph.toBitmap(FTRenderMode.NORMAL, null, true);
         final FTBitmap bitmap = bitmapGlyph.getBitmap();
-
-        final FTGlyphMetrics glyphMetrics = slot.getMetrics();
 
         final ByteBuffer buffer = bitmap.getBuffer();
         final long rows = bitmap.getRows();
         final long width = bitmap.getWidth();
         final int pitch = bitmap.getPitch();
-        System.out.println("buffer: " + buffer.capacity() + ", rows: " + rows + ", width: " + width + ", pitch: " + pitch);
-
-        for(int y = 0; y < rows; y++) {
-            for(int x = 0; x < width; x++) {
-                final int index = (x + pitch * y);
-                final String string = (buffer.get(index) != 0 ? "X" : " ");
-                System.out.print(string);
-            }
-            System.out.println();
-        }
+        System.out.println(bitmap + "{capacity=" + buffer.capacity() + ", rows=" + rows + ", width=" + width + ", pitch=" + pitch + "}");
     }
 
 }

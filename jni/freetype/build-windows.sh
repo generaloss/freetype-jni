@@ -18,16 +18,16 @@ build_windows() {
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_BUILD_TYPE=Release \
         -DFT_DISABLE_ZLIB=FALSE \
-        -DFT_DISABLE_BZIP2=TRUE \
-        -DFT_DISABLE_PNG=FALSE \
-        -DFT_DISABLE_HARFBUZZ=FALSE \
-        -DFT_DISABLE_BROTLI=TRUE \
         -DZLIB_INCLUDE_DIR="${DIR}/../libs/zlib/include" \
         -DZLIB_LIBRARY="${DIR}/../libs/zlib/lib/windows/${arch}/libz.a" \
+        -DFT_DISABLE_BZIP2=TRUE \
+        -DFT_DISABLE_PNG=FALSE \
+        -DPNG_PNG_INCLUDE_DIR="${DIR}/../libs/libpng/include" \
+        -DPNG_LIBRARY="${DIR}/../libs/libpng/lib/windows/${arch}/libpng.a" \
+        -DFT_DISABLE_HARFBUZZ=FALSE \
         -DHarfBuzz_INCLUDE_DIR="${DIR}/../libs/harfbuzz/include/harfbuzz" \
         -DHarfBuzz_LIBRARY="${DIR}/../libs/harfbuzz/lib/windows/${arch}/libharfbuzz.a" \
-        -DPNG_PNG_INCLUDE_DIR="${DIR}/../libs/libpng/include" \
-        -DPNG_LIBRARY="${DIR}/../libs/libpng/lib/windows/${arch}/libpng.a"
+        -DFT_DISABLE_BROTLI=TRUE
 
     make -j$(nproc)
 

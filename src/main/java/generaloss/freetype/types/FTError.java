@@ -136,7 +136,6 @@ public enum FTError {
 
     FTError(int code, String description) {
         this.code = code;
-        System.out.println(code);
         this.description = description;
     }
 
