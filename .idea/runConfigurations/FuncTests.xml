@@ -4,7 +4,7 @@
     <projectPathOnTarget name="projectPathOnTarget" value="$USER_HOME$/dev/freetype-jni" />
     <target name="@@@LOCAL@@@" />
     <option name="PACKAGE_NAME" value="unit" />
-    <option name="MAIN_CLASS_NAME" value="unit.FuncTests" />
+    <option name="MAIN_CLASS_NAME" value="unit.Tests" />
     <option name="METHOD_NAME" value="" />
     <option name="TEST_OBJECT" value="class" />
     <method v="2">

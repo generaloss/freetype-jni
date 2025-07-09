@@ -1,0 +1,97 @@
+
+struct FT_Glyph { [x]
+    FT_Library            library; [x] FTLibrary getLibrary()
+    FT_Glyph_Format       format;  [x] FTGlyphFormat getFormat()
+    FT_Vector             advance; [x] FTVector getAdvance()
+}
+
+struct FT_BitmapGlyph { [x]
+    FT_GlyphRec root;   [x] FTGlyph getRoot()
+    FT_Int      left;   [x] int getLeft()
+    FT_Int      top;    [x] int getTop()
+    FT_Bitmap   bitmap; [x] FTBitmap getBitmap()
+}
+
+struct FT_OutlineGlyph { [ ]
+    FT_GlyphRec root;    [ ] FTGlyph getRoot()
+    FT_Outline  outline; [ ] FTOutline getOutline()
+}
+
+struct FT_SvgGlyph { [ ]
+    FT_GlyphRec     root;                [ ] FTGlyph getRoot()
+    FT_Byte*        svg_document;        [ ] byte[] getSvgDocument()
+    FT_ULong        svg_document_length; [ ] long getSvgDocumentLength()
+    FT_UInt         glyph_index;         [ ] long getGlyphIndex()
+    FT_Size_Metrics metrics;             [ ] FTSizeMetrics getMetrics()
+    FT_UShort       units_per_EM;        [ ] int getUnitsPerEM()
+    FT_UShort       start_glyph_id;      [ ] int getStartGlyphID()
+    FT_UShort       end_glyph_id;        [ ] int getEndGlyphID()
+    FT_Matrix       transform;           [ ] FTMatrix getTransform()
+    FT_Vector       delta;               [ ] FTVector getDelta()
+}
+
+enum FT_Glyph_BBox_Mode { [x]
+    UNSCALED  = 0
+    SUBPIXELS = 0
+    GRIDFIT   = 1
+    TRUNCATE  = 2
+    PIXELS    = 3
+}
+
+
+--------- FUNCTIONS ---------
+
+
+FT_Error FT_New_Glyph(FT_Library library, FT_Glyph_Format format, FT_Glyph *aglyph)
+FTError newGlyph(FTLibrary library, FTGlyphFormat format, FTGlyph* glyph)
+
+FT_Error FT_Get_Glyph(FT_GlyphSlot slot, FT_Glyph *aglyph)
+FTError getGlyph(FTGlyphSlot slot, FTGlyph* glyph)
+
+FT_Error FT_Glyph_Copy(FT_Glyph source, FT_Glyph *target)
+FTError copy(FTGlyph source, FTFlyph* target)
+
+FT_Error FT_Glyph_Transform(FT_Glyph glyph, const FT_Matrix* matrix, const FT_Vector* delta)
+FTError transform(FTGlyph glyph, FTMatrix* matrix, FTVector* delta)
+
+void FT_Glyph_Get_CBox(FT_Glyph glyph, FT_UInt bbox_mode, FT_BBox *acbox)
+void getCBox(FTGlyph glyph, long bboxMode, FTBBox* cbox)
+
+FT_Error FT_Glyph_To_Bitmap(FT_Glyph* the_glyph, FT_Render_Mode render_mode, const FT_Vector* origin, FT_Bool destroy)
+FTError toBitmap(FTGlyph glyph, FTRenderMode renderMode, FTVector* origin, boolean destroy)
+
+void FT_Done_Glyph(FT_Glyph glyph)
+void doneGlyph(FTGlyph glyph)
+
+void FT_Matrix_Multiply(const FT_Matrix* a, FT_Matrix* b)
+void multiply(FTMatrix a, FTMatrix* b)
+
+FT_Error FT_Matrix_Invert(FT_Matrix* matrix)
+FTError invert(FTMatrix* matrix)
+
+
+--------- METHODS ---------
+
+
+object FTLibrary {
+    FTError newGlyph(FTLibrary library, FTGlyphFormat format, FTGlyph* glyph)
+}
+
+object FTGlyph {
+    FTError copy(FTGlyph source, FTFlyph* target)
+    FTError transform(FTGlyph glyph, FTMatrix* matrix, FTVector* delta)
+    void getCBox(FTGlyph glyph, long bboxMode, FTBBox* cbox)
+    FTError toBitmap(FTGlyph glyph, FTRenderMode renderMode, FTVector* origin, boolean destroy)
+    void doneGlyph(FTGlyph glyph)
+}
+
+object FTGlyphSlot {
+    FTError getGlyph(FTGlyphSlot slot, FTGlyph* glyph)
+}
+
+object FTMatrix {
+    void multiply(FTMatrix a, FTMatrix* b)
+    FTError invert(FTMatrix* matrix)
+}
+
+

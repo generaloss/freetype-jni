@@ -1,0 +1,459 @@
+
+struct FT_Glyph_Metrics { [x]
+    FT_Pos width;        [x] FTPos getWidth()
+    FT_Pos height;       [x] FTPos getHeight()
+    FT_Pos horiBearingX; [x] FTPos getHoriBearingX()
+    FT_Pos horiBearingY; [x] FTPos getHoriBearingY()
+    FT_Pos horiAdvance;  [x] FTPos getHoriAdvance()
+    FT_Pos vertBearingX; [x] FTPos getVertBearingX()
+    FT_Pos vertBearingY; [x] FTPos getVertBearingY()
+    FT_Pos vertAdvance;  [x] FTPos getVertAdvance()
+}
+
+struct FT_Bitmap_Size { [x]
+    FT_Short height; [x] int getWidth()
+    FT_Short width;  [x] int getHeight()
+    FT_Pos   size;   [x] FTPos getSize()
+    FT_Pos   x_ppem; [x] FTPos getXppem()
+    FT_Pos   y_ppem; [x] FTPos getYppem()
+}
+
+struct FT_Library { [x]
+    FT_Memory memory; [x]
+}
+
+enum FT_Encoding { [x]
+    NONE
+    MS_SYMBOL
+    UNICODE
+    SJIS
+    MS_SJIS
+    PRC
+    GB2312
+    MS_GB2312
+    BIG5
+    MS_BIG5
+    WANSUNG
+    MS_WANSUNG
+    JOHAB
+    MS_JOHAB
+    ADOBE_STANDARD
+    ADOBE_EXPERT
+    ADOBE_CUSTOM
+    ADOBE_LATIN_1
+    OLD_LATIN_2
+    APPLE_ROMAN
+}
+
+struct FT_CharMap { [x]
+    FT_Face     face;        [x] FTFace getFace()
+    FT_Encoding encoding;    [x] FTEncoding getEncoding()
+    FT_UShort   platform_id; [x] int getPlatformID()
+    FT_UShort   encoding_id; [x] int getEncodingID()
+}
+
+struct FT_Face { [x]
+    FT_Long         num_faces;           [x] long getNumFaces()
+    FT_Long         face_index;          [x] long getFaceIndex()
+    FT_Long         face_flags;          [x] int getFaceFlags()
+    FT_Long         style_flags;         [x] int getStyleFlags()
+    FT_Long         num_glyphs;          [x] long getNumGlyphs()
+    FT_String*      family_name;         [x] String getFamilyName()
+    FT_String*      style_name;          [x] String getStyleName()
+    FT_Int          num_fixed_sizes;     [x] int getNumFixedSizes()
+    FT_Bitmap_Size* available_sizes;     [x] FTBitmapSize[] getAvailableSizes()
+    FT_Int          num_charmaps;        [x] int getNumCharmaps()
+    FT_CharMap*     charmaps;            [x] FTCharMap getCharmaps()
+    FT_BBox         bbox;                [x] FTBBox getBBox()
+    FT_UShort       units_per_EM;        [x] int getUnitsPerEM()
+    FT_Short        ascender;            [x] int getAscender()
+    FT_Short        descender;           [x] int getDescender()
+    FT_Short        height;              [x] int getHeight()
+    FT_Short        max_advance_width;   [x] int getMaxAdvanceWidth()
+    FT_Short        max_advance_height;  [x] int getMaxAdvanceHeight()
+    FT_Short        underline_position;  [x] int getUnderlinePosition()
+    FT_Short        underline_thickness; [x] int getUnderlineThickness()
+    FT_GlyphSlot    glyph;               [x] FTGlyphSlot getGlyph()
+    FT_Size         size;                [x] FTSize getSize()
+    FT_CharMap      charmap;             [x] FTCharMap getCharmap()
+}
+
+flags FT_Face_Flag { [x]
+    SCALABLE
+    FIXED_SIZES
+    FIXED_WIDTH
+    SFNT
+    HORIZONTAL
+    VERTICAL
+    KERNING
+    FAST_GLYPHS
+    MULTIPLE_MASTERS
+    GLYPH_NAMES
+    EXTERNAL_STREAM
+    HINTER
+    CID_KEYED
+    TRICKY
+    COLOR
+    VARIATION
+    SVG
+    SBIX
+    SBIX_OVERLAY
+}
+
+flags FT_Style_Flag { [x]
+    ITALIC
+    BOLD
+}
+
+struct FT_Size_Metrics { [x]
+    FT_UShort x_ppem;      [x] int getXppem()
+    FT_UShort y_ppem;      [x] int getYppem()
+    FT_Fixed  x_scale;     [x] FTFixed getXScale()
+    FT_Fixed  y_scale;     [x] FTFixed getYScale()
+    FT_Pos    ascender;    [x] FTPos getAscender()
+    FT_Pos    descender;   [x] FTPos getDescender()
+    FT_Pos    height;      [x] FTPos getHeight()
+    FT_Pos    max_advance; [x] FTPos getMaxAdvance()
+}
+
+struct FT_Size { [x]
+    FT_Face          face;     [x] FTFace getFace()
+    FT_Size_Metrics  metrics;  [x] FTSizeMetrics getMetrics()
+}
+
+struct FT_GlyphSlot { [x]
+    FT_Library       library;           [x] FTLibrary getLibrary()
+    FT_Face          face;              [x] FTFace getFace()
+    FT_GlyphSlot     next;              [x] FTGlyphSlot getNext()
+    FT_UInt          glyph_index;       [x] int getGlyphIndex()
+    FT_Glyph_Metrics metrics;           [x] FTGlyphMetrics getMetrics()
+    FT_Fixed         linearHoriAdvance; [x] FTFixed getLinearHoriAdvance()
+    FT_Fixed         linearVertAdvance; [x] FTFixed getLinearVertAdvance()
+    FT_Vector        advance;           [x] FTVector getAdvance()
+    FT_Glyph_Format  format;            [x] FTGlyphFormat getFormat()
+    FT_Bitmap        bitmap;            [x] FTBitmap getBitmap()
+    FT_Int           bitmap_left;       [x] int getBitmapLeft()
+    FT_Int           bitmap_top;        [x] int getBitmapTop()
+    FT_Outline       outline;           [x] FTOutline getOutline()
+    FT_UInt          num_subglyphs;     [x] int getNumSubglyphs()
+    FT_SubGlyph      subglyphs;         [x] FTSubGlyph getSubglyphs()
+    FT_Pos           lsb_delta;         [x] FTPos getLsbDelta()
+    FT_Pos           rsb_delta;         [x] FTPos getRsbDelta()
+}
+
+flags FT_Open { [x]
+    MEMORY   0x1
+    STREAM   0x2
+    PATHNAME 0x4
+    DRIVER   0x8
+    PARAMS   0x10
+}
+
+struct FT_Parameter { [x]
+    FT_ULong   tag;  [x] long getTag()
+    FT_Pointer data; [x] FTPointer getData()
+}
+
+sturct FT_Open_Args { [ ]
+    FT_UInt        flags;       [x] long getFlags()
+    const FT_Byte* memory_base; [x] byte getMemoryBase()
+    FT_Long        memory_size; [x] long getMemorySize()
+    FT_String*     pathname;    [x] String getPathname()
+    FT_Stream      stream;      [x] FTStream getStream()
+    FT_Module      driver;      [ ] FTModule getDriver()
+    FT_Int         num_params;  [x] int getNumParams()
+    FT_Parameter*  params;      [x] FTParameter[] getParams()
+}
+
+enum FT_Size_Request_Type { [x]
+    NOMINAL
+    REAL_DIM
+    BBOX
+    CELL
+    SCALES
+    MAX
+}
+
+struct FT_Size_Request { [x]
+    FT_Size_Request_Type type;           [x] FTSizeRequestType getType()
+    FT_Long              width;          [x] long getWidth()
+    FT_Long              height;         [x] long getHeight()
+    FT_UInt              horiResolution; [x] long getHoriResolution()
+    FT_UInt              vertResolution; [x] long getVertResolution()
+}
+
+enum FT_Load { [x]
+    DEFAULT
+    NO_SCALE
+    NO_HINTING
+    RENDER
+    NO_BITMAP
+    VERTICAL_LAYOUT
+    FORCE_AUTOHINT
+    CROP_BITMAP
+    PEDANTIC
+    IGNORE_GLOBAL_ADVAN
+    NO_RECURSE
+    IGNORE_TRANSFORM
+    MONOCHROME
+    LINEAR_DESIGN
+    SBITS_ONLY
+    NO_AUTOHINT
+    COLOR
+    COMPUTE_METRICS
+    BITMAP_METRICS_ONLY
+    NO_SVG
+    ADVANCE_ONLY
+    SVG_ONLY
+}
+
+enum FT_Load_Target { [x]
+    NORMAL
+    LIGHT
+    MONO
+    LCD
+    LCD_V
+}
+
+enum FT_Render_Mode { [x]
+    NORMAL
+    LIGHT
+    MONO
+    LCD
+    LCD_V
+    SDF
+    MAX
+}
+
+enum FT_Kerning_Mode { [x]
+    DEFAULT  0
+    UNFITTED 1
+    UNSCALED 2
+}
+
+flags FT_Subglyph_Flag { [x]
+    ARGS_ARE_WORDS     1
+    ARGS_ARE_XY_VALUES 2
+    ROUND_XY_TO_GRID   4
+    SCALE              8
+    XY_SCALE           64
+    2X2                128
+    USE_MY_METRICS     512
+}
+
+enum FT_FSType { [x]
+    INSTALLABLE_EMBEDDING        0
+    RESTRICTED_LICENSE_EMBEDDING 2
+    PREVIEW_AND_PRINT_EMBEDDING  4
+    EDITABLE_EMBEDDING           8
+    NO_SUBSETTING                256
+    BITMAP_EMBEDDING_ONLY        512
+}
+
+
+FT_ENC_TAG(value, a, b, c, d)
+int ftEncodeTag(char a, char b, char c, char d)
+
+
+FT_Error FT_Init_FreeType(FT_Library *alibrary)
+FTError initFreeType(FTLibrary library)
+
+FT_Error FT_Done_FreeType(FT_Library library)
+FTError doneFreeType(FTLibrary library)
+
+FT_Error FT_New_Face(FT_Library library, const char* filepathname, FT_Long face_index, FT_Face *aface)
+FTError newFace(FTLibrary library, String filepath, long faceIndex, FTFace* face)
+
+FT_Error FT_New_Memory_Face(FT_Library library, const FT_Byte* file_base, FT_Long file_size, FT_Long face_index, FT_Face *aface)
+FTError newMemoryFace(FTLibrary library, byte[] fileBase, long fileSize, long faceIndex, FTFace* face)
+
+FT_Error FT_Open_Face(FT_Library library, const FT_Open_Args* args, FT_Long face_index, FT_Face *aface)
+FTError openFace(FTLibrary library, FTOpenArgs args, long faceIndex, FTFace* face)
+
+FT_Error FT_Attach_File(FT_Face face, const char* filepathname)
+FTError attachFile(FTFace face, String filepath)
+
+FT_Error FT_Attach_Stream(FT_Face face, const FT_Open_Args* parameters)
+FTError attachStream(FTFace face, FTOpenArgs* parameters)
+
+FT_Error FT_Reference_Face(FT_Face face)
+FTError referenceFace(FTFace face)
+
+FT_Error FT_Done_Face(FT_Face face)
+FTError doneFace(FTFace face)
+
+FT_Error FT_Select_Size(FT_Face face, FT_Int strike_index)
+FTError selectSize(FTFace face, int strikeIndex)
+
+FT_Error FT_Request_Size(FT_Face face, FT_Size_Request req)
+FTError requestSize(FTFace face, FTSizeRequest reqest)
+
+FT_Error FT_Set_Char_Size(FT_Face face, FT_F26Dot6 char_width, FT_F26Dot6 char_height, FT_UInt horz_resolution, FT_UInt vert_resolution)
+FTError setCharSize(FTFace face, FTF26Dot6 charWidth, FTF26Dot6 charHeight, int horzResolution, int vertResolution)
+
+FT_Error FT_Set_Pixel_Sizes(FT_Face face, FT_UInt pixel_width, FT_UInt pixel_height)
+FTError setPixelSizes(FTFace face, int pixelWidth, int pixelHeight)
+
+FT_Error FT_Load_Glyph(FT_Face face, FT_UInt glyph_index, FT_Int32 load_flags)
+FTError loadGlyph(FTFace face, int glyphIndex, int loadFlags)
+
+FT_Error FT_Load_Char(FT_Face face, FT_ULong char_code, FT_Int32 load_flags)
+FTError loadChar(FTFace face, long charcode, int loadFlags)
+
+void FT_Set_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta)
+void setTransform(FTFace face, FTMatrix matrix, FTVector delta)
+
+void FT_Get_Transform(FT_Face face, FT_Matrix* matrix, FT_Vector* delta)
+void getTransform(FTFace face, FTMatrix* matrixm, FTVactor* delta)
+
+FT_Error FT_Render_Glyph(FT_GlyphSlot slot, FT_Render_Mode render_mode)
+FTError renderGlyph(FTGlyphSlot slot, FTRenderMode mode)
+
+FT_Error FT_Get_Kerning(FT_Face face, FT_UInt left_glyph, FT_UInt right_glyph, FT_UInt kern_mode, FT_Vector *akerning)
+FTError getKerning(FTFace face, int leftGlyph, int rightGlyph, int kernMode, FTVector* kerning)
+
+FT_Error FT_Get_Track_Kerning(FT_Face face, FT_Fixed point_size, FT_Int degree, FT_Fixed* akerning)
+FTError getTrackKerning(FTFace face, FTFixed pointSize, int degree, FTFixed* kerning)
+
+FT_Error FT_Select_Charmap(FT_Face face, FT_Encoding encoding)
+FTError selectCharmap(FTFace face, FTEncoding encoding)
+
+FT_Error FT_Set_Charmap(FT_Face face, FT_CharMap charmap)
+FTError setCharmap(FTFace face, FTCharMap charmap)
+
+FT_Int FT_Get_Charmap_Index(FT_CharMap charmap)
+int getCharmapIndex(FTCharMap charmap)
+
+FT_UInt FT_Get_Char_Index(FT_Face face, FT_ULong charcode)
+int getCharIndex(FTFace face, long charcode)
+
+FT_ULong FT_Get_First_Char(FT_Face face, FT_UInt *agindex)
+long getFirstChar(FTFace face, int* gindex)
+
+FT_ULong FT_Get_Next_Char(FT_Face face, FT_ULong char_code, FT_UInt *agindex)
+long getNextChar(FTFace face, long charcode, int* gindex)
+
+FT_Error FT_Face_Properties(FT_Face face, FT_UInt num_properties, FT_Parameter* properties)
+FTError FTFaceProperties(FTFace face, int numProperties, FTParameter* properties)
+
+FT_UInt FT_Get_Name_Index(FT_Face face, const FT_String* glyph_name)
+int getNameIndex(FTFace face, String* glyphName)
+
+FT_Error FT_Get_Glyph_Name(FT_Face face, FT_UInt glyph_index, FT_Pointer buffer, FT_UInt buffer_max)
+FTError getGlyphName(FTFace face, int glyphIndex, FTPointer buffer, int bufferMax)
+
+const char* FT_Get_Postscript_Name(FT_Face face)
+String getPostscriptName(FTFace face)
+
+FT_Error FT_Get_SubGlyph_Info(FT_GlyphSlot glyph, FT_UInt sub_index, FT_Int *p_index, FT_UInt *p_flags, FT_Int *p_arg1, FT_Int *p_arg2, FT_Matrix *p_transform)
+FTError getSubGlyphInfo(FTGlyphSlot glyph, int subIndex, int* pIndex, int* pFlags, int* pArg1, int* pArg2, FTMatrix* pTransform)
+
+FT_UShort FT_Get_FSType_Flags(FT_Face face)
+int getFSTypeFlags(FTFace face)
+
+FT_UInt FT_Face_GetCharVariantIndex(FT_Face face, FT_ULong charcode, FT_ULong variantSelector)
+int FTFaceGetCharVariantIndex(FTFace face, long charcode, long variantSelector)
+
+FT_Int FT_Face_GetCharVariantIsDefault(FT_Face face, FT_ULong charcode, FT_ULong variantSelector)
+int FTFaceGetCharVariantIsDefault(FTFace face, long charcode, long variantSelector)
+
+FT_UInt32* FT_Face_GetVariantSelectors(FT_Face face)
+int FTFaceGetVariantSelectors(FTFace face)
+
+FT_UInt32* FT_Face_GetVariantsOfChar(FT_Face face, FT_ULong charcode)
+int FTFaceGetVariantsOfChar(FTFace face, long charcode)
+
+FT_UInt32* FT_Face_GetCharsOfVariant(FT_Face face, FT_ULong variantSelector)
+int FTFaceGetCharsOfVariant(FTFace face, long variantSelector)
+
+
+FT_Long FT_MulDiv(FT_Long a, FT_Long b, FT_Long c)
+long mulDiv(long a, long b, long c)
+
+FT_Long FT_MulFix(FT_Long a, FT_Long b)
+long mulFix(long a, long b)
+
+FT_Long FT_DivFix(FT_Long a, FT_Long b)
+long divFix(long a, long b)
+
+FT_Fixed FT_RoundFix(FT_Fixed a)
+FTFixed roundFix(FTFixed a)
+
+FT_Fixed FT_CeilFix(FT_Fixed a)
+FTFixed ceilFix(FTFixed a)
+
+FT_Fixed FT_FloorFix(FT_Fixed a)
+FTFixed floorFix(FTFixed a)
+
+void FT_Vector_Transform(FT_Vector* vector, const FT_Matrix* matrix)
+void FTVectorTransform(FTVector vector, FTMatrix* matrix)
+
+void FT_Library_Version(FT_Library library, FT_Int *amajor, FT_Int *aminor, FT_Int *apatch)
+void FTLibraryVersion(FTLibrary library, int* major, int* minor, int* patch)
+
+FT_Bool FT_Face_CheckTrueTypePatents(FT_Face face)
+boolean FTFaceCheckTrueTypePatents(FTFace face)
+
+@DEPRECATED
+FT_Bool FT_Face_SetUnpatentedHinting(FT_Face face, FT_Bool value)
+boolean FTFaceSetUnpatentedHinting(FTFace face, boolean value)
+
+
+--------- METHODS ---------
+
+
+object FTLibrary {
+    FTError initFreeType(FTLibrary library)
+    FTError doneFreeType(FTLibrary library)
+    FTError newFace(FTLibrary library, String filepath, long faceIndex, FTFace* face)
+    FTError newMemoryFace(FTLibrary library, byte[] fileBase, long fileSize, long faceIndex, FTFace* face)
+    FTError openFace(FTLibrary library, FTOpenArgs args, long faceIndex, FTFace* face)
+    void FTLibraryVersion(FTLibrary library, int* major, int* minor, int* patch)
+}
+
+object FTFace {
+    FTError attachFile(FTFace face, String filepath)
+    FTError attachStream(FTFace face, FTOpenArgs* parameters)
+    FTError referenceFace(FTFace face)
+    FTError doneFace(FTFace face)
+    FTError selectSize(FTFace face, int strikeIndex)
+    FTError requestSize(FTFace face, FTSizeRequest reqest)
+    FTError setCharSize(FTFace face, FTF26Dot6 charWidth, FTF26Dot6 charHeight, int horzResolution, int vertResolution)
+    FTError setPixelSizes(FTFace face, int pixelWidth, int pixelHeight)
+    FTError loadGlyph(FTFace face, int glyphIndex, int loadFlags)
+    FTError loadChar(FTFace face, long charcode, int loadFlags)
+    void setTransform(FTFace face, FTMatrix matrix, FTVector delta)
+    void getTransform(FTFace face, FTMatrix* matrixm, FTVactor* delta)
+    FTError getKerning(FTFace face, int leftGlyph, int rightGlyph, int kernMode, FTVector* kerning)
+    FTError getTrackKerning(FTFace face, FTFixed pointSize, int degree, FTFixed* kerning)
+    FTError selectCharmap(FTFace face, FTEncoding encoding)
+    FTError setCharmap(FTFace face, FTCharMap charmap)
+    int getCharIndex(FTFace face, long charcode)
+    long getFirstChar(FTFace face, int* gindex)
+    long getNextChar(FTFace face, long charcode, int* gindex)
+    FTError properties(FTFace face, int numProperties, FTParameter* properties)
+    int getNameIndex(FTFace face, String* glyphName)
+    FTError getGlyphName(FTFace face, int glyphIndex, FTPointer buffer, int bufferMax)
+    String getPostscriptName(FTFace face)
+    int getFSTypeFlags(FTFace face)
+    int getCharVariantIndex(FTFace face, long charcode, long variantSelector)
+    int getCharVariantIsDefault(FTFace face, long charcode, long variantSelector)
+    int getVariantSelectors(FTFace face)
+    int getVariantsOfChar(FTFace face, long charcode)
+    int getCharsOfVariant(FTFace face, long variantSelector)
+    boolean checkTrueTypePatents(FTFace face)
+    @DEPRECATED boolean setUnpatentedHinting(FTFace face, boolean value)
+}
+
+object FTGlyphSlot {
+    FTError renderGlyph(FTGlyphSlot slot, FTRenderMode mode)
+    FTError getSubGlyphInfo(FTGlyphSlot glyph, int subIndex, int* pIndex, int* pFlags, int* pArg1, int* pArg2, FTMatrix* pTransform)
+}
+
+object FTCharMap {
+    int getCharmapIndex(FTCharMap charmap)
+}
+
+object FTVector {
+    void FTVectorTransform(FTVector vector, FTMatrix matrix)
+}

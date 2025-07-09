@@ -9,56 +9,41 @@
 
 ---
 
-## How to use:
+## How to use
 
 1. Add the [freetype-jni](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni) dependency.
 2. Add the natives you need:
-    * [freetype-jni-natives-windows](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-windows) (available arches: x86_64, i686)
-    * [freetype-jni-natives-linux](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-linux) (available arches: x86_64, aarch64)
+    * [freetype-jni-natives-windows](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-windows) (Archetictures available: x86_64, x86)
+    * [freetype-jni-natives-linux](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-linux) (Archetictures available: x86_64, aarch64)
     * [freetype-jni-natives-android](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-android) (all ABIs available)
 
-Android SDK: 21 +
+### Minimal requirements
+* Java: 1.8 +
+* Android SDK: 21 +
+
+### Natives
+* Compiled with libraries: zlib, harfbuzz, libpng
+
 
 ---
 
-## Code sample:
-
-Java version: 8 +
+## Code sample
 
 ``` java
-final FTLibrary library = FTLibrary.init();
-
-final FTFace face = library.newMemoryFace(/*font file raw data*/, 0);
-face.setPixelSizes(0, 15);
-final FTSizeMetrics faceMetrics = face.getSize().getMetrics();
-System.out.println(faceMetrics.getAscender() + ", " + faceMetrics.getDescender() + ", " + faceMetrics.getHeight());
-
-private static final String CHARS = "abcdefghijklmnopqrstuvwxyz1234567890";
-// print all chars bitmaps:
-for(int i = 0; i < CHARS.length(); i++) {
-    if(!face.loadGlyph(face.getCharIndex(CHARS.charAt(i))))
-        continue;
-    if(!face.getGlyph().renderGlyph(FTRenderMode.NORMAL))
-        continue;
-
-    final FTBitmap bitmap = face.getGlyph().getBitmap();
-    final FTGlyphMetrics glyphMetrics = face.getGlyph().getMetrics();
-
-    System.out.println(glyphMetrics.getHoriBearingX() + ", " + glyphMetrics.getHoriBearingY());
-    System.out.println(glyphMetrics.getWidth() + ", " + glyphMetrics.getHeight() + ", " + glyphMetrics.getHoriAdvance());
-    System.out.println(bitmap.getWidth() + ", " + bitmap.getRows() + ", " + bitmap.getPitch() + ", " + bitmap.getNumGray());
-
-    for(int y = 0; y < bitmap.getRows(); y++) {
-        for(int x = 0; x < bitmap.getWidth(); x++)
-            System.out.print(bitmap.getBuffer().get(x + bitmap.getPitch() * y) != 0? "X": " ");
-        System.out.println();
-    }
-}
-
+final FTLibrary lib = new FTLibrary();
+final ByteBuffer data = ...;
+final FTFace face = lib.newMemoryFace(data, 0);
+// ...
 face.done();
-        
-library.done();
+lib.done();
 ```
+
+See other samples (*99*) in [**Tests.java**](src/test/java/unit/Tests.java)
+
+## Implemented
+
+* Functions (*93*) - [**FreeType.cpp**](jni/freetype-jni/src/FreeType.cpp)
+* Structs in headers (**fully** / partially): [**freetype.h**](.index/freetype.h.txt), [**ftgloadr.h**](.index/ftgloadr.h.txt), [ftglyph.h](.index/ftglyph.h.txt), [ftimage.h](.index/ftimage.h.txt), [**ftoutln.h**](.index/ftoutln.h.txt), [**ftstroke.h**](.index/ftstroke.h.txt), [ftsystem.h](.index/ftsystem.h.txt)
 
 ---
 

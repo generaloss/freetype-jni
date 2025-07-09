@@ -5,6 +5,7 @@ ANDROID_API_LEVEL=21
 ANDROID_ABIS=("armeabi-v7a" "arm64-v8a" "x86" "x86_64")
 
 DIR="$(pwd)"
+LIBS_DIR="${DIR}/../libs"
 
 build_android() {
     local abi=$1
@@ -14,7 +15,7 @@ build_android() {
     mkdir -p "${abi}"
     cd "${abi}"
 
-    cmake ../../../ \
+    cmake "${DIR}" \
         -DANDROID_NDK="${ANDROID_NDK}" \
         -DCMAKE_TOOLCHAIN_FILE="${ANDROID_NDK}/build/cmake/android.toolchain.cmake" \
         -DANDROID_ABI="${abi}" \
@@ -22,22 +23,22 @@ build_android() {
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_BUILD_TYPE=Release \
         -DFT_DISABLE_ZLIB=FALSE \
-        -DZLIB_INCLUDE_DIR="${DIR}/../libs/zlib/include" \
-        -DZLIB_LIBRARY="${DIR}/../libs/zlib/lib/android/${abi}/libz.a" \
+        -DZLIB_INCLUDE_DIR="${LIBS_DIR}/zlib/include" \
+        -DZLIB_LIBRARY="${LIBS_DIR}/zlib/lib/android/${abi}/libz.a" \
         -DFT_DISABLE_BZIP2=TRUE \
         -DFT_DISABLE_PNG=FALSE \
-        -DPNG_PNG_INCLUDE_DIR="${DIR}/../libs/libpng/include" \
-        -DPNG_LIBRARY="${DIR}/../libs/libpng/lib/android/${abi}/libpng.a" \
+        -DPNG_PNG_INCLUDE_DIR="${LIBS_DIR}/libpng/include" \
+        -DPNG_LIBRARY="${LIBS_DIR}/libpng/lib/android/${abi}/libpng.a" \
         -DFT_DISABLE_HARFBUZZ=FALSE \
-        -DHarfBuzz_INCLUDE_DIR="${DIR}/../libs/harfbuzz/include/harfbuzz" \
-        -DHarfBuzz_LIBRARY="${DIR}/../libs/harfbuzz/lib/android/${abi}/libharfbuzz.a" \
+        -DHarfBuzz_INCLUDE_DIR="${LIBS_DIR}/harfbuzz/include/harfbuzz" \
+        -DHarfBuzz_LIBRARY="${LIBS_DIR}/harfbuzz/lib/android/${abi}/libharfbuzz.a" \
         -DFT_DISABLE_BROTLI=TRUE
 
     make -j$(nproc)
 
     cd ../
-    mkdir "../../lib/android/$abi"
-    cp "$abi/libfreetype.a" "../../lib/android/$abi/libfreetype.a"
+    mkdir "${DIR}/lib/android/$abi"
+    cp "$abi/libfreetype.a" "${DIR}/lib/android/$abi/libfreetype.a"
 }
 
 set -e

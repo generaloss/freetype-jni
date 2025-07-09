@@ -1,7 +1,7 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+!jni/freetype-jni/src/main/**/target/
+!jni/freetype-jni/src/test/**/target/
 
 natives/freetype-jni-natives-android/gradle.properties
 
@@ -30,8 +30,8 @@ natives/freetype-jni-natives-android/gradle.properties
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+!jni/freetype-jni/src/main/**/build/
+!jni/freetype-jni/src/test/**/build/
 
 ### VS Code ###
 .vscode/

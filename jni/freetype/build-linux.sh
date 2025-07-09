@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ARCHES=("x86_64" "aarch64") # "riscv64" "arm32" "powerpc64"
+ARCHES=("x86_64" "aarch64")
 
 DIR="$(pwd)"
 
@@ -12,9 +12,9 @@ build_linux() {
     mkdir -p "${arch}"
     cd "${arch}"
 
-    cmake ../../../ \
+    cmake "${DIR}" \
         -DTARGET_PLATFORM=linux \
-        -DCMAKE_TOOLCHAIN_FILE="${DIR}/../toolchains/linux-${arch}.cmake" \
+        -DCMAKE_TOOLCHAIN_FILE="${DIR}/../toolchains/linux/${arch}.cmake" \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_BUILD_TYPE=Release \
         -DFT_DISABLE_ZLIB=FALSE \
@@ -26,8 +26,8 @@ build_linux() {
     make -j$(nproc)
 
     cd ../
-    mkdir "../../lib/linux/$arch"
-    cp "$arch/libfreetype.a" "../../lib/linux/$arch/libfreetype.a"
+    mkdir "${DIR}/lib/linux/$arch"
+    cp "$arch/libfreetype.a" "${DIR}/lib/linux/$arch/libfreetype.a"
 }
 
 set -e
