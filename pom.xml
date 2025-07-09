@@ -6,7 +6,7 @@
 
     <groupId>io.github.generaloss</groupId>
     <artifactId>freetype-jni</artifactId>
-    <version>25.7.1-SNAPSHOT-4</version>
+    <version>25.7.1-SNAPSHOT-5</version>
     <name>freetype-jni</name>
 
     <description>FreeType Library Java Native Interface</description>

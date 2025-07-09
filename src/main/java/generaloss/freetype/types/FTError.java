@@ -158,7 +158,7 @@ public enum FTError {
 
     @Override
     public String toString() {
-        return "FTErro: " + description + " (code: " + code + ")";
+        return "FTError: " + description + " (code: " + code + ")";
     }
 
 

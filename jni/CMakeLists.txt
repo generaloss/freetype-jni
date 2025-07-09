@@ -94,12 +94,33 @@ elseif(TARGET_PLATFORM STREQUAL "windows")
 else()
     message(STATUS "Configuring for Linux")
 
+    # z
+    add_library(z STATIC IMPORTED GLOBAL)
+    set_target_properties(z PROPERTIES
+        IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/libs/zlib/lib/linux/${TARGET_ARCH}/libz.so"
+        INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/libs/zlib/include"
+    )
+
+    # png
+    add_library(libpng STATIC IMPORTED GLOBAL)
+    set_target_properties(libpng PROPERTIES
+        IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/libs/libpng/lib/linux/${TARGET_ARCH}/libpng.so"
+        INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/libs/libpng/include"
+    )
+
+    # harfbuzz
+    add_library(harfbuzz STATIC IMPORTED GLOBAL)
+    set_target_properties(harfbuzz PROPERTIES
+        IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/libs/harfbuzz/lib/linux/${TARGET_ARCH}/libharfbuzz.so"
+        INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/libs/harfbuzz/include/harfbuzz"
+    )
+
     # link
     target_link_libraries(freetype_jni PRIVATE
         freetype
-        # harfbuzz
-        # libpng
-        # z
+        harfbuzz
+        libpng
+        z
     )
     target_compile_options(freetype_jni PRIVATE -fPIC)
     set_target_properties(freetype_jni PROPERTIES
