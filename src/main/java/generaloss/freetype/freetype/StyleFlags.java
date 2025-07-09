@@ -25,4 +25,9 @@ public class StyleFlags extends BitMask<FTStyleFlag> {
         return super.toString(FTStyleFlag.class);
     }
 
+    @Override
+    public StyleFlags copy() {
+        return new StyleFlags(super.getBits());
+    }
+
 }

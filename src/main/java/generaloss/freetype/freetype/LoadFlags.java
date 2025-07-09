@@ -133,4 +133,9 @@ public class LoadFlags extends BitMask<FTLoad> {
         return string.substring(0, string.length() - 1) + ", FTLoadTarget=" + this.getTarget() + "}";
     }
 
+    @Override
+    public LoadFlags copy() {
+        return new LoadFlags(super.getBits());
+    }
+
 }

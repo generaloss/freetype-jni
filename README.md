@@ -17,7 +17,7 @@
     * [freetype-jni-natives-linux](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-linux) (Archetictures available: x86_64, aarch64)
     * [freetype-jni-natives-android](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-android) (all ABIs available)
 
-### Minimal requirements
+### Requirements
 * Java: 1.8 +
 * Android SDK: 21 +
 

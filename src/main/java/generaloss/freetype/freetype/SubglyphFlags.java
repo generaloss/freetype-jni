@@ -45,4 +45,9 @@ public class SubglyphFlags extends BitMask<FTSubglyphFlag> {
         return super.toString(FTSubglyphFlag.class);
     }
 
+    @Override
+    public SubglyphFlags copy() {
+        return new SubglyphFlags(super.getBits());
+    }
+
 }

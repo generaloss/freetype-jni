@@ -1,6 +1,7 @@
 package generaloss.freetype.image;
 
 import generaloss.freetype.BitMask;
+import generaloss.freetype.freetype.SubglyphFlags;
 
 public class RasterFlags extends BitMask<FTRasterFlag> {
 
@@ -31,6 +32,11 @@ public class RasterFlags extends BitMask<FTRasterFlag> {
     @Override
     public String toString() {
         return super.toString(FTRasterFlag.class);
+    }
+
+    @Override
+    public RasterFlags copy() {
+        return new RasterFlags(super.getBits());
     }
 
 }

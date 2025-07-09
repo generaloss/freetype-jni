@@ -73,4 +73,9 @@ public class FaceFlags extends BitMask<FTFaceFlag> {
         return super.toString(FTFaceFlag.class);
     }
 
+    @Override
+    public FaceFlags copy() {
+        return new FaceFlags(super.getBits());
+    }
+
 }

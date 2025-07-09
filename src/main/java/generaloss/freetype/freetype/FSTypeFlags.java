@@ -41,4 +41,9 @@ public class FSTypeFlags extends BitMask<FTFSType> {
         return super.toString(FTFSType.class);
     }
 
+    @Override
+    public FSTypeFlags copy() {
+        return new FSTypeFlags(super.getBits());
+    }
+
 }

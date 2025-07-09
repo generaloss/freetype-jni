@@ -37,4 +37,9 @@ public class OpenFlags extends BitMask<FTOpen> {
         return super.toString(FTOpen.class);
     }
 
+    @Override
+    public OpenFlags copy() {
+        return new OpenFlags(super.getBits());
+    }
+
 }

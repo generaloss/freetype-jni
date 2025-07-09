@@ -86,4 +86,7 @@ public abstract class BitMask<M extends BitMaskable> {
         return mask.bits;
     }
 
+
+    abstract public BitMask<M> copy();
+
 }

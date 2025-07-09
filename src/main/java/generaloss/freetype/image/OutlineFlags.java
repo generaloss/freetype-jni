@@ -1,6 +1,7 @@
 package generaloss.freetype.image;
 
 import generaloss.freetype.BitMask;
+import generaloss.freetype.freetype.SubglyphFlags;
 
 public class OutlineFlags extends BitMask<FTOutlineFlag> {
 
@@ -51,6 +52,11 @@ public class OutlineFlags extends BitMask<FTOutlineFlag> {
     @Override
     public String toString() {
         return super.toString(FTOutlineFlag.class);
+    }
+
+    @Override
+    public OutlineFlags copy() {
+        return new OutlineFlags(super.getBits());
     }
 
 }
