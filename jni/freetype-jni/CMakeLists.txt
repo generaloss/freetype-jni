@@ -25,14 +25,14 @@ if(TARGET_PLATFORM STREQUAL "android")
     # z
     add_library(z STATIC IMPORTED GLOBAL)
     set_target_properties(z PROPERTIES
-        IMPORTED_LOCATION "${LIBS_DIR}/zlib/lib/android/${ANDROID_ABI}/libz.so"
+        IMPORTED_LOCATION "${LIBS_DIR}/zlib/lib/android/${ANDROID_ABI}/libz.a"
         INTERFACE_INCLUDE_DIRECTORIES "${LIBS_DIR}/zlib/include"
     )
 
     # png
     add_library(libpng STATIC IMPORTED GLOBAL)
     set_target_properties(libpng PROPERTIES
-        IMPORTED_LOCATION "${LIBS_DIR}/libpng/lib/android/${ANDROID_ABI}/libpng.so"
+        IMPORTED_LOCATION "${LIBS_DIR}/libpng/lib/android/${ANDROID_ABI}/libpng.a"
         INTERFACE_INCLUDE_DIRECTORIES "${LIBS_DIR}/libpng/include"
     )
 
