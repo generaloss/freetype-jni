@@ -43,7 +43,7 @@ See other samples (*99*) in [**Tests.java**](src/test/java/unit/Tests.java)
 ## Implemented
 
 * Functions (*93*) - [**FreeType.cpp**](jni/freetype-jni/src/FreeType.cpp)
-* Structs in headers (**fully** / partially): [**freetype.h**](.index/freetype.h.txt), [**ftgloadr.h**](.index/ftgloadr.h.txt), [ftglyph.h](.index/ftglyph.h.txt), [ftimage.h](.index/ftimage.h.txt), [**ftoutln.h**](.index/ftoutln.h.txt), [**ftstroke.h**](.index/ftstroke.h.txt), [ftsystem.h](.index/ftsystem.h.txt)
+* Structs (*30*) in headers (**fully** / partially): [**freetype.h**](.index/freetype.h.txt), [**ftgloadr.h**](.index/ftgloadr.h.txt), [ftglyph.h](.index/ftglyph.h.txt), [ftimage.h](.index/ftimage.h.txt), [**ftoutln.h**](.index/ftoutln.h.txt), [**ftstroke.h**](.index/ftstroke.h.txt), [ftsystem.h](.index/ftsystem.h.txt)
 
 ---
 
