@@ -7,10 +7,10 @@
     <groupId>io.github.generaloss</groupId>
     <artifactId>freetype-jni</artifactId>
     <version>25.8.1-2.13.3</version>
-    <name>freetype-jni</name>
+    <name>${artifactId}</name>
 
     <description>FreeType Library Java Native Interface</description>
-    <url>https://github.com/generaloss/freetype-jni</url>
+    <url>https://github.com/generaloss/${artifactId}</url>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -35,9 +35,9 @@
     </dependencies>
 
     <scm>
-        <connection>scm:git:git://github.com/generaloss/freetype-jni.git</connection>
-        <developerConnection>scm:git:ssh://github.com:generaloss/freetype-jni.git</developerConnection>
-        <url>https://github.com/generaloss/freetype-jni/tree/master</url>
+        <connection>scm:git:git://github.com/generaloss/${artifactId}.git</connection>
+        <developerConnection>scm:git:ssh://github.com:generaloss/${artifactId}.git</developerConnection>
+        <url>https://github.com/generaloss/${artifactId}/tree/master</url>
     </scm>
 
     <developers>
@@ -124,7 +124,7 @@
                 <version>0.3.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <deploymentName>freetype-jni:${version}</deploymentName>
+                    <deploymentName>${artifactId}:${version}</deploymentName>
                     <publishingServerId>central</publishingServerId>
                     <tokenAuth>true</tokenAuth>
                 </configuration>
