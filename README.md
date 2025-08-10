@@ -9,6 +9,16 @@
 
 ---
 
+## Features
+* Natives compiled with libraries: *[zlib](https://github.com/madler/zlib)*, *[harfbuzz](https://github.com/harfbuzz/harfbuzz)*, *[libpng](https://github.com/pnggroup/libpng)*
+* Сaching FTStruct objects to prevent unnecessary heap usage and duplicates
+* Enumerations are actually java enums (so it would be hard to use the wrong argument in a FreeType function)
+* Flag bitmask objects (as an alternative to integers)
+
+## Requirements
+* Java: 1.8 +
+* Android SDK: 21 +
+
 ## How to use
 
 1. Add the [freetype-jni](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni) dependency.
@@ -16,17 +26,6 @@
     * [freetype-jni-natives-windows](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-windows) (Archetictures available: x86_64, x86)
     * [freetype-jni-natives-linux](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-linux) (Archetictures available: x86_64, aarch64)
     * [freetype-jni-natives-android](https://central.sonatype.com/artifact/io.github.generaloss/freetype-jni-natives-android) (all ABIs available)
-
-### Requirements
-* Java: 1.8 +
-* Android SDK: 21 +
-
-### Features
-* Natives compiled with libraries: zlib, harfbuzz, libpng
-* Сaching FTStruct objects to prevent unnecessary heap usage and duplicates
-* Enumerations are actually java enums (so it would be hard to use the wrong argument in a FreeType function)
-* Flag bitmask objects (as an alternative to integers)
-
 
 ---
 
