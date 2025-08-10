@@ -21,8 +21,11 @@
 * Java: 1.8 +
 * Android SDK: 21 +
 
-### Natives
-* Compiled with libraries: zlib, harfbuzz, libpng
+### Features
+* Natives compiled with libraries: zlib, harfbuzz, libpng
+* Сaching FTStruct objects to prevent unnecessary heap usage and duplicates
+* Enumerations are actually java enums (so it would be hard to use the wrong argument in a FreeType function)
+* Flag bitmask objects (as an alternative to integers)
 
 
 ---
