@@ -16,6 +16,7 @@ build_macos() {
 
     cmake "${DIR}" \
         -DTARGET_PLATFORM=macos \
+        -DCMAKE_TOOLCHAIN_FILE="${DIR}/../toolchains/macos/${arch_cmake}.cmake" \
         -DCMAKE_OSX_ARCHITECTURES="${arch_cmake}" \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DCMAKE_BUILD_TYPE=Release \

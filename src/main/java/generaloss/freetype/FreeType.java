@@ -57,9 +57,10 @@ public class FreeType {
                     out.write(buffer, 0, read);
             }
 
+            System.out.println("Try to load native library for ");
             System.load(temp.toAbsolutePath().toString());
-        }catch(IOException e) {
-            throw new RuntimeException("Failed to load native library", e);
+        }catch(Exception e) {
+            throw new RuntimeException("Failed to load native library for " + os + "-" + arch, e);
         }
     }
 
