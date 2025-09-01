@@ -27,6 +27,8 @@ build_android() {
     cd ../
     mkdir "${DIR}/out/android/$abi"
     cp "$abi/libfreetype_jni.so" "${DIR}/out/android/$abi/libfreetype_jni.so"
+
+    printf "Done.\n\n"
 }
 
 set -e

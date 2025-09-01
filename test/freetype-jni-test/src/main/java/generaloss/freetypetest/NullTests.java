@@ -1,10 +1,9 @@
-package dev;
+package generaloss.freetypetest;
 
 import generaloss.freetype.FreeType;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.nio.ByteBuffer;
 
 public class NullTests {
 
@@ -32,7 +31,7 @@ public class NullTests {
                 }
                 method.invoke(null, params);
             }catch(Exception e){
-                System.out.println(e.getCause());
+                System.out.println(e.getCause().toString());
             }
         }
     }

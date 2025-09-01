@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.generaloss</groupId>
+    <artifactId>freetype-jni-natives-macos</artifactId>
+    <version>25.8.1-SNAPSHOT-2-2.13.3</version>
+    <name>${project.artifactId}</name>
+
+    <description>FreeType Library JNI MacOS native libraries</description>
+    <url>https://github.com/generaloss/freetype-jni</url>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <scm>
+        <connection>scm:git:git://github.com/generaloss/freetype-jni.git</connection>
+        <developerConnection>scm:git:ssh://github.com:generaloss/freetype-jni.git</developerConnection>
+        <url>https://github.com/generaloss/freetype-jni/tree/master/natives/${project.artifactId}</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>generaloss</id>
+            <name>Pavel Vladimirovich</name>
+            <email>generaloss@proton.me</email>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>GNU GPL-v2.0 license</name>
+            <url>https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</url>
+        </license>
+    </licenses>
+
+    <build>
+        <plugins>
+            <!-- sign jar with gpg key -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.3</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- deploy to maven central repository -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.3.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <deploymentName>${project.artifactId}:${project.version}</deploymentName>
+                    <publishingServerId>central</publishingServerId>
+                    <tokenAuth>true</tokenAuth>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

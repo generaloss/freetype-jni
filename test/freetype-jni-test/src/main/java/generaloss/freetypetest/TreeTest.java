@@ -1,4 +1,4 @@
-package dev;
+package generaloss.freetypetest;
 
 import generaloss.freetype.freetype.*;
 import generaloss.freetype.gload.FTGlyphLoader;

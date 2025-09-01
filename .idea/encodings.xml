@@ -3,9 +3,13 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/natives/freetype-jni-natives-linux/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/natives/freetype-jni-natives-linux/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/natives/freetype-jni-natives-macos/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/natives/freetype-jni-natives-macos/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/natives/freetype-jni-natives-windows/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/natives/freetype-jni-natives-windows/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test/freetype-jni-test/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test/freetype-jni-test/src/main/resources" charset="UTF-8" />
   </component>
 </project>

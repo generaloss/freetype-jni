@@ -40,12 +40,12 @@ public class FreeType {
         }
 
         final String arch = detectArch();
-        final String libName = (os.equals("windows") ? LIBRARY_NAME + ".dll" : "lib" + LIBRARY_NAME + ".so");
+        final String libName = getOSLibName(os);
         final String pathInJar = String.format("/jni/%s/%s/%s", os, arch, libName);
 
         try(InputStream in = FTLibrary.class.getResourceAsStream(pathInJar)) {
             if(in == null)
-                throw new UnsatisfiedLinkError("Native library not found: " + pathInJar);
+                throw new UnsatisfiedLinkError("Native library for " + os + "-" + arch + " not found: " + pathInJar);
 
             final Path temp = Files.createTempFile(LIBRARY_NAME, libName);
             temp.toFile().deleteOnExit();
@@ -63,17 +63,30 @@ public class FreeType {
         }
     }
 
+    private static String getOSLibName(String os) {
+        switch(os) {
+            case "windows":               return (LIBRARY_NAME + ".dll");
+            case "linux": case "android": return ("lib" + LIBRARY_NAME + ".so");
+            case "macos":                 return ("lib" + LIBRARY_NAME + ".dylib");
+        }
+        throw new UnsupportedOperationException("Unsupported OS: " + os);
+    }
+
     private static String detectOS() {
         final String os = System.getProperty("os.name").toLowerCase();
         if(os.contains("win"))
             return "windows";
 
         if(os.contains("linux")) {
-            String vm = System.getProperty("java.vm.name").toLowerCase();
+            final String vm = System.getProperty("java.vm.name").toLowerCase();
             if(vm.contains("dalvik") || vm.contains("art"))
                 return "android";
             return "linux";
         }
+
+        if(os.contains("mac"))
+            return "macos";
+
         throw new UnsupportedOperationException("Unsupported OS: " + os);
     }
 

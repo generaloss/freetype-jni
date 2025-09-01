@@ -1,5 +1,3 @@
-package unit;
-
 import generaloss.freetype.FreeType;
 import generaloss.freetype.types.*;
 import org.junit.jupiter.api.Assertions;

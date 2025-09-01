@@ -22,6 +22,8 @@ build_windows() {
     cd ../
     mkdir "${DIR}/out/windows/$arch"
     cp "$arch/freetype_jni.dll" "${DIR}/out/windows/$arch/freetype_jni.dll"
+
+    printf "Done.\n\n"
 }
 
 set -e

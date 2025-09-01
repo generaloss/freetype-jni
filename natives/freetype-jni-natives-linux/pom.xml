@@ -7,7 +7,7 @@
     <groupId>io.github.generaloss</groupId>
     <artifactId>freetype-jni-natives-linux</artifactId>
     <version>25.8.1-2.13.3</version>
-    <name>${artifactId}</name>
+    <name>${project.artifactId}</name>
 
     <description>FreeType Library JNI Linux native libraries</description>
     <url>https://github.com/generaloss/freetype-jni</url>
@@ -21,7 +21,7 @@
     <scm>
         <connection>scm:git:git://github.com/generaloss/freetype-jni.git</connection>
         <developerConnection>scm:git:ssh://github.com:generaloss/freetype-jni.git</developerConnection>
-        <url>https://github.com/generaloss/freetype-jni/tree/master/natives/${artifactId}</url>
+        <url>https://github.com/generaloss/freetype-jni/tree/master/natives/${project.artifactId}</url>
     </scm>
 
     <developers>
@@ -63,7 +63,7 @@
                 <version>0.3.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <deploymentName>${artifactId}:${version}</deploymentName>
+                    <deploymentName>${project.artifactId}:${project.version}</deploymentName>
                     <publishingServerId>central</publishingServerId>
                     <tokenAuth>true</tokenAuth>
                 </configuration>

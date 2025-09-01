@@ -28,6 +28,8 @@ build_linux() {
     cd ../
     mkdir "${DIR}/lib/linux/$arch"
     cp "$arch/libfreetype.a" "${DIR}/lib/linux/$arch/libfreetype.a"
+
+    printf "Done.\n\n"
 }
 
 set -e

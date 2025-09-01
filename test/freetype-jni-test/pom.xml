@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.generaloss</groupId>
+    <artifactId>freetype-jni-test</artifactId>
+    <version>25.9.1-SNAPSHOT</version>
+
+    <dependencies>
+        <!-- main -->
+        <dependency>
+            <groupId>io.github.generaloss</groupId>
+            <artifactId>freetype-jni</artifactId>
+            <version>25.8.1.1-SNAPSHOT-3-2.13.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.generaloss</groupId>
+            <artifactId>freetype-jni-natives-macos</artifactId>
+            <version>25.8.1-SNAPSHOT-2-2.13.3</version>
+        </dependency>
+
+        <!-- test -->
+        <dependency>
+            <groupId>io.github.generaloss</groupId>
+            <artifactId>jpize-utils</artifactId>
+            <version>25.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.9.0</version>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+</project>

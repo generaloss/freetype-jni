@@ -22,6 +22,8 @@ build_linux() {
     cd ../
     mkdir "${DIR}/out/linux/$arch"
     cp "$arch/libfreetype_jni.so" "${DIR}/out/linux/$arch/libfreetype_jni.so"
+
+    printf "Done.\n\n"
 }
 
 set -e

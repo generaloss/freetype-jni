@@ -39,6 +39,8 @@ build_android() {
     cd ../
     mkdir "${DIR}/lib/android/$abi"
     cp "$abi/libfreetype.a" "${DIR}/lib/android/$abi/libfreetype.a"
+
+    printf "Done.\n\n"
 }
 
 set -e

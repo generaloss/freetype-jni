@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="StructTests" type="JUnit" factoryName="JUnit">
     <module name="freetype-jni" />
-    <option name="PACKAGE_NAME" value="unit" />
-    <option name="MAIN_CLASS_NAME" value="unit.TypesTests" />
+    <option name="PACKAGE_NAME" value="" />
+    <option name="MAIN_CLASS_NAME" value="TypesTests" />
     <option name="METHOD_NAME" value="" />
     <option name="TEST_OBJECT" value="class" />
     <method v="2">

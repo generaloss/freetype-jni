@@ -1,5 +1,3 @@
-package unit;
-
 import generaloss.freetype.FreeType;
 import generaloss.freetype.UnicodeVariationSelector;
 import generaloss.freetype.freetype.*;

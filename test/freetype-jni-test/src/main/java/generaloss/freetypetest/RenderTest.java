@@ -1,10 +1,9 @@
-package dev;
+package generaloss.freetypetest;
 
 import generaloss.freetype.freetype.*;
 import generaloss.freetype.glyph.FTGlyph;
 import generaloss.freetype.image.FTBitmap;
 import generaloss.freetype.glyph.FTBitmapGlyph;
-import generaloss.freetype.types.FTVector;
 import jpize.util.res.Resource;
 
 import java.nio.ByteBuffer;

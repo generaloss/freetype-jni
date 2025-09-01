@@ -35,6 +35,8 @@ build_windows() {
     cd ../
     mkdir "${DIR}/lib/windows/$arch"
     cp "$arch/libfreetype.a" "${DIR}/lib/windows/$arch/libfreetype.a"
+
+    printf "Done.\n\n"
 }
 
 set -e
