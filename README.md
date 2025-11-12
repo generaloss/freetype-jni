@@ -40,7 +40,7 @@ face.done();
 lib.done();
 ```
 
-See other samples (*99*) in [**Tests.java**](src/test/java/unit/Tests.java)
+See other samples (*99*) in [**Tests.java**](src/test/java/Tests.java)
 
 ## Implemented
 
